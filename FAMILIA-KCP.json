@@ -1,0 +1,43 @@
+{
+  "schema": "konfirmu.kcp.familia.v1",
+  "autor": "lead (DSH), 2026-11-21",
+  "nota": "Familia de perfis do KCP completa: 5 perfis com hash e dono. Hash null = auto-referencia (ver RECIBO do proprio pacote).",
+  "perfis": [
+    {
+      "perfil": "Paz",
+      "id": "KCP-PAZ",
+      "pacote": "entregas/2026-11-21-protocolo-da-paz",
+      "raiz_sha256": "3a396db6e9ee51f10b8b1671fb0c34f747ca45cfbba5b89ed905714bc064283c",
+      "dono": "Gabinete de Paz (lead)"
+    },
+    {
+      "perfil": "Actos",
+      "id": "KCP-ACT",
+      "pacote": "entregas/2026-11-21-kcp-act",
+      "raiz_sha256": "5b47deb76c76712fb06f8242123cd8ae7bb5f7b227c20f821ba105c35f053794",
+      "dono": "Renascimento (braco robotico)"
+    },
+    {
+      "perfil": "QR",
+      "id": "KCP-QR",
+      "pacote": "entregas/2026-11-21-kcp-qr",
+      "raiz_sha256": "ef67914a3778920af27ac966e8bc6c3b703488b1fa38a700110e5846aec58977",
+      "dono": "lead (DSH)"
+    },
+    {
+      "perfil": "Gateway",
+      "id": "KCP-GATEWAY",
+      "pacote": "entregas/2026-11-21-kcp-gateway",
+      "raiz_sha256": "0877b82331d43afc5c50325040a7ecfbe5baa4deb084544986e1df17b3660767",
+      "dono": "Comercial (alfandega automatica)"
+    },
+    {
+      "perfil": "Care",
+      "id": "KCP-CARE",
+      "pacote": "entregas/2026-11-21-kcp-care",
+      "raiz_sha256": null,
+      "dono": "Gabinete de Paz (lead)",
+      "nota": "raiz no RECIBO do proprio pacote"
+    }
+  ]
+}
