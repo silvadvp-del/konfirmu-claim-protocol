@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KONFIRMU — Estúdio Aberto de Arte & Música (offline)</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:680px;margin:0 auto;padding:16px;background:#0d1117;color:#e6edf3}
+.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;margin:12px 0}
+button{background:#238636;color:#fff;border:0;border-radius:6px;padding:8px 12px;margin:3px 2px;cursor:pointer}
+canvas{background:#fff;border-radius:6px;touch-action:none}
+pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
+.aviso{font-size:.75em;color:#8b949e;margin-top:10px}
+.verde{color:#3fb950}.vermelho{color:#f85149}
+.notas button{background:#0f172a;width:44px;padding:10px 0}
+</style>
+</head>
+<body>
+<h1>🎨🎵 KONFIRMU — Estúdio Aberto de Arte & Música</h1>
+<p>Cria, desenha, toca e sela a tua autoria — tudo offline, sem nuvem, sem taxas. A obra fica contigo; o selo prova quando e em que aparelho a selaste.</p>
+
+<div class="card notas">
+<b>1. Sintetizador (Web Audio, zero downloads)</b><br>
+<div id="teclas"></div>
+<select id="onda"><option value="sine">seno</option><option value="square">quadrada</option><option value="sawtooth">serra</option><option value="triangle">triângulo</option></select>
+<button onclick="escala()">▶ escala cultural (dó ré mi…)</button>
+</div>
+
+<div class="card">
+<b>2. Tela de desenho vetorial</b><br>
+<input type="color" id="cor" value="#3fb950"> <button onclick="limpar()">limpar</button><br>
+<canvas id="tela" width="640" height="360"></canvas>
+</div>
+
+<div class="card">
+<b>3. Selo de autoria (Chronolex)</b><br>
+<input id="artista" placeholder="Nome do autor / artista">
+<select id="licenca"><option value="CC BY 4.0">CC BY 4.0</option><option value="CC BY-SA 4.0">CC BY-SA 4.0</option><option value="EUPL-1.2">EUPL-1.2</option><option value="CC0">CC0 (domínio público)</option></select>
+<button onclick="selar()">🔒 Selar obra</button>
+<pre id="selo">—</pre>
+<canvas id="qr" style="background:#fff;padding:6px"></canvas><br>
+<button onclick="guardar()">💾 Guardar obra + certificado (JSON)</button> <button onclick="verificar()">Re-verificar</button>
+<pre id="verif">—</pre>
+</div>
+
+<p class="aviso">O que NÃO garante: o selo prova que ESTA obra (os traços/notas registados) foi selada neste aparelho à hora do relógio local — NÃO prova que foi criada por humano nem que é original; isso nenhuma máquina prova. O áudio não é gravado — o selo cobre a TELA (traços vetoriais). RFC 3161/âncora = passo posterior online. A chave nasce e fica no aparelho.</p>
+<script src="./assets/nacl-fast.min.js"></script>
+<script src="./assets/nacl-util.min.js"></script>
+<script src="./assets/qrcode.js"></script>
+<script>
+function sha256Studio(str) {
+  // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
+  // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
+  function rightRotate(value, amount) { return (value>>>amount) | (value<<(32-amount)); }
+  var ascii = unescape(encodeURIComponent(str));   // bytes UTF-8 como chars 0-255
+  var mathPow = Math.pow, maxWord = mathPow(2,32);
+  var result = '', words = [];
+  var asciiBitLength = ascii.length*8;
+  var hash = sha256Studio.h = sha256Studio.h || [];
+  var k = sha256Studio.k = sha256Studio.k || [];
+  var primeCounter = k.length, isComposite = {};
+  for (var candidate = 2; primeCounter < 64; candidate++) {
+    if (!isComposite[candidate]) {
+      for (var i = 0; i < 313; i += candidate) isComposite[i] = candidate;
+      hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+      k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+    }
+  }
+  ascii += '\x80';
+  while (ascii.length%64 - 56) ascii += '\x00';
+  for (var i = 0; i < ascii.length; i++) {
+    var j = ascii.charCodeAt(i);
+    words[i>>2] |= j << ((3 - i)%4)*8;
+  }
+  words[words.length] = (asciiBitLength/maxWord)|0;
+  words[words.length] = (asciiBitLength);
+  for (var jj = 0; jj < words.length;) {
+    var w = words.slice(jj, jj += 16);
+    var oldHash = hash;
+    hash = hash.slice(0, 8);
+    for (var i2 = 0; i2 < 64; i2++) {
+      var w15 = w[i2-15], w2 = w[i2-2];
+      var a = hash[0], e = hash[4];
+      var temp1 = hash[7]
+        + (rightRotate(e,6)^rightRotate(e,11)^rightRotate(e,25))
+        + ((e&hash[5])^((~e)&hash[6]))
+        + k[i2]
+        + (w[i2] = (i2 < 16) ? w[i2] : (
+            w[i2-16] + (rightRotate(w15,7)^rightRotate(w15,18)^(w15>>>3))
+            + w[i2-7] + (rightRotate(w2,17)^rightRotate(w2,19)^(w2>>>10)))|0);
+      var temp2 = (rightRotate(a,2)^rightRotate(a,13)^rightRotate(a,22))
+        + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
+      hash = [(temp1+temp2)|0].concat(hash);
+      hash[4] = (hash[4]+temp1)|0;
+    }
+    for (var i3 = 0; i3 < 8; i3++) hash[i3] = (hash[i3]+oldHash[i3])|0;
+  }
+  for (var i4 = 0; i4 < 8; i4++) {
+    for (var j4 = 3; j4 + 1; j4--) {
+      var b = (hash[i4]>>(j4*8))&255;
+      result += ((b < 16) ? 0 : '') + b.toString(16);
+    }
+  }
+  return result;
+}
+var tracos = [];
+var aDesenhar = false;
+var selo = null;
+function toHex(u8){ var s=""; for (var i=0;i<u8.length;i++) s += ("0"+u8[i].toString(16)).slice(-2); return s; }
+function fromHex(h){ var u=new Uint8Array(h.length/2); for (var i=0;i<u.length;i++) u[i]=parseInt(h.substr(i*2,2),16); return u; }
+// --- sintetizador ---
+var actx = null;
+function ctxAudio(){ if(!actx) actx = new (window.AudioContext || window.webkitAudioContext)(); return actx; }
+function nota(freq){
+  var a = ctxAudio();
+  var o = a.createOscillator(); var g = a.createGain();
+  o.type = document.getElementById("onda").value;
+  o.frequency.value = freq;
+  g.gain.setValueAtTime(0.15, a.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.7);
+  o.connect(g); g.connect(a.destination);
+  o.start(); o.stop(a.currentTime + 0.7);
+}
+var freqs = { "dó":261.63, "ré":293.66, "mi":329.63, "fá":349.23, "sol":392.00, "lá":440.00, "si":493.88 };
+(function teclado(){
+  var el = document.getElementById("teclas");
+  for (var nome in freqs) {
+    var b = document.createElement("button");
+    b.textContent = nome; b.onclick = function(f){ return function(){ nota(f); }; }(freqs[nome]);
+    el.appendChild(b);
+  }
+})();
+function escala(){ var n = Object.keys(freqs), i = 0; (function passo(){ if(i < n.length){ nota(freqs[n[i]]); i++; setTimeout(passo, 380); } })(); }
+// --- tela vetorial ---
+var tela = document.getElementById("tela");
+var ctx = tela.getContext("2d");
+tela.addEventListener("pointerdown", function(ev){
+  aDesenhar = true;
+  tracos.push({ cor: document.getElementById("cor").value, pts: [[ev.offsetX, ev.offsetY]] });
+});
+tela.addEventListener("pointermove", function(ev){
+  if(!aDesenhar) return;
+  var tr = tracos[tracos.length - 1];
+  tr.pts.push([ev.offsetX, ev.offsetY]);
+  ctx.strokeStyle = tr.cor; ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(tr.pts[tr.pts.length - 2][0], tr.pts[tr.pts.length - 2][1]);
+  ctx.lineTo(ev.offsetX, ev.offsetY);
+  ctx.stroke();
+});
+tela.addEventListener("pointerup", function(){ aDesenhar = false; });
+function limpar(){ tracos = []; ctx.clearRect(0, 0, tela.width, tela.height); }
+// --- selo ---
+function selar(){
+  var nome = document.getElementById("artista").value.trim();
+  if(!nome){ alert("escreve o nome do autor"); return; }
+  if(!tracos.length){ alert("desenha pelo menos um traço (a obra a selar)"); return; }
+  var lic = document.getElementById("licenca").value;
+  var ts = new Date().toISOString();
+  var obra = JSON.stringify({ tracos: tracos, licenca: lic });
+  var hash = sha256Studio(obra, false);
+  var alvo = "KONFIRMU-ART|v1|" + hash + "|" + nome + "|" + ts;
+  var kp = nacl.sign.keyPair();
+  var sig = nacl.sign.detached(nacl.util.decodeUTF8(alvo), kp.secretKey);
+  selo = { nome: nome, lic: lic, ts: ts, hash: hash, pk: toHex(kp.publicKey), sig: toHex(sig) };
+  document.getElementById("selo").textContent =
+    "sha256 da obra: " + hash + "\nlicença: " + lic + "\nhora (aparelho): " + ts + "\npk: " + selo.pk + "\nsig: " + selo.sig;
+  var payload = "KONFIRMU|ART|v1|" + hash + "|" + selo.pk + "|" + selo.sig + "|" + ts;
+  var c = document.getElementById("qr");
+  var qr = qrcode(0,"M"); qr.addData(payload,"Byte"); qr.make();
+  var n = qr.getModuleCount(), s = 3; c.width = n*s; c.height = n*s;
+  var ctx2 = c.getContext("2d"); ctx2.fillStyle = "#fff"; ctx2.fillRect(0,0,c.width,c.height); ctx2.fillStyle = "#000";
+  for (var r=0;r<n;r++) for (var cc=0;cc<n;cc++) if (qr.isDark(r,cc)) ctx2.fillRect(cc*s,r*s,s,s);
+}
+function verificar(){
+  if(!selo){ alert("primeiro sela"); return; }
+  var obra = JSON.stringify({ tracos: tracos, licenca: selo.lic });
+  var okH = sha256Studio(obra, false) === selo.hash;
+  var alvo = "KONFIRMU-ART|v1|" + selo.hash + "|" + selo.nome + "|" + selo.ts;
+  var okS = nacl.sign.detached.verify(nacl.util.decodeUTF8(alvo), fromHex(selo.sig), fromHex(selo.pk));
+  document.getElementById("verif").textContent = "hash: " + (okH ? "CONFERE" : "DIVERGE") + "\nassinatura: " + (okS ? "VÁLIDA" : "INVÁLIDA") + "\n" + (okH && okS ? "VERDE — obra íntegra" : "VERMELHO — adulterada");
+  document.getElementById("verif").className = okH && okS ? "verde" : "vermelho";
+}
+function guardar(){
+  if(!selo){ alert("primeiro sela"); return; }
+  var doc = { versao: "konfirmu-art/1", autor: selo.nome, licenca: selo.lic, seladoEm: selo.ts, obra: { tracos: tracos }, hash: selo.hash, pk: selo.pk, sig: selo.sig };
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(doc, null, 2)], { type: "application/json" }));
+  a.download = "obra-" + selo.hash.slice(0,12) + ".json";
+  a.click();
+}
+</script>
+</body>
+</html>
