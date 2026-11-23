@@ -10,7 +10,8 @@
 | Tecnologia | Estado | Prova / nota honesta |
 |---|---|---|
 | Ethernet · Wi-Fi · TCP/IP | PROVADO (infra) | usados por toda a infra; não são código deste repositório |
-| Bluetooth · LoRa · QUIC | ROADMAP | desenhados para o produto offline; nenhuma implementação selada na casa |
+| QUIC (HTTP/3) | **PROVADO (infra)** | activado 23-11 no VPS: Caddy v2.11.9 escutava UDP 443; regra ufw 443/udp adicionada; handshake QUIC de máquina externa → OK, ALPN negociado `h3` (aioquic) |
+| Bluetooth · LoRa | ROADMAP | desenhados para o produto offline; nenhuma implementação selada na casa (varrredura 23-11: zero evidência) |
 
 ## 2. Camada de Segurança e Identidade (como se protege o canal)
 
