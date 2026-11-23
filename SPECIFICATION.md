@@ -71,3 +71,20 @@ A cartridge conforms when `kcp_lint.py` passes all its `test_vectors`; an implem
 conforms when its digests equal the reference for every published test vector (see `cartridges/`
 and CI workflow `kcp_cartridge_ci.yml`). "Almost within limits" does not exist: the worst case
 decides.
+
+
+## 7. Reserva Pós-Quântica (PROVA/2-PQ) — sem tocar no núcleo congelado
+
+A versão `3.0.0` NÃO muda. Para envelopes de longo prazo (30–50 anos), fica **reservado** o campo:
+
+```json
+{ "schema": "PROVA/2-PQ", "sig_suite": "ED25519+SLH-DSA-SHA2-128s", "digest": "…",
+  "signatures": { "classical_ed25519": "…", "post_quantum_slh_dsa": "…" } }
+```
+
+- A reserva é um CAMPO NA SPEC — a implementação real de SLH-DSA (FIPS 205) é trabalho de versão
+  futura (v4-PQ), com vectores oficiais do NIST, nunca cripto caseira.
+- Existe um PROTÓTIPO DIDÁTICO em `kcp_pq_hybrid.py` (Lamport+Merkle, stdlib-only, marcado
+  DIDÁTICO — não usar em produção) que demonstra o envelope híbrido de duas camadas.
+- SHA-256 permanece adequado (Grover reduz 256→128 bits); SHA-384/SHA3-256 são a opção para os
+  envelopes de muito longo prazo — decisão da versão v4-PQ.
