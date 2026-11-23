@@ -1,5 +1,9 @@
 # Konfirmu Claim Protocol
 
+> Infraestrutura **humanitária**: a IA propõe, o humano confirma. O cliente é a família sem
+> internet; o excedente é para as girafinhas. Zero premine, zero juros, emissão só contra prova
+> física. Manifesto: MANIFESTO-MISSAO.md · Inovação: INOVACAO-SOBRE-A-BITCOIN.md.
+
 Toda a afirmacao factual carrega a sua prova — ou a sua honestidade.
 
 ## O que NAO garante (lido primeiro, como manda a casa)
