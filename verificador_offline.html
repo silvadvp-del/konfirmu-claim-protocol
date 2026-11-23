@@ -51,7 +51,7 @@ table{font-size:.8em;border-collapse:collapse;width:100%} td,th{border:1px solid
 <b>4. Ler QR (câmara — leitor nativo BarcodeDetector)</b><br>
 <button onclick="lerQR()">abrir câmara e ler</button> <video id="cam" playsinline style="width:100%;margin-top:8px;display:none"></video>
 <pre id="qrout">—</pre>
-<small class="aviso">BarcodeDetector existe no Chrome/Android. iOS Safari não o tem — aí: cola o conteúdo do QR na caixa de texto e usa «Calcular» (o formato KONFIRMU|v1|&lt;sha256&gt; é verificado à mesma).</small>
+<small class="aviso">Medicamentos: a leitura offline mostra o que está codificado na caixa; a AUTENTICIDADE exige consulta ao repositório nacional (Reg. UE 2016/161, Diretiva dos Medicamentos Falsificados). BarcodeDetector existe no Chrome/Android. iOS Safari não o tem — aí: cola o conteúdo na caixa de texto. Formatos lidos: QR e DataMatrix (GS1 de medicamentos: produto/lote/série/validade, quando presentes).</small>
 </div>
 <div class="card">
 <b>5. Prova de data (sem confiar em nós):</b>
@@ -142,6 +142,31 @@ function calc(){
 }
 if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(function(){});}
 
+
+function parseGS1(raw){
+  // DataMatrix GS1: AI 01=GTIN, 10=lote, 21=serie, 17=validade (AAMMDD).
+  // Sem barra invertida: separador real e String.fromCharCode(29); parenteses na forma humana.
+  var out = {};
+  var sep = String.fromCharCode(29);
+  var partes = raw.split(sep);
+  if (partes.length > 1) {
+    for (var i = 0; i < partes.length; i++) {
+      var p = partes[i];
+      if (p.indexOf("(01)") === 0) { out.produto_gtin = p.slice(4, 18); continue; }
+      if (p.indexOf("01") === 0) { out.produto_gtin = p.slice(2, 16); continue; }
+      if (p.indexOf("10") === 0) { out.lote = p.slice(2); continue; }
+      if (p.indexOf("21") === 0) { out.serie = p.slice(2); continue; }
+      if (p.indexOf("17") === 0) { var v = p.slice(2, 8); out.validade = v.slice(4,6) + "/" + v.slice(2,4) + "/20" + v.slice(0,2); continue; }
+    }
+  } else {
+    var m;
+    m = raw.match(/\(01\)([0-9]{14})/); if (m) out.produto_gtin = m[1];
+    m = raw.match(/\(10\)([^()]{1,20})/); if (m) out.lote = m[1];
+    m = raw.match(/\(21\)([^()]{1,20})/); if (m) out.serie = m[1];
+    m = raw.match(/\(17\)([0-9]{6})/); if (m) { var v2 = m[1]; out.validade = v2.slice(4,6) + "/" + v2.slice(2,4) + "/20" + v2.slice(0,2); }
+  }
+  return out;
+}
 var ultimoHash = "";
 function concluir(h){ ultimoHash = h; /* reusa o finish original? — definido no calc() */ }
 
@@ -174,14 +199,16 @@ async function lerQR(){
   v.style.display = "block";
   streamAtivo = await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});
   v.srcObject = streamAtivo;
-  var det = new BarcodeDetector({formats:["qr_code"]});
+  var det = new BarcodeDetector({formats:["qr_code","data_matrix"]});
   (async function loop(){
     if(!streamAtivo) return;
     try{
       var codes = await det.detect(v);
       if(codes.length){
         var txt = codes[0].rawValue;
-        document.getElementById("qrout").textContent = txt;
+        var g = parseGS1(txt);
+        var extra = Object.keys(g).length ? "\nGS1: " + JSON.stringify(g) : "";
+        document.getElementById("qrout").textContent = txt + extra;
         var m = txt.match(/^KONFIRMU\|v1\|([0-9a-f]{64})\|/);
         if(m){ verificarHashLido(m[1]); }
         pararCamara();
