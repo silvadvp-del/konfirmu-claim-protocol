@@ -1,4 +1,4 @@
-# KCP — Konfirmu Claim Protocol
+# Konfirmu Claim Protocol
 
 Toda a afirmacao factual carrega a sua prova — ou a sua honestidade.
 
@@ -11,7 +11,7 @@ Toda a afirmacao factual carrega a sua prova — ou a sua honestidade.
 
 ## O que e
 
-KCP/0.1 define o minimo para uma afirmacao factual ser recebida como usavel:
+O Konfirmu Claim Protocol 0.1 define o minimo para uma afirmacao factual ser recebida como usavel:
 CLAIM → PROOF → VERIFY. Sem terceira via: VERIFICADO ou SEM_COBERTURA.
 A prova re-executa-se na maquina de quem recebe, em menos de 1 s, offline.
 
@@ -28,6 +28,26 @@ Licenca: EUPL-1.2 · Prioridade declarada: 2026-11-20 (ancora Bitcoin, blocos 97
 - KCP-NUCLEAR — o perfil da inspecao: trust, but verify em codigo (este repositorio)
 
 Indice da familia: FAMILIA-KCP.json (5 perfis, hash e dono).
+
+## Desambiguacao e trabalho anterior (importante, 23-11-2026)
+
+- A sigla «KCP» e usada publicamente por um padrao aberto ANTERIOR: o **Knowledge Context
+  Protocol** (github.com/Cantara/knowledge-context-protocol; especificacao publica desde
+  03-2026). Citado aqui como trabalho anterior.
+- Por decisao do fundador, este protocolo usa SEMPRE por extenso **«Konfirmu Claim Protocol»**;
+  a sigla sozinha nao e registada (i-DEPOT) nem usada em publico. Nada e apagado; a decisao e
+  reversivel.
+- O «KCP Agent» da Genesis Digital Solutions (Key Contractual Principles) e um produto de
+  terceiros, sem relacao com a Konfirmu.
+
+## O motor
+
+\`konfirmu_calc.py\` v3.0.0 (sha256 \`529098c6…\`, licenca EUPL-1.2) executa a verificacao:
+
+\`\`\`sh
+python3 konfirmu_calc.py --demo        # TUDO VERDE 247/247 (prova em PROVA.md)
+python3 konfirmu_calc.py --auditoria   # auditoria do ledger imutavel
+\`\`\`
 
 ## Nao acredites — verifica
 

@@ -1,0 +1,30 @@
+{
+  "protocolo": "Konfirmu Claim Protocol",
+  "versao": "3.0.0",
+  "data_selagem": "2026-11-23",
+  "fuso": "Europe/Berlin",
+  "artefacto": "konfirmu_calc.py",
+  "artefacto_sha256": "529098c652ee8234960d69383e308f60db6a5df8ea6bdae578b538eb806e80cf",
+  "base_v251_sha256": "7b0680f795d9614bf6de97dae507db3b21d61f99742753ef444565d0b32086a6",
+  "demo": "ver PROVA.md (execucao real, 2026-11-23, janela lead)",
+  "licenca": "EUPL-1.2",
+  "trabalho_anterior": [
+    "Knowledge Context Protocol (Cantara, github.com/Cantara/knowledge-context-protocol) — padrao aberto com a mesma sigla publica, spec publica desde 03-2026. Citado como trabalho anterior; este protocolo usa por extenso «Konfirmu Claim Protocol» e nao regista nem usa a sigla sozinha em publico.",
+    "Genesis Digital Solutions «KCP Agent» (Key Contractual Principles) — produto de terceiros, sem relacao com a Konfirmu."
+  ],
+  "depositos_boip": [
+    "i-DEPOT n.º 162925 (2026-09-06)",
+    "i-DEPOT n.º 164391 (2026-10-21)"
+  ],
+  "ancoras_bitcoin": {
+    "GENESIS_STAMP_v4.json": { "sha256": "3cfe80002b756a40b81ceeae1ff5bec58d55bc49b80303f94cb16164ac036277", "bloco": 976735 },
+    "MANIFESTO_HASHES_2026-11-20.txt": { "sha256": "01721dfa169c8cd8c3ae45f5f6cf454b16efcee963812552b8dbf3e005f80f37", "bloco": 976760 }
+  },
+  "garantia_produto": "auto-avaliacao de primeira parte contra ECSS-Q-ST-80C Rev.2 (295 requisitos) — nao e certificacao ESA/ECSS",
+  "o_que_nao_garante": [
+    "Nao e dispositivo medico; nao diagnostica nem substitui profissionais de saude.",
+    "«Selado» ≠ «verdadeiro».",
+    "Depositos i-DEPOT provam data de deposito — nao patente nem aprovacao regulatoria.",
+    "Publicacao do DOI (Zenodo) e acto externo do fundador."
+  ]
+}

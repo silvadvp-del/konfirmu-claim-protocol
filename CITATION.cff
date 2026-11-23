@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+title: "Konfirmu Claim Protocol — Deterministic Offline Verification Core"
+message: "If you use this software or protocol specification, please cite it using the metadata below."
+type: software
+version: "3.0.0"
+date-released: "2026-11-22"
+license: "EUPL-1.2"
+keywords:
+  - deterministic-verification
+  - offline-first
+  - metrology-gum
+  - ed25519
+  - cose-scitt
+  - software-product-assurance
+  - ecss-q-st-80c
+references:
+  - type: generic
+    title: "Konfirmu — BOIP i-DEPOT Certificate no. 162925 (Proof of Date of Deposit)"
+    date-released: "2026-09-06"
+    notes: "Benelux Office for Intellectual Property (BOIP) registered deposit no. 162925"
+  - type: generic
+    title: "Konfirmu — BOIP i-DEPOT Certificate no. 164391 (Proof of Date of Deposit)"
+    date-released: "2026-10-21"
+    notes: "Benelux Office for Intellectual Property (BOIP) registered deposit no. 164391"
+  - type: standard
+    title: "ECSS-Q-ST-80C Rev.2 — Space product assurance: Software product assurance"
+    notes: "First-party self-assessment of the Konfirmu Claim Protocol verification core across 295 requirements"
+  - type: generic
+    title: "Knowledge Context Protocol (Cantara) — prior work with the same public acronym"
+    date-released: "2026-03-25"
+    notes: "Open standard for AI-agent knowledge navigation (github.com/Cantara/knowledge-context-protocol). Cited as prior work; this project uses the full name 'Konfirmu Claim Protocol' and does not register or use the bare acronym."
