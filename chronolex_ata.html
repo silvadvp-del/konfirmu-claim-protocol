@@ -3,35 +3,57 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Konfirmu · Chronolex — Ata pericial offline</title>
-<style>body{font-family:system-ui,sans-serif;max-width:640px;margin:0 auto;padding:16px;background:#0d1117;color:#e6edf3}
-.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;margin:12px 0}
-input,textarea{width:100%;background:#0d1117;color:#e6edf3;border:1px solid #30363d;padding:6px;margin:4px 0}
-button{background:#238636;color:#fff;border:0;border-radius:6px;padding:8px 14px;margin:4px 2px;cursor:pointer}
-canvas{background:#fff;padding:6px;margin-top:8px}
-pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
-.verde{color:#3fb950}.vermelho{color:#f85149}.aviso{font-size:.75em;color:#8b949e;margin-top:10px}
+<title>CHRONOLEX — Ata & Prova Documental (offline)</title>
+<style>
+body{font-family:Georgia,"Times New Roman",serif;background:#f8fafc;color:#0f172a;margin:0;padding:24px 16px;display:flex;justify-content:center}
+.doc{width:100%;max-width:780px;background:#fff;border:1px solid #cbd5e1;border-radius:8px;padding:32px;box-shadow:0 10px 25px rgba(0,0,0,.05)}
+.header{border-bottom:2px solid #0f172a;padding-bottom:14px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap}
+h1{font-size:1.4rem;margin:0;letter-spacing:.04em;text-transform:uppercase}
+.meta{font-family:system-ui,sans-serif;font-size:.8rem;color:#475569}
+input,textarea{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;font-family:system-ui,sans-serif;font-size:.95rem;margin-bottom:10px;box-sizing:border-box}
+button{font-family:system-ui,sans-serif;padding:10px 16px;border:none;border-radius:6px;font-weight:600;cursor:pointer}
+.btn-add{background:#0f172a;color:#fff}
+.btn-seal{background:#047857;color:#fff;width:100%;margin-top:16px;padding:14px;font-size:1rem}
+.entry{border-left:3px solid #0f172a;padding:8px 12px;margin:10px 0;background:#f1f5f9;font-family:system-ui,sans-serif;font-size:.9rem}
+.hash{font-family:monospace;font-size:.74rem;color:#64748b;word-break:break-all;margin-top:4px}
+.seal-box{margin-top:20px;padding:16px;border:2px solid #047857;background:#ecfdf5;border-radius:6px;display:none;font-family:system-ui,sans-serif}
+.sig-row{font-family:monospace;font-size:.74rem;color:#064e3b;word-break:break-all;margin-top:4px}
+@media print{.no-print{display:none}.doc{box-shadow:none;border:none}}
 </style>
 </head>
 <body>
-<h1>📜 Ata pericial offline — Konfirmu · Chronolex</h1>
-<p>O perito sela a ata no local, sem rede: conteúdo → sha256 → assinatura Ed25519 → QR. A verificação é local.</p>
-<div class="card">
-<b>1. Os dados da ata</b><br>
-<input id="caso" placeholder="N.º do caso"><br>
-<input id="local" placeholder="Local (ex.: via pública, obra, navio)"><br>
-<input id="perito" placeholder="Perito (nome)"><br>
-<textarea id="relato" rows="4" placeholder="Relato dos factos observados"></textarea><br>
-<button onclick="selar()">Selar ata</button>
-<pre id="out">—</pre>
-<canvas id="qr" style="display:none"></canvas>
+<div class="doc">
+  <div class="header">
+    <div>
+      <h1>Chronolex · Auto &amp; Ata Certificada</h1>
+      <div class="meta">Registo cronológico encadeado (SHA-256) · assinaturas Ed25519 · offline</div>
+    </div>
+    <div class="meta" id="doc-date"></div>
+  </div>
+
+  <div class="no-print">
+    <input id="doc-title" placeholder="Título da Ata / Processo / Auto de Vistoria">
+    <input id="doc-author" placeholder="Declarante / Papel (ex.: Dr. Silva — Presidente / Perito)">
+    <textarea id="doc-text" rows="3" placeholder="Texto do ponto a registar..."></textarea>
+    <button class="btn-add" onclick="addEntry()">+ Registar &amp; Encadear Ponto</button>
+    <hr>
+    <input id="sign-name" placeholder="Nome do participante que assina">
+    <button class="btn-add" onclick="assinar()">✍️ Assinar (gera chave Ed25519 no aparelho)</button>
+  </div>
+
+  <div id="timeline" style="margin-top:20px"></div>
+
+  <button class="btn-seal no-print" onclick="selar()">🔒 Encerrar &amp; Selar Ata Definitiva</button>
+  <div id="final-seal" class="seal-box">
+    <strong style="color:#065f46">✔ DOCUMENTO SELADO E ENCADEADO</strong>
+    <div class="hash" id="final-hash" style="color:#064e3b"></div>
+    <div id="final-sigs"></div>
+    <button class="no-print" style="margin-top:12px;background:#065f46;color:#fff" onclick="guardarJSON()">💾 Guardar JSON assinado</button>
+    <button class="no-print" style="margin-top:12px;background:#065f46;color:#fff" onclick="window.print()">🖨️ Imprimir / PDF</button>
+    <canvas id="qr" class="no-print" style="background:#fff;padding:6px;margin-top:12px"></canvas>
+  </div>
 </div>
-<div class="card">
-<b>2. Verificar (local)</b><br>
-<button onclick="verificar()">Re-verificar assinatura e hash</button>
-<pre id="verif">—</pre>
-</div>
-<p class="aviso">O que NÃO garante: a hora é a do RELÓGIO DO APARELHO — não é data juridicamente ancorada. Valor probatório eIDAS exige carimbo QUALIFICADO (lista de confiança UE) — a ancoragem faz-se depois, online (RFC 3161/OTS), como no rfc3161.tsr do motor. SELADO ≠ VERDADEIRO: a assinatura prova que o perito selou ESTE texto, não que os factos são verdadeiros. A chave nasce e fica neste aparelho.</p>
+<p class="meta" style="max-width:780px;margin:12px auto;font-size:.72rem">O que NÃO garante: a hora é a do relógio do aparelho; valor probatório eIDAS exige carimbo QUALIFICADO (ancoragem posterior via RFC 3161/OTS); SELADO ≠ VERDADEIRO — as assinaturas provam que os participantes selaram ESTES pontos, não que os factos são verdadeiros. Chaves nascem e ficam no aparelho. Verificação pública: chronolex_verify.html (este repo).</p>
 <script src="./assets/nacl-fast.min.js"></script>
 <script src="./assets/nacl-util.min.js"></script>
 <script src="./assets/qrcode.js"></script>
@@ -91,38 +113,71 @@ function sha256Atas(str) {
   }
   return result;
 }
-var ata = null;
+document.getElementById("doc-date").textContent = new Date().toISOString();
+var prevHash = "0".repeat(64);
+var pontos = [];
+var assinaturas = [];
+var selado = null;
 function toHex(u8){ var s=""; for (var i=0;i<u8.length;i++) s += ("0"+u8[i].toString(16)).slice(-2); return s; }
 function fromHex(h){ var u=new Uint8Array(h.length/2); for (var i=0;i<u.length;i++) u[i]=parseInt(h.substr(i*2,2),16); return u; }
-function selar(){
-  var caso = document.getElementById("caso").value.trim();
-  var local = document.getElementById("local").value.trim();
-  var perito = document.getElementById("perito").value.trim();
-  var relato = document.getElementById("relato").value.trim();
-  if(!caso || !local || !perito || !relato){ alert("preenche todos os campos"); return; }
+function addEntry(){
+  var author = document.getElementById("doc-author").value.trim() || "Participante";
+  var text = document.getElementById("doc-text").value.trim();
+  if(!text) return;
   var ts = new Date().toISOString();
-  var conteudo = caso + "|" + local + "|" + perito + "|" + relato + "|" + ts;
+  var payload = JSON.stringify({ index: pontos.length + 1, ts: ts, author: author, text: text, prevHash: prevHash });
+  var hash = sha256Atas(payload, false);
+  pontos.push({ index: pontos.length + 1, ts: ts, author: author, text: text, prevHash: prevHash, hash: hash });
+  prevHash = hash;
+  var div = document.createElement("div");
+  div.className = "entry";
+  div.innerHTML = "<strong>#" + pontos.length + " [" + ts + "] — " + author + "</strong><div>" + text + "</div><div class='hash'>HASH: " + hash + "</div>";
+  document.getElementById("timeline").appendChild(div);
+  document.getElementById("doc-text").value = "";
+}
+function assinar(){
+  if(!selado){ alert("primeiro encerra e sela a ata (o selo mestre é o objecto assinado)"); return; }
+  var nome = document.getElementById("sign-name").value.trim();
+  if(!nome){ alert("escreve o nome do participante"); return; }
+  var alvo = "KONFIRMU-CLX|v1|" + selado.master;
   var kp = nacl.sign.keyPair();
-  var sig = nacl.sign.detached(nacl.util.decodeUTF8(conteudo), kp.secretKey);
-  // sha256 embutido (o da casa, provado 3/3 NIST)
-  var digest = sha256Atas(conteudo, false);
-  ata = { conteudo: conteudo, pk: toHex(kp.publicKey), sig: toHex(sig), digest: digest, ts: ts };
-  document.getElementById("out").textContent =
-    "hora (aparelho): " + ts + "\nsha256: " + digest + "\npk: " + ata.pk + "\nsig: " + ata.sig;
-  var payload = "KONFIRMU|ATA|v1|" + digest + "|" + ata.pk + "|" + ata.sig + "|" + ts;
-  var c = document.getElementById("qr"); c.style.display = "block";
+  var sig = nacl.sign.detached(nacl.util.decodeUTF8(alvo), kp.secretKey);
+  assinaturas.push({ nome: nome, pk: toHex(kp.publicKey), sig: toHex(sig) });
+  var el = document.createElement("div");
+  el.className = "sig-row";
+  el.textContent = nome + " · pk " + toHex(kp.publicKey).slice(0,16) + "… · sig " + toHex(sig).slice(0,16) + "…";
+  document.getElementById("final-sigs").appendChild(el);
+  document.getElementById("sign-name").value = "";
+  gerarQR();
+}
+function selar(){
+  if(pontos.length === 0){ alert("regista pelo menos um ponto"); return; }
+  var titulo = document.getElementById("doc-title").value.trim() || "Documento Chronolex";
+  var seladoEm = new Date().toISOString();
+  var master = sha256Atas(JSON.stringify(pontos) + "|" + titulo + "|" + seladoEm, false);
+  selado = { titulo: titulo, seladoEm: seladoEm, master: master, prevHashFinal: prevHash };
+  document.getElementById("final-hash").textContent = "SELO MESTRE (SHA-256): " + master + " | PONTOS: " + pontos.length;
+  document.getElementById("final-seal").style.display = "block";
+  gerarQR();
+}
+function gerarQR(){
+  if(!selado){ return; }
+  var payload = "KONFIRMU|CLX|v1|" + selado.master + "|" + selado.seladoEm;
+  for (var i = 0; i < assinaturas.length; i++) payload += "|" + assinaturas[i].pk + "|" + assinaturas[i].sig;
+  var c = document.getElementById("qr");
   var qr = qrcode(0, "M"); qr.addData(payload, "Byte"); qr.make();
   var n = qr.getModuleCount(), s = 3; c.width = n*s; c.height = n*s;
   var ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#000";
   for (var r=0;r<n;r++) for (var cc=0;cc<n;cc++) if (qr.isDark(r,cc)) ctx.fillRect(cc*s,r*s,s,s);
 }
-function verificar(){
-  if(!ata){ alert("primeiro sela a ata"); return; }
-  var okSig = nacl.sign.detached.verify(nacl.util.decodeUTF8(ata.conteudo), fromHex(ata.sig), fromHex(ata.pk));
-  var okHash = sha256Atas(ata.conteudo, false) === ata.digest;
-  document.getElementById("verif").textContent =
-    "assinatura: " + (okSig ? "VÁLIDA" : "INVÁLIDA") + "\nhash: " + (okHash ? "CONFERE" : "DIVERGE") + "\n" + (okSig && okHash ? "VERDE — ata íntegra" : "VERMELHO — ata adulterada");
-  document.getElementById("verif").className = (okSig && okHash) ? "verde" : "vermelho";
+function guardarJSON(){
+  if(!selado){ alert("primeiro sela"); return; }
+  var doc = { versao: "chronolex-ata/1", titulo: selado.titulo, seladoEm: selado.seladoEm, pontos: pontos, master: selado.master, assinaturas: assinaturas };
+  var blob = new Blob([JSON.stringify(doc, null, 2)], { type: "application/json" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "chronolex-ata-" + selado.master.slice(0,12) + ".json";
+  a.click();
 }
 </script>
 </body>
