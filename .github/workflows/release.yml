@@ -1,0 +1,34 @@
+# .github/workflows/release.yml — release verificada (tag v*)
+# Cadeia: motor --demo (247/247 esperado) -> SHA256SUMS dos ficheiros de release -> GitHub Release.
+# Assinatura de commits/releases: chave SSH do fundador (Settings > SSH and GPG keys) — passo do dono.
+name: release-verificada
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Motor — demo completo (prova)
+        run: |
+          python3 -I konfirmu_calc.py --demo > demo-saida.txt
+          grep -E "TUDO VERDE|sha256 desta saída" demo-saida.txt
+      - name: SHA256SUMS da release
+        run: |
+          shasum -a 256 konfirmu_calc.py LICENSE.txt README.md PROVA.md WHITEPAPER.md             MANIFESTO.json CITATION.cff ECSS-Q-ST-80C-Rev2_SelfAssessment.md             STACK-TECNOLOGICO.md INOVACAO-SOBRE-A-BITCOIN.md MANIFESTO-MISSAO.md             anchors/* verificador_offline.html testemunha_offline.html manifest.json sw.js             > SHA256SUMS-release.txt
+          cat SHA256SUMS-release.txt
+      - name: GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            konfirmu_calc.py
+            LICENSE.txt
+            SHA256SUMS-release.txt
+            demo-saida.txt
