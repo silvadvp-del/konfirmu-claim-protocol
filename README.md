@@ -54,6 +54,18 @@ python3 konfirmu_calc.py --auditoria   # auditoria do ledger imutavel
 As 5 camadas do protocolo, com estado real por peca (PROVADO/PARCIAL/ROADMAP/PENDENTE):
 ver STACK-TECNOLOGICO.md.
 
+## Prova temporal — RFC 3161 (verificacao 100% offline)
+
+O motor esta carimbado pela FreeTSA: **2026-11-23T05:13:01Z**. A prova completa vive em
+\`anchors/\` (pedido \`.tsq\`, resposta assinada \`.tsr\`, certificados \`tsa.crt\` + \`cacert.pem\`);
+o motor fica na raiz (unica copia, selada em SHA256SUMS.txt). Qualquer auditor confirma offline:
+
+\`\`\`sh
+openssl ts -verify -in anchors/konfirmu_calc.tsr -data konfirmu_calc.py \\
+  -CAfile anchors/cacert.pem -untrusted anchors/tsa.crt
+# esperado: Verification: OK
+\`\`\`
+
 ## Nao acredites — verifica
 
 Cada ficheiro tem o seu hash em SHA256SUMS.txt. Re-computa:

@@ -22,6 +22,9 @@ references:
     title: "Konfirmu — BOIP i-DEPOT Certificate no. 164391 (Proof of Date of Deposit)"
     date-released: "2026-10-21"
     notes: "Benelux Office for Intellectual Property (BOIP) registered deposit no. 164391"
+  - type: generic
+    title: "RFC 3161 Timestamp — FreeTSA, 2026-11-23T05:13:01Z"
+    notes: "RFC 3161 cryptographic timestamp over konfirmu_calc.py v3.0.0 (anchors/konfirmu_calc.tsr; verify offline with openssl ts -verify)"
   - type: standard
     title: "ECSS-Q-ST-80C Rev.2 — Space product assurance: Software product assurance"
     notes: "First-party self-assessment of the Konfirmu Claim Protocol verification core across 295 requirements"
