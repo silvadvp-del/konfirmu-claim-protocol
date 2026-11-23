@@ -1,0 +1,44 @@
+{
+  "cartridge_id": "SOLAS_VGM_CONTAINER_V1",
+  "version": "1.0.0",
+  "standard_ref": "SOLAS VI/2 (VGM) + CSC Plate (max gross mass)",
+  "reason_code_veto": "VETO_VGM_EXCEEDS_CSC_MAX_GROSS",
+  "inputs": [
+    "max_csc_kg",
+    "peso_bruto_kg"
+  ],
+  "formula": "max_csc_kg - peso_bruto_kg",
+  "limits": {
+    "min_allowed": 0,
+    "max_allowed": 1000000000
+  },
+  "test_vectors": [
+    {
+      "env": {
+        "max_csc_kg": [
+          30480,
+          0
+        ],
+        "peso_bruto_kg": [
+          24180,
+          20
+        ]
+      },
+      "expected_verdict": "OK"
+    },
+    {
+      "env": {
+        "max_csc_kg": [
+          30480,
+          0
+        ],
+        "peso_bruto_kg": [
+          31000,
+          20
+        ]
+      },
+      "expected_verdict": "VETO"
+    }
+  ],
+  "o_que_nao_garante": "residual = max CSC - VGM; o CSC vem da placa do contentor (proveniencia, nao calculo); metodo 1 (bascuLa) e metodo 2 (soma item-a-item) entram ambos como peso_bruto_kg VERIFICADO a montante — a escolha/verificacao do metodo e do selo fisico da porta e do sealer maritimo, nao deste cartucho; incerteza da bascula = declarada por quem mede [VALIDAR calibracao]"
+}

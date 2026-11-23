@@ -1,0 +1,44 @@
+{
+  "cartridge_id": "SOLAS_VGM_TARA_V1",
+  "version": "1.0.0",
+  "standard_ref": "SOLAS VI/2 (VGM) — tara oficial (BIC/CSC) vs peso bruto",
+  "reason_code_veto": "VETO_PAYLOAD_NEGATIVO",
+  "inputs": [
+    "peso_bruto_kg",
+    "tara_kg"
+  ],
+  "formula": "peso_bruto_kg - tara_kg",
+  "limits": {
+    "min_allowed": 0,
+    "max_allowed": 1000000000
+  },
+  "test_vectors": [
+    {
+      "env": {
+        "peso_bruto_kg": [
+          30480,
+          20
+        ],
+        "tara_kg": [
+          3900,
+          10
+        ]
+      },
+      "expected_verdict": "OK"
+    },
+    {
+      "env": {
+        "peso_bruto_kg": [
+          3800,
+          20
+        ],
+        "tara_kg": [
+          3900,
+          10
+        ]
+      },
+      "expected_verdict": "VETO"
+    }
+  ],
+  "o_que_nao_garante": "payload = bruto - tara; tara oficial = placa CSC/codigo BIC (proveniencia externa); bruto < tara = sinal de fraude/erro — VETO no pior caso"
+}
