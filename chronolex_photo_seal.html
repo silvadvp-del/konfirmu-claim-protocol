@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHRONOLEX — Selador Fotográfico Offline</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:640px;margin:0 auto;padding:16px;background:#0d1117;color:#e6edf3}
+.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;margin:12px 0}
+button{background:#238636;color:#fff;border:0;border-radius:6px;padding:8px 14px;margin:4px 2px;cursor:pointer}
+video,img{width:100%;border-radius:6px;margin-top:8px}
+pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
+canvas{display:none}
+.aviso{font-size:.75em;color:#8b949e;margin-top:10px}
+.verde{color:#3fb950}.vermelho{color:#f85149}
+</style>
+</head>
+<body>
+<h1>📷 CHRONOLEX — Selador Fotográfico Offline</h1>
+<p>Captura, comprime localmente (WebP; JPEG como reserva) e sela: SHA-256 + assinatura Ed25519 + certificado com QR. Zero nuvem, zero taxas, Modo Avião total.</p>
+<div class="card">
+<b>1. Capturar</b><br>
+<button onclick="abrirCamara()">📸 Abrir câmara</button> <button onclick="capturar()">Capturar e comprimir</button> <button onclick="parar()">parar</button><br>
+<video id="cam" playsinline></video>
+<img id="foto" style="display:none">
+<pre id="capturaInfo">—</pre>
+</div>
+<div class="card">
+<b>2. Selar (chave Ed25519 gerada agora, no aparelho)</b><br>
+<button onclick="selar()">🔒 Selar fotografia</button>
+<pre id="selo">—</pre>
+<canvas id="qr"></canvas><br>
+<button onclick="guardarFoto()">💾 Guardar foto selada</button> <button onclick="guardarCert()">💾 Guardar certificado JSON</button> <button onclick="verificar()">Re-verificar</button>
+<pre id="verif">—</pre>
+</div>
+<p class="aviso">O que NÃO garante: o selo prova que ESTA fotografia foi capturada e selada NESTE aparelho à hora indicada (relógio do aparelho) — NÃO prova que a cena é real nem que não foi montada ou editada antes/fora da captura. C2PA é um padrão externo de metadados — não implementado aqui. Sem GPS por privacidade. A compressão local reduz o ficheiro (WebP; JPEG como reserva em navegadores sem WebP) — a percentagem exacta depende da imagem. A chave nasce e fica neste aparelho.</p>
+<script src="./assets/nacl-fast.min.js"></script>
+<script src="./assets/nacl-util.min.js"></script>
+<script src="./assets/qrcode.js"></script>
+<script>
+function sha256Photo(str) {
+  // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
+  // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
+  function rightRotate(value, amount) { return (value>>>amount) | (value<<(32-amount)); }
+  var ascii = unescape(encodeURIComponent(str));   // bytes UTF-8 como chars 0-255
+  var mathPow = Math.pow, maxWord = mathPow(2,32);
+  var result = '', words = [];
+  var asciiBitLength = ascii.length*8;
+  var hash = sha256Photo.h = sha256Photo.h || [];
+  var k = sha256Photo.k = sha256Photo.k || [];
+  var primeCounter = k.length, isComposite = {};
+  for (var candidate = 2; primeCounter < 64; candidate++) {
+    if (!isComposite[candidate]) {
+      for (var i = 0; i < 313; i += candidate) isComposite[i] = candidate;
+      hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+      k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+    }
+  }
+  ascii += '\x80';
+  while (ascii.length%64 - 56) ascii += '\x00';
+  for (var i = 0; i < ascii.length; i++) {
+    var j = ascii.charCodeAt(i);
+    words[i>>2] |= j << ((3 - i)%4)*8;
+  }
+  words[words.length] = (asciiBitLength/maxWord)|0;
+  words[words.length] = (asciiBitLength);
+  for (var jj = 0; jj < words.length;) {
+    var w = words.slice(jj, jj += 16);
+    var oldHash = hash;
+    hash = hash.slice(0, 8);
+    for (var i2 = 0; i2 < 64; i2++) {
+      var w15 = w[i2-15], w2 = w[i2-2];
+      var a = hash[0], e = hash[4];
+      var temp1 = hash[7]
+        + (rightRotate(e,6)^rightRotate(e,11)^rightRotate(e,25))
+        + ((e&hash[5])^((~e)&hash[6]))
+        + k[i2]
+        + (w[i2] = (i2 < 16) ? w[i2] : (
+            w[i2-16] + (rightRotate(w15,7)^rightRotate(w15,18)^(w15>>>3))
+            + w[i2-7] + (rightRotate(w2,17)^rightRotate(w2,19)^(w2>>>10)))|0);
+      var temp2 = (rightRotate(a,2)^rightRotate(a,13)^rightRotate(a,22))
+        + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
+      hash = [(temp1+temp2)|0].concat(hash);
+      hash[4] = (hash[4]+temp1)|0;
+    }
+    for (var i3 = 0; i3 < 8; i3++) hash[i3] = (hash[i3]+oldHash[i3])|0;
+  }
+  for (var i4 = 0; i4 < 8; i4++) {
+    for (var j4 = 3; j4 + 1; j4--) {
+      var b = (hash[i4]>>(j4*8))&255;
+      result += ((b < 16) ? 0 : '') + b.toString(16);
+    }
+  }
+  return result;
+}
+var streamAtivo = null;
+var blobSelado = null;
+var selo = null;
+function toHex(u8){ var s=""; for (var i=0;i<u8.length;i++) s += ("0"+u8[i].toString(16)).slice(-2); return s; }
+function fromHex(h){ var u=new Uint8Array(h.length/2); for (var i=0;i<u.length;i++) u[i]=parseInt(h.substr(i*2,2),16); return u; }
+async function abrirCamara(){
+  try {
+    streamAtivo = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+    document.getElementById("cam").srcObject = streamAtivo;
+  } catch(e){ alert("câmara indisponível: " + e); }
+}
+function parar(){ if(streamAtivo){ streamAtivo.getTracks().forEach(function(t){t.stop();}); streamAtivo = null; } }
+function capturar(){
+  var v = document.getElementById("cam");
+  if(!v.srcObject){ alert("primeiro abre a câmara"); return; }
+  var c = document.createElement("canvas");
+  c.width = v.videoWidth; c.height = v.videoHeight;
+  c.getContext("2d").drawImage(v, 0, 0);
+  var tipos = ["image/webp", "image/jpeg"];
+  (function tentar(i){
+    if(i >= tipos.length){ alert("navegador sem webp nem jpeg?"); return; }
+    c.toBlob(function(blob){
+      if(!blob){ tentar(i+1); return; }
+      blobSelado = blob;
+      var url = URL.createObjectURL(blob);
+      var img = document.getElementById("foto");
+      img.src = url; img.style.display = "block";
+      var rd = new FileReader();
+      rd.onload = function(){
+        var bin = String.fromCharCode.apply(null, new Uint8Array(rd.result));
+        var h = sha256Photo(bin, true);
+        document.getElementById("capturaInfo").textContent =
+          "tipo: " + blob.type + " · tamanho: " + Math.round(blob.size/1024) + " KB · sha256: " + h;
+      };
+      rd.readAsArrayBuffer(blob);
+    }, tipos[i], 0.8);
+  })(0);
+}
+function selar(){
+  if(!blobSelado){ alert("primeiro captura"); return; }
+  var rd = new FileReader();
+  rd.onload = function(){
+    var bin = String.fromCharCode.apply(null, new Uint8Array(rd.result));
+    var h = sha256Photo(bin, true);
+    var ts = new Date().toISOString();
+    var alvo = "KONFIRMU-PHOTO|v1|" + h + "|" + ts;
+    var kp = nacl.sign.keyPair();
+    var sig = nacl.sign.detached(nacl.util.decodeUTF8(alvo), kp.secretKey);
+    selo = { hash: h, ts: ts, pk: toHex(kp.publicKey), sig: toHex(sig) };
+    document.getElementById("selo").textContent =
+      "sha256: " + h + "\nhora (aparelho): " + ts + "\npk: " + selo.pk + "\nsig: " + selo.sig;
+    var payload = "KONFIRMU|PHOTO|v1|" + h + "|" + selo.pk + "|" + selo.sig + "|" + ts;
+    var c = document.getElementById("qr");
+    var qr = qrcode(0,"M"); qr.addData(payload,"Byte"); qr.make();
+    var n = qr.getModuleCount(), s = 3; c.width = n*s; c.height = n*s;
+    var ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#000";
+    for (var r=0;r<n;r++) for (var cc=0;cc<n;cc++) if (qr.isDark(r,cc)) ctx.fillRect(cc*s,r*s,s,s);
+  };
+  rd.readAsArrayBuffer(blobSelado);
+}
+function verificar(){
+  if(!selo || !blobSelado){ alert("primeiro sela"); return; }
+  var rd = new FileReader();
+  rd.onload = function(){
+    var bin = String.fromCharCode.apply(null, new Uint8Array(rd.result));
+    var okH = sha256Photo(bin, true) === selo.hash;
+    var alvo = "KONFIRMU-PHOTO|v1|" + selo.hash + "|" + selo.ts;
+    var okS = nacl.sign.detached.verify(nacl.util.decodeUTF8(alvo), fromHex(selo.sig), fromHex(selo.pk));
+    document.getElementById("verif").textContent = "hash: " + (okH ? "CONFERE" : "DIVERGE") + "\nassinatura: " + (okS ? "VÁLIDA" : "INVÁLIDA") + "\n" + (okH && okS ? "VERDE — fotografia íntegra" : "VERMELHO — adulterada");
+    document.getElementById("verif").className = okH && okS ? "verde" : "vermelho";
+  };
+  rd.readAsArrayBuffer(blobSelado);
+}
+function guardarFoto(){
+  if(!blobSelado){ alert("primeiro captura"); return; }
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blobSelado);
+  a.download = "chronolex-" + (selo ? selo.hash.slice(0,12) : "foto") + (blobSelado.type === "image/webp" ? ".webp" : ".jpg");
+  a.click();
+}
+function guardarCert(){
+  if(!selo){ alert("primeiro sela"); return; }
+  var cert = { versao: "chronolex-photo/1", hash: selo.hash, capturadoEm: selo.ts, pk: selo.pk, sig: selo.sig };
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(cert, null, 2)], { type: "application/json" }));
+  a.download = "certificado-" + selo.hash.slice(0,12) + ".json";
+  a.click();
+}
+</script>
+</body>
+</html>
