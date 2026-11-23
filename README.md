@@ -49,6 +49,11 @@ python3 konfirmu_calc.py --demo        # TUDO VERDE 247/247 (prova em PROVA.md)
 python3 konfirmu_calc.py --auditoria   # auditoria do ledger imutavel
 \`\`\`
 
+## Stack tecnologico
+
+As 5 camadas do protocolo, com estado real por peca (PROVADO/PARCIAL/ROADMAP/PENDENTE):
+ver STACK-TECNOLOGICO.md.
+
 ## Nao acredites — verifica
 
 Cada ficheiro tem o seu hash em SHA256SUMS.txt. Re-computa:
