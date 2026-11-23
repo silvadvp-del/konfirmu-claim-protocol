@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konfirmu — Testemunha de Acordo Mútuo (offline)</title>
+<link rel="manifest" href="./manifest.json">
+<style>body{font-family:system-ui,sans-serif;max-width:640px;margin:0 auto;padding:16px;background:#0d1117;color:#e6edf3}
+.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;margin:12px 0}
+input,textarea{width:100%;background:#0d1117;color:#e6edf3;border:1px solid #30363d;padding:6px;margin:4px 0}
+button{background:#238636;color:#fff;border:0;border-radius:6px;padding:8px 14px;margin:4px 2px;cursor:pointer}
+canvas{background:#fff;padding:6px;margin-top:8px}
+pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
+.verde{color:#3fb950}.vermelho{color:#f85149}.aviso{font-size:.75em;color:#8b949e;margin-top:10px}
+</style>
+</head>
+<body>
+<h1>🤝 Testemunha de Acordo Mútuo — offline</h1>
+<p>Duas partes selam o mesmo registo no mesmo ecrã (ou em dois telemóveis via QR), sem internet. Cada assinatura é Ed25519; a verificação é local.</p>
+
+<div class="card">
+<b>1. O registo</b><br>
+<input id="nomeA" placeholder="Parte A (nome)"><br>
+<input id="nomeB" placeholder="Parte B (nome)"><br>
+<textarea id="texto" rows="3" placeholder="O que acordam (texto)"></textarea><br>
+<button onclick="parteA()">A sela → gera chave e assina</button>
+<pre id="saidaA">—</pre>
+<canvas id="qrA" style="display:none"></canvas>
+</div>
+
+<div class="card">
+<b>2. A testemunha (Parte B)</b><br>
+<button onclick="parteB()">B testemunha → assina o mesmo registo</button><br>
+<small>ou lê o QR da Parte A noutro telemóvel:</small><br>
+<button onclick="lerQRA()">ler QR da Parte A (câmara)</button> <video id="cam" playsinline style="display:none;width:100%"></video>
+<pre id="saidaB">—</pre>
+<canvas id="qrB" style="display:none"></canvas>
+</div>
+
+<div class="card">
+<b>3. Recibo final (verificação local)</b>
+<pre id="recibo">—</pre>
+</div>
+
+<p class="aviso">O que NÃO garante: as assinaturas provam que as partes selaram ESTE texto — não que o conteúdo é verdadeiro (SELADO ≠ VERDADEIRO). A DATA não fica ancorada offline: para data pública, o recibo ancora-se depois online (RFC 3161/OTS — declarado, não feito aqui). As chaves nascem e ficam neste aparelho.</p>
+<script src="./assets/nacl-fast.min.js"></script>
+<script src="./assets/nacl-util.min.js"></script>
+<script src="./assets/qrcode.js"></script>
+<script>
+var ctxA = null, ctxB = null; // estado do acordo em curso
+function toHex(u8){ var s=""; for (var i=0;i<u8.length;i++) s += ("0"+u8[i].toString(16)).slice(-2); return s; }
+function fromHex(h){ var u=new Uint8Array(h.length/2); for (var i=0;i<u.length;i++) u[i]=parseInt(h.substr(i*2,2),16); return u; }
+function sha256hex(str){ return sha256(str, false); }
+function assinar(texto){
+  var kp = nacl.sign.keyPair();
+  var msg = nacl.util.decodeUTF8(texto);
+  var sig = nacl.sign.detached(msg, kp.secretKey);
+  return { pk: toHex(kp.publicKey), sig: toHex(sig) };
+}
+function verificar(texto, pkHex, sigHex){
+  return nacl.sign.detached.verify(nacl.util.decodeUTF8(texto), fromHex(sigHex), fromHex(pkHex));
+}
+function mostrarQR(canvas, payload){
+  canvas.style.display="block";
+  var qr = qrcode(0,"M"); qr.addData(payload,"Byte"); qr.make();
+  var n=qr.getModuleCount(), s=3; canvas.width=n*s; canvas.height=n*s;
+  var c=canvas.getContext("2d"); c.fillStyle="#fff"; c.fillRect(0,0,canvas.width,canvas.height); c.fillStyle="#000";
+  for (var r=0;r<n;r++) for (var cc=0;cc<n;cc++) if (qr.isDark(r,cc)) c.fillRect(cc*s,r*s,s,s);
+}
+function canónico(){
+  var t = document.getElementById("texto").value.trim();
+  var a = document.getElementById("nomeA").value.trim();
+  var b = document.getElementById("nomeB").value.trim();
+  if(!t || !a || !b){ alert("preenche nomes e texto"); return null; }
+  return { sha: sha256hex(t), a: a, b: b };
+}
+function parteA(){
+  var c = canónico(); if(!c) return;
+  var alvo = "KONFIRMU-WITNESS|v1|" + c.sha;   // ambos assinam este fio canonico
+  var s = assinar(alvo);
+  ctxA = { alvo: alvo, pk: s.pk, sig: s.sig, sha: c.sha, nomes: c.a + " & " + c.b };
+  document.getElementById("saidaA").textContent = "sha256: " + c.sha + "\npkA: " + s.pk + "\nsigA: " + s.sig;
+  mostrarQR(document.getElementById("qrA"), "KONFIRMU|WIT|PENDING|" + c.sha + "|" + s.pk + "|" + s.sig);
+}
+function parteB(){
+  if(!ctxA){ alert("primeiro a Parte A sela"); return; }
+  var s = assinar(ctxA.alvo);
+  ctxB = { pk: s.pk, sig: s.sig };
+  finalizar();
+}
+function finalizar(){
+  var okA = verificar(ctxA.alvo, ctxA.pk, ctxA.sig);
+  var okB = verificar(ctxA.alvo, ctxB.pk, ctxB.sig);
+  var estado = (okA && okB) ? "VERDE — 2/2 assinaturas válidas" : "VERMELHO — assinatura inválida";
+  var payload = "KONFIRMU|WIT|" + ctxA.sha + "|" + ctxA.pk + "|" + ctxA.sig + "|" + ctxB.pk + "|" + ctxB.sig;
+  document.getElementById("saidaB").textContent = "pkB: " + ctxB.pk + "\nsigB: " + ctxB.sig + "\n" + estado;
+  mostrarQR(document.getElementById("qrB"), payload);
+  document.getElementById("recibo").innerHTML = "RECIBO DE ACORDO MÚTUO (offline)\n" +
+    "partes: " + ctxA.nomes + "\nsha256 do texto: " + ctxA.sha + "\n" +
+    "pkA: " + ctxA.pk + "\nsigA: " + ctxA.sig + "\npkB: " + ctxB.pk + "\nsigB: " + ctxB.sig + "\n" +
+    "verificação local: " + estado + "\n(para data pública: ancorar online — RFC 3161/OTS)";
+}
+var streamAtivo = null;
+async function lerQRA(){
+  if(!("BarcodeDetector" in window)){ alert("BarcodeDetector indisponível (iOS) — cola o payload e usa a verificação manual."); return; }
+  var v = document.getElementById("cam"); v.style.display="block";
+  streamAtivo = await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});
+  v.srcObject = streamAtivo;
+  var det = new BarcodeDetector({formats:["qr_code"]});
+  (async function loop(){
+    if(!streamAtivo) return;
+    try {
+      var codes = await det.detect(v);
+      if(codes.length){
+        var txt = codes[0].rawValue;
+        var m = txt.match(/^KONFIRMU\|WIT\|PENDING\|([0-9a-f]{64})\|([0-9a-f]{64})\|([0-9a-f]{128})$/);
+        if(m){
+          ctxA = { alvo: "KONFIRMU-WITNESS|v1|" + m[1], pk: m[2], sig: m[3], sha: m[1], nomes: "A (QR) & B" };
+          document.getElementById("saidaA").textContent = "lido do QR — sha256: " + m[1];
+          var s = assinar(ctxA.alvo); ctxB = { pk: s.pk, sig: s.sig };
+          finalizar();
+        } else { document.getElementById("saidaB").textContent = "QR não reconhecido: " + txt; }
+        streamAtivo.getTracks().forEach(function(t){t.stop();}); streamAtivo=null; v.style.display="none";
+        return;
+      }
+    } catch(e){}
+    setTimeout(loop, 300);
+  })();
+}
+</script>
+</body>
+</html>
