@@ -19,7 +19,7 @@
 | Ed25519 (RFC 8032) | **PROVADO** | Wycheproof 210/210 · RFC 8032 TEST 1 · 5/5 vectores ×2 rondas (oráculo-pai, 22-11) |
 | FROST (RFC 9591) | **PARCIAL** | ensaio E.1 VERDE (sig 36282629…); o FROST/1 da casa ≠ RFC no fio — declarado no motor (P44 vs P53) |
 | TLS 1.3 | PROVADO (infra) | usado nos servidores; não é código do motor |
-| RFC 3161 (carimbo temporal) | **PENDENTE** | instruções prontas (openssl ts + TSA); acto externo do fundador |
+| RFC 3161 (carimbo temporal) | **PROVADO** | executado 23-11: `openssl ts -query -data konfirmu_calc.py` → Free TSA (freetsa.org), granted 05:13:01 GMT; `openssl ts -verify -CAfile` → **Verification: OK**; recibo em `rfc3161.tsr` (sha256 `df182d72…`) |
 
 ## 3. Camada de Dados e Web (como se lê e corre o código)
 
