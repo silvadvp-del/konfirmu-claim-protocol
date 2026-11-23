@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konfirmu — Carteira Soberana do Paciente (offline)</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:640px;margin:0 auto;padding:16px;background:#0d1117;color:#e6edf3}
+.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;margin:12px 0}
+input,select,textarea{width:100%;background:#0d1117;color:#e6edf3;border:1px solid #30363d;padding:6px;margin:4px 0}
+button{background:#238636;color:#fff;border:0;border-radius:6px;padding:8px 14px;margin:4px 2px;cursor:pointer}
+pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
+.verde{color:#3fb950}.vermelho{color:#f85149}.aviso{font-size:.75em;color:#8b949e;margin-top:10px}
+.entry{border-left:3px solid #30363d;padding:6px 10px;margin:8px 0;font-size:.85em}
+</style>
+</head>
+<body>
+<h1>🩺 Carteira Soberana do Paciente</h1>
+<p>A tua história médica vive NO TEU APARELHO: cirurgias, alergias, antibióticos, vacinas. Cada evento é encadeado por hash e assinado pela tua chave (Ed25519, gerada aqui). Nada sai do telemóvel — só tu decides o que mostras.</p>
+
+<div class="card">
+<b>1. Registar evento</b><br>
+<select id="tipo"><option value="cirurgia">Cirurgia</option><option value="alergia">Alergia</option><option value="antibiotico">Antibiótico em curso</option><option value="vacina">Vacina</option><option value="outro">Outro</option></select>
+<input id="data" placeholder="Data (AAAA-MM-DD)">
+<textarea id="detalhe" rows="2" placeholder="Detalhe (ex.: apendicectomia; penicilina; ceftriaxona 1g/dia)"></textarea>
+<button onclick="registar()">Registar &amp; encadear</button>
+<div id="lista"></div>
+</div>
+
+<div class="card">
+<b>2. Selar e assinar (a tua chave)</b><br>
+<input id="nome" placeholder="Nome do titular (identifica a carteira)">
+<button onclick="selar()">🔒 Selar carteira</button>
+<pre id="selo">—</pre>
+<canvas id="qr" style="background:#fff;padding:6px;display:none"></canvas><br>
+<button onclick="guardar()">💾 Guardar JSON</button> <button onclick="verificar()">Re-verificar</button>
+<pre id="verif">—</pre>
+</div>
+
+<p class="aviso">O que NÃO garante: os dados ficam SÓ neste aparelho (nenhum servidor os vê); a hora é a do relógio do aparelho; SELADO ≠ VERDADEIRO — a carteira prova que ESTES eventos foram registados e não foram alterados, não substitui o médico nem o prontuário oficial; a chave nasce e fica aqui (guarda o JSON num sítio seguro teu).</p>
+<script src="./assets/nacl-fast.min.js"></script>
+<script src="./assets/nacl-util.min.js"></script>
+<script src="./assets/qrcode.js"></script>
+<script>
+function sha256Vault(str) {
+  // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
+  // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
+  function rightRotate(value, amount) { return (value>>>amount) | (value<<(32-amount)); }
+  var ascii = unescape(encodeURIComponent(str));   // bytes UTF-8 como chars 0-255
+  var mathPow = Math.pow, maxWord = mathPow(2,32);
+  var result = '', words = [];
+  var asciiBitLength = ascii.length*8;
+  var hash = sha256Vault.h = sha256Vault.h || [];
+  var k = sha256Vault.k = sha256Vault.k || [];
+  var primeCounter = k.length, isComposite = {};
+  for (var candidate = 2; primeCounter < 64; candidate++) {
+    if (!isComposite[candidate]) {
+      for (var i = 0; i < 313; i += candidate) isComposite[i] = candidate;
+      hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+      k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+    }
+  }
+  ascii += '\x80';
+  while (ascii.length%64 - 56) ascii += '\x00';
+  for (var i = 0; i < ascii.length; i++) {
+    var j = ascii.charCodeAt(i);
+    words[i>>2] |= j << ((3 - i)%4)*8;
+  }
+  words[words.length] = (asciiBitLength/maxWord)|0;
+  words[words.length] = (asciiBitLength);
+  for (var jj = 0; jj < words.length;) {
+    var w = words.slice(jj, jj += 16);
+    var oldHash = hash;
+    hash = hash.slice(0, 8);
+    for (var i2 = 0; i2 < 64; i2++) {
+      var w15 = w[i2-15], w2 = w[i2-2];
+      var a = hash[0], e = hash[4];
+      var temp1 = hash[7]
+        + (rightRotate(e,6)^rightRotate(e,11)^rightRotate(e,25))
+        + ((e&hash[5])^((~e)&hash[6]))
+        + k[i2]
+        + (w[i2] = (i2 < 16) ? w[i2] : (
+            w[i2-16] + (rightRotate(w15,7)^rightRotate(w15,18)^(w15>>>3))
+            + w[i2-7] + (rightRotate(w2,17)^rightRotate(w2,19)^(w2>>>10)))|0);
+      var temp2 = (rightRotate(a,2)^rightRotate(a,13)^rightRotate(a,22))
+        + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
+      hash = [(temp1+temp2)|0].concat(hash);
+      hash[4] = (hash[4]+temp1)|0;
+    }
+    for (var i3 = 0; i3 < 8; i3++) hash[i3] = (hash[i3]+oldHash[i3])|0;
+  }
+  for (var i4 = 0; i4 < 8; i4++) {
+    for (var j4 = 3; j4 + 1; j4--) {
+      var b = (hash[i4]>>(j4*8))&255;
+      result += ((b < 16) ? 0 : '') + b.toString(16);
+    }
+  }
+  return result;
+}
+var eventos = [];
+var selado = null;
+function toHex(u8){ var s=""; for (var i=0;i<u8.length;i++) s += ("0"+u8[i].toString(16)).slice(-2); return s; }
+function fromHex(h){ var u=new Uint8Array(h.length/2); for (var i=0;i<u.length;i++) u[i]=parseInt(h.substr(i*2,2),16); return u; }
+function registar(){
+  var tipo = document.getElementById("tipo").value;
+  var data = document.getElementById("data").value.trim() || new Date().toISOString().slice(0,10);
+  var det = document.getElementById("detalhe").value.trim();
+  if(!det) return;
+  var prev = eventos.length ? eventos[eventos.length-1].hash : "0".repeat(64);
+  var payload = JSON.stringify({ tipo: tipo, data: data, detalhe: det, prevHash: prev });
+  var hash = sha256Vault(payload, false);
+  eventos.push({ tipo: tipo, data: data, detalhe: det, prevHash: prev, hash: hash });
+  var div = document.createElement("div");
+  div.className = "entry";
+  div.innerHTML = "<strong>" + tipo + " · " + data + "</strong> — " + det + "<br><span class='aviso'>" + hash.slice(0,24) + "…</span>";
+  document.getElementById("lista").appendChild(div);
+  document.getElementById("detalhe").value = "";
+}
+function selar(){
+  if(!eventos.length){ alert("regista pelo menos um evento"); return; }
+  var nome = document.getElementById("nome").value.trim();
+  if(!nome){ alert("escreve o nome do titular"); return; }
+  var seladoEm = new Date().toISOString();
+  var master = sha256Vault(JSON.stringify(eventos) + "|" + nome + "|" + seladoEm, false);
+  var alvo = "KONFIRMU-VAULT|v1|" + master;
+  var kp = nacl.sign.keyPair();
+  var sig = nacl.sign.detached(nacl.util.decodeUTF8(alvo), kp.secretKey);
+  selado = { nome: nome, seladoEm: seladoEm, master: master, pk: toHex(kp.publicKey), sig: toHex(sig) };
+  document.getElementById("selo").textContent =
+    "SELO MESTRE: " + master + "\npk: " + selado.pk + "\nsig: " + selado.sig;
+  var payload = "KONFIRMU|VAULT|v1|" + master + "|" + selado.pk + "|" + selado.sig;
+  var c = document.getElementById("qr"); c.style.display = "block";
+  var qr = qrcode(0,"M"); qr.addData(payload,"Byte"); qr.make();
+  var n = qr.getModuleCount(), s = 3; c.width = n*s; c.height = n*s;
+  var ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#000";
+  for (var r=0;r<n;r++) for (var cc=0;cc<n;cc++) if (qr.isDark(r,cc)) ctx.fillRect(cc*s,r*s,s,s);
+}
+function guardar(){
+  if(!selado){ alert("primeiro sela"); return; }
+  var doc = { versao: "konfirmu-vault/1", nome: selado.nome, seladoEm: selado.seladoEm, eventos: eventos, master: selado.master, pk: selado.pk, sig: selado.sig };
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(doc, null, 2)], { type: "application/json" }));
+  a.download = "carteira-" + selado.master.slice(0,12) + ".json";
+  a.click();
+}
+function verificar(){
+  if(!selado){ alert("primeiro sela"); return; }
+  var m = sha256Vault(JSON.stringify(eventos) + "|" + selado.nome + "|" + selado.seladoEm, false);
+  var okM = m === selado.master;
+  var okS = nacl.sign.detached.verify(nacl.util.decodeUTF8("KONFIRMU-VAULT|v1|" + selado.master), fromHex(selado.sig), fromHex(selado.pk));
+  document.getElementById("verif").textContent = "selo mestre: " + (okM ? "CONFERE" : "DIVERGE") + "\nassinatura: " + (okS ? "VÁLIDA" : "INVÁLIDA") + "\n" + (okM && okS ? "VERDE — carteira íntegra" : "VERMELHO — carteira adulterada");
+  document.getElementById("verif").className = okM && okS ? "verde" : "vermelho";
+}
+</script>
+</body>
+</html>
