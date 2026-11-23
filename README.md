@@ -66,6 +66,13 @@ openssl ts -verify -in anchors/konfirmu_calc.tsr -data konfirmu_calc.py \\
 # esperado: Verification: OK
 \`\`\`
 
+## Verificador offline (PWA)
+
+\`verificador_offline.html\` — calcula SHA-256 NO APARELHO (sem rede, sem servidor), compara
+com os hash selados acima e mostra as provas de data (Bitcoin + RFC 3161 + BOIP). Com
+\`sw.js\` + \`manifest.json\`, instala-se no ecra principal do telemovel e funciona offline.
+Prova: 3/3 vectores NIST + sha256 do motor real CONFERE (verificado 23-11).
+
 ## Nao acredites — verifica
 
 Cada ficheiro tem o seu hash em SHA256SUMS.txt. Re-computa:

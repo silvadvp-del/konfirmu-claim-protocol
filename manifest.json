@@ -1,0 +1,9 @@
+{
+  "name": "Konfirmu Claim Protocol — Verificador Offline",
+  "short_name": "Konfirmu Verificador",
+  "start_url": "./verificador_offline.html",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#0d1117",
+  "lang": "pt"
+}
