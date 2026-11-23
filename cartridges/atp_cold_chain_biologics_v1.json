@@ -1,0 +1,35 @@
+{
+  "cartridge_id": "ATP_COLD_CHAIN_BIOLOGICS_V1",
+  "version": "1.0.0",
+  "standard_ref": "WHO PQS / ATP Cold Chain Transport (2.0 to 8.0 C)",
+  "reason_code_veto": "VETO_COLD_CHAIN_BREACH_2_8C",
+  "inputs": [
+    "temp_c"
+  ],
+  "formula": "temp_c",
+  "limits": {
+    "min_allowed": 2,
+    "max_allowed": 8
+  },
+  "test_vectors": [
+    {
+      "env": {
+        "temp_c": [
+          4.6,
+          0.2
+        ]
+      },
+      "expected_verdict": "OK"
+    },
+    {
+      "env": {
+        "temp_c": [
+          9.4,
+          0.2
+        ]
+      },
+      "expected_verdict": "VETO"
+    }
+  ],
+  "o_que_nao_garante": "2-8 C = regra M3 da casa (OMS PQS); excursoes por tempo (TTSPP) nao avaliadas aqui"
+}

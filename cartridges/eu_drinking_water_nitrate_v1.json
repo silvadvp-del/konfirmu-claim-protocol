@@ -1,0 +1,35 @@
+{
+  "cartridge_id": "EU_DRINKING_WATER_NITRATE_V1",
+  "version": "1.0.0",
+  "standard_ref": "EU Drinking Water Directive (EU) 2020/2184",
+  "reason_code_veto": "VETO_WATER_NITRATE_EXCEEDS_50MGL",
+  "inputs": [
+    "nitrato_mgl"
+  ],
+  "formula": "nitrato_mgl",
+  "limits": {
+    "min_allowed": 0,
+    "max_allowed": 50
+  },
+  "test_vectors": [
+    {
+      "env": {
+        "nitrato_mgl": [
+          14.2,
+          1
+        ]
+      },
+      "expected_verdict": "OK"
+    },
+    {
+      "env": {
+        "nitrato_mgl": [
+          51,
+          1.5
+        ]
+      },
+      "expected_verdict": "VETO"
+    }
+  ],
+  "o_que_nao_garante": "50 mg/L = parametro quimico da Diretiva (UE) 2020/2184; analise laboratorial = outra maquina"
+}

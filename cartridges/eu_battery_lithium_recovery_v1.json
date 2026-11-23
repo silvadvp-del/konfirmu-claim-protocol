@@ -1,0 +1,44 @@
+{
+  "cartridge_id": "EU_BATTERY_LITHIUM_RECOVERY_V1",
+  "version": "1.0.0",
+  "standard_ref": "EU Battery Regulation (EU) 2023/1542 (80% Li Recovery Target)",
+  "reason_code_veto": "VETO_BATTERY_LI_RECOVERY_BELOW_80PCT",
+  "inputs": [
+    "li_recuperado_kg",
+    "li_entrada_kg"
+  ],
+  "formula": "li_recuperado_kg / li_entrada_kg",
+  "limits": {
+    "min_allowed": 0.8,
+    "max_allowed": 1
+  },
+  "test_vectors": [
+    {
+      "env": {
+        "li_recuperado_kg": [
+          86,
+          0.5
+        ],
+        "li_entrada_kg": [
+          100,
+          0.5
+        ]
+      },
+      "expected_verdict": "OK"
+    },
+    {
+      "env": {
+        "li_recuperado_kg": [
+          74,
+          0.5
+        ],
+        "li_entrada_kg": [
+          100,
+          0.5
+        ]
+      },
+      "expected_verdict": "VETO"
+    }
+  ],
+  "o_que_nao_garante": "80% Li = meta de 2031 do Reg. (UE) 2023/1542 [VALIDAR data exacta]; balanco de massa = assumido medido"
+}

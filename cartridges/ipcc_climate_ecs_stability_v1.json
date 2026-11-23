@@ -1,0 +1,53 @@
+{
+  "cartridge_id": "IPCC_CLIMATE_ECS_STABILITY_V1",
+  "version": "1.0.0",
+  "standard_ref": "IPCC AR6 / WMO GCOS Equilibrium Climate Sensitivity Guard",
+  "reason_code_veto": "VETO_CLIMATE_ECS_CRITICAL_THRESHOLD",
+  "inputs": [
+    "forcing_2xco2_wm2",
+    "lambda_planck",
+    "lambda_clouds"
+  ],
+  "formula": "-forcing_2xco2_wm2 / (lambda_planck + lambda_clouds)",
+  "limits": {
+    "min_allowed": 1.5,
+    "max_allowed": 4.5
+  },
+  "test_vectors": [
+    {
+      "env": {
+        "forcing_2xco2_wm2": [
+          3.93,
+          0.1
+        ],
+        "lambda_planck": [
+          -3.22,
+          0.05
+        ],
+        "lambda_clouds": [
+          1.85,
+          0.1
+        ]
+      },
+      "expected_verdict": "OK"
+    },
+    {
+      "env": {
+        "forcing_2xco2_wm2": [
+          3.93,
+          0.1
+        ],
+        "lambda_planck": [
+          -3.22,
+          0.05
+        ],
+        "lambda_clouds": [
+          2.45,
+          0.15
+        ]
+      },
+      "expected_verdict": "VETO"
+    }
+  ],
+  "o_que_nao_garante": "CENARIO pedagogico (formula de feedback simplificada); intervalo 1,5-4,5 C = IPCC AR6; nao e modelo climatico"
+}

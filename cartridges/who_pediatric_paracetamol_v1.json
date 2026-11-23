@@ -1,0 +1,44 @@
+{
+  "cartridge_id": "WHO_PEDIATRIC_PARACETAMOL_V1",
+  "version": "1.0.0",
+  "standard_ref": "WHO Model Formulary for Children (Max 15 mg/kg/dose)",
+  "reason_code_veto": "VETO_PEDIATRIC_OVERDOSE_15MGKG",
+  "inputs": [
+    "dose_mg",
+    "peso_kg"
+  ],
+  "formula": "dose_mg / peso_kg",
+  "limits": {
+    "min_allowed": 5,
+    "max_allowed": 15
+  },
+  "test_vectors": [
+    {
+      "env": {
+        "dose_mg": [
+          180,
+          0.5
+        ],
+        "peso_kg": [
+          12.4,
+          0.1
+        ]
+      },
+      "expected_verdict": "OK"
+    },
+    {
+      "env": {
+        "dose_mg": [
+          350,
+          0.5
+        ],
+        "peso_kg": [
+          12.4,
+          0.1
+        ]
+      },
+      "expected_verdict": "VETO"
+    }
+  ],
+  "o_que_nao_garante": "teto 15 mg/kg = fonte da casa (farmacopeia, P39); minimo 5 mg/kg = ASSUMIDO [VALIDAR]; nao diagnostica nem prescreve"
+}

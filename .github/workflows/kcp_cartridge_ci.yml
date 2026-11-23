@@ -1,0 +1,25 @@
+name: KCP Deterministic Cartridge & Core Audit
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+permissions:
+  contents: read
+jobs:
+  audit-core-and-cartridges:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"   # runtime provado da casa (247/247 nesta versao)
+      - name: Motor — demo determinista (prova)
+        run: |
+          python3 -I konfirmu_calc.py --demo
+      - name: kcp_lint — selftest (whitelist AST, sem eval)
+        run: |
+          python3 -I kcp_lint.py --selftest
+      - name: Auditar todos os cartuchos
+        run: |
+          python3 -I kcp_lint.py
