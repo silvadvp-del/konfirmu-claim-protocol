@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KONFIRMU — Ligação Local WebRTC (sem nuvem, mesma rede)</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:680px;margin:0 auto;padding:16px;background:#0d1117;color:#e6edf3}
+.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;margin:12px 0}
+button{background:#238636;color:#fff;border:0;border-radius:6px;padding:8px 14px;margin:4px 2px;cursor:pointer}
+textarea{width:100%;background:#0d1117;color:#e6edf3;border:1px solid #30363d;padding:6px;font-size:.75em}
+pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
+.verde{color:#3fb950}.vermelho{color:#f85149}.aviso{font-size:.75em;color:#8b949e;margin-top:10px}
+</style>
+</head>
+<body>
+<h1>📡 Ligação Local WebRTC — Konfirmu</h1>
+<p>Dois aparelhos na MESMA rede Wi-Fi (router local, internet pode estar desligada): um cria a oferta, o outro cola e responde; a mensagem assinada (Ed25519) viaja pelo túnel direto e ambos verificam.</p>
+
+<div class="card">
+<b>Aparelho A — anfitrião</b><br>
+<button onclick="criarOferta()">1. Criar oferta</button>
+<textarea id="oferta" rows="4" placeholder="a oferta aparece aqui — copia-a"></textarea>
+</div>
+
+<div class="card">
+<b>Aparelho B — convidado</b><br>
+<textarea id="ofertaB" rows="4" placeholder="cola aqui a oferta do aparelho A"></textarea>
+<button onclick="responder()">2. Criar resposta</button>
+<textarea id="resposta" rows="4" placeholder="a resposta aparece aqui — copia-a de volta"></textarea>
+</div>
+
+<div class="card">
+<b>Aparelho A — fechar o túnel</b><br>
+<textarea id="respostaA" rows="4" placeholder="cola aqui a resposta do aparelho B"></textarea>
+<button onclick="ligar()">3. Ligar</button>
+<input id="msg" placeholder="mensagem a enviar (ex.: ALERTA DE TESTE)">
+<button onclick="enviar()">4. Enviar mensagem ASSINADA</button>
+<pre id="estado">—</pre>
+<pre id="recetor">—</pre>
+</div>
+
+<p class="aviso">O que NÃO garante: ligação APENAS na mesma rede local (sem STUN/TURN — declarado); o SDP viaja por copiar/colar (um SDP completo não cabe num QR — o QR fica para a mensagem curta assinada); a página foi verificada em sintaxe e lógica, mas o túnel REAL precisa de dois aparelhos com browser (dono: fundador + 1 pessoa real); a hora é a do aparelho.</p>
+<script src="./assets/nacl-fast.min.js"></script>
+<script src="./assets/nacl-util.min.js"></script>
+<script>
+var pc = null, canal = null;
+var kp = nacl.sign.keyPair();
+var kpRec = null;
+function toHex(u8){ var s=""; for (var i=0;i<u8.length;i++) s += ("0"+u8[i].toString(16)).slice(-2); return s; }
+function fromHex(h){ var u=new Uint8Array(h.length/2); for (var i=0;i<u.length;i++) u[i]=parseInt(h.substr(i*2,2),16); return u; }
+function novoPc(){
+  pc = new RTCPeerConnection({ iceServers: [] });          // SEM STUN/TURN: só rede local
+  canal = pc.createDataChannel("konfirmu");
+  canal.onmessage = function(ev){ receber(ev.data); };
+  pc.oniceconnectionstatechange = function(){
+    var s = pc.iceConnectionState;
+    document.getElementById("estado").textContent = "estado do túnel: " + s;
+  };
+}
+function criarOferta(){
+  novoPc();
+  pc.createOffer().then(function(o){ return pc.setLocalDescription(o); }).then(function(){
+    pc.onicecandidate = function(ev){
+      if(ev.candidate) return;                              // espera o fim dos candidatos (trickle desligado na prática)
+      document.getElementById("oferta").value = JSON.stringify(pc.localDescription);
+      document.getElementById("estado").textContent = "oferta pronta — copia-a para o aparelho B";
+    };
+    // dispara o ultimo evento artificialmente se já não houver candidatos pendentes
+    setTimeout(function(){ if(pc.iceGatheringState === "complete") pc.onicecandidate({candidate:null}); }, 800);
+  });
+}
+function responder(){
+  novoPc();
+  var oferta = JSON.parse(document.getElementById("ofertaB").value);
+  pc.setRemoteDescription(oferta).then(function(){ return pc.createAnswer(); })
+    .then(function(a){ return pc.setLocalDescription(a); }).then(function(){
+    setTimeout(function(){ if(pc.iceGatheringState === "complete"){
+      document.getElementById("resposta").value = JSON.stringify(pc.localDescription);
+      document.getElementById("estado").textContent = "resposta pronta — copia-a de volta para o aparelho A";
+    }}, 800);
+  });
+  pc.ondatachannel = function(ev){
+    canal = ev.channel;
+    canal.onmessage = function(e){ receber(e.data); };
+  };
+}
+function ligar(){
+  var resp = JSON.parse(document.getElementById("respostaA").value);
+  pc.setRemoteDescription(resp);
+}
+function enviar(){
+  if(!canal || canal.readyState !== "open"){ alert("túnel ainda não aberto (estado: " + (canal ? canal.readyState : "—") + ")"); return; }
+  var m = document.getElementById("msg").value || "ALERTA DE TESTE";
+  var sig = nacl.sign.detached(nacl.util.decodeUTF8(m), kp.secretKey);
+  var pacote = JSON.stringify({ msg: m, pk: toHex(kp.publicKey), sig: toHex(sig) });
+  canal.send(pacote);
+  document.getElementById("estado").textContent = "enviado e assinado: " + m;
+}
+function receber(dados){
+  var p = JSON.parse(dados);
+  var ok = nacl.sign.detached.verify(nacl.util.decodeUTF8(p.msg), fromHex(p.sig), fromHex(p.pk));
+  document.getElementById("recetor").textContent =
+    "mensagem recebida: «" + p.msg + "» — assinatura " + (ok ? "VÁLIDA (Ed25519)" : "INVÁLIDA");
+  document.getElementById("recetor").className = ok ? "verde" : "vermelho";
+}
+</script>
+</body>
+</html>
