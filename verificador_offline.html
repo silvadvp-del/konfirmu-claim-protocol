@@ -6,6 +6,7 @@
 <title>Konfirmu Claim Protocol — Verificador Offline</title>
 <meta name="description" content="Verifica offline os hash publicados do Konfirmu Claim Protocol — sem servidor, sem rede.">
 <link rel="manifest" href="./manifest.json">
+<script src="./assets/qrcode.js"></script>
 <style>
 body{font-family:system-ui,-apple-system,sans-serif;max-width:640px;margin:0 auto;padding:16px;background:#0d1117;color:#e6edf3}
 h1{font-size:1.2em} .card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;margin:12px 0}
@@ -38,8 +39,22 @@ table{font-size:.8em;border-collapse:collapse;width:100%} td,th{border:1px solid
 </table>
 </div>
 
+
 <div class="card">
-<b>3. Prova de data (sem confiar em nós):</b>
+<b>3. QR da prova (offline)</b><br>
+<button onclick="gerarQR()">Gerar QR do último hash</button> <button onclick="pararCamara()">parar câmara</button><br>
+<canvas id="qr" style="background:#fff;padding:6px;margin-top:8px"></canvas><br>
+<small id="qrpayload" style="word-break:break-all"></small>
+</div>
+
+<div class="card">
+<b>4. Ler QR (câmara — leitor nativo BarcodeDetector)</b><br>
+<button onclick="lerQR()">abrir câmara e ler</button> <video id="cam" playsinline style="width:100%;margin-top:8px;display:none"></video>
+<pre id="qrout">—</pre>
+<small class="aviso">BarcodeDetector existe no Chrome/Android. iOS Safari não o tem — aí: cola o conteúdo do QR na caixa de texto e usa «Calcular» (o formato KONFIRMU|v1|&lt;sha256&gt; é verificado à mesma).</small>
+</div>
+<div class="card">
+<b>5. Prova de data (sem confiar em nós):</b>
 <ul>
 <li>Bitcoin · bloco <b>976735</b> atesta GENESIS_STAMP (OpenTimestamps)</li>
 <li>Bitcoin · bloco <b>976760</b> atesta MANIFESTO_HASHES</li>
@@ -126,6 +141,69 @@ function calc(){
   else{out.textContent="escolhe um ficheiro ou cola texto";}
 }
 if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(function(){});}
+
+var ultimoHash = "";
+function concluir(h){ ultimoHash = h; /* reusa o finish original? — definido no calc() */ }
+
+function gerarQR(){
+  var h = ultimoHash || document.getElementById("out").textContent.trim();
+  if(!h || !/^[0-9a-f]{64}$/.test(h)){ alert("calcula primeiro um SHA-256 válido (botão 1)"); return; }
+  var payload = "KONFIRMU|v1|" + h + "|" + new Date().toISOString().slice(0,10);
+  try {
+    var qr = qrcode(0, "M");
+    qr.addData(payload, "Byte");
+    qr.make();
+    var n = qr.getModuleCount(), s = 4;
+    var c = document.getElementById("qr");
+    c.width = n * s; c.height = n * s;
+    var ctx = c.getContext("2d");
+    ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, c.width, c.height);
+    ctx.fillStyle = "#000";
+    for (var r = 0; r < n; r++) for (var cc = 0; cc < n; cc++)
+      if (qr.isDark(r, cc)) ctx.fillRect(cc * s, r * s, s, s);
+    document.getElementById("qrpayload").textContent = payload;
+  } catch(e){ alert("erro a gerar QR: " + e); }
+}
+
+var streamAtivo = null;
+function pararCamara(){ if(streamAtivo){ streamAtivo.getTracks().forEach(function(t){t.stop();}); streamAtivo = null; } var v=document.getElementById("cam"); v.style.display="none"; }
+
+async function lerQR(){
+  if(!("BarcodeDetector" in window)){ document.getElementById("qrout").textContent = "BarcodeDetector indisponível neste navegador (ex.: iOS) — cola o conteúdo do QR na caixa de texto do passo 1."; return; }
+  var v = document.getElementById("cam");
+  v.style.display = "block";
+  streamAtivo = await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});
+  v.srcObject = streamAtivo;
+  var det = new BarcodeDetector({formats:["qr_code"]});
+  (async function loop(){
+    if(!streamAtivo) return;
+    try{
+      var codes = await det.detect(v);
+      if(codes.length){
+        var txt = codes[0].rawValue;
+        document.getElementById("qrout").textContent = txt;
+        var m = txt.match(/^KONFIRMU\|v1\|([0-9a-f]{64})\|/);
+        if(m){ verificarHashLido(m[1]); }
+        pararCamara();
+        return;
+      }
+    }catch(e){}
+    setTimeout(loop, 300);
+  })();
+}
+
+function verificarHashLido(h){
+  var rows = {
+    "529098c652ee8234960d69383e308f60db6a5df8ea6bdae578b538eb806e80cf": "r1",
+    "3cfe80002b756a40b81ceeae1ff5bec58d55bc49b80303f94cb16164ac036277": "r2",
+    "01721dfa169c8cd8c3ae45f5f6cf454b16efcee963812552b8dbf3e005f80f37": "r3",
+    "df182d72860c5519be378a49c2ff7f76c37b0c36814b6802346e4b5f7d277dce": "r4"
+  };
+  var el = rows[h] ? document.getElementById(rows[h]) : null;
+  if(el){ el.textContent = "✓ CONFERE"; el.className = "verde"; }
+  else { document.getElementById("qrout").textContent += "\n(atenção: hash lido não está na lista publicada — verifica a fonte do QR)"; }
+}
+
 </script>
 </body>
 </html>
