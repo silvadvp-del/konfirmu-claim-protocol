@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konfirmu · Chronolex — Ata pericial offline</title>
+<style>body{font-family:system-ui,sans-serif;max-width:640px;margin:0 auto;padding:16px;background:#0d1117;color:#e6edf3}
+.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;margin:12px 0}
+input,textarea{width:100%;background:#0d1117;color:#e6edf3;border:1px solid #30363d;padding:6px;margin:4px 0}
+button{background:#238636;color:#fff;border:0;border-radius:6px;padding:8px 14px;margin:4px 2px;cursor:pointer}
+canvas{background:#fff;padding:6px;margin-top:8px}
+pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
+.verde{color:#3fb950}.vermelho{color:#f85149}.aviso{font-size:.75em;color:#8b949e;margin-top:10px}
+</style>
+</head>
+<body>
+<h1>📜 Ata pericial offline — Konfirmu · Chronolex</h1>
+<p>O perito sela a ata no local, sem rede: conteúdo → sha256 → assinatura Ed25519 → QR. A verificação é local.</p>
+<div class="card">
+<b>1. Os dados da ata</b><br>
+<input id="caso" placeholder="N.º do caso"><br>
+<input id="local" placeholder="Local (ex.: via pública, obra, navio)"><br>
+<input id="perito" placeholder="Perito (nome)"><br>
+<textarea id="relato" rows="4" placeholder="Relato dos factos observados"></textarea><br>
+<button onclick="selar()">Selar ata</button>
+<pre id="out">—</pre>
+<canvas id="qr" style="display:none"></canvas>
+</div>
+<div class="card">
+<b>2. Verificar (local)</b><br>
+<button onclick="verificar()">Re-verificar assinatura e hash</button>
+<pre id="verif">—</pre>
+</div>
+<p class="aviso">O que NÃO garante: a hora é a do RELÓGIO DO APARELHO — não é data juridicamente ancorada. Valor probatório eIDAS exige carimbo QUALIFICADO (lista de confiança UE) — a ancoragem faz-se depois, online (RFC 3161/OTS), como no rfc3161.tsr do motor. SELADO ≠ VERDADEIRO: a assinatura prova que o perito selou ESTE texto, não que os factos são verdadeiros. A chave nasce e fica neste aparelho.</p>
+<script src="./assets/nacl-fast.min.js"></script>
+<script src="./assets/nacl-util.min.js"></script>
+<script src="./assets/qrcode.js"></script>
+<script>
+function sha256Atas(str) {
+  // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
+  // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
+  function rightRotate(value, amount) { return (value>>>amount) | (value<<(32-amount)); }
+  var ascii = unescape(encodeURIComponent(str));   // bytes UTF-8 como chars 0-255
+  var mathPow = Math.pow, maxWord = mathPow(2,32);
+  var result = '', words = [];
+  var asciiBitLength = ascii.length*8;
+  var hash = sha256Atas.h = sha256Atas.h || [];
+  var k = sha256Atas.k = sha256Atas.k || [];
+  var primeCounter = k.length, isComposite = {};
+  for (var candidate = 2; primeCounter < 64; candidate++) {
+    if (!isComposite[candidate]) {
+      for (var i = 0; i < 313; i += candidate) isComposite[i] = candidate;
+      hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+      k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+    }
+  }
+  ascii += '\x80';
+  while (ascii.length%64 - 56) ascii += '\x00';
+  for (var i = 0; i < ascii.length; i++) {
+    var j = ascii.charCodeAt(i);
+    words[i>>2] |= j << ((3 - i)%4)*8;
+  }
+  words[words.length] = (asciiBitLength/maxWord)|0;
+  words[words.length] = (asciiBitLength);
+  for (var jj = 0; jj < words.length;) {
+    var w = words.slice(jj, jj += 16);
+    var oldHash = hash;
+    hash = hash.slice(0, 8);
+    for (var i2 = 0; i2 < 64; i2++) {
+      var w15 = w[i2-15], w2 = w[i2-2];
+      var a = hash[0], e = hash[4];
+      var temp1 = hash[7]
+        + (rightRotate(e,6)^rightRotate(e,11)^rightRotate(e,25))
+        + ((e&hash[5])^((~e)&hash[6]))
+        + k[i2]
+        + (w[i2] = (i2 < 16) ? w[i2] : (
+            w[i2-16] + (rightRotate(w15,7)^rightRotate(w15,18)^(w15>>>3))
+            + w[i2-7] + (rightRotate(w2,17)^rightRotate(w2,19)^(w2>>>10)))|0);
+      var temp2 = (rightRotate(a,2)^rightRotate(a,13)^rightRotate(a,22))
+        + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
+      hash = [(temp1+temp2)|0].concat(hash);
+      hash[4] = (hash[4]+temp1)|0;
+    }
+    for (var i3 = 0; i3 < 8; i3++) hash[i3] = (hash[i3]+oldHash[i3])|0;
+  }
+  for (var i4 = 0; i4 < 8; i4++) {
+    for (var j4 = 3; j4 + 1; j4--) {
+      var b = (hash[i4]>>(j4*8))&255;
+      result += ((b < 16) ? 0 : '') + b.toString(16);
+    }
+  }
+  return result;
+}
+var ata = null;
+function toHex(u8){ var s=""; for (var i=0;i<u8.length;i++) s += ("0"+u8[i].toString(16)).slice(-2); return s; }
+function fromHex(h){ var u=new Uint8Array(h.length/2); for (var i=0;i<u.length;i++) u[i]=parseInt(h.substr(i*2,2),16); return u; }
+function selar(){
+  var caso = document.getElementById("caso").value.trim();
+  var local = document.getElementById("local").value.trim();
+  var perito = document.getElementById("perito").value.trim();
+  var relato = document.getElementById("relato").value.trim();
+  if(!caso || !local || !perito || !relato){ alert("preenche todos os campos"); return; }
+  var ts = new Date().toISOString();
+  var conteudo = caso + "|" + local + "|" + perito + "|" + relato + "|" + ts;
+  var kp = nacl.sign.keyPair();
+  var sig = nacl.sign.detached(nacl.util.decodeUTF8(conteudo), kp.secretKey);
+  // sha256 embutido (o da casa, provado 3/3 NIST)
+  var digest = sha256Atas(conteudo, false);
+  ata = { conteudo: conteudo, pk: toHex(kp.publicKey), sig: toHex(sig), digest: digest, ts: ts };
+  document.getElementById("out").textContent =
+    "hora (aparelho): " + ts + "\nsha256: " + digest + "\npk: " + ata.pk + "\nsig: " + ata.sig;
+  var payload = "KONFIRMU|ATA|v1|" + digest + "|" + ata.pk + "|" + ata.sig + "|" + ts;
+  var c = document.getElementById("qr"); c.style.display = "block";
+  var qr = qrcode(0, "M"); qr.addData(payload, "Byte"); qr.make();
+  var n = qr.getModuleCount(), s = 3; c.width = n*s; c.height = n*s;
+  var ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#000";
+  for (var r=0;r<n;r++) for (var cc=0;cc<n;cc++) if (qr.isDark(r,cc)) ctx.fillRect(cc*s,r*s,s,s);
+}
+function verificar(){
+  if(!ata){ alert("primeiro sela a ata"); return; }
+  var okSig = nacl.sign.detached.verify(nacl.util.decodeUTF8(ata.conteudo), fromHex(ata.sig), fromHex(ata.pk));
+  var okHash = sha256Atas(ata.conteudo, false) === ata.digest;
+  document.getElementById("verif").textContent =
+    "assinatura: " + (okSig ? "VÁLIDA" : "INVÁLIDA") + "\nhash: " + (okHash ? "CONFERE" : "DIVERGE") + "\n" + (okSig && okHash ? "VERDE — ata íntegra" : "VERMELHO — ata adulterada");
+  document.getElementById("verif").className = (okSig && okHash) ? "verde" : "vermelho";
+}
+</script>
+</body>
+</html>
