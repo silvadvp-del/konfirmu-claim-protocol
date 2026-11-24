@@ -1,0 +1,57 @@
+{
+  "cartridge_id": "EU_BUILDING_RETROFIT_ENERGY_V1",
+  "version": "1.0.0",
+  "standard_ref": "balanço energético renovável (P14 da casa) + meta de reabilitação profunda UE [VALIDAR]",
+  "reason_code_veto": "VETO_RETROFIT_CONSUMO_ACIMA_DO_TETO",
+  "inputs": [
+    "limite_kwh_m2_ano",
+    "kwh_m2_ano"
+  ],
+  "formula": "limite_kwh_m2_ano - kwh_m2_ano",
+  "limits": {
+    "min_allowed": 0,
+    "max_allowed": 1000000
+  },
+  "test_vectors": [
+    {
+      "env": {
+        "limite_kwh_m2_ano": [
+          50,
+          0
+        ],
+        "kwh_m2_ano": [
+          38,
+          2
+        ]
+      },
+      "expected_verdict": "OK"
+    },
+    {
+      "env": {
+        "limite_kwh_m2_ano": [
+          50,
+          0
+        ],
+        "kwh_m2_ano": [
+          72,
+          3
+        ]
+      },
+      "expected_verdict": "VETO"
+    },
+    {
+      "env": {
+        "limite_kwh_m2_ano": [
+          50,
+          0
+        ],
+        "kwh_m2_ano": [
+          55,
+          2
+        ]
+      },
+      "expected_verdict": "VETO"
+    }
+  ],
+  "o_que_nao_garante": "o teto de 50 kWh/m²/ano é meta de reabilitação profunda típica da UE [VALIDAR contra a EPBD/regulamento local — Rotterdam/Amesterdão têm valores próprios]; o consumo entra MEDIDO por contador verificado (não estimado); renováveis no balanço exigem prova de produção local selada (medidores) — este cartucho audita o número, não a instalação; SEMÂNTICA DO LINT (declarada e agora verificada): o veto dispara quando o INTERVALO completo (valor ± incerteza) sai dos limites — um valor que toca o limite com incerteza larga passa (OK) e a margem de segurança é responsabilidade do desenhador do limite"
+}

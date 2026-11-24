@@ -1,0 +1,44 @@
+{
+  "cartridge_id": "EU_BUILDING_RETROFIT_AIR_V1",
+  "version": "1.0.0",
+  "standard_ref": "qualidade do ar interior — CO2 ≤ 1000 ppm (EN 16798, categoria II) [VALIDAR]",
+  "reason_code_veto": "VETO_RETROFIT_AR_INTERIOR",
+  "inputs": [
+    "co2_max_ppm",
+    "co2_ppm"
+  ],
+  "formula": "co2_max_ppm - co2_ppm",
+  "limits": {
+    "min_allowed": 0,
+    "max_allowed": 1000000
+  },
+  "test_vectors": [
+    {
+      "env": {
+        "co2_max_ppm": [
+          1000,
+          0
+        ],
+        "co2_ppm": [
+          780,
+          40
+        ]
+      },
+      "expected_verdict": "OK"
+    },
+    {
+      "env": {
+        "co2_max_ppm": [
+          1000,
+          0
+        ],
+        "co2_ppm": [
+          1200,
+          40
+        ]
+      },
+      "expected_verdict": "VETO"
+    }
+  ],
+  "o_que_nao_garante": "CO2 é proxy de ventilação, não de toxicidade; o limite de 1000 ppm é a categoria II da EN 16798 [VALIDAR]; a medição exige sensor calibrado colocado no ponto de ocupação; humidade relativa (30-60%) fica para um cartucho próprio se o fundador o pedir"
+}

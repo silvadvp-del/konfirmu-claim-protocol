@@ -1,0 +1,44 @@
+{
+  "cartridge_id": "EU_BUILDING_RETROFIT_SHELL_V1",
+  "version": "1.0.0",
+  "standard_ref": "isolamento da envolvente — U ≤ 0,28 W/m²K típico de reabilitação residencial NL [VALIDAR]",
+  "reason_code_veto": "VETO_RETROFIT_ISOLAMENTO_INSUFICIENTE",
+  "inputs": [
+    "u_max_w_m2k",
+    "u_isolamento_w_m2k"
+  ],
+  "formula": "u_max_w_m2k - u_isolamento_w_m2k",
+  "limits": {
+    "min_allowed": 0,
+    "max_allowed": 100
+  },
+  "test_vectors": [
+    {
+      "env": {
+        "u_max_w_m2k": [
+          0.28,
+          0
+        ],
+        "u_isolamento_w_m2k": [
+          0.22,
+          0.01
+        ]
+      },
+      "expected_verdict": "OK"
+    },
+    {
+      "env": {
+        "u_max_w_m2k": [
+          0.28,
+          0
+        ],
+        "u_isolamento_w_m2k": [
+          0.45,
+          0.02
+        ]
+      },
+      "expected_verdict": "VETO"
+    }
+  ],
+  "o_que_nao_garante": "o valor 0,28 W/m²K é referência de reabilitação NL [VALIDAR contra o regulamento local — cada câmara tem o seu]; U medido por ensaio/termografia com calibração declarada; pontes térmicas e infiltrações ficam fora deste cartucho (declarado)"
+}
