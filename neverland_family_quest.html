@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✨ O Mapa Vivo da Terra do Nunca — Expedição em Família (Chronolex)</title>
+<style>body{font-family:system-ui,sans-serif;background:radial-gradient(circle at top,#1e1b4b 0%,#090d16 70%);color:#f8fafc;min-height:100vh;padding:16px;display:flex;justify-content:center;margin:0}
+.app{width:100%;max-width:560px;display:flex;flex-direction:column;gap:16px}
+.hero{background:linear-gradient(135deg,rgba(30,41,59,.92),rgba(15,23,42,.95));border:1px solid rgba(251,191,36,.4);border-radius:18px;padding:20px;text-align:center}
+.hero h1{font-size:1.35rem;color:#fbbf24;margin-bottom:6px}
+.hero p{font-size:.88rem;color:#94a3b8;line-height:1.45}
+.pill{display:inline-block;margin-top:10px;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(16,185,129,.18);color:#6ee7b7;border:1px solid rgba(16,185,129,.4)}
+.card{background:rgba(30,41,59,.88);border:1px solid #334155;border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.card h2{font-size:1.02rem;color:#fbbf24;margin:0}
+input[type="text"],input[type="number"]{width:100%;padding:11px 14px;border-radius:10px;border:1px solid #475569;background:#0f172a;color:#f8fafc;font-size:.95rem;box-sizing:border-box}
+button{padding:12px 16px;border:none;border-radius:12px;font-weight:700;font-size:.95rem;cursor:pointer}
+button:active{transform:scale(.98)}
+.btn-gold{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#1e1b4b}
+.btn-green{background:#10b981;color:#052e16}
+.track{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.dot{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:8px 4px;text-align:center;font-size:.72rem;color:#94a3b8}
+.dot.done{background:rgba(16,185,129,.2);border-color:#10b981;color:#a7f3d0;font-weight:700}
+.dot.active{border-color:#fbbf24;color:#fbbf24;box-shadow:0 0 12px rgba(251,191,36,.25)}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.m-key{padding:16px 6px;background:#1e1b4b;border:1px solid #38bdf8;color:#e0f2fe;border-radius:10px;font-weight:700}
+.parchment{background:linear-gradient(180deg,#fef3c7 0%,#fde68a 100%);color:#451a03;border:3px solid #d97706;border-radius:16px;padding:20px;text-align:center;display:none;flex-direction:column;gap:10px}
+.parchment h3{font-size:1.25rem;color:#78350f}
+.seal{font-family:monospace;font-size:.72rem;background:rgba(120,53,15,.1);padding:8px;border-radius:8px;word-break:break-all;text-align:left}
+.photo{max-width:100%;border-radius:10px;border:2px solid #d97706;margin-top:6px;display:none}
+.feedback{font-size:.85rem;padding:10px;border-radius:8px;display:none;background:rgba(239,68,68,.2);border:1px solid #ef4444;color:#fecaca}
+.aviso{font-size:.7rem;color:#94a3b8;margin-top:8px}</style>
+</head>
+<body>
+<div class="app">
+  <div class="hero">
+    <h1>✨ O Mapa Vivo da Terra do Nunca</h1>
+    <p>Uma aventura cooperativa para pais, filhos e avós — sem anúncios, sem internet, com memórias seladas para sempre.</p>
+    <span class="pill">🧭 CHRONOLEX FAMILY EDITION · 100% OFFLINE</span>
+  </div>
+
+  <div class="card" id="setupCard">
+    <h2>🏴‍☠️ 1. Batizar a Tripulação</h2>
+    <input type="text" id="crewName" placeholder="Ex: Família Silva & os Exploradores Estelares">
+    <input type="text" id="crewMembers" placeholder="Nomes da equipa (ex: Sofia, Tiago, Mãe, Pai)">
+    <button class="btn-gold" onclick="startExpedition()">✨ Abrir o Mapa e Iniciar Aventura</button>
+  </div>
+
+  <div id="activeQuest" style="display:none;flex-direction:column;gap:14px;">
+    <div class="track" id="progressTrack"></div>
+    <div class="card" id="islandCard">
+      <h2 id="islandTitle"></h2>
+      <p id="islandStory" style="font-size:.9rem;line-height:1.5;color:#e2e8f0;"></p>
+      <div id="islandMission" style="background:#0f172a;padding:12px;border-radius:10px;border-left:3px solid #fbbf24;font-size:.88rem;"></div>
+      <div id="islandInteractive"></div>
+      <div id="feedbackBox" class="feedback"></div>
+    </div>
+  </div>
+
+  <div class="parchment" id="diplomaCard">
+    <div style="font-size:2rem;">🏆🧭✨</div>
+    <h3>Certificado Oficial de Exploradores da Terra do Nunca</h3>
+    <p id="diplomaText" style="font-size:.92rem;line-height:1.5;"></p>
+    <img id="finalPhoto" class="photo" alt="Foto da Tripulação">
+    <div id="timelineSummary" style="font-size:.8rem;text-align:left;background:rgba(255,255,255,.55);padding:10px;border-radius:8px;"></div>
+    <div class="seal" id="chronolexSeal"></div>
+    <canvas id="qr" style="background:#fff;padding:6px;margin:0 auto;display:none;"></canvas>
+    <button class="btn-gold" onclick="window.print()">🖨️ Imprimir ou Guardar Pergaminho em PDF</button>
+    <div class="aviso">O que NÃO garante: o selo prova que ESTA aventura (passos e tempos do relógio do aparelho) foi registada e encadeada neste telemóvel — a hora é a do aparelho; as fotos ficam no aparelho (nada sai); é um jogo de memória, não um documento legal.</div>
+  </div>
+</div>
+<script src="./assets/nacl-fast.min.js"></script>
+<script src="./assets/qrcode.js"></script>
+<script>
+function sha256NL(str) {
+  // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
+  // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
+  function rightRotate(value, amount) { return (value>>>amount) | (value<<(32-amount)); }
+  var ascii = unescape(encodeURIComponent(str));   // bytes UTF-8 como chars 0-255
+  var mathPow = Math.pow, maxWord = mathPow(2,32);
+  var result = '', words = [];
+  var asciiBitLength = ascii.length*8;
+  var hash = sha256NL.h = sha256NL.h || [];
+  var k = sha256NL.k = sha256NL.k || [];
+  var primeCounter = k.length, isComposite = {};
+  for (var candidate = 2; primeCounter < 64; candidate++) {
+    if (!isComposite[candidate]) {
+      for (var i = 0; i < 313; i += candidate) isComposite[i] = candidate;
+      hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+      k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+    }
+  }
+  ascii += '\x80';
+  while (ascii.length%64 - 56) ascii += '\x00';
+  for (var i = 0; i < ascii.length; i++) {
+    var j = ascii.charCodeAt(i);
+    words[i>>2] |= j << ((3 - i)%4)*8;
+  }
+  words[words.length] = (asciiBitLength/maxWord)|0;
+  words[words.length] = (asciiBitLength);
+  for (var jj = 0; jj < words.length;) {
+    var w = words.slice(jj, jj += 16);
+    var oldHash = hash;
+    hash = hash.slice(0, 8);
+    for (var i2 = 0; i2 < 64; i2++) {
+      var w15 = w[i2-15], w2 = w[i2-2];
+      var a = hash[0], e = hash[4];
+      var temp1 = hash[7]
+        + (rightRotate(e,6)^rightRotate(e,11)^rightRotate(e,25))
+        + ((e&hash[5])^((~e)&hash[6]))
+        + k[i2]
+        + (w[i2] = (i2 < 16) ? w[i2] : (
+            w[i2-16] + (rightRotate(w15,7)^rightRotate(w15,18)^(w15>>>3))
+            + w[i2-7] + (rightRotate(w2,17)^rightRotate(w2,19)^(w2>>>10)))|0);
+      var temp2 = (rightRotate(a,2)^rightRotate(a,13)^rightRotate(a,22))
+        + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
+      hash = [(temp1+temp2)|0].concat(hash);
+      hash[4] = (hash[4]+temp1)|0;
+    }
+    for (var i3 = 0; i3 < 8; i3++) hash[i3] = (hash[i3]+oldHash[i3])|0;
+  }
+  for (var i4 = 0; i4 < 8; i4++) {
+    for (var j4 = 3; j4 + 1; j4--) {
+      var b = (hash[i4]>>(j4*8))&255;
+      result += ((b < 16) ? 0 : '') + b.toString(16);
+    }
+  }
+  return result;
+}
+var ISLANDS = [
+  { short: "1. Bússola", title: "🧭 Ilha 1: A Bússola das Estrelas",
+    story: "O Peter Pan perdeu o rumo entre as nuvens! Para orientar o navio voador, a tripulação tem de encontrar o Norte verdadeiro.",
+    mission: "<strong>Missão Física:</strong> Deem 5 passos juntos pela sala ou jardim e respondam: quantas direções principais tem uma bússola?",
+    type: "number", answer: 4, hint: "Pensa nos pontos cardeais: Norte, Sul, Este e..." },
+  { short: "2. Sininho", title: "🧚 Ilha 2: A Melodia Mágica da Sininho",
+    story: "A fada Sininho só abre a ponte de pó de fada quando ouve a sequência das 4 estrelas brilhantes!",
+    mission: "<strong>Missão Musical:</strong> Toquem juntos na ordem exata: <strong>Dó → Mi → Sol → Dó Alto</strong>.",
+    type: "music", targetSeq: ["Dó","Mi","Sol","Dó+"] },
+  { short: "3. Natureza", title: "🌿 Ilha 3: O Segredo dos Meninos Perdidos",
+    story: "Na floresta encantada, os Meninos Perdidos cuidam das árvores e da água limpa.",
+    mission: "<strong>Missão de Explorador:</strong> Encontrem algo verde ou natural perto de vocês e escrevam o nome do tesouro natural!",
+    type: "text_any", placeholder: "Ex: Folha de manjericão / Maçã vermelha" },
+  { short: "4. Gancho", title: "⏰ Ilha 4: O Enigma do Crocodilo Tic-Tac",
+    story: "O Capitão Gancho trancou o baú com um cadeado matemático!",
+    mission: "<strong>Missão de Equipa:</strong> Contem nos dedos das vossas mãos: quantos dedos existem em 3 mãos juntas?",
+    type: "number", answer: 15, hint: "5 dedos + 5 dedos + 5 dedos = ?" },
+  { short: "5. Tesouro", title: "📸 Ilha 5: O Retrato da Tripulação Vitoriosa",
+    story: "Chegaram ao coração da Terra do Nunca! Falta o retrato da equipa para selar a vitória.",
+    mission: "<strong>Missão Final:</strong> Tirem uma foto divertida todos juntos para ficar no Diploma Oficial!",
+    type: "photo" }
+];
+var currentIdx = 0, crew = "", members = "", startTime = null, prevHash = "", chainLog = [], playedNotes = [], teamPhotoDataUrl = null, audioCtx = null;
+function toHex(u8){ var s=""; for (var i=0;i<u8.length;i++) s += ("0"+u8[i].toString(16)).slice(-2); return s; }
+var seloEd = null, kpEd = null;
+function playNote(freq, label){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  var o = audioCtx.createOscillator(), g = audioCtx.createGain();
+  o.type = "triangle"; o.frequency.setValueAtTime(freq, audioCtx.currentTime);
+  g.gain.setValueAtTime(0.3, audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+  o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime + 0.4);
+  if(!label) return;
+  playedNotes.push(label);
+  var seqEl = document.getElementById("playedSeq");
+  if(seqEl) seqEl.textContent = "Notas tocadas: " + playedNotes.join(" → ");
+  var target = ISLANDS[currentIdx].targetSeq;
+  for(var i=0;i<playedNotes.length;i++){
+    if(playedNotes[i] !== target[i]){
+      playedNotes = [];
+      showFeedback("Ops! A fada Sininho baralhou-se — tentem outra vez: Dó → Mi → Sol → Dó Alto!");
+      return;
+    }
+  }
+  if(playedNotes.length === target.length) completeIsland("Melodia mágica tocada em harmonia!");
+}
+function startExpedition(){
+  crew = document.getElementById("crewName").value.trim() || "Tripulação da Terra do Nunca";
+  members = document.getElementById("crewMembers").value.trim() || "Exploradores em Família";
+  startTime = new Date();
+  prevHash = sha256NL("NEVERLAND-GENESIS|" + crew + "|" + startTime.toISOString(), false);
+  document.getElementById("setupCard").style.display = "none";
+  document.getElementById("activeQuest").style.display = "flex";
+  renderIsland();
+}
+function renderProgress(){
+  var track = document.getElementById("progressTrack"); track.innerHTML = "";
+  ISLANDS.forEach(function(isl, idx){
+    var d = document.createElement("div");
+    d.className = "dot" + (idx < currentIdx ? " done" : idx === currentIdx ? " active" : "");
+    d.textContent = (idx < currentIdx ? "✔ " : "") + isl.short;
+    track.appendChild(d);
+  });
+}
+function showFeedback(msg){
+  var fb = document.getElementById("feedbackBox");
+  fb.className = "feedback"; fb.textContent = msg; fb.style.display = "block";
+}
+function renderIsland(){
+  renderProgress();
+  document.getElementById("feedbackBox").style.display = "none";
+  var isl = ISLANDS[currentIdx];
+  document.getElementById("islandTitle").textContent = isl.title;
+  document.getElementById("islandStory").textContent = isl.story;
+  document.getElementById("islandMission").innerHTML = isl.mission;
+  var box = document.getElementById("islandInteractive"); box.innerHTML = "";
+  if(isl.type === "number"){
+    box.innerHTML = '<input type="number" id="ansNum" placeholder="Escrevam o número aqui..."><button class="btn-gold" style="width:100%;margin-top:10px;" onclick="checkNumber()">Confirmar Resposta da Equipa</button>';
+  } else if(isl.type === "music"){
+    playedNotes = [];
+    box.innerHTML = '<div class="keys"><button class="m-key" onclick="playNote(261.63,\'Dó\')">🎵 Dó</button><button class="m-key" onclick="playNote(329.63,\'Mi\')">✨ Mi</button><button class="m-key" onclick="playNote(392.00,\'Sol\')">🌟 Sol</button><button class="m-key" onclick="playNote(523.25,\'Dó+\')">🧚 Dó Alto</button></div><div id="playedSeq" style="font-size:.82rem;color:#bae6fd;margin-top:8px;">Notas tocadas: (nenhuma ainda)</div>';
+  } else if(isl.type === "text_any"){
+    box.innerHTML = '<input type="text" id="ansTxt" placeholder="' + isl.placeholder + '"><button class="btn-green" style="width:100%;margin-top:10px;" onclick="checkText()">Registar Tesouro Natural</button>';
+  } else if(isl.type === "photo"){
+    box.innerHTML = '<input type="file" id="photoInput" accept="image/*" capture="user" style="color:#f8fafc;"><button class="btn-gold" style="width:100%;margin-top:10px;" onclick="finishWithPhoto()">🏆 Selar Aventura e Abrir Diploma!</button>';
+  }
+}
+function checkNumber(){
+  var val = parseInt(document.getElementById("ansNum").value, 10);
+  var isl = ISLANDS[currentIdx];
+  if(val === isl.answer) completeIsland("Enigma resolvido (" + val + ")");
+  else showFeedback("Quase lá! Dica da bússola: " + isl.hint);
+}
+function checkText(){
+  var txt = document.getElementById("ansTxt").value.trim();
+  if(txt.length < 2){ showFeedback("Escrevam o nome do tesouro natural que encontraram juntos!"); return; }
+  completeIsland('Tesouro natural encontrado: "' + txt + '"');
+}
+function finishWithPhoto(){
+  var fi = document.getElementById("photoInput");
+  if(fi.files && fi.files[0]){
+    var reader = new FileReader();
+    reader.onload = function(ev){ teamPhotoDataUrl = ev.target.result; completeIsland("Retrato oficial da tripulação registado!"); };
+    reader.readAsDataURL(fi.files[0]);
+  } else {
+    completeIsland("Aventura concluída com sucesso!");
+  }
+}
+function completeIsland(summary){
+  playNote(523.25, null);
+  setTimeout(function(){ playNote(659.25, null); }, 120);
+  var isl = ISLANDS[currentIdx];
+  var ts = new Date().toISOString();
+  var eventHash = sha256NL(prevHash + "|" + isl.short + "|" + summary + "|" + ts, false);
+  chainLog.push({ step: isl.short, summary: summary, ts: ts, hash: eventHash });
+  prevHash = eventHash;
+  currentIdx++;
+  if(currentIdx < ISLANDS.length) renderIsland(); else showDiploma();
+}
+function showDiploma(){
+  document.getElementById("activeQuest").style.display = "none";
+  var dip = document.getElementById("diplomaCard"); dip.style.display = "flex";
+  var endTime = new Date();
+  var mins = Math.max(1, Math.round((endTime - startTime) / 60000));
+  var master = sha256NL(prevHash + "|" + crew + "|" + members, false);
+  document.getElementById("diplomaText").textContent =
+    "Certifica-se que a tripulação " + crew + " (" + members + ") completou as 5 Ilhas da Terra do Nunca em cooperação total, em " + mins + " minuto(s), na data de " + endTime.toLocaleDateString() + "!";
+  if(teamPhotoDataUrl){
+    var img = document.getElementById("finalPhoto");
+    img.src = teamPhotoDataUrl; img.style.display = "block";
+  }
+  var linhas = ["Diário de Bordo Selado:"];
+  chainLog.forEach(function(c){ linhas.push("✔ " + c.step + ": " + c.summary); });
+  document.getElementById("timelineSummary").innerHTML = linhas.join("<br>");
+  kpEd = nacl.sign.keyPair();
+  var alvo = "KONFIRMU-NEVERLAND|v1|" + master;
+  var sig = nacl.sign.detached(new TextEncoder().encode(alvo), kpEd.secretKey);
+  seloEd = { master: master, pk: toHex(kpEd.publicKey), sig: toHex(sig) };
+  document.getElementById("chronolexSeal").innerHTML =
+    "<strong>SELO CHRONOLEX (SHA-256 + Ed25519):</strong><br>master: " + master +
+    "<br>pk: " + seloEd.pk.slice(0,32) + "…<br>sig: " + seloEd.sig.slice(0,64) + "…";
+  var c = document.getElementById("qr"); c.style.display = "block";
+  var qr = qrcode(0,"M"); qr.addData("KONFIRMU|NEVERLAND|v1|" + master + "|" + seloEd.pk + "|" + seloEd.sig,"Byte"); qr.make();
+  var n = qr.getModuleCount(), s = 3; c.width = n*s; c.height = n*s;
+  var ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#000";
+  for(var r=0;r<n;r++) for(var cc=0;cc<n;cc++) if(qr.isDark(r,cc)) ctx.fillRect(cc*s,r*s,s,s);
+}
+</script>
+</body>
+</html>
