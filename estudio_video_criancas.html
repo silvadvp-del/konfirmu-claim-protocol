@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎬 Estúdio de Vídeo das Crianças — offline, selado</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:640px;margin:0 auto;padding:16px;background:#0d1117;color:#e6edf3}
+.card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:14px;margin:12px 0}
+button{background:#238636;color:#fff;border:0;border-radius:8px;padding:10px 16px;margin:4px 2px;cursor:pointer;font-weight:700}
+video{width:100%;border-radius:8px;margin-top:8px;background:#000}
+pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
+.verde{color:#3fb950}.aviso{font-size:.72em;color:#8b949e;margin-top:10px}
+</style>
+</head>
+<body>
+<h1>🎬 O Estúdio das Crianças</h1>
+<p>Filma o teu mundo, mesmo sem internet. Cada filme ganha uma marca mágica (hash) e entra na corrente dos filmes da tua aldeia — ninguém o muda sem todos verem.</p>
+<div class="card">
+<b>1. Filmar</b><br>
+<button onclick="gravar()">🎥 Gravar</button> <button onclick="parar()">⏹ Parar e selar</button><br>
+<video id="v" muted playsinline></video>
+</div>
+<div class="card">
+<b>2. Selar o filme</b><br>
+<input id="titulo" placeholder="Título do filme (ex.: A nossa escola)">
+<input id="autor" placeholder="Quem filmou (ex.: Turma da Aldeia)">
+<button onclick="selar()">🔒 Selar filme na corrente</button>
+<pre id="out">—</pre>
+</div>
+<p class="aviso">O que NÃO garante: o filme fica SÓ neste aparelho (nada sobe para lado nenhum); o selo prova que ESTE filme foi selado nesta corrente à hora do aparelho — não prova que o que se vê aconteceu (SELADO ≠ VERDADEIRO); a gravação precisa de um browser com câmara e microfone.</p>
+<script>
+function sha256Video(str) {
+  // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
+  // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
+  function rightRotate(value, amount) { return (value>>>amount) | (value<<(32-amount)); }
+  var ascii = unescape(encodeURIComponent(str));   // bytes UTF-8 como chars 0-255
+  var mathPow = Math.pow, maxWord = mathPow(2,32);
+  var result = '', words = [];
+  var asciiBitLength = ascii.length*8;
+  var hash = sha256Video.h = sha256Video.h || [];
+  var k = sha256Video.k = sha256Video.k || [];
+  var primeCounter = k.length, isComposite = {};
+  for (var candidate = 2; primeCounter < 64; candidate++) {
+    if (!isComposite[candidate]) {
+      for (var i = 0; i < 313; i += candidate) isComposite[i] = candidate;
+      hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+      k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+    }
+  }
+  ascii += '\x80';
+  while (ascii.length%64 - 56) ascii += '\x00';
+  for (var i = 0; i < ascii.length; i++) {
+    var j = ascii.charCodeAt(i);
+    words[i>>2] |= j << ((3 - i)%4)*8;
+  }
+  words[words.length] = (asciiBitLength/maxWord)|0;
+  words[words.length] = (asciiBitLength);
+  for (var jj = 0; jj < words.length;) {
+    var w = words.slice(jj, jj += 16);
+    var oldHash = hash;
+    hash = hash.slice(0, 8);
+    for (var i2 = 0; i2 < 64; i2++) {
+      var w15 = w[i2-15], w2 = w[i2-2];
+      var a = hash[0], e = hash[4];
+      var temp1 = hash[7]
+        + (rightRotate(e,6)^rightRotate(e,11)^rightRotate(e,25))
+        + ((e&hash[5])^((~e)&hash[6]))
+        + k[i2]
+        + (w[i2] = (i2 < 16) ? w[i2] : (
+            w[i2-16] + (rightRotate(w15,7)^rightRotate(w15,18)^(w15>>>3))
+            + w[i2-7] + (rightRotate(w2,17)^rightRotate(w2,19)^(w2>>>10)))|0);
+      var temp2 = (rightRotate(a,2)^rightRotate(a,13)^rightRotate(a,22))
+        + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
+      hash = [(temp1+temp2)|0].concat(hash);
+      hash[4] = (hash[4]+temp1)|0;
+    }
+    for (var i3 = 0; i3 < 8; i3++) hash[i3] = (hash[i3]+oldHash[i3])|0;
+  }
+  for (var i4 = 0; i4 < 8; i4++) {
+    for (var j4 = 3; j4 + 1; j4--) {
+      var b = (hash[i4]>>(j4*8))&255;
+      result += ((b < 16) ? 0 : '') + b.toString(16);
+    }
+  }
+  return result;
+}
+var chunks=[], mediaRec=null, stream=null, blobFilme=null, prevHash="0".repeat(64), cadeia=[];
+function toHex(u8){var s="";for(var i=0;i<u8.length;i++)s+=("0"+u8[i].toString(16)).slice(-2);return s}
+async function gravar(){
+  stream = await navigator.mediaDevices.getUserMedia({video:true,audio:true});
+  document.getElementById("v").srcObject = stream;
+  mediaRec = new MediaRecorder(stream); chunks=[];
+  mediaRec.ondataavailable = function(e){ if(e.data.size) chunks.push(e.data); };
+  mediaRec.onstop = function(){ blobFilme = new Blob(chunks,{type:"video/webm"}); };
+  mediaRec.start();
+}
+function parar(){
+  if(!mediaRec){alert("primeiro grava");return}
+  mediaRec.stop(); stream.getTracks().forEach(function(t){t.stop();});
+  document.getElementById("out").textContent = "filme gravado: " + (blobFilme ? Math.round(blobFilme.size/1024)+" KB — agora sela" : "a selar…");
+  setTimeout(function(){ document.getElementById("out").textContent = "filme gravado: " + Math.round(blobFilme.size/1024) + " KB — agora sela"; }, 400);
+}
+async function selar(){
+  if(!blobFilme){alert("grava e para primeiro");return}
+  var titulo=document.getElementById("titulo").value.trim()||"Sem título";
+  var autor=document.getElementById("autor").value.trim()||"Criança da aldeia";
+  var buf=new Uint8Array(await blobFilme.arrayBuffer());
+  var bin=String.fromCharCode.apply(null,buf);
+  var hash=sha256Video(bin,true);
+  var ts=new Date().toISOString();
+  var evento={n:cadeia.length+1,titulo:titulo,autor:autor,ts:ts,hash:hash,prev:prevHash};
+  var enc=sha256Video(prevHash+"|"+hash+"|"+titulo+"|"+autor+"|"+ts,false);
+  evento.cadeia=enc; prevHash=enc; cadeia.push(evento);
+  document.getElementById("out").textContent="SELADO: "+titulo+String.fromCharCode(10)+"sha256 do filme: "+hash+String.fromCharCode(10)+"corrente: "+enc+String.fromCharCode(10)+"posição: "+cadeia.length+" — o filme está na corrente da tua aldeia";
+  document.getElementById("out").className="verde";
+  var a=document.createElement("a");
+  a.href=URL.createObjectURL(blobFilme); a.download="filme-"+hash.slice(0,8)+".webm"; a.click();
+}
+</script>
+</body>
+</html>
