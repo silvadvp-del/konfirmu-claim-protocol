@@ -1,0 +1,133 @@
+# Ler e jogar na tua língua
+
+Escolhe uma edição para ler o relato, o artigo e a publicação e para jogar com as oito tigelas. A Sala de Natal permite encontrar pares, jogar com um amigo e imprimir uma lembrança. Os ficheiros podem ser guardados para jogar offline.
+
+Choose an edition to read the story, article and post, and to play the eight-bowl game. In the Christmas Room you can match pairs, play with a friend and print a keepsake. Save either game to play offline.
+
+[Outras línguas com internet · More languages online](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/idiomas.html) · [Sala offline · 99 501 bytes](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/sala-offline.zip)
+
+| Língua · Language | Relato e tigelas · Story and bowls | Sala das Girafinhas · Christmas Room |
+| --- | --- | --- |
+| Bahsa Acèh (ACE) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/ACE) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=ACE) |
+| Afrikaans (AF) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/AF) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=AF) |
+| Aragonés (AN) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/AN) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=AN) |
+| العربية (AR) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/AR) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=AR) |
+| অসমীয়া (AS) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/AS) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=AS) |
+| Aymar aru (AY) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/AY) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=AY) |
+| azərbaycan (AZ) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/AZ) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=AZ) |
+| башҡорт (BA) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/BA) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=BA) |
+| беларуская (BE) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/BE) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=BE) |
+| български (BG) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/BG) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=BG) |
+| भोजपुरी (BHO) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/BHO) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=BHO) |
+| বাংলা (BN) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/BN) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=BN) |
+| Brezhoneg (BR) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/BR) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=BR) |
+| bosanski (BS) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/BS) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=BS) |
+| català (CA) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/CA) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=CA) |
+| Cebuano (CEB) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/CEB) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=CEB) |
+| کوردیی ناوەندی (CKB) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/CKB) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=CKB) |
+| čeština (CS) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/CS) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=CS) |
+| Cymraeg (CY) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/CY) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=CY) |
+| dansk (DA) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/DA) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=DA) |
+| Deutsch (DE) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/DE) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=DE) |
+| Schweizer Hochdeutsch (DE-CH) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/DE-CH) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=DE-CH) |
+| Ελληνικά (EL) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/EL) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=EL) |
+| English (EN) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/EN) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=EN) |
+| English (UK) (EN-GB) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/EN-GB) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=EN-GB) |
+| English (US) (EN-US) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/EN-US) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=EN-US) |
+| Esperanto (EO) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/EO) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=EO) |
+| español (ES) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/ES) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=ES) |
+| español latinoamericano (ES-419) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/ES-419) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=ES-419) |
+| eesti (ET) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/ET) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=ET) |
+| euskara (EU) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/EU) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=EU) |
+| فارسی (FA) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/FA) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=FA) |
+| suomi (FI) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/FI) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=FI) |
+| français (FR) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/FR) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=FR) |
+| français canadien (FR-CA) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/FR-CA) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=FR-CA) |
+| Gaeilge (GA) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/GA) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=GA) |
+| galego (GL) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/GL) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=GL) |
+| Avañe’ẽ (GN) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/GN) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=GN) |
+| कोंकणी / Konknni (GOM) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/GOM) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=GOM) |
+| ગુજરાતી (GU) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/GU) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=GU) |
+| Hausa (HA) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/HA) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=HA) |
+| עברית (HE) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/HE) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=HE) |
+| हिन्दी (HI) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/HI) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=HI) |
+| hrvatski (HR) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/HR) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=HR) |
+| Haitian Creole (HT) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/HT) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=HT) |
+| magyar (HU) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/HU) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=HU) |
+| հայերեն (HY) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/HY) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=HY) |
+| Indonesia (ID) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/ID) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=ID) |
+| Igbo (IG) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/IG) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=IG) |
+| íslenska (IS) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/IS) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=IS) |
+| italiano (IT) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/IT) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=IT) |
+| 日本語 (JA) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/JA) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=JA) |
+| Jawa (JV) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/JV) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=JV) |
+| ქართული (KA) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/KA) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=KA) |
+| қазақ тілі (KK) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/KK) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=KK) |
+| Kurmancî (KMR) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/KMR) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=KMR) |
+| 한국어 (KO) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/KO) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=KO) |
+| кыргызча (KY) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/KY) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=KY) |
+| Latin (LA) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/LA) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=LA) |
+| Lëtzebuergesch (LB) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/LB) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=LB) |
+| Lombard (LMO) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/LMO) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=LMO) |
+| lingála (LN) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/LN) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=LN) |
+| lietuvių (LT) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/LT) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=LT) |
+| latviešu (LV) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/LV) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=LV) |
+| मैथिली (MAI) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/MAI) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=MAI) |
+| Malagasy (MG) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/MG) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=MG) |
+| Māori (MI) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/MI) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=MI) |
+| македонски (MK) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/MK) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=MK) |
+| മലയാളം (ML) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/ML) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=ML) |
+| монгол (MN) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/MN) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=MN) |
+| मराठी (MR) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/MR) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=MR) |
+| Melayu (MS) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/MS) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=MS) |
+| Malti (MT) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/MT) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=MT) |
+| မြန်မာ (MY) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/MY) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=MY) |
+| norsk bokmål (NB) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/NB) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=NB) |
+| नेपाली (NE) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/NE) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=NE) |
+| Nederlands (NL) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/NL) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=NL) |
+| occitan (OC) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/OC) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=OC) |
+| Afaan Oromoo (OM) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/OM) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=OM) |
+| ਪੰਜਾਬੀ (PA) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/PA) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=PA) |
+| Pangasinan (PAG) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/PAG) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=PAG) |
+| Kapampangan (PAM) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/PAM) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=PAM) |
+| polski (PL) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/PL) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=PL) |
+| دری (PRS) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/PRS) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=PRS) |
+| پښتو (PS) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/PS) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=PS) |
+| Português (Brasil) (PT-BR) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/PT-BR) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=PT-BR) |
+| Português (Portugal) (PT-PT) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/PT-PT) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=PT-PT) |
+| Runasimi (QU) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/QU) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=QU) |
+| română (RO) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/RO) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=RO) |
+| русский (RU) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/RU) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=RU) |
+| संस्कृत भाषा (SA) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/SA) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=SA) |
+| Sicilianu (SCN) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/SCN) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=SCN) |
+| slovenčina (SK) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/SK) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=SK) |
+| slovenščina (SL) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/SL) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=SL) |
+| shqip (SQ) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/SQ) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=SQ) |
+| српски (SR) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/SR) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=SR) |
+| Sesotho (ST) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/ST) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=ST) |
+| Basa Sunda (SU) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/SU) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=SU) |
+| svenska (SV) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/SV) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=SV) |
+| Kiswahili (SW) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/SW) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=SW) |
+| தமிழ் (TA) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/TA) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=TA) |
+| తెలుగు (TE) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/TE) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=TE) |
+| Тоҷикӣ (TG) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/TG) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=TG) |
+| ไทย (TH) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/TH) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=TH) |
+| Türkmençe (TK) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/TK) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=TK) |
+| Filipino (TL) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/TL) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=TL) |
+| Setswana (TN) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/TN) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=TN) |
+| Türkçe (TR) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/TR) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=TR) |
+| itsonga (TS) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/TS) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=TS) |
+| татар (TT) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/TT) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=TT) |
+| українська (UK) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/UK) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=UK) |
+| اردو (UR) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/UR) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=UR) |
+| o‘zbek (UZ) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/UZ) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=UZ) |
+| Tiếng Việt (VI) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/VI) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=VI) |
+| Wolof (WO) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/WO) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=WO) |
+| IsiXhosa (XH) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/XH) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=XH) |
+| ייִדיש (YI) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/YI) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=YI) |
+| 粵語 (YUE) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/YUE) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=YUE) |
+| 简体中文 (ZH-HANS) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/ZH-HANS) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=ZH-HANS) |
+| 繁體中文 (ZH-HANT) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/ZH-HANT) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=ZH-HANT) |
+| isiZulu (ZU) | [🥣](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/viagem/edicoes/ZU) | [🦒](https://konfirmu-girafinhas.silvadvp195984.chatgpt.site/natal/?lang=ZU) |
+
+121 edições, 114 códigos principais de língua. Há variantes regionais e de escrita. As traduções têm revisão humana pendente. Para contribuir com outra língua, abre o modelo JSON na experiência, traduz o texto e importa a tua versão. Podes guardá-la e passá-la a outra família.
