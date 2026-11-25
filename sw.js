@@ -1,26 +1,13 @@
-// sw.js — Service Worker offline-first do verificador Konfirmu (corrigido: só ficheiros REAIS)
-// Regra 13: nada de caminhos inventados. Ficheiros reais: verificador_offline.html + manifest.json.
-const CACHE_NAME = "konfirmu-verificador-v1";
-const ASSETS = ["./", "./verificador_offline.html", "./manifest.json"];
-
+// sw.js v2 — a app única: precache de TODAS as salas reais (regra 13: só ficheiros existentes)
+const CACHE_NAME = "konfirmu-app-unica-v2";
+const ASSETS = ["./", "./app_unica.html", "./manifest.json", "./assets/qrcode.js", "./assets/nacl-fast.min.js", "./verificador_offline.html", "./patient_vault_offline.html", "./ficha_campo.html", "./urna_voto_offline.html", "./testemunha_offline.html", "./chronolex_ata.html", "./chronolex_photo_seal.html", "./chronolex_verify.html", "./regua_do_planeta.html", "./neverland_family_quest.html", "./kcp_art_music_studio.html", "./webrtc_local.html"];
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
   self.skipWaiting();
 });
-
 self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    )
-  );
+  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))));
 });
-
 self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((cached) => cached || fetch(event.request))
-  );
+  event.respondWith(caches.match(event.request).then((r) => r || fetch(event.request)));
 });
-
-// O que NAO garante: offline dura enquanto o browser nao limpar o armazenamento.
-// "Para sempre" e marketing; "verificavel offline" e facto.
