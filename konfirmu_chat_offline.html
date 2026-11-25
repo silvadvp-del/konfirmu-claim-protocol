@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!-- Konfirmu · Chat de bolso offline · v0.1 · 2026-11-25 · EUPL-1.2
+     Um só ficheiro. Sem servidor. Sem bibliotecas. Abre a partir do WhatsApp num Android.
+     Finalidade: ensino e investigação. Não serve para decisões sobre pessoas. -->
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#14181f">
+<title>Konfirmu · Chat de bolso</title>
+<style>
+:root{--fundo:#14181f;--painel:#1c222c;--linha:#2f3947;--texto:#f1efe9;--fraco:#a9b0bb;--pessego:#f7b397;--ambar:#e9b949;--cinza:#9aa3ad;--eu:#2b3a55}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--fundo);color:var(--texto);height:100dvh;display:flex;flex-direction:column}
+header{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--painel);border-bottom:1px solid var(--linha)}
+.marca{font:600 1.15rem Georgia,serif}.marca b{color:var(--pessego);font-weight:600}
+select,button,input,textarea{font:inherit;color:inherit}
+select{background:var(--fundo);border:1px solid var(--linha);border-radius:8px;padding:5px 8px}
+#aviso{font-size:.8rem;color:var(--fraco);padding:7px 14px;border-bottom:1px solid var(--linha)}
+#conversa{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.b{max-width:88%;padding:10px 13px;border-radius:14px;overflow-wrap:anywhere;white-space:pre-wrap}
+.b.eu{align-self:flex-end;background:var(--eu);border-bottom-right-radius:4px}
+.b.casa{align-self:flex-start;background:var(--painel);border:1px solid var(--linha);border-bottom-left-radius:4px}
+.v{display:inline-block;font-weight:700;border-radius:6px;padding:1px 8px;margin-bottom:4px;color:#14181f}
+.v.ok{background:var(--pessego)}.v.ns{background:var(--ambar)}.v.veto{background:var(--cinza)}.v.ia{background:#c9d2e3}
+.selo{display:block;font:.7rem ui-monospace,monospace;color:var(--fraco);margin-top:6px}
+#atalhos{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;background:var(--painel);border-top:1px solid var(--linha)}
+.c{white-space:nowrap;background:var(--fundo);border:1px solid var(--linha);border-radius:8px;padding:7px 11px;font-size:.85rem;cursor:pointer}
+#barra{display:flex;gap:8px;padding:10px 12px;background:var(--painel)}
+#p{flex:1;background:var(--fundo);border:1px solid var(--linha);border-radius:12px;padding:11px 13px}
+#enviar{background:var(--pessego);color:#14181f;border:0;border-radius:12px;padding:0 16px;font-weight:700;cursor:pointer}
+#painelSelo{display:none;padding:10px 12px;background:var(--painel);border-top:1px solid var(--linha)}
+#painelSelo textarea{width:100%;min-height:64px;background:var(--fundo);border:1px solid var(--linha);border-radius:10px;padding:8px;margin:4px 0 8px}
+#painelSelo label{font-size:.82rem;color:var(--fraco)}
+:focus-visible{outline:3px solid var(--pessego);outline-offset:2px}
+</style>
+</head>
+<body>
+<header><span class="marca">Konfirm<b>u</b></span>
+<select id="lingua" aria-label="Língua"><option value="pt">Português</option><option value="en">English</option><option value="fr">Français</option></select></header>
+<div id="aviso"></div>
+<div id="conversa" aria-live="polite"></div>
+<div id="painelSelo">
+ <label for="tA" id="lA"></label><textarea id="tA"></textarea>
+ <label for="tB" id="lB"></label><textarea id="tB"></textarea>
+ <button class="c" id="bSelo"></button>
+</div>
+<div id="atalhos">
+ <button class="c" id="cAgua"></button><button class="c" id="cFrio"></button><button class="c" id="cSelo"></button>
+ <button class="c" id="cIA"></button><button class="c" id="cExp"></button><button class="c" id="cImp"></button>
+ <input type="file" id="fImp" accept=".json,application/json" hidden>
+</div>
+<div id="barra"><input id="p" autocomplete="off"><button id="enviar"></button></div>
+<script>
+'use strict';
+/* ---------- textos ---------- */
+const T={
+pt:{aviso:'Ensino e investigação. Não serve para decisões sobre pessoas. Funciona sem internet.',ph:'Escreve uma medida ou uma pergunta…',enviar:'Enviar',
+ ola:'Olá. Confiro medidas por regras escritas e digo de onde vem cada regra. Sem internet e sem conta.\nExperimenta: «nitrato 48 ± 3 mg/L» ou «vacina a 9,5 °C».',
+ agua:'Água: nitrato',frio:'Cadeia de frio',selo:'Selo de texto',ia:'Ligar IA local',exp:'Exportar conversa',imp:'Conferir conversa',
+ exAgua:'nitrato 48 ± 3 mg/L',exFrio:'vacina a 9,5 °C',
+ OK:'CONFERE',VETO:'NÃO CONFERE',NS:'AINDA NÃO SEI',IA:'IA LOCAL · não conferido',
+ nit:(i)=>`Nitrato na água para consumo: limite ${i.lim} mg/L.\nMedida: ${i.txt}.\nNorma: Diretiva (UE) 2020/2184, anexo I, parte B.`,
+ fri:(i)=>`Cadeia de frio: entre ${i.a} e ${i.b} °C.\nMedida: ${i.txt}.\nRegra da folha «cadeia de frio 2 a 8 °C» da Konfirmu.`,
+ nsPorque:'A margem da medida passa por cima do limite. Mede outra vez com um aparelho mais fino.',
+ naoGarante:'Isto confere o número com a regra. Não confere se a medida foi bem feita.',
+ semRegra:'Não tenho regra escrita para isto, por isso não respondo. Posso conferir: nitrato na água (mg/L) e cadeia de frio (°C).',
+ lA:'Texto a conferir',lB:'Original (o que te chegou por outro caminho). Pode ficar vazio.',bSelo:'Conferir',
+ seloIgual:'IGUAL ao original.',seloDif:'DIFERENTE do original.',seloSo:'Sem o original ao lado, não sei se este texto é o verdadeiro. O número dele é:',
+ iaFicheiro:'A IA local precisa de ser aberta por um link com cadeado (https), não por um ficheiro. As regras e o selo funcionam aqui na mesma.',
+ iaABaixar:'A descarregar a IA para este aparelho (cerca de 480 MB, uma só vez). Usa Wi-Fi.',iaPronta:'IA local pronta. Corre neste aparelho. O que ela disser não é conferido.',
+ iaFalhou:'A IA local não arrancou neste aparelho. As regras e o selo continuam a funcionar.',
+ expOk:(n)=>`Conversa exportada: ${n} registos.`,impOk:(n)=>`Cadeia inteira: ${n} registos, nenhum alterado.`,impMau:(n)=>`Cadeia partida no registo ${n}. Alguém mexeu aqui ou a seguir.`,impErro:'Este ficheiro não é uma conversa Konfirmu.'},
+en:{aviso:'Teaching and research. Not for decisions about people. Works without internet.',ph:'Type a measurement or a question…',enviar:'Send',
+ ola:'Hello. I check measurements against written rules and say where each rule comes from. No internet, no account.\nTry: "nitrate 48 ± 3 mg/L" or "vaccine at 9.5 °C".',
+ agua:'Water: nitrate',frio:'Cold chain',selo:'Text seal',ia:'Turn on local AI',exp:'Export chat',imp:'Check a chat',
+ exAgua:'nitrate 48 ± 3 mg/L',exFrio:'vaccine at 9.5 °C',
+ OK:'MATCHES',VETO:'DOES NOT MATCH',NS:'I DON\'T KNOW YET',IA:'LOCAL AI · not checked',
+ nit:(i)=>`Nitrate in drinking water: limit ${i.lim} mg/L.\nMeasurement: ${i.txt}.\nStandard: Directive (EU) 2020/2184, Annex I, Part B.`,
+ fri:(i)=>`Cold chain: between ${i.a} and ${i.b} °C.\nMeasurement: ${i.txt}.\nRule from the Konfirmu "cold chain 2 to 8 °C" sheet.`,
+ nsPorque:'The margin of the measurement crosses the limit. Measure again with a finer instrument.',
+ naoGarante:'This checks the number against the rule. It does not check that the measurement was done properly.',
+ semRegra:'I have no written rule for this, so I do not answer. I can check: nitrate in water (mg/L) and cold chain (°C).',
+ lA:'Text to check',lB:'Original (the one that reached you another way). May be left empty.',bSelo:'Check',
+ seloIgual:'SAME as the original.',seloDif:'DIFFERENT from the original.',seloSo:'Without the original beside it, I cannot tell whether this text is the true one. Its number is:',
+ iaFicheiro:'Local AI has to be opened from a padlocked link (https), not from a file. The rules and the seal still work here.',
+ iaABaixar:'Downloading the AI to this device (about 480 MB, once). Use Wi-Fi.',iaPronta:'Local AI ready. It runs on this device. What it says is not checked.',
+ iaFalhou:'Local AI did not start on this device. The rules and the seal keep working.',
+ expOk:(n)=>`Chat exported: ${n} records.`,impOk:(n)=>`Chain intact: ${n} records, none altered.`,impMau:(n)=>`Chain broken at record ${n}. Someone changed this record or a later one.`,impErro:'This file is not a Konfirmu chat.'},
+fr:{aviso:'Enseignement et recherche. Pas pour des décisions concernant des personnes. Fonctionne sans internet.',ph:'Écris une mesure ou une question…',enviar:'Envoyer',
+ ola:'Bonjour. Je vérifie des mesures avec des règles écrites et je dis d\'où vient chaque règle. Sans internet, sans compte.\nEssaie : « nitrate 48 ± 3 mg/L » ou « vaccin à 9,5 °C ».',
+ agua:'Eau : nitrate',frio:'Chaîne du froid',selo:'Sceau de texte',ia:'Activer l\'IA locale',exp:'Exporter',imp:'Vérifier une conversation',
+ exAgua:'nitrate 48 ± 3 mg/L',exFrio:'vaccin à 9,5 °C',
+ OK:'CONFORME',VETO:'NON CONFORME',NS:'JE NE SAIS PAS ENCORE',IA:'IA LOCALE · non vérifié',
+ nit:(i)=>`Nitrate dans l'eau de boisson : limite ${i.lim} mg/L.\nMesure : ${i.txt}.\nNorme : Directive (UE) 2020/2184, annexe I, partie B.`,
+ fri:(i)=>`Chaîne du froid : entre ${i.a} et ${i.b} °C.\nMesure : ${i.txt}.\nRègle de la fiche Konfirmu « chaîne du froid 2 à 8 °C ».`,
+ nsPorque:'La marge de la mesure dépasse la limite. Mesure à nouveau avec un appareil plus fin.',
+ naoGarante:'Ceci compare le nombre à la règle. Cela ne vérifie pas que la mesure a été bien faite.',
+ semRegra:'Je n\'ai pas de règle écrite pour cela, donc je ne réponds pas. Je peux vérifier : nitrate dans l\'eau (mg/L) et chaîne du froid (°C).',
+ lA:'Texte à vérifier',lB:'Original (celui qui t\'est arrivé par un autre chemin). Peut rester vide.',bSelo:'Vérifier',
+ seloIgual:'IDENTIQUE à l\'original.',seloDif:'DIFFÉRENT de l\'original.',seloSo:'Sans l\'original à côté, je ne sais pas si ce texte est le vrai. Son nombre est :',
+ iaFicheiro:'L\'IA locale doit être ouverte par un lien avec cadenas (https), pas par un fichier. Les règles et le sceau fonctionnent ici quand même.',
+ iaABaixar:'Téléchargement de l\'IA sur cet appareil (environ 480 Mo, une seule fois). Utilise le Wi-Fi.',iaPronta:'IA locale prête. Elle tourne sur cet appareil. Ce qu\'elle dit n\'est pas vérifié.',
+ iaFalhou:'L\'IA locale n\'a pas démarré sur cet appareil. Les règles et le sceau continuent de fonctionner.',
+ expOk:(n)=>`Conversation exportée : ${n} enregistrements.`,impOk:(n)=>`Chaîne intacte : ${n} enregistrements, aucun modifié.`,impMau:(n)=>`Chaîne rompue à l'enregistrement ${n}. Quelqu'un a modifié celui-ci ou un suivant.`,impErro:'Ce fichier n\'est pas une conversation Konfirmu.'}};
+let L='pt';const t=k=>T[L][k];const $=id=>document.getElementById(id);
+
+/* ---------- SHA-256 (WebCrypto, com reserva em JS puro para páginas sem cadeado) ---------- */
+function sha256js(bytes){const K=[],H=[];let n=2,c=0;const f=x=>(x-Math.floor(x))*4294967296|0;
+ while(c<64){let p=true;for(let i=2;i*i<=n;i++)if(n%i===0){p=false;break}if(p){if(c<8)H[c]=f(Math.pow(n,.5));K[c++]=f(Math.pow(n,1/3))}n++}
+ const l=bytes.length,bl=((l+9+63)>>6)<<6,m=new Uint8Array(bl);m.set(bytes);m[l]=128;const dv=new DataView(m.buffer);
+ dv.setUint32(bl-8,Math.floor(l/536870912));dv.setUint32(bl-4,(l<<3)>>>0);const w=new Int32Array(64),r=(x,s)=>(x>>>s)|(x<<(32-s));
+ for(let o=0;o<bl;o+=64){for(let i=0;i<16;i++)w[i]=dv.getInt32(o+i*4);
+  for(let i=16;i<64;i++){const a=w[i-15],b=w[i-2];w[i]=(w[i-16]+(r(a,7)^r(a,18)^(a>>>3))+w[i-7]+(r(b,17)^r(b,19)^(b>>>10)))|0}
+  let[a,b,c2,d,e,f2,g,h]=H;for(let i=0;i<64;i++){const t1=(h+(r(e,6)^r(e,11)^r(e,25))+((e&f2)^(~e&g))+K[i]+w[i])|0,t2=((r(a,2)^r(a,13)^r(a,22))+((a&b)^(a&c2)^(b&c2)))|0;h=g;g=f2;f2=e;e=(d+t1)|0;d=c2;c2=b;b=a;a=(t1+t2)|0}
+  H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c2)|0;H[3]=(H[3]+d)|0;H[4]=(H[4]+e)|0;H[5]=(H[5]+f2)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0}
+ return H.map(x=>(x>>>0).toString(16).padStart(8,'0')).join('')}
+async function sha256(txt,forcaJS){const b=new TextEncoder().encode(txt);
+ if(!forcaJS&&globalThis.crypto&&crypto.subtle){try{const d=await crypto.subtle.digest('SHA-256',b);return Array.from(new Uint8Array(d)).map(x=>x.toString(16).padStart(2,'0')).join('')}catch(_){}}
+ return sha256js(b)}
+
+/* ---------- portão por regras (contas em inteiros, milionésimos) ---------- */
+const REGRAS={nitrato:{tipo:'max',lim:50,un:'mg/L',chave:/nitrat/i},frio:{tipo:'faixa',a:2,b:8,un:'°C',chave:/frio|vacin|cold|froid|vaccin|°\s*c|º\s*c|\bgraus\b|\bdegr/i}};
+const micro=s=>Math.round(parseFloat(String(s).replace(',','.'))*1e6);
+function lerMedida(txt){const m=txt.match(/(-?\d+(?:[.,]\d+)?)\s*(?:(?:±|\+\/-|\+-)\s*(\d+(?:[.,]\d+)?))?/);if(!m)return null;
+ const v=micro(m[1]),u=m[2]?micro(m[2]):0;if(!Number.isFinite(v)||!Number.isFinite(u))return null;return{v,u,lo:v-u,hi:v+u}}
+function portao(txt){let nome=null;for(const k in REGRAS)if(REGRAS[k].chave.test(txt)){nome=k;break}
+ if(!nome)return null;const r=REGRAS[nome],m=lerMedida(txt.replace(/2\s*(a|to|à|-)\s*8\s*°?\s*c/i,''));if(!m)return null;
+ let ver;if(r.tipo==='max'){const Lm=r.lim*1e6;ver=m.hi<=Lm?'OK':m.lo>Lm?'VETO':'NS'}
+ else{const a=r.a*1e6,b=r.b*1e6;ver=(m.lo>=a&&m.hi<=b)?'OK':(m.hi<a||m.lo>b)?'VETO':'NS'}
+ const f=x=>String(x/1e6).replace('.',L==='en'?'.':',');
+ return{regra:nome,ver,medida:m,txt:f(m.v)+(m.u?' ± '+f(m.u):'')+' '+r.un,lim:r.lim,a:r.a,b:r.b}}
+
+/* ---------- cadeia da conversa ---------- */
+const ZERO='0'.repeat(64);let cadeia=[],ponta=ZERO;
+const corpo=e=>JSON.stringify([e.n,e.ts,e.q,e.a,e.ver,e.prev]);
+async function registar(q,a,ver){const e={n:cadeia.length+1,ts:new Date().toISOString(),q,a,ver,prev:ponta};e.hash=await sha256(corpo(e));ponta=e.hash;cadeia.push(e);return e}
+async function conferirCadeia(pk){if(!pk||pk.schema!=='KONFIRMU-CHAT/1'||!Array.isArray(pk.registos))return{ok:false,erro:true};
+ let prev=ZERO;for(let i=0;i<pk.registos.length;i++){const e=pk.registos[i];if(e.n!==i+1||e.prev!==prev||await sha256(corpo(e))!==e.hash)return{ok:false,em:i+1};prev=e.hash}
+ if(pk.ponta!==prev||pk.n!==pk.registos.length)return{ok:false,em:pk.registos.length};return{ok:true,n:pk.registos.length}}
+const pacote=()=>({schema:'KONFIRMU-CHAT/1',n:cadeia.length,ponta,registos:cadeia});
+
+/* ---------- selo de texto ---------- */
+const limpar=s=>s.normalize('NFC').replace(/ /g,' ').split(/\r?\n/).map(l=>l.replace(/[ \t]+$/,'')).join('\n').replace(/\n+$/,'');
+async function selo(a,b){const ha=await sha256(limpar(a));if(!b||!limpar(b))return{ver:'NS',hash:ha};const hb=await sha256(limpar(b));return{ver:ha===hb?'OK':'VETO',hash:ha}}
+
+/* ---------- ecrã ---------- */
+function bolha(quem,texto,ver,seloTxt){const d=document.createElement('div');d.className='b '+quem;
+ if(ver){const v=document.createElement('span');v.className='v '+({OK:'ok',VETO:'veto',NS:'ns',IA:'ia'})[ver];v.textContent=t(ver);d.appendChild(v);d.appendChild(document.createElement('br'))}
+ d.appendChild(document.createTextNode(texto));
+ if(seloTxt){const s=document.createElement('span');s.className='selo';s.textContent='sha256 '+seloTxt.slice(0,16)+'… · n.º '+cadeia.length;d.appendChild(s)}
+ $('conversa').appendChild(d);$('conversa').scrollTop=$('conversa').scrollHeight}
+let ia=null;
+async function responder(q){const g=portao(q);let a,ver;
+ if(g){ver=g.ver;a=(g.regra==='nitrato'?t('nit')(g):t('fri')(g))+(ver==='NS'?'\n'+t('nsPorque'):'')+'\n'+t('naoGarante')}
+ else if(ia){ver='IA';try{const o=await ia([{role:'system',content:'Answer briefly and plainly, in the language of the user. You never give numbers, limits, doses or deadlines: say that those must come from a written rule.'},{role:'user',content:q}],{max_new_tokens:160});a=o[0].generated_text.at(-1).content}catch(_){ver='NS';a=t('iaFalhou')}}
+ else{ver='NS';a=t('semRegra')}
+ const e=await registar(q,a,ver);return{a,ver,hash:e.hash}}
+async function enviar(){const q=$('p').value.trim();if(!q)return;$('p').value='';bolha('eu',q);const r=await responder(q);bolha('casa',r.a,r.ver,r.hash)}
+async function ligarIA(){if(location.protocol==='file:'||!globalThis.isSecureContext){bolha('casa',t('iaFicheiro'));return}
+ bolha('casa',t('iaABaixar'));try{const m=await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3');
+  const gpu=!!navigator.gpu;ia=await m.pipeline('text-generation','onnx-community/Qwen2.5-0.5B-Instruct',{dtype:gpu?'q4f16':'q8',device:gpu?'webgpu':'wasm'});bolha('casa',t('iaPronta'))}
+ catch(_){ia=null;bolha('casa',t('iaFalhou'))}}
+async function exportar(){const txt=JSON.stringify(pacote(),null,1),nome='konfirmu_conversa.json';
+ try{const f=new File([txt],nome,{type:'application/json'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'Konfirmu'});bolha('casa',t('expOk')(cadeia.length));return}}catch(_){}
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'application/json'}));a.download=nome;a.click();bolha('casa',t('expOk')(cadeia.length))}
+async function importar(ev){const f=ev.target.files[0];if(!f)return;let r;try{r=await conferirCadeia(JSON.parse(await f.text()))}catch(_){r={ok:false,erro:true}}
+ bolha('casa',r.ok?t('impOk')(r.n):r.erro?t('impErro'):t('impMau')(r.em),r.ok?'OK':r.erro?'NS':'VETO');ev.target.value=''}
+async function conferirSelo(){const r=await selo($('tA').value,$('tB').value);bolha('casa',r.ver==='OK'?t('seloIgual'):r.ver==='VETO'?t('seloDif'):t('seloSo')+'\n'+r.hash,r.ver)}
+function pintar(){document.documentElement.lang={pt:'pt-PT',en:'en',fr:'fr'}[L];$('aviso').textContent=t('aviso');$('p').placeholder=t('ph');$('enviar').textContent=t('enviar');
+ for(const[id,k]of[['cAgua','agua'],['cFrio','frio'],['cSelo','selo'],['cIA','ia'],['cExp','exp'],['cImp','imp'],['lA','lA'],['lB','lB'],['bSelo','bSelo']])$(id).textContent=t(k)}
+$('lingua').onchange=e=>{L=e.target.value;pintar()};$('enviar').onclick=enviar;$('p').onkeydown=e=>{if(e.key==='Enter')enviar()};
+$('cAgua').onclick=()=>{$('p').value=t('exAgua');enviar()};$('cFrio').onclick=()=>{$('p').value=t('exFrio');enviar()};
+$('cSelo').onclick=()=>{const s=$('painelSelo').style;s.display=s.display==='block'?'none':'block'};$('bSelo').onclick=conferirSelo;
+$('cIA').onclick=ligarIA;$('cExp').onclick=exportar;$('cImp').onclick=()=>$('fImp').click();$('fImp').onchange=importar;
+const nav=(navigator.language||'pt').slice(0,2);if(T[nav]){L=nav;$('lingua').value=nav}
+pintar();bolha('casa',t('ola'));
+globalThis.KONFIRMU={sha256,sha256js,portao,selo,responder,conferirCadeia,pacote,limpar,definirLingua:l=>{L=l;pintar()}};
+</script>
+</body>
+</html>
