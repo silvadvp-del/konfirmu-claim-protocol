@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌱 Régua do Planeta — a grande notícia das nossas IAs</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:680px;margin:0 auto;padding:16px;color:#eafbe9;overflow-x:hidden;
+ background:radial-gradient(120% 80% at 50% -10%, #0b3d2e 0%, #071a12 45%, #050d09 100%)}
+.stars{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(1px 1px at 20% 30%, #fff, transparent),radial-gradient(1px 1px at 70% 20%, #fff, transparent),radial-gradient(1.5px 1.5px at 40% 70%, #ffd54f, transparent),radial-gradient(1px 1px at 85% 60%, #fff, transparent);background-size:500px 500px;animation:tw 4s ease-in-out infinite alternate;opacity:.7}
+@keyframes tw{from{opacity:.35}to{opacity:.85}}
+.badge{display:inline-block;background:linear-gradient(90deg,#ffb300,#ffd54f);color:#1a1200;font-weight:800;padding:6px 14px;border-radius:999px;font-size:.8rem;letter-spacing:.02em;box-shadow:0 4px 18px rgba(255,179,0,.45);animation:pulse 2.2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+h1{font-size:1.9rem;margin:10px 0 6px;background:linear-gradient(90deg,#ffd54f,#81c784);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:rgba(10,40,28,.75);border:1px solid rgba(129,199,132,.35);border-radius:16px;padding:16px;margin:14px 0;backdrop-filter:blur(6px)}
+button{background:linear-gradient(135deg,#2e7d32,#4caf50);color:#fff;border:0;border-radius:10px;padding:10px 16px;margin:4px 2px;cursor:pointer;font-weight:700}
+button.gold{background:linear-gradient(135deg,#ff8f00,#ffb300);color:#1a1200}
+input[type=range]{width:100%;accent-color:#ffb300}
+pre{white-space:pre-wrap;font-size:.85em;word-break:break-all}
+.verde{color:#a5d6a7}.aviso{font-size:.72em;color:#9e9e9e;margin-top:10px}
+#res{font-size:1.15em;font-weight:800;color:#ffd54f;text-shadow:0 0 18px rgba(255,213,79,.5)}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div style="text-align:center">
+<span class="badge">🤖 we've great news given by our AI Agents — check it out!</span>
+<h1 id="t1">🌱 Régua do Planeta</h1>
+<p id="p1" style="font-size:1.05em;color:#ffd54f">Can we still save the planet? — Planta e descobre, offline, com selo.</p>
+</div>
+<canvas id="globe" width="640" height="320" style="display:block;margin:0 auto"></canvas>
+<div class="card">
+<div id="lang" style="display:flex;gap:6px;margin-bottom:8px"><button onclick="setLang('pt')">🇵🇹 PT</button><button onclick="setLang('en')">🇬🇧 EN</button><button onclick="kidMode()">🧒 kids</button></div>
+<b id="t2">Ritmo de plantação (mudas/dia)</b><br>
+<input type="range" id="rate" min="100" max="3200" step="100" value="800"><span id="rateTxt">800</span><br>
+<b id="t3">Percentagem que sobrevive</b><br>
+<input type="range" id="surv" min="30" max="100" step="5" value="90"><span id="survTxt">90%</span><br>
+<button class="gold" onclick="plantar()" id="btnPlant">🌍 Plantar e calcular!</button>
+</div>
+<div class="card" style="text-align:center">
+<div id="res"></div>
+<pre id="out">—</pre>
+<canvas id="qr" style="display:none;background:#fff;padding:4px;margin:0 auto"></canvas>
+</div>
+<p class="aviso" id="aviso">O que NÃO garante: cenário de demonstração (números de área/densidade ASSUMIDOS [VALIDAR]); a data vem do relógio do aparelho; o selo prova que ESTE cenário foi calculado assim, não que a plantação aconteceu; SELADO ≠ VERDADEIRO.</p>
+<script src="./assets/nacl-fast.min.js"></script>
+<script src="./assets/qrcode.js"></script>
+<script>
+function sha256Planeta(str) {
+  // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
+  // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
+  function rightRotate(value, amount) { return (value>>>amount) | (value<<(32-amount)); }
+  var ascii = unescape(encodeURIComponent(str));   // bytes UTF-8 como chars 0-255
+  var mathPow = Math.pow, maxWord = mathPow(2,32);
+  var result = '', words = [];
+  var asciiBitLength = ascii.length*8;
+  var hash = sha256Planeta.h = sha256Planeta.h || [];
+  var k = sha256Planeta.k = sha256Planeta.k || [];
+  var primeCounter = k.length, isComposite = {};
+  for (var candidate = 2; primeCounter < 64; candidate++) {
+    if (!isComposite[candidate]) {
+      for (var i = 0; i < 313; i += candidate) isComposite[i] = candidate;
+      hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+      k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+    }
+  }
+  ascii += '\x80';
+  while (ascii.length%64 - 56) ascii += '\x00';
+  for (var i = 0; i < ascii.length; i++) {
+    var j = ascii.charCodeAt(i);
+    words[i>>2] |= j << ((3 - i)%4)*8;
+  }
+  words[words.length] = (asciiBitLength/maxWord)|0;
+  words[words.length] = (asciiBitLength);
+  for (var jj = 0; jj < words.length;) {
+    var w = words.slice(jj, jj += 16);
+    var oldHash = hash;
+    hash = hash.slice(0, 8);
+    for (var i2 = 0; i2 < 64; i2++) {
+      var w15 = w[i2-15], w2 = w[i2-2];
+      var a = hash[0], e = hash[4];
+      var temp1 = hash[7]
+        + (rightRotate(e,6)^rightRotate(e,11)^rightRotate(e,25))
+        + ((e&hash[5])^((~e)&hash[6]))
+        + k[i2]
+        + (w[i2] = (i2 < 16) ? w[i2] : (
+            w[i2-16] + (rightRotate(w15,7)^rightRotate(w15,18)^(w15>>>3))
+            + w[i2-7] + (rightRotate(w2,17)^rightRotate(w2,19)^(w2>>>10)))|0);
+      var temp2 = (rightRotate(a,2)^rightRotate(a,13)^rightRotate(a,22))
+        + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
+      hash = [(temp1+temp2)|0].concat(hash);
+      hash[4] = (hash[4]+temp1)|0;
+    }
+    for (var i3 = 0; i3 < 8; i3++) hash[i3] = (hash[i3]+oldHash[i3])|0;
+  }
+  for (var i4 = 0; i4 < 8; i4++) {
+    for (var j4 = 3; j4 + 1; j4--) {
+      var b = (hash[i4]>>(j4*8))&255;
+      result += ((b < 16) ? 0 : '') + b.toString(16);
+    }
+  }
+  return result;
+}
+var L = "pt";
+var TXT = {
+  pt: { t1: "🌱 Régua do Planeta", p1: "Can we still save the planet? — Planta e descobre, offline, com selo.",
+    t2: "Ritmo de plantação (mudas/dia)", t3: "Percentagem que sobrevive", btnPlant: "🌍 Plantar e calcular!",
+    res: "A GRANDE NOTÍCIA: a última muda entra na terra em", crianca: "A árvore que plantas hoje é a sombra de amanhã. Planta e vê!" },
+  en: { t1: "🌱 Planet Ruler", p1: "Can we still save the planet? — Plant and find out, offline, sealed.",
+    t2: "Planting rate (seedlings/day)", t3: "Survival percentage", btnPlant: "🌍 Plant and calculate!",
+    res: "GREAT NEWS: the last seedling goes into the ground on", crianca: "The tree you plant today is tomorrow's shade. Plant and see!" }
+};
+function setLang(l){ L = l; document.getElementById("t1").textContent = TXT[l].t1; document.getElementById("p1").textContent = TXT[l].p1; document.getElementById("t2").textContent = TXT[l].t2; document.getElementById("t3").textContent = TXT[l].t3; document.getElementById("btnPlant").textContent = TXT[l].btnPlant; }
+function kidMode(){ setLang(L); document.getElementById("p1").textContent = TXT[L].crianca; }
+function toHex(u8){ var s=""; for(var i=0;i<u8.length;i++) s += ("0"+u8[i].toString(16)).slice(-2); return s; }
+var verde = 0.08, alvoVerde = 0.08, ang = 0, audioCtx = null;
+function drawGlobe(){
+  var c = document.getElementById("globe"), x = c.getContext("2d");
+  var cx = c.width/2, cy = c.height/2, R = 140;
+  x.clearRect(0,0,c.width,c.height);
+  x.fillStyle = "#0b1f33"; x.beginPath(); x.arc(cx,cy,R,0,7); x.fill();
+  x.save(); x.beginPath(); x.arc(cx,cy,R,0,7); x.clip();
+  var g = x.createRadialGradient(cx-40,cy-50,20,cx,cy,R);
+  g.addColorStop(0,"#2e7d32"); g.addColorStop(1,"#0a1208");
+  x.fillStyle = g; x.fillRect(cx-R,cy-R,2*R,2*R);
+  x.strokeStyle = "rgba(255,255,255,.2)";
+  for(var i=-2;i<=2;i++){ x.beginPath(); x.ellipse(cx+i*R/3, cy, R*0.35, R, 0, 0, 7); x.stroke(); }
+  for(var j=-2;j<=2;j++){ x.beginPath(); x.ellipse(cx, cy+j*R/3, R, R*0.35, 0, 0, 7); x.stroke(); }
+  ang += 0.004; var wob = Math.sin(ang)*12;
+  var h = verde * R*2;
+  x.fillStyle = "rgba(76,175,80,.6)";
+  x.fillRect(cx-R + wob, cy+R-h, 2*R, h);
+  x.fillStyle = "rgba(255,213,79,.5)";
+  for(var s=0;s<14;s++){ var sx = cx + Math.sin(ang*2 + s*1.7)*R*0.9, sy = cy + Math.cos(ang + s)*R*0.9; x.beginPath(); x.arc(sx,sy,1.2,0,7); x.fill(); }
+  x.restore();
+  x.strokeStyle = "#4caf50"; x.lineWidth = 3; x.beginPath(); x.arc(cx,cy,R,0,7); x.stroke();
+  verde += (alvoVerde - verde)*0.04;
+  requestAnimationFrame(drawGlobe);
+}
+function somFesta(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  [523.25,659.25,783.99].forEach(function(f,i){
+    var o=audioCtx.createOscillator(), g2=audioCtx.createGain();
+    o.type="triangle"; o.frequency.value=f;
+    g2.gain.setValueAtTime(0.001,audioCtx.currentTime+i*0.15);
+    g2.gain.exponentialRampToValueAtTime(0.25,audioCtx.currentTime+i*0.15+0.05);
+    g2.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+i*0.15+0.6);
+    o.connect(g2); g2.connect(audioCtx.destination);
+    o.start(audioCtx.currentTime+i*0.15); o.stop(audioCtx.currentTime+i*0.15+0.6);
+  });
+}
+function plantar(){
+  var rate = parseInt(document.getElementById("rate").value, 10);
+  var surv = parseInt(document.getElementById("surv").value, 10);
+  document.getElementById("rateTxt").textContent = rate;
+  document.getElementById("survTxt").textContent = surv + "%";
+  var TOTAL = 1600000000;
+  var dias = Math.ceil(TOTAL / rate);
+  var hoje = new Date();
+  var fim = new Date(hoje.getTime() + dias*86400000);
+  var vivas = Math.round(TOTAL * surv / 100);
+  alvoVerde = Math.min(1, Math.max(0.08, vivas / TOTAL));
+  somFesta();
+  document.getElementById("res").textContent = TXT[L].res + " " + fim.toISOString().slice(0,10) + " 🎉";
+  var linhas = [];
+  linhas.push(TXT[L].t2 + ": " + rate + " | " + TXT[L].t3 + ": " + surv + "%");
+  linhas.push("mudas plantadas: " + TOTAL.toLocaleString() + " | árvores vivas: " + vivas.toLocaleString());
+  linhas.push("dias até à última muda: " + dias + " (" + Math.round(dias/365) + " anos)");
+  var cenario = { rate: rate, surv: surv, total: TOTAL, dias: dias, fim: fim.toISOString().slice(0,10), vivas: vivas };
+  var hash = sha256Planeta(JSON.stringify(cenario), false);
+  linhas.push("sha256: " + hash.slice(0,32) + "…");
+  var kp = nacl.sign.keyPair();
+  var alvo = "KONFIRMU-PLANETA|v1|" + hash;
+  var sig = nacl.sign.detached(new TextEncoder().encode(alvo), kp.secretKey);
+  linhas.push("selo Ed25519: " + toHex(sig).slice(0,32) + "…");
+  document.getElementById("out").textContent = linhas.join(String.fromCharCode(10));
+  var c = document.getElementById("qr"); c.style.display = "block";
+  var qr = qrcode(0,"M"); qr.addData("KONFIRMU|PLANETA|v1|" + hash + "|" + toHex(kp.publicKey) + "|" + toHex(sig),"Byte"); qr.make();
+  var n = qr.getModuleCount(), s = 3; c.width = n*s; c.height = n*s;
+  var ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#000";
+  for(var r=0;r<n;r++) for(var cc=0;cc<n;cc++) if(qr.isDark(r,cc)) ctx.fillRect(cc*s,r*s,s,s);
+}
+drawGlobe();
+</script>
+</body>
+</html>
