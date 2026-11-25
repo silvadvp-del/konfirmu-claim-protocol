@@ -1,13 +1,13 @@
-# Chat de bolso offline v0.4 — o que está provado e o que não está
+# Chat de bolso offline v0.5 — o que está provado e o que não está
 
 Data: 2026-11-25. Finalidade: ensino e investigação. Não serve para decisões sobre pessoas.
 
 | Ficheiro | Bytes | SHA-256 |
 |---|---|---|
-| konfirmu_chat_offline.html | 36971 | 5f9034c1e9eb0593f09a860a58f97ae167d0fbdbba9cc9230157b30fb4e85eb7 |
+| konfirmu_chat_offline.html | 47731 | 0b1659ed306616e5cf8b9952548cd494fade61bafe3e5f1abc22456258653ce4 |
 | konfirmu_chat_sw.js | 630 | f22025f21635a977f4b2f946cb3b9ddf6b76da3a8335f2be38394d314b284a02 |
 
-## Provado (34 de 34)
+## Provado (39 de 39)
 
 Repetir: `python3 tests/test_konfirmu_chat_offline.py` (Chrome sem ecrã; sai com 0 só se tudo passar).
 
@@ -29,6 +29,10 @@ Repetir: `python3 tests/test_konfirmu_chat_offline.py` (Chrome sem ecrã; sai co
 16. Assinatura: a conversa exportada sai assinada pela chave do aparelho (ECDSA P-256) e a assinatura confere. Um bit mexido na assinatura é recusado. Uma conversa cortada no fim, com a assinatura antiga, é recusada.
 17. Foto assinada: confere. Imagem trocada com a assinatura de outra é recusada. Sem a linha de assinatura, a página diz que não sabe quem enviou.
 18. A chave do aparelho é a mesma depois de fechar e abrir.
+19. Folhas da casa: as 9 folhas de `cartridges/` estão dentro da página, cada uma com o SHA-256 do ficheiro de origem. As regras já não estão escritas à mão.
+20. Os 19 vetores de teste da casa dão o mesmo lado: onde a casa diz OK, a página diz «confere»; onde a casa diz VETO, a página diz «não confere» ou «ainda não sei». Em 2 dos 19 (nitrato 51 ± 1,5 e sensibilidade climática) a casa diz VETO e a página diz «ainda não sei», porque a margem cruza o limite. Nenhum VETO da casa passa a «confere».
+21. A folha de dose pediátrica não está na página.
+22. A conta das fórmulas não usa `eval`: 8 fórmulas estranhas são recusadas; divisão por um valor que pode ser zero é recusada.
 
 ## Não provado, e porquê
 
@@ -46,6 +50,8 @@ Repetir: `python3 tests/test_konfirmu_chat_offline.py` (Chrome sem ecrã; sai co
 ## Não feito
 
 - Chave da Konfirmu para assinar as folhas de regras e a própria página. Não existe. Quem guarda essa chave é decisão do dono; por isso hoje nada prova que uma cópia desta página é a original, além do SHA-256 da tabela acima.
+- Vigência verdadeira de cada norma (Chronolex). As folhas de `cartridges/` não trazem data de início nem de fim. O prazo «2027-11-25» é da página inteira e foi escolhido por quem escreveu o código.
+- As folhas estão só em português; os nomes das entradas são os do ficheiro (por exemplo `peso_bruto_kg`).
 - Revisão humana das regras. Nenhuma folha tem ainda o nome de quem a reviu. O prazo de 12 meses foi escolhido por quem escreveu o código.
 - Cifra dos pacotes. Tudo viaja em claro.
 - QR animado, Wi-Fi local, rádio LoRa.
