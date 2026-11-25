@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Konfirmu · Chat de bolso offline · v0.1 · 2026-11-25 · EUPL-1.2
+<!-- Konfirmu · Chat de bolso offline · v0.2 · 2026-11-25 · EUPL-1.2
      Um só ficheiro. Sem servidor. Sem bibliotecas. Abre a partir do WhatsApp num Android.
      Finalidade: ensino e investigação. Não serve para decisões sobre pessoas. -->
 <html lang="pt-PT">
@@ -47,7 +47,7 @@ select{background:var(--fundo);border:1px solid var(--linha);border-radius:8px;p
 </div>
 <div id="atalhos">
  <button class="c" id="cAgua"></button><button class="c" id="cFrio"></button><button class="c" id="cSelo"></button>
- <button class="c" id="cIA"></button><button class="c" id="cExp"></button><button class="c" id="cImp"></button>
+ <button class="c" id="cIA"></button><button class="c" id="cSomE"></button><button class="c" id="cSomO"></button><button class="c" id="cExp"></button><button class="c" id="cImp"></button><button class="c" id="cApg"></button>
  <input type="file" id="fImp" accept=".json,application/json" hidden>
 </div>
 <div id="barra"><input id="p" autocomplete="off"><button id="enviar"></button></div>
@@ -70,7 +70,10 @@ pt:{aviso:'Ensino e investigação. Não serve para decisões sobre pessoas. Fun
  iaFicheiro:'A IA local precisa de ser aberta por um link com cadeado (https), não por um ficheiro. As regras e o selo funcionam aqui na mesma.',
  iaABaixar:'A descarregar a IA para este aparelho (cerca de 480 MB, uma só vez). Usa Wi-Fi.',iaPronta:'IA local pronta. Corre neste aparelho. O que ela disser não é conferido.',
  iaFalhou:'A IA local não arrancou neste aparelho. As regras e o selo continuam a funcionar.',
- expOk:(n)=>`Conversa exportada: ${n} registos.`,impOk:(n)=>`Cadeia inteira: ${n} registos, nenhum alterado.`,impMau:(n)=>`Cadeia partida no registo ${n}. Alguém mexeu aqui ou a seguir.`,impErro:'Este ficheiro não é uma conversa Konfirmu.'},
+ expOk:(n)=>`Conversa exportada: ${n} registos.`,impOk:(n)=>`Cadeia inteira: ${n} registos, nenhum alterado.`,impMau:(n)=>`Cadeia partida no registo ${n}. Alguém mexeu aqui ou a seguir.`,impErro:'Este ficheiro não é uma conversa Konfirmu.',somE:'Enviar por som',somO:'Ouvir som',apg:'Apagar conversa',apgMesmo:'Apagar mesmo?',
+ somATocar:(n)=>`A tocar o som (${n} s). Põe o outro telemóvel perto, em «Ouvir som».`,somNada:'Ainda não há nada para enviar.',somGrande:'Texto grande demais para o som (máximo 120 letras).',somSemSom:'Este aparelho não deixou tocar o som. O resto funciona.',
+ somAOuvir:'A ouvir durante 30 segundos…',somRecebido:(m)=>`Recebido por som, sem erros de transmissão:\n${m}\nIsto diz que o som chegou inteiro. Não diz que o conteúdo é verdadeiro.`,somFalhou:'Não apanhei nenhuma mensagem inteira. Aproxima os telemóveis e tenta outra vez.',somSemMic:'Este aparelho não me deu o microfone. O resto funciona.',
+ guardado:(n)=>`Tens ${n} registos guardados neste aparelho.`,semGuardar:'Este aparelho não deixa guardar a conversa. Se fechares, perde-se. Exporta antes.',guardadoMau:'A conversa guardada neste aparelho foi alterada. Não a carreguei e não lhe mexi.',apagado:'Conversa apagada deste aparelho.'},
 en:{aviso:'Teaching and research. Not for decisions about people. Works without internet.',ph:'Type a measurement or a question…',enviar:'Send',
  ola:'Hello. I check measurements against written rules and say where each rule comes from. No internet, no account.\nTry: "nitrate 48 ± 3 mg/L" or "vaccine at 9.5 °C".',
  agua:'Water: nitrate',frio:'Cold chain',selo:'Text seal',ia:'Turn on local AI',exp:'Export chat',imp:'Check a chat',
@@ -86,7 +89,10 @@ en:{aviso:'Teaching and research. Not for decisions about people. Works without 
  iaFicheiro:'Local AI has to be opened from a padlocked link (https), not from a file. The rules and the seal still work here.',
  iaABaixar:'Downloading the AI to this device (about 480 MB, once). Use Wi-Fi.',iaPronta:'Local AI ready. It runs on this device. What it says is not checked.',
  iaFalhou:'Local AI did not start on this device. The rules and the seal keep working.',
- expOk:(n)=>`Chat exported: ${n} records.`,impOk:(n)=>`Chain intact: ${n} records, none altered.`,impMau:(n)=>`Chain broken at record ${n}. Someone changed this record or a later one.`,impErro:'This file is not a Konfirmu chat.'},
+ expOk:(n)=>`Chat exported: ${n} records.`,impOk:(n)=>`Chain intact: ${n} records, none altered.`,impMau:(n)=>`Chain broken at record ${n}. Someone changed this record or a later one.`,impErro:'This file is not a Konfirmu chat.',somE:'Send by sound',somO:'Listen for sound',apg:'Delete chat',apgMesmo:'Really delete?',
+ somATocar:(n)=>`Playing the sound (${n} s). Hold the other phone close, on "Listen for sound".`,somNada:'Nothing to send yet.',somGrande:'Text too long for sound (120 letters at most).',somSemSom:'This device did not let me play sound. The rest works.',
+ somAOuvir:'Listening for 30 seconds…',somRecebido:(m)=>`Received by sound, with no transmission errors:\n${m}\nThis says the sound arrived whole. It does not say the content is true.`,somFalhou:'I did not catch a whole message. Bring the phones closer and try again.',somSemMic:'This device did not give me the microphone. The rest works.',
+ guardado:(n)=>`You have ${n} records saved on this device.`,semGuardar:'This device does not allow saving the chat. If you close, it is lost. Export first.',guardadoMau:'The chat saved on this device was altered. I did not load it and did not touch it.',apagado:'Chat deleted from this device.'},
 fr:{aviso:'Enseignement et recherche. Pas pour des décisions concernant des personnes. Fonctionne sans internet.',ph:'Écris une mesure ou une question…',enviar:'Envoyer',
  ola:'Bonjour. Je vérifie des mesures avec des règles écrites et je dis d\'où vient chaque règle. Sans internet, sans compte.\nEssaie : « nitrate 48 ± 3 mg/L » ou « vaccin à 9,5 °C ».',
  agua:'Eau : nitrate',frio:'Chaîne du froid',selo:'Sceau de texte',ia:'Activer l\'IA locale',exp:'Exporter',imp:'Vérifier une conversation',
@@ -102,7 +108,10 @@ fr:{aviso:'Enseignement et recherche. Pas pour des décisions concernant des per
  iaFicheiro:'L\'IA locale doit être ouverte par un lien avec cadenas (https), pas par un fichier. Les règles et le sceau fonctionnent ici quand même.',
  iaABaixar:'Téléchargement de l\'IA sur cet appareil (environ 480 Mo, une seule fois). Utilise le Wi-Fi.',iaPronta:'IA locale prête. Elle tourne sur cet appareil. Ce qu\'elle dit n\'est pas vérifié.',
  iaFalhou:'L\'IA locale n\'a pas démarré sur cet appareil. Les règles et le sceau continuent de fonctionner.',
- expOk:(n)=>`Conversation exportée : ${n} enregistrements.`,impOk:(n)=>`Chaîne intacte : ${n} enregistrements, aucun modifié.`,impMau:(n)=>`Chaîne rompue à l'enregistrement ${n}. Quelqu'un a modifié celui-ci ou un suivant.`,impErro:'Ce fichier n\'est pas une conversation Konfirmu.'}};
+ expOk:(n)=>`Conversation exportée : ${n} enregistrements.`,impOk:(n)=>`Chaîne intacte : ${n} enregistrements, aucun modifié.`,impMau:(n)=>`Chaîne rompue à l'enregistrement ${n}. Quelqu'un a modifié celui-ci ou un suivant.`,impErro:'Ce fichier n\'est pas une conversation Konfirmu.',somE:'Envoyer par le son',somO:'Écouter le son',apg:'Effacer la conversation',apgMesmo:'Vraiment effacer ?',
+ somATocar:(n)=>`Le son joue (${n} s). Approche l'autre téléphone, sur « Écouter le son ».`,somNada:'Rien à envoyer pour l\'instant.',somGrande:'Texte trop long pour le son (120 lettres au plus).',somSemSom:'Cet appareil n\'a pas laissé jouer le son. Le reste fonctionne.',
+ somAOuvir:'J\'écoute pendant 30 secondes…',somRecebido:(m)=>`Reçu par le son, sans erreur de transmission :\n${m}\nCela dit que le son est arrivé entier. Cela ne dit pas que le contenu est vrai.`,somFalhou:'Je n\'ai capté aucun message entier. Rapproche les téléphones et réessaie.',somSemMic:'Cet appareil ne m\'a pas donné le micro. Le reste fonctionne.',
+ guardado:(n)=>`Tu as ${n} enregistrements gardés sur cet appareil.`,semGuardar:'Cet appareil ne permet pas de garder la conversation. Si tu fermes, elle est perdue. Exporte avant.',guardadoMau:'La conversation gardée sur cet appareil a été modifiée. Je ne l\'ai pas chargée et je n\'y ai pas touché.',apagado:'Conversation effacée de cet appareil.'}};
 let L='pt';const t=k=>T[L][k];const $=id=>document.getElementById(id);
 
 /* ---------- SHA-256 (WebCrypto, com reserva em JS puro para páginas sem cadeado) ---------- */
@@ -132,9 +141,11 @@ function portao(txt){let nome=null;for(const k in REGRAS)if(REGRAS[k].chave.test
  return{regra:nome,ver,medida:m,txt:f(m.v)+(m.u?' ± '+f(m.u):'')+' '+r.un,lim:r.lim,a:r.a,b:r.b}}
 
 /* ---------- cadeia da conversa ---------- */
-const ZERO='0'.repeat(64);let cadeia=[],ponta=ZERO;
+const ZERO='0'.repeat(64);let cadeia=[],ponta=ZERO,bd=null;
+function abrirBD(){return new Promise(r=>{try{const q=indexedDB.open('konfirmu_chat',1);q.onupgradeneeded=()=>q.result.createObjectStore('r',{keyPath:'n'});q.onsuccess=()=>r(q.result);q.onerror=q.onblocked=()=>r(null)}catch(_){r(null)}})}
+const bdOp=(modo,f)=>new Promise(r=>{if(!bd)return r(null);try{const tx=bd.transaction('r',modo),q=f(tx.objectStore('r'));tx.oncomplete=()=>r(q.result);tx.onerror=tx.onabort=()=>r(null)}catch(_){r(null)}});
 const corpo=e=>JSON.stringify([e.n,e.ts,e.q,e.a,e.ver,e.prev]);
-async function registar(q,a,ver){const e={n:cadeia.length+1,ts:new Date().toISOString(),q,a,ver,prev:ponta};e.hash=await sha256(corpo(e));ponta=e.hash;cadeia.push(e);return e}
+async function registar(q,a,ver){const e={n:cadeia.length+1,ts:new Date().toISOString(),q,a,ver,prev:ponta};e.hash=await sha256(corpo(e));ponta=e.hash;cadeia.push(e);await bdOp('readwrite',s=>s.put(e));return e}
 async function conferirCadeia(pk){if(!pk||pk.schema!=='KONFIRMU-CHAT/1'||!Array.isArray(pk.registos))return{ok:false,erro:true};
  let prev=ZERO;for(let i=0;i<pk.registos.length;i++){const e=pk.registos[i];if(e.n!==i+1||e.prev!==prev||await sha256(corpo(e))!==e.hash)return{ok:false,em:i+1};prev=e.hash}
  if(pk.ponta!==prev||pk.n!==pk.registos.length)return{ok:false,em:pk.registos.length};return{ok:true,n:pk.registos.length}}
@@ -145,10 +156,10 @@ const limpar=s=>s.normalize('NFC').replace(/ /g,' ').split(/\r?\n/).map(l=>l.re
 async function selo(a,b){const ha=await sha256(limpar(a));if(!b||!limpar(b))return{ver:'NS',hash:ha};const hb=await sha256(limpar(b));return{ver:ha===hb?'OK':'VETO',hash:ha}}
 
 /* ---------- ecrã ---------- */
-function bolha(quem,texto,ver,seloTxt){const d=document.createElement('div');d.className='b '+quem;
+function bolha(quem,texto,ver,seloTxt,n){const d=document.createElement('div');d.className='b '+quem;
  if(ver){const v=document.createElement('span');v.className='v '+({OK:'ok',VETO:'veto',NS:'ns',IA:'ia'})[ver];v.textContent=t(ver);d.appendChild(v);d.appendChild(document.createElement('br'))}
  d.appendChild(document.createTextNode(texto));
- if(seloTxt){const s=document.createElement('span');s.className='selo';s.textContent='sha256 '+seloTxt.slice(0,16)+'… · n.º '+cadeia.length;d.appendChild(s)}
+ if(seloTxt){const s=document.createElement('span');s.className='selo';s.textContent='sha256 '+seloTxt.slice(0,16)+'… · n.º '+(n||cadeia.length);d.appendChild(s)}
  $('conversa').appendChild(d);$('conversa').scrollTop=$('conversa').scrollHeight}
 let ia=null;
 async function responder(q){const g=portao(q);let a,ver;
@@ -167,15 +178,59 @@ async function exportar(){const txt=JSON.stringify(pacote(),null,1),nome='konfir
 async function importar(ev){const f=ev.target.files[0];if(!f)return;let r;try{r=await conferirCadeia(JSON.parse(await f.text()))}catch(_){r={ok:false,erro:true}}
  bolha('casa',r.ok?t('impOk')(r.n):r.erro?t('impErro'):t('impMau')(r.em),r.ok?'OK':r.erro?'NS':'VETO');ev.target.value=''}
 async function conferirSelo(){const r=await selo($('tA').value,$('tB').value);bolha('casa',r.ver==='OK'?t('seloIgual'):r.ver==='VETO'?t('seloDif'):t('seloSo')+'\n'+r.hash,r.ver)}
+
+/* ---------- modem de som: FSK 1850/2350 Hz, 35 ms por bit, CRC-16 ---------- */
+const SOM={f0:1850,f1:2350,fs:1400,bit:.035,sinc:.2,max:120};
+function crc16(b){let c=0xFFFF;for(const x of b){c^=x<<8;for(let i=0;i<8;i++)c=c&0x8000?((c<<1)^0x1021)&0xFFFF:(c<<1)&0xFFFF}return c}
+function somBits(txt){const p=new TextEncoder().encode(txt);if(!p.length||p.length>SOM.max)return null;
+ const f=new Uint8Array(p.length+5);f[0]=0xAA;f[1]=0x4B;f[2]=p.length;f.set(p,3);const c=crc16(f.subarray(1,p.length+3));f[p.length+3]=c>>8;f[p.length+4]=c&255;
+ const bits=[];for(const y of f)for(let i=7;i>=0;i--)bits.push((y>>i)&1);return bits}
+function somOnda(bits,sr){const nb=sr*SOM.bit,ns=Math.round(sr*SOM.sinc),tot=ns+Math.ceil(bits.length*nb)+Math.round(sr*.05),o=new Float32Array(tot);let ph=0;
+ for(let i=0;i<tot;i++){let f=SOM.fs;if(i>=ns){const k=Math.floor((i-ns)/nb);f=k<bits.length?(bits[k]?SOM.f1:SOM.f0):0}
+  if(f){ph+=2*Math.PI*f/sr;o[i]=.6*Math.sin(ph)}}
+ const r=Math.round(sr*.01);for(let i=0;i<r;i++)o[i]*=i/r;return o}
+function goertzel(s,a,n,f,sr){const c=2*Math.cos(2*Math.PI*f/sr);let q1=0,q2=0;for(let i=a;i<a+n;i++){const q0=c*q1-q2+s[i];q2=q1;q1=q0}return q1*q1+q2*q2-q1*q2*c}
+function somLer(s,sr){const nb=sr*SOM.bit,n=Math.floor(nb),passo=Math.max(1,Math.floor(nb/8));
+ const bitEm=(ini,k)=>{const a=Math.round(ini+k*nb);if(a+n>s.length)return -1;return goertzel(s,a,n,SOM.f1,sr)>goertzel(s,a,n,SOM.f0,sr)?1:0};
+ const byteEm=(ini,k)=>{let v=0;for(let i=0;i<8;i++){const b=bitEm(ini,k*8+i);if(b<0)return -1;v=v<<1|b}return v};
+ const casa=(ini,k,val)=>{for(let i=0;i<8;i++)if(bitEm(ini,k*8+i)!==((val>>(7-i))&1))return false;return true};
+ for(let ini=0;ini+40*nb<s.length;ini+=passo){if(!casa(ini,0,0xAA)||!casa(ini,1,0x4B))continue;
+  const L=byteEm(ini,2);if(L<1||L>SOM.max)continue;const tudo=new Uint8Array(L+2);tudo[0]=0x4B;tudo[1]=L;let ok=true;
+  for(let i=0;i<L;i++){const v=byteEm(ini,3+i);if(v<0){ok=false;break}tudo[2+i]=v}
+  if(!ok)continue;const ch=byteEm(ini,3+L),cl=byteEm(ini,4+L);if(ch<0||cl<0||crc16(tudo)!==(ch<<8|cl))continue;
+  try{return new TextDecoder('utf-8',{fatal:true}).decode(tudo.subarray(2))}catch(_){}}
+ return null}
+const AC=()=>new(globalThis.AudioContext||globalThis.webkitAudioContext)();
+async function somEnviar(){let m=$('p').value.trim();if(!m){if(!cadeia.length){bolha('casa',t('somNada'));return}const e=cadeia[cadeia.length-1];m='K1|'+e.n+'|'+e.ver+'|'+e.hash.slice(0,32)}
+ const bits=somBits(m);if(!bits){bolha('casa',t('somGrande'));return}
+ try{const ctx=AC(),o=somOnda(bits,ctx.sampleRate),buf=ctx.createBuffer(1,o.length,ctx.sampleRate);buf.getChannelData(0).set(o);
+  const src=ctx.createBufferSource();src.buffer=buf;src.connect(ctx.destination);src.onended=()=>ctx.close();src.start();
+  $('p').value='';bolha('eu','♪ '+m);bolha('casa',t('somATocar')(Math.ceil(o.length/ctx.sampleRate)))}
+ catch(_){bolha('casa',t('somSemSom'))}}
+async function somOuvir(){let st;try{st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}})}catch(_){bolha('casa',t('somSemMic'));return}
+ bolha('casa',t('somAOuvir'));const ctx=AC(),src=ctx.createMediaStreamSource(st),pr=ctx.createScriptProcessor(4096,1,1),ped=[];let total=0,fim=false;const t0=Date.now();
+ const parar=m=>{if(fim)return;fim=true;pr.disconnect();src.disconnect();st.getTracks().forEach(x=>x.stop());ctx.close();bolha('casa',m==null?t('somFalhou'):t('somRecebido')(m),m==null?'NS':null)};
+ pr.onaudioprocess=e=>{if(fim)return;const d=e.inputBuffer.getChannelData(0);ped.push(new Float32Array(d));total+=d.length};src.connect(pr);pr.connect(ctx.destination);
+ const ver=()=>{if(fim)return;const s=new Float32Array(total);let o=0;for(const x of ped){s.set(x,o);o+=x.length}
+  const m=somLer(s,ctx.sampleRate);if(m!=null)parar(m);else if(Date.now()-t0>30000)parar(null);else setTimeout(ver,2500)};setTimeout(ver,2500)}
+let apgArmado=0;
+async function apagar(){if(Date.now()>apgArmado){apgArmado=Date.now()+4000;$('cApg').textContent=t('apgMesmo');setTimeout(()=>{$('cApg').textContent=t('apg')},4000);return}
+ apgArmado=0;await bdOp('readwrite',s=>s.clear());cadeia=[];ponta=ZERO;$('conversa').textContent='';$('cApg').textContent=t('apg');bolha('casa',t('ola'));bolha('casa',t('apagado'))}
+async function arrancar(){pintar();bolha('casa',t('ola'));bd=await abrirBD();if(!bd){bolha('casa',t('semGuardar'));return}
+ const rs=await bdOp('readonly',s=>s.getAll())||[];if(!rs.length)return;
+ const r=await conferirCadeia({schema:'KONFIRMU-CHAT/1',n:rs.length,ponta:rs[rs.length-1].hash,registos:rs});
+ if(!r.ok){bd=null;bolha('casa',t('guardadoMau'),'VETO');return}
+ cadeia=rs;ponta=rs[rs.length-1].hash;for(const e of rs){bolha('eu',e.q);bolha('casa',e.a,e.ver,e.hash,e.n)}bolha('casa',t('guardado')(rs.length))}
 function pintar(){document.documentElement.lang={pt:'pt-PT',en:'en',fr:'fr'}[L];$('aviso').textContent=t('aviso');$('p').placeholder=t('ph');$('enviar').textContent=t('enviar');
- for(const[id,k]of[['cAgua','agua'],['cFrio','frio'],['cSelo','selo'],['cIA','ia'],['cExp','exp'],['cImp','imp'],['lA','lA'],['lB','lB'],['bSelo','bSelo']])$(id).textContent=t(k)}
+ for(const[id,k]of[['cAgua','agua'],['cFrio','frio'],['cSelo','selo'],['cIA','ia'],['cSomE','somE'],['cSomO','somO'],['cApg','apg'],['cExp','exp'],['cImp','imp'],['lA','lA'],['lB','lB'],['bSelo','bSelo']])$(id).textContent=t(k)}
 $('lingua').onchange=e=>{L=e.target.value;pintar()};$('enviar').onclick=enviar;$('p').onkeydown=e=>{if(e.key==='Enter')enviar()};
 $('cAgua').onclick=()=>{$('p').value=t('exAgua');enviar()};$('cFrio').onclick=()=>{$('p').value=t('exFrio');enviar()};
 $('cSelo').onclick=()=>{const s=$('painelSelo').style;s.display=s.display==='block'?'none':'block'};$('bSelo').onclick=conferirSelo;
-$('cIA').onclick=ligarIA;$('cExp').onclick=exportar;$('cImp').onclick=()=>$('fImp').click();$('fImp').onchange=importar;
+$('cIA').onclick=ligarIA;$('cExp').onclick=exportar;$('cImp').onclick=()=>$('fImp').click();$('fImp').onchange=importar;$('cSomE').onclick=somEnviar;$('cSomO').onclick=somOuvir;$('cApg').onclick=apagar;
 const nav=(navigator.language||'pt').slice(0,2);if(T[nav]){L=nav;$('lingua').value=nav}
-pintar();bolha('casa',t('ola'));
-globalThis.KONFIRMU={sha256,sha256js,portao,selo,responder,conferirCadeia,pacote,limpar,definirLingua:l=>{L=l;pintar()}};
+const pronto=arrancar();
+if(location.protocol!=='file:'&&globalThis.isSecureContext&&'serviceWorker'in navigator)navigator.serviceWorker.register('konfirmu_chat_sw.js').catch(()=>{});
+globalThis.KONFIRMU={sha256,sha256js,portao,selo,responder,conferirCadeia,pacote,limpar,pronto,crc16,somBits,somOnda,somLer,definirLingua:l=>{L=l;pintar()}};
 </script>
 </body>
 </html>
