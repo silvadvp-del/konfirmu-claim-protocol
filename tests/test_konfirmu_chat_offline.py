@@ -20,6 +20,11 @@ JS=r'''async()=>{const K=KONFIRMU;await K.pronto;K.definirLingua('pt');const o={
  for(const m of msgs)for(const sr of [44100,48000])for(const amp of [0,.3,.6]){const w=K.somOnda(K.somBits(m),sr);o.som.push(K.somLer(ruido(w,amp,sr+amp*10),sr)===m)}
  const w=K.somOnda(K.somBits(msgs[0]),44100),est=ruido(w,.1,7);for(let i=30000;i<34000;i++)est[i]=0;o.som_cortado=K.somLer(est,44100);
  o.som_so_ruido=K.somLer(ruido(new Float32Array(1),.6,3),44100);o.som_grande=K.somBits('x'.repeat(121));o.crc=K.crc16(new TextEncoder().encode('123456789')).toString(16);
+ // prazo de validade e assinatura
+ o.validade=[K.portao('nitrato 40 mg/L',new Date('2027-11-25T12:00:00Z')).ver,K.portao('nitrato 40 mg/L',new Date('2027-11-26T12:00:00Z')).ver,K.portao('nitrato 40 mg/L',new Date('2027-11-26T12:00:00Z')).velha];
+ const pa=JSON.parse(JSON.stringify(await K.pacoteAssinado()));const ra=await K.conferirCadeia(pa);o.dedo=(await K.minhaChave()).dedo;o.assin_ok=ra.ok&&ra.dedo===o.dedo&&/^[0-9a-f]{16}$/.test(o.dedo);
+ const pm=JSON.parse(JSON.stringify(pa));const sb=atob(pm.assinatura.sig).split('');sb[5]=String.fromCharCode(sb[5].charCodeAt(0)^1);pm.assinatura.sig=btoa(sb.join(''));const rm=await K.conferirCadeia(pm);o.assin_ma=rm.ok===false&&rm.assinMa===true;
+ const pt2=JSON.parse(JSON.stringify(pa));pt2.registos.pop();pt2.n=2;pt2.ponta=pt2.registos[1].hash;const rt=await K.conferirCadeia(pt2);o.assin_cortada=rt.ok===false&&rt.assinMa===true;
  // foto leve
  const cv=document.createElement('canvas');cv.width=1200;cv.height=900;const g=cv.getContext('2d');const gr=g.createLinearGradient(0,0,1200,900);gr.addColorStop(0,'#234');gr.addColorStop(1,'#fb9');g.fillStyle=gr;g.fillRect(0,0,1200,900);
  let x=5;for(let i=0;i<400;i++){x=(x*1664525+1013904223)>>>0;g.fillStyle='hsl('+(x%360)+',60%,'+(30+x%40)+'%)';g.beginPath();g.arc(x%1200,(x>>>8)%900,10+(x>>>16)%60,0,7);g.fill()}
@@ -34,6 +39,11 @@ JS=r'''async()=>{const K=KONFIRMU;await K.pronto;K.definirLingua('pt');const o={
  r=await K.fotoJuntar(P.filter(p=>p!==dados[0]&&p!==dados[1]));o.f_perde2=[r.ver,r.faltam];
  const q=dados[2].split('|');const u=atob(q[4]).split('');u[10]=String.fromCharCode(u[10].charCodeAt(0)^1);q[4]=btoa(u.join(''));
  r=await K.fotoJuntar(P.map(p=>p===dados[2]?q.join('|'):p));o.f_mexido=r.ver;
+ r=await K.fotoJuntar(P);o.f_assinada=r.ver==='OK'&&r.dedo===o.dedo;
+ r=await K.fotoJuntar(P.filter(p=>p.split('|')[2]!=='S'));o.f_sem_assin=r.ver==='OK'&&r.dedo===null;
+ const cv2=document.createElement('canvas');cv2.width=300;cv2.height=200;cv2.getContext('2d').fillRect(20,20,200,100);const outra=await K.fotoComprimir(await new Promise(r=>cv2.toBlob(r,'image/png')));
+ const k2=await K.fotoPacotes(outra.bytes,outra.tipo),Sa=P.find(p=>p.split('|')[2]==='S').split('|');Sa[1]=k2.id;
+ r=await K.fotoJuntar(k2.pacotes.filter(p=>p.split('|')[2]!=='S').concat([Sa.join('|')]));o.f_troca=r.ver==='VETO'&&r.assinMa===true;
  r=await K.fotoJuntar(P.slice(1));o.f_sem_cabecalho=r.ver;r=await K.fotoJuntar(['olá','KI1|x']);o.f_lixo=r.ver;
  return o}'''
 async def main():
@@ -57,6 +67,11 @@ async def main():
             ver('som: 18 idas e voltas (3 textos, 2 ritmos, 3 níveis de ruído)',len(o['som'])==18 and all(o['som']))
             ver('som cortado a meio não inventa mensagem',o['som_cortado'] is None); ver('só ruído não inventa mensagem',o['som_so_ruido'] is None)
             ver('texto com mais de 120 bytes é recusado',o['som_grande'] is None); ver('CRC-16 de «123456789» = 29b1',o['crc']=='29b1')
+            ver('regra dentro do prazo responde; fora do prazo diz «ainda não sei»',o['validade']==['OK','NS',True])
+            ver('conversa exportada sai assinada e a assinatura confere',o['assin_ok']); ver('assinatura com 1 bit mexido é recusada',o['assin_ma'])
+            ver('conversa cortada no fim, com a assinatura antiga, é recusada',o['assin_cortada'])
+            ver('foto: assinada pela chave do aparelho',o['f_assinada']); ver('foto: sem a linha de assinatura, diz que não sabe quem enviou',o['f_sem_assin'])
+            ver('foto: imagem trocada com a assinatura de outra é recusada',o['f_troca'])
             f=o['foto']; print('   foto:',json.dumps(f))
             ver('foto: 1200×900 fica abaixo de 6 000 bytes e cada pacote abaixo de 240 letras',f['bytes']<6000 and f['maior']<240)
             ver('foto: todos os pacotes juntos dão a imagem exata',o['f_tudo']); ver('foto: pacotes fora de ordem dão a imagem exata',o['f_baralhado'])
@@ -68,6 +83,7 @@ async def main():
             ver('em ficheiro, zero pedidos à rede',all(u.startswith('file:') or u.startswith('blob:') for u in pedidos))
             await pg.reload(); n=await pg.evaluate("(async()=>{await KONFIRMU.pronto;return KONFIRMU.pacote().n})()")
             p2=await pg.evaluate("KONFIRMU.pacote().ponta"); ver('conversa volta depois de fechar e abrir (3 registos, mesma ponta)',n==3 and p2==o['ponta'])
+            ver('a chave do aparelho é a mesma depois de fechar e abrir',await pg.evaluate("(async()=>(await KONFIRMU.minhaChave()).dedo)()")==o['dedo'])
             await pg.click('#cApg'); await pg.click('#cApg'); await pg.wait_for_timeout(200); await pg.reload()
             ver('apagar apaga mesmo',await pg.evaluate("(async()=>{await KONFIRMU.pronto;return KONFIRMU.pacote().n})()")==0)
             html=open(RAIZ+'/konfirmu_chat_offline.html',encoding='utf-8').read().lower()

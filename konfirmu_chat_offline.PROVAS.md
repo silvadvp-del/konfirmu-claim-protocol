@@ -1,13 +1,13 @@
-# Chat de bolso offline v0.3 — o que está provado e o que não está
+# Chat de bolso offline v0.4 — o que está provado e o que não está
 
 Data: 2026-11-25. Finalidade: ensino e investigação. Não serve para decisões sobre pessoas.
 
 | Ficheiro | Bytes | SHA-256 |
 |---|---|---|
-| konfirmu_chat_offline.html | 32948 | 92df90cd4a3e306785aefaf47b1e0771b3e65aab4a0d72c1e77e9283b45ab3d0 |
+| konfirmu_chat_offline.html | 36971 | 5f9034c1e9eb0593f09a860a58f97ae167d0fbdbba9cc9230157b30fb4e85eb7 |
 | konfirmu_chat_sw.js | 630 | f22025f21635a977f4b2f946cb3b9ddf6b76da3a8335f2be38394d314b284a02 |
 
-## Provado (26 de 26)
+## Provado (34 de 34)
 
 Repetir: `python3 tests/test_konfirmu_chat_offline.py` (Chrome sem ecrã; sai com 0 só se tudo passar).
 
@@ -25,6 +25,10 @@ Repetir: `python3 tests/test_konfirmu_chat_offline.py` (Chrome sem ecrã; sai co
 12. Pacotes todos juntos, ou fora de ordem, dão a imagem exata, byte a byte.
 13. Um pacote perdido em cada grupo de 4 é recuperado. Dois perdidos no mesmo grupo dão «ainda não sei, faltam 2».
 14. Um bit mexido dá «não confere». Sem cabeçalho, ou com lixo, não aparece imagem nenhuma.
+15. Prazo de validade: dentro do prazo (até 2027-11-25) a regra responde; no dia seguinte a página diz «ainda não sei» e pede uma cópia nova.
+16. Assinatura: a conversa exportada sai assinada pela chave do aparelho (ECDSA P-256) e a assinatura confere. Um bit mexido na assinatura é recusado. Uma conversa cortada no fim, com a assinatura antiga, é recusada.
+17. Foto assinada: confere. Imagem trocada com a assinatura de outra é recusada. Sem a linha de assinatura, a página diz que não sabe quem enviou.
+18. A chave do aparelho é a mesma depois de fechar e abrir.
 
 ## Não provado, e porquê
 
@@ -41,7 +45,9 @@ Repetir: `python3 tests/test_konfirmu_chat_offline.py` (Chrome sem ecrã; sai co
 
 ## Não feito
 
-- Assinatura e cifra dos pacotes (a cadeia mostra alterações; não mostra quem escreveu).
+- Chave da Konfirmu para assinar as folhas de regras e a própria página. Não existe. Quem guarda essa chave é decisão do dono; por isso hoje nada prova que uma cópia desta página é a original, além do SHA-256 da tabela acima.
+- Revisão humana das regras. Nenhuma folha tem ainda o nome de quem a reviu. O prazo de 12 meses foi escolhido por quem escreveu o código.
+- Cifra dos pacotes. Tudo viaja em claro.
 - QR animado, Wi-Fi local, rádio LoRa.
 - Modelo de IA mais pequeno para telemóveis com pouca memória.
 
@@ -50,5 +56,6 @@ Repetir: `python3 tests/test_konfirmu_chat_offline.py` (Chrome sem ecrã; sai co
 - O portão confere o número com a regra. Não confere se a medida foi bem feita.
 - O que a IA local disser aparece marcado como «não conferido».
 - O som confirma que a mensagem chegou inteira. Não confirma que é verdadeira.
-- O selo da foto confere com o que o emissor declarou no cabeçalho. Sem assinatura, não prova quem enviou.
+- A assinatura diz «foi o mesmo aparelho». Não diz o nome de ninguém, e quem recebe só reconhece a chave se já a viu antes.
+- Qualquer pessoa no caminho pode tirar a assinatura. Nesse caso a página diz «sem assinatura», não diz «confere».
 - A reserva recupera 1 pacote em cada 4. Não recupera perdas seguidas.

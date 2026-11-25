@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Konfirmu · Chat de bolso offline · v0.3 · 2026-11-25 · EUPL-1.2
+<!-- Konfirmu · Chat de bolso offline · v0.4 · 2026-11-25 · EUPL-1.2
      Um só ficheiro. Sem servidor. Sem bibliotecas. Abre a partir do WhatsApp num Android.
      Finalidade: ensino e investigação. Não serve para decisões sobre pessoas. -->
 <html lang="pt-PT">
@@ -74,7 +74,8 @@ pt:{aviso:'Ensino e investigação. Não serve para decisões sobre pessoas. Fun
  somATocar:(n)=>`A tocar o som (${n} s). Põe o outro telemóvel perto, em «Ouvir som».`,somNada:'Ainda não há nada para enviar.',somGrande:'Texto grande demais para o som (máximo 120 letras).',somSemSom:'Este aparelho não deixou tocar o som. O resto funciona.',
  somAOuvir:'A ouvir durante 30 segundos…',somRecebido:(m)=>`Recebido por som, sem erros de transmissão:\n${m}\nIsto diz que o som chegou inteiro. Não diz que o conteúdo é verdadeiro.`,somFalhou:'Não apanhei nenhuma mensagem inteira. Aproxima os telemóveis e tenta outra vez.',somSemMic:'Este aparelho não me deu o microfone. O resto funciona.',
  guardado:(n)=>`Tens ${n} registos guardados neste aparelho.`,semGuardar:'Este aparelho não deixa guardar a conversa. Se fechares, perde-se. Exporta antes.',guardadoMau:'A conversa guardada neste aparelho foi alterada. Não a carreguei e não lhe mexi.',apagado:'Conversa apagada deste aparelho.',foto:'Foto leve',pac:'Juntar pacotes',fotoOk:(b,n,r)=>`Foto reduzida a ${b} bytes: ${n} pacotes e ${r} de reserva.\nServe para reconhecer uma coisa. Não serve para decidir sobre pessoas.`,fotoFalhou:'Não consegui ler esta imagem.',
- pacOk:'Imagem inteira. O selo confere com o que o emissor declarou.',pacMau:'A imagem chegou alterada. O selo não confere.',pacFalta:(f)=>`Ainda não sei: faltam ${f} pacotes.`,pacLixo:'Este ficheiro não tem pacotes de imagem completos.'},
+ pacOk:'Imagem inteira. O selo confere com o que o emissor declarou.',pacMau:'A imagem chegou alterada. O selo não confere.',pacFalta:(f)=>`Ainda não sei: faltam ${f} pacotes.`,pacLixo:'Este ficheiro não tem pacotes de imagem completos.',assinadoPor:(f)=>`Assinado pela chave ${f}. A mesma chave quer dizer o mesmo aparelho. Não diz o nome de ninguém.`,semAssin:'Sem assinatura: não sei que aparelho escreveu isto.',assinMa:'A assinatura não confere. Alguém mexeu neste ficheiro.',
+ semChave:'Este aparelho não consegue assinar. O ficheiro saiu sem assinatura.',aMinhaChave:(f)=>`Assinado com a chave deste aparelho: ${f}`,regraVelha:(d)=>`Ainda não sei: esta folha de regras valia até ${d}. Pede uma cópia nova desta página.`,valeAte:(d)=>`Folha de regras válida até ${d}.`},
 en:{aviso:'Teaching and research. Not for decisions about people. Works without internet.',ph:'Type a measurement or a question…',enviar:'Send',
  ola:'Hello. I check measurements against written rules and say where each rule comes from. No internet, no account.\nTry: "nitrate 48 ± 3 mg/L" or "vaccine at 9.5 °C".',
  agua:'Water: nitrate',frio:'Cold chain',selo:'Text seal',ia:'Turn on local AI',exp:'Export chat',imp:'Check a chat',
@@ -94,7 +95,8 @@ en:{aviso:'Teaching and research. Not for decisions about people. Works without 
  somATocar:(n)=>`Playing the sound (${n} s). Hold the other phone close, on "Listen for sound".`,somNada:'Nothing to send yet.',somGrande:'Text too long for sound (120 letters at most).',somSemSom:'This device did not let me play sound. The rest works.',
  somAOuvir:'Listening for 30 seconds…',somRecebido:(m)=>`Received by sound, with no transmission errors:\n${m}\nThis says the sound arrived whole. It does not say the content is true.`,somFalhou:'I did not catch a whole message. Bring the phones closer and try again.',somSemMic:'This device did not give me the microphone. The rest works.',
  guardado:(n)=>`You have ${n} records saved on this device.`,semGuardar:'This device does not allow saving the chat. If you close, it is lost. Export first.',guardadoMau:'The chat saved on this device was altered. I did not load it and did not touch it.',apagado:'Chat deleted from this device.',foto:'Light photo',pac:'Join packets',fotoOk:(b,n,r)=>`Photo reduced to ${b} bytes: ${n} packets and ${r} spare.\nGood for recognising a thing. Not for decisions about people.`,fotoFalhou:'I could not read this image.',
- pacOk:'Image whole. The seal matches what the sender declared.',pacMau:'The image arrived altered. The seal does not match.',pacFalta:(f)=>`I don't know yet: ${f} packets missing.`,pacLixo:'This file has no complete image packets.'},
+ pacOk:'Image whole. The seal matches what the sender declared.',pacMau:'The image arrived altered. The seal does not match.',pacFalta:(f)=>`I don't know yet: ${f} packets missing.`,pacLixo:'This file has no complete image packets.',assinadoPor:(f)=>`Signed by key ${f}. The same key means the same device. It does not give anyone's name.`,semAssin:'No signature: I do not know which device wrote this.',assinMa:'The signature does not match. Someone changed this file.',
+ semChave:'This device cannot sign. The file went out unsigned.',aMinhaChave:(f)=>`Signed with this device's key: ${f}`,regraVelha:(d)=>`I don't know yet: this rule sheet was valid until ${d}. Ask for a fresh copy of this page.`,valeAte:(d)=>`Rule sheet valid until ${d}.`},
 fr:{aviso:'Enseignement et recherche. Pas pour des décisions concernant des personnes. Fonctionne sans internet.',ph:'Écris une mesure ou une question…',enviar:'Envoyer',
  ola:'Bonjour. Je vérifie des mesures avec des règles écrites et je dis d\'où vient chaque règle. Sans internet, sans compte.\nEssaie : « nitrate 48 ± 3 mg/L » ou « vaccin à 9,5 °C ».',
  agua:'Eau : nitrate',frio:'Chaîne du froid',selo:'Sceau de texte',ia:'Activer l\'IA locale',exp:'Exporter',imp:'Vérifier une conversation',
@@ -114,7 +116,8 @@ fr:{aviso:'Enseignement et recherche. Pas pour des décisions concernant des per
  somATocar:(n)=>`Le son joue (${n} s). Approche l'autre téléphone, sur « Écouter le son ».`,somNada:'Rien à envoyer pour l\'instant.',somGrande:'Texte trop long pour le son (120 lettres au plus).',somSemSom:'Cet appareil n\'a pas laissé jouer le son. Le reste fonctionne.',
  somAOuvir:'J\'écoute pendant 30 secondes…',somRecebido:(m)=>`Reçu par le son, sans erreur de transmission :\n${m}\nCela dit que le son est arrivé entier. Cela ne dit pas que le contenu est vrai.`,somFalhou:'Je n\'ai capté aucun message entier. Rapproche les téléphones et réessaie.',somSemMic:'Cet appareil ne m\'a pas donné le micro. Le reste fonctionne.',
  guardado:(n)=>`Tu as ${n} enregistrements gardés sur cet appareil.`,semGuardar:'Cet appareil ne permet pas de garder la conversation. Si tu fermes, elle est perdue. Exporte avant.',guardadoMau:'La conversation gardée sur cet appareil a été modifiée. Je ne l\'ai pas chargée et je n\'y ai pas touché.',apagado:'Conversation effacée de cet appareil.',foto:'Photo légère',pac:'Assembler les paquets',fotoOk:(b,n,r)=>`Photo réduite à ${b} octets : ${n} paquets et ${r} de réserve.\nSert à reconnaître une chose. Pas à décider pour des personnes.`,fotoFalhou:'Je n\'ai pas pu lire cette image.',
- pacOk:'Image entière. Le sceau correspond à ce que l\'émetteur a déclaré.',pacMau:'L\'image est arrivée modifiée. Le sceau ne correspond pas.',pacFalta:(f)=>`Je ne sais pas encore : il manque ${f} paquets.`,pacLixo:'Ce fichier n\'a pas de paquets d\'image complets.'}};
+ pacOk:'Image entière. Le sceau correspond à ce que l\'émetteur a déclaré.',pacMau:'L\'image est arrivée modifiée. Le sceau ne correspond pas.',pacFalta:(f)=>`Je ne sais pas encore : il manque ${f} paquets.`,pacLixo:'Ce fichier n\'a pas de paquets d\'image complets.',assinadoPor:(f)=>`Signé par la clé ${f}. La même clé veut dire le même appareil. Elle ne donne le nom de personne.`,semAssin:'Pas de signature : je ne sais pas quel appareil a écrit ceci.',assinMa:'La signature ne correspond pas. Quelqu\'un a modifié ce fichier.',
+ semChave:'Cet appareil ne peut pas signer. Le fichier est sorti sans signature.',aMinhaChave:(f)=>`Signé avec la clé de cet appareil : ${f}`,regraVelha:(d)=>`Je ne sais pas encore : cette fiche de règles valait jusqu'au ${d}. Demande une nouvelle copie de cette page.`,valeAte:(d)=>`Fiche de règles valable jusqu'au ${d}.`}};
 let L='pt';const t=k=>T[L][k];const $=id=>document.getElementById(id);
 
 /* ---------- SHA-256 (WebCrypto, com reserva em JS puro para páginas sem cadeado) ---------- */
@@ -134,26 +137,39 @@ async function sha256b(b,forcaJS){
 const sha256=(txt,forcaJS)=>sha256b(new TextEncoder().encode(txt),forcaJS);
 
 /* ---------- portão por regras (contas em inteiros, milionésimos) ---------- */
-const REGRAS={nitrato:{tipo:'max',lim:50,un:'mg/L',chave:/nitrat/i},frio:{tipo:'faixa',a:2,b:8,un:'°C',chave:/frio|vacin|cold|froid|vaccin|°\s*c|º\s*c|\bgraus\b|\bdegr/i}};
+const REGRAS={nitrato:{tipo:'max',lim:50,un:'mg/L',ate:'2027-11-25',chave:/nitrat/i},frio:{tipo:'faixa',a:2,b:8,un:'°C',ate:'2027-11-25',chave:/frio|vacin|cold|froid|vaccin|°\s*c|º\s*c|\bgraus\b|\bdegr/i}};
 const micro=s=>Math.round(parseFloat(String(s).replace(',','.'))*1e6);
 function lerMedida(txt){const m=txt.match(/(-?\d+(?:[.,]\d+)?)\s*(?:(?:±|\+\/-|\+-)\s*(\d+(?:[.,]\d+)?))?/);if(!m)return null;
  const v=micro(m[1]),u=m[2]?micro(m[2]):0;if(!Number.isFinite(v)||!Number.isFinite(u))return null;return{v,u,lo:v-u,hi:v+u}}
-function portao(txt){let nome=null;for(const k in REGRAS)if(REGRAS[k].chave.test(txt)){nome=k;break}
+function portao(txt,hoje){let nome=null;for(const k in REGRAS)if(REGRAS[k].chave.test(txt)){nome=k;break}
  if(!nome)return null;const r=REGRAS[nome],m=lerMedida(txt.replace(/2\s*(a|to|à|-)\s*8\s*°?\s*c/i,''));if(!m)return null;
  let ver;if(r.tipo==='max'){const Lm=r.lim*1e6;ver=m.hi<=Lm?'OK':m.lo>Lm?'VETO':'NS'}
  else{const a=r.a*1e6,b=r.b*1e6;ver=(m.lo>=a&&m.hi<=b)?'OK':(m.hi<a||m.lo>b)?'VETO':'NS'}
+ const velha=(hoje||new Date()).toISOString().slice(0,10)>r.ate;if(velha)ver='NS';
  const f=x=>String(x/1e6).replace('.',L==='en'?'.':',');
- return{regra:nome,ver,medida:m,txt:f(m.v)+(m.u?' ± '+f(m.u):'')+' '+r.un,lim:r.lim,a:r.a,b:r.b}}
+ return{regra:nome,ver,velha,ate:r.ate,medida:m,txt:f(m.v)+(m.u?' ± '+f(m.u):'')+' '+r.un,lim:r.lim,a:r.a,b:r.b}}
 
 /* ---------- cadeia da conversa ---------- */
 const ZERO='0'.repeat(64);let cadeia=[],ponta=ZERO,bd=null;
-function abrirBD(){return new Promise(r=>{try{const q=indexedDB.open('konfirmu_chat',1);q.onupgradeneeded=()=>q.result.createObjectStore('r',{keyPath:'n'});q.onsuccess=()=>r(q.result);q.onerror=q.onblocked=()=>r(null)}catch(_){r(null)}})}
-const bdOp=(modo,f)=>new Promise(r=>{if(!bd)return r(null);try{const tx=bd.transaction('r',modo),q=f(tx.objectStore('r'));tx.oncomplete=()=>r(q.result);tx.onerror=tx.onabort=()=>r(null)}catch(_){r(null)}});
+function abrirBD(){return new Promise(r=>{try{const q=indexedDB.open('konfirmu_chat',2);q.onupgradeneeded=()=>{const d=q.result;if(!d.objectStoreNames.contains('r'))d.createObjectStore('r',{keyPath:'n'});if(!d.objectStoreNames.contains('k'))d.createObjectStore('k',{keyPath:'id'})};q.onsuccess=()=>r(q.result);q.onerror=q.onblocked=()=>r(null)}catch(_){r(null)}})}
+const bdOp=(modo,f,loja='r')=>new Promise(r=>{if(!bd)return r(null);try{const tx=bd.transaction(loja,modo),q=f(tx.objectStore(loja));tx.oncomplete=()=>r(q.result);tx.onerror=tx.onabort=()=>r(null)}catch(_){r(null)}});
 const corpo=e=>JSON.stringify([e.n,e.ts,e.q,e.a,e.ver,e.prev]);
 async function registar(q,a,ver){const e={n:cadeia.length+1,ts:new Date().toISOString(),q,a,ver,prev:ponta};e.hash=await sha256(corpo(e));ponta=e.hash;cadeia.push(e);await bdOp('readwrite',s=>s.put(e));return e}
 async function conferirCadeia(pk){if(!pk||pk.schema!=='KONFIRMU-CHAT/1'||!Array.isArray(pk.registos))return{ok:false,erro:true};
  let prev=ZERO;for(let i=0;i<pk.registos.length;i++){const e=pk.registos[i];if(e.n!==i+1||e.prev!==prev||await sha256(corpo(e))!==e.hash)return{ok:false,em:i+1};prev=e.hash}
- if(pk.ponta!==prev||pk.n!==pk.registos.length)return{ok:false,em:pk.registos.length};return{ok:true,n:pk.registos.length}}
+ if(pk.ponta!==prev||pk.n!==pk.registos.length)return{ok:false,em:pk.registos.length};
+ let dedo=null;if(pk.assinatura){const v=await verAssin('KONFIRMU-CHAT/1|'+pk.n+'|'+pk.ponta,pk.assinatura);if(!v.ok)return{ok:false,assinMa:true};dedo=v.dedo}
+ return{ok:true,n:pk.registos.length,dedo}}
+const pacoteAssinado=async()=>{const p=pacote(),a=await assinar('KONFIRMU-CHAT/1|'+p.n+'|'+p.ponta);if(a)p.assinatura=a;return p};
+
+/* ---------- chave do aparelho (ECDSA P-256; a parte secreta não sai do aparelho) ---------- */
+let chave=null;const EC={name:'ECDSA',namedCurve:'P-256'},ES={name:'ECDSA',hash:'SHA-256'};
+async function minhaChave(){if(chave)return chave;try{let k=await bdOp('readonly',s=>s.get('eu'),'k');
+  if(!k){const par=await crypto.subtle.generateKey(EC,false,['sign','verify']);k={id:'eu',priv:par.privateKey,pub:b64(new Uint8Array(await crypto.subtle.exportKey('raw',par.publicKey)))};await bdOp('readwrite',s=>s.put(k),'k')}
+  k.dedo=(await sha256b(d64(k.pub))).slice(0,16);chave=k;return k}catch(_){return null}}
+async function assinar(txt){const k=await minhaChave();if(!k)return null;try{return{alg:'ES256',chave:k.pub,sig:b64(new Uint8Array(await crypto.subtle.sign(ES,k.priv,new TextEncoder().encode(txt))))}}catch(_){return null}}
+async function verAssin(txt,a){try{const raw=d64(a.chave),pub=await crypto.subtle.importKey('raw',raw,EC,false,['verify']);
+  return{ok:await crypto.subtle.verify(ES,pub,d64(a.sig),new TextEncoder().encode(txt)),dedo:(await sha256b(raw)).slice(0,16)}}catch(_){return{ok:false}}}
 const pacote=()=>({schema:'KONFIRMU-CHAT/1',n:cadeia.length,ponta,registos:cadeia});
 
 /* ---------- selo de texto ---------- */
@@ -168,7 +184,8 @@ function bolha(quem,texto,ver,seloTxt,n){const d=document.createElement('div');d
  $('conversa').appendChild(d);$('conversa').scrollTop=$('conversa').scrollHeight}
 let ia=null;
 async function responder(q){const g=portao(q);let a,ver;
- if(g){ver=g.ver;a=(g.regra==='nitrato'?t('nit')(g):t('fri')(g))+(ver==='NS'?'\n'+t('nsPorque'):'')+'\n'+t('naoGarante')}
+ if(g&&g.velha){ver='NS';a=t('regraVelha')(g.ate)}
+ else if(g){ver=g.ver;a=(g.regra==='nitrato'?t('nit')(g):t('fri')(g))+(ver==='NS'?'\n'+t('nsPorque'):'')+'\n'+t('naoGarante')+'\n'+t('valeAte')(g.ate)}
  else if(ia){ver='IA';try{const o=await ia([{role:'system',content:'Answer briefly and plainly, in the language of the user. You never give numbers, limits, doses or deadlines: say that those must come from a written rule.'},{role:'user',content:q}],{max_new_tokens:160});a=o[0].generated_text.at(-1).content}catch(_){ver='NS';a=t('iaFalhou')}}
  else{ver='NS';a=t('semRegra')}
  const e=await registar(q,a,ver);return{a,ver,hash:e.hash}}
@@ -179,9 +196,9 @@ async function ligarIA(){if(location.protocol==='file:'||!globalThis.isSecureCon
  catch(_){ia=null;bolha('casa',t('iaFalhou'))}}
 async function partilhar(txt,nome,tipo){try{const f=new File([txt],nome,{type:tipo});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'Konfirmu'});return}}catch(_){}
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:tipo}));a.download=nome;a.click()}
-async function exportar(){await partilhar(JSON.stringify(pacote(),null,1),'konfirmu_conversa.json','application/json');bolha('casa',t('expOk')(cadeia.length))}
+async function exportar(){const p=await pacoteAssinado();await partilhar(JSON.stringify(p,null,1),'konfirmu_conversa.json','application/json');bolha('casa',t('expOk')(cadeia.length)+'\n'+(p.assinatura?t('aMinhaChave')(chave.dedo):t('semChave')))}
 async function importar(ev){const f=ev.target.files[0];if(!f)return;let r;try{r=await conferirCadeia(JSON.parse(await f.text()))}catch(_){r={ok:false,erro:true}}
- bolha('casa',r.ok?t('impOk')(r.n):r.erro?t('impErro'):t('impMau')(r.em),r.ok?'OK':r.erro?'NS':'VETO');ev.target.value=''}
+ bolha('casa',r.ok?t('impOk')(r.n)+'\n'+(r.dedo?t('assinadoPor')(r.dedo):t('semAssin')):r.erro?t('impErro'):r.assinMa?t('assinMa'):t('impMau')(r.em),r.ok?'OK':r.erro?'NS':'VETO');ev.target.value=''}
 async function conferirSelo(){const r=await selo($('tA').value,$('tB').value);bolha('casa',r.ver==='OK'?t('seloIgual'):r.ver==='VETO'?t('seloDif'):t('seloSo')+'\n'+r.hash,r.ver)}
 
 /* ---------- modem de som: FSK 1850/2350 Hz, 35 ms por bit, CRC-16 ---------- */
@@ -228,13 +245,15 @@ async function fotoComprimir(file,larg=180,q=.22){const bm=await createImageBitm
  let bl=await new Promise(r=>c.toBlob(r,'image/webp',q));if(!bl||bl.type!=='image/webp')bl=await new Promise(r=>c.toBlob(r,'image/jpeg',.3));
  return{bytes:new Uint8Array(await bl.arrayBuffer()),tipo:bl.type,larg:c.width,alt:c.height}}
 async function fotoPacotes(bytes,tipo){const h=await sha256b(bytes),id=h.slice(0,8),n=Math.ceil(bytes.length/PAC.tam),ps=['KI1|'+id+'|H|'+n+'|'+bytes.length+'|'+tipo+'|'+h];let par=null,np=0;
+ const as=await assinar(ps[0]);if(as)ps.push('KI1|'+id+'|S|'+as.chave+'|'+as.sig);
  for(let i=0;i<n;i++){const c=new Uint8Array(PAC.tam);c.set(bytes.subarray(i*PAC.tam,(i+1)*PAC.tam));ps.push('KI1|'+id+'|D|'+(i+1)+'|'+b64(c));
   if(!par)par=new Uint8Array(PAC.tam);for(let j=0;j<PAC.tam;j++)par[j]^=c[j];
   if((i+1)%PAC.grupo===0||i===n-1){np++;ps.push('KI1|'+id+'|P|'+np+'|'+b64(par));par=null}}
- return{id,sha:h,bytes:bytes.length,n,reserva:np,pacotes:ps}}
-async function fotoJuntar(linhas){let H=null;const D=new Map(),P=new Map();
+ return{id,sha:h,bytes:bytes.length,n,reserva:np,assinado:!!as,pacotes:ps}}
+async function fotoJuntar(linhas){let H=null;const D=new Map(),P=new Map(),S=new Map();
  for(const l of linhas){const p=l.trim().split('|');if(p[0]!=='KI1')continue;try{
-  if(p[2]==='H'&&p.length===7){if(!H)H={id:p[1],n:+p[3],bytes:+p[4],tipo:p[5],sha:p[6]}}
+  if(p[2]==='H'&&p.length===7){if(!H)H={id:p[1],n:+p[3],bytes:+p[4],tipo:p[5],sha:p[6],linha:l.trim()}}
+  else if(p[2]==='S'&&p.length===5)S.set(p[1],{chave:p[3],sig:p[4]})
   else if(p.length===5&&(p[2]==='D'||p[2]==='P')){const u=d64(p[4]);if(u.length===PAC.tam)(p[2]==='D'?D:P).set(p[1]+'|'+p[3],u)}}catch(_){}}
  if(!H||!(H.n>0)||!(H.bytes>0)||H.bytes>H.n*PAC.tam||H.n>4000)return{ver:'NS',faltam:0};
  const pega=(m,i)=>m.get(H.id+'|'+i),G=Math.ceil(H.n/PAC.grupo),tudo=new Uint8Array(H.n*PAC.tam);let faltam=0,recuperados=0;
@@ -243,13 +262,14 @@ async function fotoJuntar(linhas){let H=null;const D=new Map(),P=new Map();
   faltam+=falta.length;if(!falta.length)for(let i=a;i<=b;i++)tudo.set(pega(D,i),(i-1)*PAC.tam)}
  if(faltam)return{ver:'NS',faltam};const bytes=tudo.slice(0,H.bytes);
  if(await sha256b(bytes)!==H.sha)return{ver:'VETO'};
- return{ver:'OK',sha:H.sha,bytes,recuperados,tipo:/^image\/(webp|jpeg)$/.test(H.tipo)?H.tipo:'image/webp'}}
+ let dedo=null;const as=S.get(H.id);if(as){const v=await verAssin(H.linha,as);if(!v.ok)return{ver:'VETO',assinMa:true};dedo=v.dedo}
+ return{ver:'OK',sha:H.sha,bytes,recuperados,dedo,tipo:/^image\/(webp|jpeg)$/.test(H.tipo)?H.tipo:'image/webp'}}
 function bolhaImg(bytes,tipo,texto,ver){bolha('casa',texto,ver);const im=document.createElement('img');im.src=URL.createObjectURL(new Blob([bytes],{type:tipo}));im.alt='';im.style.cssText='display:block;max-width:100%;border-radius:8px;margin-top:8px';$('conversa').lastChild.appendChild(im)}
 async function fotoEscolhida(ev){const f=ev.target.files[0];ev.target.value='';if(!f)return;
  try{const c=await fotoComprimir(f),k=await fotoPacotes(c.bytes,c.tipo);bolhaImg(c.bytes,c.tipo,t('fotoOk')(k.bytes,k.n,k.reserva)+'\nsha256 '+k.sha.slice(0,16)+'…');await partilhar(k.pacotes.join('\n'),'konfirmu_foto_'+k.id+'.txt','text/plain')}
  catch(_){bolha('casa',t('fotoFalhou'),'NS')}}
 async function pacEscolhidos(ev){const f=ev.target.files[0];ev.target.value='';if(!f)return;let r;try{r=await fotoJuntar((await f.text()).split(/\r?\n/))}catch(_){r={ver:'NS',faltam:0}}
- if(r.ver==='OK')bolhaImg(r.bytes,r.tipo,t('pacOk'),'OK');else if(r.ver==='VETO')bolha('casa',t('pacMau'),'VETO');else bolha('casa',r.faltam?t('pacFalta')(r.faltam):t('pacLixo'),'NS')}
+ if(r.ver==='OK')bolhaImg(r.bytes,r.tipo,t('pacOk')+'\n'+(r.dedo?t('assinadoPor')(r.dedo):t('semAssin')),'OK');else if(r.ver==='VETO')bolha('casa',r.assinMa?t('assinMa'):t('pacMau'),'VETO');else bolha('casa',r.faltam?t('pacFalta')(r.faltam):t('pacLixo'),'NS')}
 let apgArmado=0;
 async function apagar(){if(Date.now()>apgArmado){apgArmado=Date.now()+4000;$('cApg').textContent=t('apgMesmo');setTimeout(()=>{$('cApg').textContent=t('apg')},4000);return}
  apgArmado=0;await bdOp('readwrite',s=>s.clear());cadeia=[];ponta=ZERO;$('conversa').textContent='';$('cApg').textContent=t('apg');bolha('casa',t('ola'));bolha('casa',t('apagado'))}
@@ -267,7 +287,7 @@ $('cIA').onclick=ligarIA;$('cExp').onclick=exportar;$('cImp').onclick=()=>$('fIm
 const nav=(navigator.language||'pt').slice(0,2);if(T[nav]){L=nav;$('lingua').value=nav}
 const pronto=arrancar();
 if(location.protocol!=='file:'&&globalThis.isSecureContext&&'serviceWorker'in navigator)navigator.serviceWorker.register('konfirmu_chat_sw.js').catch(()=>{});
-globalThis.KONFIRMU={sha256,sha256js,portao,selo,responder,conferirCadeia,pacote,limpar,pronto,crc16,sha256b,fotoComprimir,fotoPacotes,fotoJuntar,somBits,somOnda,somLer,definirLingua:l=>{L=l;pintar()}};
+globalThis.KONFIRMU={sha256,sha256js,portao,selo,responder,conferirCadeia,pacote,limpar,pronto,pacoteAssinado,minhaChave,crc16,sha256b,fotoComprimir,fotoPacotes,fotoJuntar,somBits,somOnda,somLer,definirLingua:l=>{L=l;pintar()}};
 </script>
 </body>
 </html>
