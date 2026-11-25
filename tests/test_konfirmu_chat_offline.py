@@ -4,7 +4,14 @@ import asyncio, json, hashlib, os, sys, subprocess, time
 from playwright.async_api import async_playwright
 RAIZ=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CHROME=os.environ.get('CHROME','/usr/bin/google-chrome')
-JS=r'''async()=>{const K=KONFIRMU;await K.pronto;K.definirLingua('pt');const o={};
+import glob
+VET=[]; FICH={}
+for f in sorted(glob.glob(RAIZ+'/cartridges/*.json')):
+    b=open(f,'rb').read(); d=json.loads(b)
+    if 'pediatric' in f: continue
+    FICH[os.path.basename(f)]=hashlib.sha256(b).hexdigest()
+    for tv in d['test_vectors']: VET.append([d['cartridge_id'],tv['env'],tv['expected_verdict']])
+JS=r'''async()=>{const VETORES=__VET__;const K=KONFIRMU;await K.pronto;K.definirLingua('pt');const o={};
  const casos=[['nitrato 40 mg/L','OK'],['nitrato 48 ± 3 mg/L','NS'],['nitrato 55 ± 2 mg/L','VETO'],['nitrato 50 mg/L','OK'],['nitrato 50,000001 mg/L','VETO'],
   ['vacina a 5 °C','OK'],['vacina a 9,5 °C','VETO'],['vacina a 7,8 ± 0,5 °C','NS'],['vacina a 1,9 °C','VETO'],['vacina a 2 °C','OK'],['cadeia de frio 2 a 8 °C: medi 6 °C','OK']];
  o.portao=casos.every(([q,e])=>{const g=K.portao(q);return g&&g.ver===e});
@@ -20,6 +27,12 @@ JS=r'''async()=>{const K=KONFIRMU;await K.pronto;K.definirLingua('pt');const o={
  for(const m of msgs)for(const sr of [44100,48000])for(const amp of [0,.3,.6]){const w=K.somOnda(K.somBits(m),sr);o.som.push(K.somLer(ruido(w,amp,sr+amp*10),sr)===m)}
  const w=K.somOnda(K.somBits(msgs[0]),44100),est=ruido(w,.1,7);for(let i=30000;i<34000;i++)est[i]=0;o.som_cortado=K.somLer(est,44100);
  o.som_so_ruido=K.somLer(ruido(new Float32Array(1),.6,3),44100);o.som_grande=K.somBits('x'.repeat(121));o.crc=K.crc16(new TextEncoder().encode('123456789')).toString(16);
+ // folhas da casa
+ o.folhas=K.FOLHAS.map(f=>[f.ficheiro,f.sha256]);
+ o.vetores=VETORES.map(([id,env,esp])=>{const g=K.avaliar(K.FOLHAS.find(f=>f.cartridge_id===id),env);return [id,esp,g.ver]});
+ let lancou=0;for(const fx of ['alert(1)','a.b','x=>x','nitrato_mgl;1','constructor','1e9','2**3','(1']){try{K.intervalo(fx,{nitrato_mgl:[1,0]})}catch(_){lancou++}}o.formula_ma=lancou;
+ o.intervalos=[K.intervalo('a - b',{a:[10,1],b:[4,1]}),K.intervalo('a / b',{a:[8,0],b:[2,0]}),K.intervalo('-a / (b + c)',{a:[4,0],b:[1,0],c:[1,0]})];
+ try{K.intervalo('a / b',{a:[1,0],b:[0,1]});o.div_zero=false}catch(_){o.div_zero=true}
  // prazo de validade e assinatura
  o.validade=[K.portao('nitrato 40 mg/L',new Date('2027-11-25T12:00:00Z')).ver,K.portao('nitrato 40 mg/L',new Date('2027-11-26T12:00:00Z')).ver,K.portao('nitrato 40 mg/L',new Date('2027-11-26T12:00:00Z')).velha];
  const pa=JSON.parse(JSON.stringify(await K.pacoteAssinado()));const ra=await K.conferirCadeia(pa);o.dedo=(await K.minhaChave()).dedo;o.assin_ok=ra.ok&&ra.dedo===o.dedo&&/^[0-9a-f]{16}$/.test(o.dedo);
@@ -67,6 +80,12 @@ async def main():
             ver('som: 18 idas e voltas (3 textos, 2 ritmos, 3 níveis de ruído)',len(o['som'])==18 and all(o['som']))
             ver('som cortado a meio não inventa mensagem',o['som_cortado'] is None); ver('só ruído não inventa mensagem',o['som_so_ruido'] is None)
             ver('texto com mais de 120 bytes é recusado',o['som_grande'] is None); ver('CRC-16 de «123456789» = 29b1',o['crc']=='29b1')
+            ver('folhas: as %d da casa estão na página, com o sha256 do ficheiro de origem'%len(FICH),dict(o['folhas'])==FICH)
+            ver('folhas: os %d vetores de teste da casa dão o mesmo lado (OK=OK; VETO=não confere ou ainda não sei)'%len(VET),all((e=='OK' and g=='OK') or (e=='VETO' and g in('VETO','NS')) for _,e,g in o['vetores']))
+            print('   vetores:',[(i.split('_V1')[0][:18],e,g) for i,e,g in o['vetores']])
+            ver('folhas: a de dose pediátrica não está na página','paracetamol' not in open(RAIZ+'/konfirmu_chat_offline.html',encoding='utf-8').read().lower())
+            ver('conta: 8 fórmulas estranhas são recusadas (sem eval)',o['formula_ma']==8)
+            ver('conta com margens: a-b, a/b, -a/(b+c) certos; divisão por zero recusada',o['intervalos']==[[4,8],[4,4],[-2,-2]] and o['div_zero'])
             ver('regra dentro do prazo responde; fora do prazo diz «ainda não sei»',o['validade']==['OK','NS',True])
             ver('conversa exportada sai assinada e a assinatura confere',o['assin_ok']); ver('assinatura com 1 bit mexido é recusada',o['assin_ma'])
             ver('conversa cortada no fim, com a assinatura antiga, é recusada',o['assin_cortada'])
@@ -101,4 +120,5 @@ async def main():
     finally:
         if srv.poll() is None: srv.terminate()
     print(f"\n{total[0]-len(falhas)} de {total[0]} passam"); sys.exit(1 if falhas else 0)
+JS=JS.replace('__VET__',json.dumps(VET))
 asyncio.run(main())
