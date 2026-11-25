@@ -1,13 +1,13 @@
-# Chat de bolso offline v0.2 — o que está provado e o que não está
+# Chat de bolso offline v0.3 — o que está provado e o que não está
 
 Data: 2026-11-25. Finalidade: ensino e investigação. Não serve para decisões sobre pessoas.
 
 | Ficheiro | Bytes | SHA-256 |
 |---|---|---|
-| konfirmu_chat_offline.html | 27298 | 3db83354c322988c37b61607bf0c82d2c290860085100392b96771da8fb9d962 |
+| konfirmu_chat_offline.html | 32948 | 92df90cd4a3e306785aefaf47b1e0771b3e65aab4a0d72c1e77e9283b45ab3d0 |
 | konfirmu_chat_sw.js | 630 | f22025f21635a977f4b2f946cb3b9ddf6b76da3a8335f2be38394d314b284a02 |
 
-## Provado (20 de 20)
+## Provado (26 de 26)
 
 Repetir: `python3 tests/test_konfirmu_chat_offline.py` (Chrome sem ecrã; sai com 0 só se tudo passar).
 
@@ -21,6 +21,10 @@ Repetir: `python3 tests/test_konfirmu_chat_offline.py` (Chrome sem ecrã; sai co
 8. A conversa volta depois de fechar e abrir. Apagar apaga.
 9. Com link: depois da primeira visita, a página abre com o servidor desligado.
 10. Sem verde no ficheiro. Zero erros de página.
+11. Foto leve: uma imagem de teste de 1200×900 (522 113 bytes) ficou em 4 340 bytes (WebP, 180×135), em 29 pacotes e 8 de reserva, cada um abaixo de 240 letras.
+12. Pacotes todos juntos, ou fora de ordem, dão a imagem exata, byte a byte.
+13. Um pacote perdido em cada grupo de 4 é recuperado. Dois perdidos no mesmo grupo dão «ainda não sei, faltam 2».
+14. Um bit mexido dá «não confere». Sem cabeçalho, ou com lixo, não aparece imagem nenhuma.
 
 ## Não provado, e porquê
 
@@ -29,6 +33,10 @@ Repetir: `python3 tests/test_konfirmu_chat_offline.py` (Chrome sem ecrã; sai co
 | A IA local (Qwen2.5-0.5B) a descarregar e a responder | A máquina de teste não tem saída para cdn.jsdelivr.net nem huggingface.co. O código existe e nunca correu. |
 | Som pelo ar, entre dois telemóveis | Não há telemóveis nem microfone real na máquina de teste. Só está provada a conta (onda gerada, ruído somado, onda lida). Eco, distância e altifalantes fracos não foram medidos. |
 | iPhone | Não foi testado em nenhum iPhone. Um ficheiro .html aberto no WhatsApp do iPhone é só pré-visualizado; precisa de link https. |
+| Foto por rádio LoRa, HF ou Wi-Fi HaLow | Não há rádio nenhum ligado. Os pacotes saem num ficheiro de texto; ninguém os pôs no ar. |
+| Foto por som | Não é viável com este modem: 4 340 bytes a 28 bits por segundo são cerca de 25 minutos. |
+| Se a foto reduzida ainda se lê | Não foi medido. 180 pontos de largura chegam para reconhecer uma coisa grande; não está provado que cheguem para ler letras pequenas, e não servem para diagnóstico. |
+| Foto leve no iPhone | O Safari pode não gravar WebP; nesse caso a página usa JPEG. Não testado. |
 | Android real, a partir do WhatsApp | Testado só em Chrome de computador. |
 
 ## Não feito
@@ -42,3 +50,5 @@ Repetir: `python3 tests/test_konfirmu_chat_offline.py` (Chrome sem ecrã; sai co
 - O portão confere o número com a regra. Não confere se a medida foi bem feita.
 - O que a IA local disser aparece marcado como «não conferido».
 - O som confirma que a mensagem chegou inteira. Não confirma que é verdadeira.
+- O selo da foto confere com o que o emissor declarou no cabeçalho. Sem assinatura, não prova quem enviou.
+- A reserva recupera 1 pacote em cada 4. Não recupera perdas seguidas.
