@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "fy",
+  "nome": "Frysk",
+  "nome_pt": "Frísio",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Famylje",
+ "fam.titulo": "Ûnderwiis en famylje",
+ "fam.sub": "Tegearre leare en boartsje as famylje, mei deselde soarch foar privacy.",
+ "fam.comeca": "Begjin hjir",
+ "fam.lingua": "Taal",
+ "fam.procurar_lingua": "Taal sykje",
+ "fam.girafinhas.t": "Earste stappen",
+ "fam.girafinhas.d": "Trije tikken, stim en kleuren, foar wa't noch nea in telefoan brûkt hat.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Leart stap foar stap, ek sûnder netwurk.",
+ "fam.quiz.t": "Famyljekwis",
+ "fam.quiz.d": "Fragen om as famylje te boartsjen, of allinnich mei folwoeksenen.",
+ "fam.natal.t": "Kryst mei de famylje",
+ "fam.natal.d": "Spultsjes, papieren patroanen en in sertifikaat om te bewarjen.",
+ "fam.video.t": "Fideostudio",
+ "fam.video.d": "Film sûnder ynternet en bewarje de film mei in segel.",
+ "fam.contas.t": "Rekkenje mei segel",
+ "fam.contas.d": "Rekkenje en bewarje de útkomst mei in segel.",
+ "fam.arte.t": "Keunststudio",
+ "fam.arte.d": "Muzyk en tekenjen, mei dyn namme.",
+ "fam.regua.t": "Liniaal fan de planeet",
+ "fam.regua.d": "Binne wy noch op 'e tiid om de planeet te rêden?",
+ "fam.aventura.t": "Famyljeaventoer",
+ "fam.aventura.d": "In aventoerspul om tegearre te boartsjen."
+}

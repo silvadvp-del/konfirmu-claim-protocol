@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "sv",
+  "nome": "Svenska",
+  "nome_pt": "Sueco",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Familj",
+ "fam.titulo": "Utbildning och familj",
+ "fam.sub": "Lär och lek tillsammans som familj, med samma omsorg om integriteten.",
+ "fam.comeca": "Börja här",
+ "fam.lingua": "Språk",
+ "fam.procurar_lingua": "Sök språk",
+ "fam.girafinhas.t": "Första stegen",
+ "fam.girafinhas.d": "Tre tryck, röst och färger för den som aldrig har använt en telefon.",
+ "fam.tutor.t": "Handledare",
+ "fam.tutor.d": "Lär ut steg för steg, även utan nät.",
+ "fam.quiz.t": "Familjequiz",
+ "fam.quiz.d": "Frågor att spela som familj, eller bara bland vuxna.",
+ "fam.natal.t": "Jul med familjen",
+ "fam.natal.d": "Lekar, pappersmallar och ett diplom att spara.",
+ "fam.video.t": "Videostudio",
+ "fam.video.d": "Filma utan internet och spara filmen med ett sigill.",
+ "fam.contas.t": "Räkning med sigill",
+ "fam.contas.d": "Räkna och spara resultatet med ett sigill.",
+ "fam.arte.t": "Konststudio",
+ "fam.arte.d": "Musik och teckning, med ditt namn.",
+ "fam.regua.t": "Planetens linjal",
+ "fam.regua.d": "Hinner vi fortfarande rädda planeten?",
+ "fam.aventura.t": "Familjeäventyr",
+ "fam.aventura.d": "Ett äventyrsspel att spela tillsammans."
+}

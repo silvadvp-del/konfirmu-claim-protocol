@@ -45,6 +45,8 @@ jobs:
         run: |
           python3 -m pip install --quiet playwright==1.55.0
           python3 tests/test_imersao_offline.py dist/KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip --atividades 21
+      - name: Ensaio das tigelas da Educacao e familia — 8 tigelas, 62 linguas, modo aviao, memoria
+        run: python3 tests/test_tigelas_familia.py dist/KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip
       - name: Atestacao de origem do GitHub (Sigstore)
         uses: actions/attest-build-provenance@v2
         with:

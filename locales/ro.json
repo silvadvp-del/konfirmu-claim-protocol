@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "ro",
+  "nome": "Română",
+  "nome_pt": "Romeno",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Familie",
+ "fam.titulo": "Educație și familie",
+ "fam.sub": "Învățați și jucați-vă în familie, cu aceeași grijă pentru confidențialitate.",
+ "fam.comeca": "Începe aici",
+ "fam.lingua": "Limbă",
+ "fam.procurar_lingua": "Caută limba",
+ "fam.girafinhas.t": "Primii pași",
+ "fam.girafinhas.d": "Trei atingeri, voce și culori, pentru cine n-a folosit niciodată un telefon.",
+ "fam.tutor.t": "Tutore",
+ "fam.tutor.d": "Te învață pas cu pas, chiar și fără rețea.",
+ "fam.quiz.t": "Quiz în familie",
+ "fam.quiz.d": "Întrebări de jucat în familie sau doar între adulți.",
+ "fam.natal.t": "Crăciun în familie",
+ "fam.natal.d": "Jocuri, șabloane din hârtie și o diplomă de păstrat.",
+ "fam.video.t": "Studio video",
+ "fam.video.d": "Filmează fără internet și păstrează filmul cu sigiliu.",
+ "fam.contas.t": "Socoteli cu sigiliu",
+ "fam.contas.d": "Fă socoteli și păstrează rezultatul cu sigiliu.",
+ "fam.arte.t": "Studio de artă",
+ "fam.arte.d": "Muzică și desen, cu numele tău.",
+ "fam.regua.t": "Rigla planetei",
+ "fam.regua.d": "Mai avem timp să salvăm planeta?",
+ "fam.aventura.t": "Aventură în familie",
+ "fam.aventura.d": "Un joc de aventură de jucat împreună."
+}

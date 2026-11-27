@@ -21,10 +21,17 @@ Uso: python3 -I scripts/gerar_menu.py [CAMINHO_DO_REPOSITORIO]   (por omissão, 
 Depois: refazer as 3 linhas destes ficheiros em SHA256SUMS.txt e correr os testes do pacote.
 """
 import html
+import importlib.util
 import json
 import os
 import re
 import sys
+
+# As tigelas do Portal Educação e família vivem em scripts/tigelas.py (diretiva do David, 27-11, 12:29).
+# Carregado pelo caminho do ficheiro: funciona também com «python3 -I».
+_spec = importlib.util.spec_from_file_location("tigelas", os.path.join(os.path.dirname(os.path.abspath(__file__)), "tigelas.py"))
+tigelas = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(tigelas)
 
 ICONES = {
     "ficheiro": '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="m9 14 2 2 4-4"/>',
@@ -70,11 +77,11 @@ PORTAIS = [
          ("patient_vault_offline.html", "saude", "Cofre de saúde", "A tua história de saúde, guardada só neste aparelho.", EM_ENSAIO),
          ("carta_selada.html", "carta", "Carta com selo", "Escreve, põe o selo e imprime.", None),
          ("urna_voto_offline.html", "voto", "Votação sem rede", "Uma votação feita só nos aparelhos de quem vota.", EM_ENSAIO),
+         ("economia_anti_casino.html", "contas", "Economia anti-casino", "Porque aqui um crédito só nasce de um trabalho conferido. Passo a passo.", None),
      ]),
     ("fam", "Família", "Educação e família",
      "Aprender e brincar em família, com o mesmo cuidado pela privacidade.", [
          ("girafinhas_criancas_facil.html", "toque", "Primeiros passos", "Três toques, voz e cores, para quem nunca usou um telemóvel.", None),
-         ("economia_anti_casino.html", "contas", "Economia anti-casino", "Porque aqui um crédito só nasce de um trabalho conferido. Passo a passo.", None),
          ("Tutor-Girafinha-offline.html", "livro", "Tutor", "Ensina passo a passo, mesmo sem rede.", None),
          ("kcp_family_quiz.html", "quiz", "Quiz em família", "Perguntas para jogar em família, ou só entre adultos.", None),
          ("sala_natal_girafinhas.html", "estrela", "Natal em família", "Jogos, moldes de papel e um certificado para guardar.", None),
@@ -249,7 +256,7 @@ def cartao(href, icone, titulo, descricao, estado):
             '<b>%s</b><span class="d">%s%s</span></a>' % (href, ICONES[icone], titulo, descricao, extra))
 
 
-def pagina(variante, avisos):
+def pagina(variante, avisos, pt, dados_json):
     edicao = variante == "edicao21"
     partes = ['<!DOCTYPE html>', '<html lang="pt">', '<head>', '<meta charset="UTF-8">',
               '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
@@ -258,12 +265,12 @@ def pagina(variante, avisos):
               '<title>Konfirmu</title>',
               # ícone dentro da página: o «u» pêssego; sem pedido ao servidor (sem favicon.ico 404)
               '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Crect width=\'32\' height=\'32\' rx=\'7\' fill=\'%231D1D21\'/%3E%3Ctext x=\'16\' y=\'22.5\' font-family=\'Inter,Arial,sans-serif\' font-size=\'21\' font-weight=\'700\' text-anchor=\'middle\' fill=\'%23D97D4A\'%3Eu%3C/text%3E%3C/svg%3E">',
-              '<style>' + CSS.strip() + '</style>',
+              '<style>' + CSS.strip() + tigelas.CSS_FAMILIA.rstrip() + '</style>',
               '<link rel="stylesheet" href="./assets/imersao.css">',
               '<script defer src="./assets/imersao.js" data-viewer></script>']
     if edicao:
         partes.append('<link rel="manifest" href="./manifest.json">')
-    partes += ['</head>', '<body>',
+    partes += ['</head>', '<body>', tigelas.DEFS_PARTILHADAS,
                '<header>',
                '<h1>Konfirm<span class="u">u</span></h1>',
                '<p class="intro">Confirma e guarda com prova, no teu aparelho. Depois da primeira visita com internet, funciona também sem rede.</p>',
@@ -277,10 +284,19 @@ def pagina(variante, avisos):
     partes.append('<p id="sem" class="sem-resultados" role="status" aria-live="polite"></p>')
     partes.append('<nav class="portais" role="tablist" aria-label="Portais">')
     for chave, rotulo, _, _, _ in PORTAIS:
+        if chave == "fam":
+            rotulo = '<bdi data-k="fam.rotulo">%s</bdi>' % html.escape(pt["fam.rotulo"])
         partes.append('<button type="button" role="tab" id="t-%s" aria-controls="p-%s" aria-selected="false">%s</button>' % (chave, chave, rotulo))
     partes.append('</nav>')
     total = 0
     for chave, _, titulo, sub, itens in PORTAIS:
+        if chave == "fam":
+            # o portal das tigelas: textos de locales/pt.json, desenho de scripts/tigelas.py
+            hrefs = [i[0] for i in itens if edicao or i[0] not in SO_NA_EDICAO_21]
+            secao, _ = tigelas.secao_familia(hrefs, pt, html.escape)
+            partes.append(secao)
+            total += len(hrefs)
+            continue
         partes.append('<section class="portal" id="p-%s" role="tabpanel" aria-labelledby="t-%s">' % (chave, chave))
         partes.append('<h2>%s</h2><p class="sub">%s</p>' % (titulo, sub))
         partes.append('<div class="grid">')
@@ -302,11 +318,14 @@ def pagina(variante, avisos):
     partes += ['<footer class="rodape">'] + bloco + [
                '<p class="id" id="id"></p>',
                '</footer>',
+               '<script type="application/json" id="famDados">' + dados_json + '</script>',
                '<script src="./assets/nacl-fast.min.js"></script>',
                '<script>', JS_BASE, JS_PORTAIS.strip()]
     if not edicao:
         partes.append(JS_AVIAO)
     partes.append('</script>')
+    # script à parte: se outro bloco falhar, as tigelas e as línguas continuam a funcionar
+    partes += ['<script>', tigelas.JS_FAMILIA.strip(), '</script>']
     if edicao:
         partes.append("<script>if(window.isSecureContext && location.protocol!=='file:' && 'serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(console.error)}</script>")
     partes += ['</body>', '</html>', '']
@@ -316,14 +335,25 @@ def pagina(variante, avisos):
 def main():
     repo = sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     avisos = avisos_pt(repo)
-    raiz, n_raiz = pagina("raiz", avisos)
-    ed, n_ed = pagina("edicao21", avisos)
+    linguas = tigelas.ler_linguas(repo)
+    pt = linguas["pt"]
+    # uma só fonte para os textos do portal da família: locales/pt.json tem de bater com PORTAIS
+    for chave, rotulo, titulo, sub, itens in PORTAIS:
+        if chave == "fam":
+            assert (rotulo, titulo, sub) == (pt["fam.rotulo"], pt["fam.titulo"], pt["fam.sub"]), "PORTAIS e locales/pt.json divergem"
+            for href, _, nome, descricao, _ in itens:
+                k = tigelas.CHAVES[href]
+                assert (nome, descricao) == (pt["fam.%s.t" % k], pt["fam.%s.d" % k]), href
+    dados_json = tigelas.dados_linguas(linguas)
+    raiz, n_raiz = pagina("raiz", avisos, pt, dados_json)
+    ed, n_ed = pagina("edicao21", avisos, pt, dados_json)
     assert n_raiz == 20 and n_ed == 21, (n_raiz, n_ed)
     for caminho, conteudo in (("app_unica.html", raiz), ("edicao-21/app_unica.html", ed), ("edicao-21/index.html", ed)):
         with open(os.path.join(repo, caminho), "w", encoding="utf-8") as f:
             f.write(conteudo)
         print("%-26s %6d B" % (caminho, len(conteudo.encode("utf-8"))))
-    print("atividades: raiz %d, edição 21 %d; avisos legais no rodapé: %d" % (n_raiz, n_ed, len(avisos)))
+    print("atividades: raiz %d, edição 21 %d; avisos legais no rodapé: %d; línguas do portal da família: %d"
+          % (n_raiz, n_ed, len(avisos), len(linguas)))
 
 
 if __name__ == "__main__":

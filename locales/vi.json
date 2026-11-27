@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "vi",
+  "nome": "Tiếng Việt",
+  "nome_pt": "Vietnamita",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Gia đình",
+ "fam.titulo": "Giáo dục và gia đình",
+ "fam.sub": "Cùng học và chơi cả nhà, với cùng sự quan tâm đến quyền riêng tư.",
+ "fam.comeca": "Bắt đầu tại đây",
+ "fam.lingua": "Ngôn ngữ",
+ "fam.procurar_lingua": "Tìm ngôn ngữ",
+ "fam.girafinhas.t": "Những bước đầu tiên",
+ "fam.girafinhas.d": "Ba lần chạm, giọng nói và màu sắc, cho người chưa từng dùng điện thoại.",
+ "fam.tutor.t": "Gia sư",
+ "fam.tutor.d": "Dạy từng bước, kể cả khi không có mạng.",
+ "fam.quiz.t": "Đố vui gia đình",
+ "fam.quiz.d": "Câu hỏi để cả nhà cùng chơi, hoặc chỉ giữa người lớn.",
+ "fam.natal.t": "Giáng sinh bên gia đình",
+ "fam.natal.d": "Trò chơi, khuôn giấy và một giấy chứng nhận để giữ lại.",
+ "fam.video.t": "Phòng quay video",
+ "fam.video.d": "Quay phim không cần mạng và lưu phim kèm con dấu.",
+ "fam.contas.t": "Phép tính có dấu",
+ "fam.contas.d": "Làm phép tính và lưu kết quả kèm con dấu.",
+ "fam.arte.t": "Phòng nghệ thuật",
+ "fam.arte.d": "Âm nhạc và vẽ tranh, mang tên bạn.",
+ "fam.regua.t": "Thước đo hành tinh",
+ "fam.regua.d": "Chúng ta còn kịp cứu hành tinh không?",
+ "fam.aventura.t": "Phiêu lưu gia đình",
+ "fam.aventura.d": "Một trò chơi phiêu lưu để chơi cùng nhau."
+}

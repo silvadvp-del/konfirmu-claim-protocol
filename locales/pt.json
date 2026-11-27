@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "pt",
+  "nome": "Português",
+  "nome_pt": "Português",
+  "dir": "ltr",
+  "revisao": "texto de origem"
+ },
+ "fam.rotulo": "Família",
+ "fam.titulo": "Educação e família",
+ "fam.sub": "Aprender e brincar em família, com o mesmo cuidado pela privacidade.",
+ "fam.comeca": "Começa aqui",
+ "fam.lingua": "Língua",
+ "fam.procurar_lingua": "Procurar língua",
+ "fam.girafinhas.t": "Primeiros passos",
+ "fam.girafinhas.d": "Três toques, voz e cores, para quem nunca usou um telemóvel.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Ensina passo a passo, mesmo sem rede.",
+ "fam.quiz.t": "Quiz em família",
+ "fam.quiz.d": "Perguntas para jogar em família, ou só entre adultos.",
+ "fam.natal.t": "Natal em família",
+ "fam.natal.d": "Jogos, moldes de papel e um certificado para guardar.",
+ "fam.video.t": "Estúdio de vídeo",
+ "fam.video.d": "Filma sem internet e guarda o filme com selo.",
+ "fam.contas.t": "Contas com selo",
+ "fam.contas.d": "Faz contas e guarda o resultado com selo.",
+ "fam.arte.t": "Estúdio de arte",
+ "fam.arte.d": "Música e desenho, com o teu nome.",
+ "fam.regua.t": "Régua do planeta",
+ "fam.regua.d": "Ainda vamos a tempo de salvar o planeta?",
+ "fam.aventura.t": "Aventura em família",
+ "fam.aventura.d": "Um jogo de aventura para jogar juntos."
+}

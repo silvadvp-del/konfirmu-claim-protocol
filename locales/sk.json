@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "sk",
+  "nome": "Slovenčina",
+  "nome_pt": "Eslovaco",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Rodina",
+ "fam.titulo": "Vzdelávanie a rodina",
+ "fam.sub": "Učte sa a hrajte sa v rodine s rovnakou starostlivosťou o súkromie.",
+ "fam.comeca": "Začni tu",
+ "fam.lingua": "Jazyk",
+ "fam.procurar_lingua": "Hľadať jazyk",
+ "fam.girafinhas.t": "Prvé kroky",
+ "fam.girafinhas.d": "Tri dotyky, hlas a farby pre tých, čo nikdy nepoužili telefón.",
+ "fam.tutor.t": "Doučovanie",
+ "fam.tutor.d": "Učí krok za krokom, aj bez siete.",
+ "fam.quiz.t": "Rodinný kvíz",
+ "fam.quiz.d": "Otázky pre celú rodinu alebo len pre dospelých.",
+ "fam.natal.t": "Vianoce v rodine",
+ "fam.natal.d": "Hry, papierové vystrihovačky a diplom na pamiatku.",
+ "fam.video.t": "Video štúdio",
+ "fam.video.d": "Nakrúcaj bez internetu a ulož video s pečaťou.",
+ "fam.contas.t": "Počty s pečaťou",
+ "fam.contas.d": "Počítaj a ulož výsledok s pečaťou.",
+ "fam.arte.t": "Umelecké štúdio",
+ "fam.arte.d": "Hudba a kreslenie, s tvojím menom.",
+ "fam.regua.t": "Pravítko planéty",
+ "fam.regua.d": "Stihneme ešte zachrániť planétu?",
+ "fam.aventura.t": "Rodinné dobrodružstvo",
+ "fam.aventura.d": "Dobrodružná hra na spoločné hranie."
+}
