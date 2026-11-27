@@ -23,3 +23,6 @@ jobs:
       - name: Auditar todos os cartuchos
         run: |
           python3 -I kcp_lint.py
+      - name: Nucleo unico — motor Python v2 e motor das paginas (KSHA/2) dao as mesmas respostas (KON-596)
+        run: |
+          node tests/nucleo_unico.mjs
