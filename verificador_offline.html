@@ -65,78 +65,33 @@ table{font-size:.8em;border-collapse:collapse;width:100%} td,th{border:1px solid
 </div>
 
 <p class="aviso">O que NÃO garante: isto verifica INTEGRIDADE e PROVENIÊNCIA dos bytes — não certifica conteúdo clínico nem substitui profissionais de saúde. SELADO ≠ VERDADEIRO. O hash é unidireccional: esta página nunca guarda nem envia o teu ficheiro. Cache do browser pode ser limpa pelo utilizador — offline não é «eterno por decreto».</p>
+<script src="./assets/konfirmu_sha256.js"></script>
 <script>
 function sha256(str, bin) {
-  // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
-  // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
-  function rightRotate(value, amount) { return (value>>>amount) | (value<<(32-amount)); }
-  var ascii = bin ? str : unescape(encodeURIComponent(str));   // bin=true: str ja e bytes crus; senao converte texto em bytes UTF-8
-  var mathPow = Math.pow, maxWord = mathPow(2,32);
-  var result = '', words = [];
-  var asciiBitLength = ascii.length*8;
-  var hash = sha256.h = sha256.h || [];
-  var k = sha256.k = sha256.k || [];
-  var primeCounter = k.length, isComposite = {};
-  for (var candidate = 2; primeCounter < 64; candidate++) {
-    if (!isComposite[candidate]) {
-      for (var i = 0; i < 313; i += candidate) isComposite[i] = candidate;
-      hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
-      k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
-    }
-  }
-  ascii += '\x80';
-  while (ascii.length%64 - 56) ascii += '\x00';
-  for (var i = 0; i < ascii.length; i++) {
-    var j = ascii.charCodeAt(i);
-    words[i>>2] |= j << ((3 - i)%4)*8;
-  }
-  words[words.length] = (asciiBitLength/maxWord)|0;
-  words[words.length] = (asciiBitLength);
-  for (var jj = 0; jj < words.length;) {
-    var w = words.slice(jj, jj += 16);
-    var oldHash = hash;
-    hash = hash.slice(0, 8);
-    for (var i2 = 0; i2 < 64; i2++) {
-      var w15 = w[i2-15], w2 = w[i2-2];
-      var a = hash[0], e = hash[4];
-      var temp1 = hash[7]
-        + (rightRotate(e,6)^rightRotate(e,11)^rightRotate(e,25))
-        + ((e&hash[5])^((~e)&hash[6]))
-        + k[i2]
-        + (w[i2] = (i2 < 16) ? w[i2] : (
-            w[i2-16] + (rightRotate(w15,7)^rightRotate(w15,18)^(w15>>>3))
-            + w[i2-7] + (rightRotate(w2,17)^rightRotate(w2,19)^(w2>>>10)))|0);
-      var temp2 = (rightRotate(a,2)^rightRotate(a,13)^rightRotate(a,22))
-        + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
-      hash = [(temp1+temp2)|0].concat(hash);
-      hash[4] = (hash[4]+temp1)|0;
-    }
-    for (var i3 = 0; i3 < 8; i3++) hash[i3] = (hash[i3]+oldHash[i3])|0;
-  }
-  for (var i4 = 0; i4 < 8; i4++) {
-    for (var j4 = 3; j4 + 1; j4--) {
-      var b = (hash[i4]>>(j4*8))&255;
-      result += ((b < 16) ? 0 : '') + b.toString(16);
-    }
-  }
-  return result;
+  // SHA-256 em assets/konfirmu_sha256.js (KON-572, 27-11-2026): bytes reais, sem limite de tamanho.
+  // bin=true: str são bytes crus (um carácter por byte); senão é texto e conta em UTF-8.
+  if (bin) { var u = new Uint8Array(str.length); for (var i = 0; i < str.length; i++) u[i] = str.charCodeAt(i) & 255; return KonfirmuSHA256.bytes(u); }
+  return KonfirmuSHA256.text(str);
 }
 function calc(){
   var fi=document.getElementById("f").files[0];
   var tx=document.getElementById("t").value;
   var out=document.getElementById("out");
   function finish(h){
-    out.textContent=h;
+    out.textContent=h; ultimoHash=h;
     var rows={r1:"529098c652ee8234960d69383e308f60db6a5df8ea6bdae578b538eb806e80cf",
       r2:"3cfe80002b756a40b81ceeae1ff5bec58d55bc49b80303f94cb16164ac036277",
       r3:"01721dfa169c8cd8c3ae45f5f6cf454b16efcee963812552b8dbf3e005f80f37",
       r4:"df182d72860c5519be378a49c2ff7f76c37b0c36814b6802346e4b5f7d277dce"};
-    for(var id in rows){var el=document.getElementById(id);
-      el.textContent=(h===rows[id])?"✓ CONFERE":"✗ não bate"; el.className=(h===rows[id])?"verde":"vermelho";}
+    var algum=false;
+    for(var id in rows){var el=document.getElementById(id), igual=(h===rows[id]); if(igual) algum=true;
+      el.textContent=igual?"✓ CONFERE":"—"; el.className=igual?"verde":"";}
+    if(!algum) out.textContent=h+"\nNão é nenhum dos 4 ficheiros da casa. Num ficheiro teu é normal: este é o SHA-256 dele.";
   }
-  if(fi){var rd=new FileReader();
-    rd.onload=function(){finish(sha256(String.fromCharCode.apply(null,new Uint8Array(rd.result)), true));};
-    rd.readAsArrayBuffer(fi);}
+  if(!KonfirmuSHA256.ok){out.textContent="O cálculo do hash falhou o auto-teste neste navegador. Sem veredicto.";return;}
+  if(fi){out.textContent="a calcular…";
+    KonfirmuSHA256.ficheiro(fi,function(feito,total){out.textContent="a calcular… "+Math.floor(100*feito/Math.max(total,1))+" %";})
+      .then(finish,function(e){out.textContent="Não consegui ler o ficheiro: "+e;});}
   else if(tx){finish(sha256(tx));}
   else{out.textContent="escolhe um ficheiro ou cola texto";}
 }

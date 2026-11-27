@@ -316,7 +316,7 @@ $('cIA').onclick=ligarIA;$('cExp').onclick=exportar;$('cImp').onclick=()=>$('fIm
 $('cFoto').onclick=()=>$('fFoto').click();$('fFoto').onchange=fotoEscolhida;$('cPac').onclick=()=>$('fPac').click();$('fPac').onchange=pacEscolhidos;$('cSomE').onclick=somEnviar;$('cSomO').onclick=somOuvir;$('cApg').onclick=apagar;
 const nav=(navigator.language||'pt').slice(0,2);if(T[nav]){L=nav;$('lingua').value=nav}
 const pronto=arrancar();folhaCampos();
-if(location.protocol!=='file:'&&globalThis.isSecureContext&&'serviceWorker'in navigator)navigator.serviceWorker.register('konfirmu_chat_sw.js').catch(()=>{});
+if(location.protocol!=='file:'&&globalThis.isSecureContext&&'serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 globalThis.KONFIRMU={sha256,sha256js,portao,selo,responder,conferirCadeia,pacote,limpar,pronto,FOLHAS,avaliar,intervalo,folhaConferir,pacoteAssinado,minhaChave,crc16,sha256b,fotoComprimir,fotoPacotes,fotoJuntar,somBits,somOnda,somLer,definirLingua:l=>{L=l;pintar()}};
 </script>
 </body>

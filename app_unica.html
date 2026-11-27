@@ -50,6 +50,7 @@ h1{font-size:1.6rem;background:linear-gradient(90deg,#ffd54f,#81c784);-webkit-ba
 <p class="aviso">O que NÃO garante: cada sala tem o seu selo e as suas regras; esta porta só as junta — não certifica nada por elas. A identidade é a chave deste aparelho (local, privada). SELADO ≠ VERDADEIRO.</p>
 <script src="./assets/nacl-fast.min.js"></script>
 <script>
+if("serviceWorker" in navigator && location.protocol!=="file:"){navigator.serviceWorker.register("./sw.js").catch(function(){});}
 function toHex(u8){var s='';for(var i=0;i<u8.length;i++)s+=('0'+u8[i].toString(16)).slice(-2);return s}
 var pk;
 try{pk=localStorage.getItem("konfirmu_id")}catch(_){}

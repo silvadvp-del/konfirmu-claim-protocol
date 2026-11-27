@@ -29,61 +29,12 @@ pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
 <pre id="out">—</pre>
 </div>
 <p class="aviso">O que NÃO garante: o filme fica SÓ neste aparelho (nada sobe para lado nenhum); o selo prova que ESTE filme foi selado nesta corrente à hora do aparelho — não prova que o que se vê aconteceu (SELADO ≠ VERDADEIRO); a gravação precisa de um browser com câmara e microfone.</p>
+<script src="./assets/konfirmu_sha256.js"></script>
 <script>
 function sha256Video(str) {
-  // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
-  // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
-  function rightRotate(value, amount) { return (value>>>amount) | (value<<(32-amount)); }
-  var ascii = unescape(encodeURIComponent(str));   // bytes UTF-8 como chars 0-255
-  var mathPow = Math.pow, maxWord = mathPow(2,32);
-  var result = '', words = [];
-  var asciiBitLength = ascii.length*8;
-  var hash = sha256Video.h = sha256Video.h || [];
-  var k = sha256Video.k = sha256Video.k || [];
-  var primeCounter = k.length, isComposite = {};
-  for (var candidate = 2; primeCounter < 64; candidate++) {
-    if (!isComposite[candidate]) {
-      for (var i = 0; i < 313; i += candidate) isComposite[i] = candidate;
-      hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
-      k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
-    }
-  }
-  ascii += '\x80';
-  while (ascii.length%64 - 56) ascii += '\x00';
-  for (var i = 0; i < ascii.length; i++) {
-    var j = ascii.charCodeAt(i);
-    words[i>>2] |= j << ((3 - i)%4)*8;
-  }
-  words[words.length] = (asciiBitLength/maxWord)|0;
-  words[words.length] = (asciiBitLength);
-  for (var jj = 0; jj < words.length;) {
-    var w = words.slice(jj, jj += 16);
-    var oldHash = hash;
-    hash = hash.slice(0, 8);
-    for (var i2 = 0; i2 < 64; i2++) {
-      var w15 = w[i2-15], w2 = w[i2-2];
-      var a = hash[0], e = hash[4];
-      var temp1 = hash[7]
-        + (rightRotate(e,6)^rightRotate(e,11)^rightRotate(e,25))
-        + ((e&hash[5])^((~e)&hash[6]))
-        + k[i2]
-        + (w[i2] = (i2 < 16) ? w[i2] : (
-            w[i2-16] + (rightRotate(w15,7)^rightRotate(w15,18)^(w15>>>3))
-            + w[i2-7] + (rightRotate(w2,17)^rightRotate(w2,19)^(w2>>>10)))|0);
-      var temp2 = (rightRotate(a,2)^rightRotate(a,13)^rightRotate(a,22))
-        + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
-      hash = [(temp1+temp2)|0].concat(hash);
-      hash[4] = (hash[4]+temp1)|0;
-    }
-    for (var i3 = 0; i3 < 8; i3++) hash[i3] = (hash[i3]+oldHash[i3])|0;
-  }
-  for (var i4 = 0; i4 < 8; i4++) {
-    for (var j4 = 3; j4 + 1; j4--) {
-      var b = (hash[i4]>>(j4*8))&255;
-      result += ((b < 16) ? 0 : '') + b.toString(16);
-    }
-  }
-  return result;
+  // SHA-256 do texto em UTF-8. O motor está em assets/konfirmu_sha256.js (KON-572, 27-11-2026).
+  // Ficheiros: usar KonfirmuSHA256.ficheiro(blob), que conta os bytes reais e não tem limite de tamanho.
+  return KonfirmuSHA256.text(str);
 }
 var chunks=[], mediaRec=null, stream=null, blobFilme=null, prevHash="0".repeat(64), cadeia=[];
 function toHex(u8){var s="";for(var i=0;i<u8.length;i++)s+=("0"+u8[i].toString(16)).slice(-2);return s}
@@ -105,9 +56,7 @@ async function selar(){
   if(!blobFilme){alert("grava e para primeiro");return}
   var titulo=document.getElementById("titulo").value.trim()||"Sem título";
   var autor=document.getElementById("autor").value.trim()||"Criança da aldeia";
-  var buf=new Uint8Array(await blobFilme.arrayBuffer());
-  var bin=String.fromCharCode.apply(null,buf);
-  var hash=sha256Video(bin,true);
+  var hash=await KonfirmuSHA256.ficheiro(blobFilme); // bytes reais do .webm, sem limite de tamanho (KON-572)
   var ts=new Date().toISOString();
   var evento={n:cadeia.length+1,titulo:titulo,autor:autor,ts:ts,hash:hash,prev:prevHash};
   var enc=sha256Video(prevHash+"|"+hash+"|"+titulo+"|"+autor+"|"+ts,false);

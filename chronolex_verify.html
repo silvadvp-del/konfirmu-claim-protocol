@@ -32,61 +32,13 @@ input[type=file]{width:100%}
 
 <p class="aviso">O que NÃO garante: o navegador não verifica carimbo RFC 3161 (a cadeia da TSA verifica-se com: openssl ts -verify -in ficheiro.tsr -data ficheiro -CAfile cacert.pem -untrusted tsa.crt). SELADO ≠ VERDADEIRO. A verificação prova integridade e assinaturas, não a verdade dos factos.</p>
 <script src="./assets/nacl-fast.min.js"></script>
+<script src="./assets/nacl-util.min.js"></script>
+<script src="./assets/konfirmu_sha256.js"></script>
 <script>
 function sha256Ver(str) {
-  // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
-  // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
-  function rightRotate(value, amount) { return (value>>>amount) | (value<<(32-amount)); }
-  var ascii = unescape(encodeURIComponent(str));   // bytes UTF-8 como chars 0-255
-  var mathPow = Math.pow, maxWord = mathPow(2,32);
-  var result = '', words = [];
-  var asciiBitLength = ascii.length*8;
-  var hash = sha256Ver.h = sha256Ver.h || [];
-  var k = sha256Ver.k = sha256Ver.k || [];
-  var primeCounter = k.length, isComposite = {};
-  for (var candidate = 2; primeCounter < 64; candidate++) {
-    if (!isComposite[candidate]) {
-      for (var i = 0; i < 313; i += candidate) isComposite[i] = candidate;
-      hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
-      k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
-    }
-  }
-  ascii += '\x80';
-  while (ascii.length%64 - 56) ascii += '\x00';
-  for (var i = 0; i < ascii.length; i++) {
-    var j = ascii.charCodeAt(i);
-    words[i>>2] |= j << ((3 - i)%4)*8;
-  }
-  words[words.length] = (asciiBitLength/maxWord)|0;
-  words[words.length] = (asciiBitLength);
-  for (var jj = 0; jj < words.length;) {
-    var w = words.slice(jj, jj += 16);
-    var oldHash = hash;
-    hash = hash.slice(0, 8);
-    for (var i2 = 0; i2 < 64; i2++) {
-      var w15 = w[i2-15], w2 = w[i2-2];
-      var a = hash[0], e = hash[4];
-      var temp1 = hash[7]
-        + (rightRotate(e,6)^rightRotate(e,11)^rightRotate(e,25))
-        + ((e&hash[5])^((~e)&hash[6]))
-        + k[i2]
-        + (w[i2] = (i2 < 16) ? w[i2] : (
-            w[i2-16] + (rightRotate(w15,7)^rightRotate(w15,18)^(w15>>>3))
-            + w[i2-7] + (rightRotate(w2,17)^rightRotate(w2,19)^(w2>>>10)))|0);
-      var temp2 = (rightRotate(a,2)^rightRotate(a,13)^rightRotate(a,22))
-        + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
-      hash = [(temp1+temp2)|0].concat(hash);
-      hash[4] = (hash[4]+temp1)|0;
-    }
-    for (var i3 = 0; i3 < 8; i3++) hash[i3] = (hash[i3]+oldHash[i3])|0;
-  }
-  for (var i4 = 0; i4 < 8; i4++) {
-    for (var j4 = 3; j4 + 1; j4--) {
-      var b = (hash[i4]>>(j4*8))&255;
-      result += ((b < 16) ? 0 : '') + b.toString(16);
-    }
-  }
-  return result;
+  // SHA-256 do texto em UTF-8. O motor está em assets/konfirmu_sha256.js (KON-572, 27-11-2026).
+  // Ficheiros: usar KonfirmuSHA256.ficheiro(blob), que conta os bytes reais e não tem limite de tamanho.
+  return KonfirmuSHA256.text(str);
 }
 var ataState = null;
 function auditarDoc(doc){
@@ -140,17 +92,21 @@ setupDrop("drop1", function(f){
   rd.readAsText(f);
 });
 setupDrop("drop2", function(f){
-  var rd = new FileReader();
-  rd.onload = function(){
-    var bin = String.fromCharCode.apply(null, new Uint8Array(rd.result));
-    var h = sha256Ver(bin, true);
+  var out = document.getElementById("outFile");
+  if(!KonfirmuSHA256.ok){ out.textContent = "O cálculo do hash falhou o auto-teste neste navegador. Sem veredicto."; out.className = "vermelho"; return; }
+  out.textContent = "a calcular…"; out.className = "";
+  KonfirmuSHA256.ambos(f, function(feito, total){ out.textContent = "a calcular… " + Math.floor(100*feito/Math.max(total,1)) + " %"; }).then(function(r){
     var esperado = document.getElementById("hashEsperado").value.trim().toLowerCase();
-    var ok = esperado ? h === esperado : false;
-    var out = document.getElementById("outFile");
-    out.textContent = "sha256: " + h + (esperado ? ("\n" + (ok ? "CONFERE com o esperado" : "DIVERGE do esperado")) : "\n(cola o hash esperado para comparar)");
-    out.className = esperado ? (ok ? "verde" : "vermelho") : "";
-  };
-  rd.readAsArrayBuffer(f);
+    var txt = "sha256: " + r.sha256 + " (" + r.bytes + " bytes)";
+    if(!esperado){ out.textContent = txt + "\n(cola o hash esperado para comparar)"; out.className = ""; return; }
+    if(esperado === r.sha256){ out.textContent = txt + "\nCONFERE com o esperado"; out.className = "verde"; return; }
+    if(esperado === r.legado_v1){
+      out.textContent = txt + "\nCONFERE com o esperado no cálculo antigo v1." +
+        "\nO hash esperado foi feito antes de 27-11-2026, quando as páginas contavam cada byte acima de 127 como dois (KON-572). Os bytes são os mesmos que foram selados.";
+      out.className = "verde"; return;
+    }
+    out.textContent = txt + "\nDIVERGE do esperado"; out.className = "vermelho";
+  }, function(e){ out.textContent = "Não consegui ler o ficheiro: " + e; out.className = "vermelho"; });
 });
 </script>
 </body>

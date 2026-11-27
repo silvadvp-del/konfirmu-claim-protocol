@@ -37,61 +37,12 @@ canvas{display:none}
 <script src="./assets/nacl-fast.min.js"></script>
 <script src="./assets/nacl-util.min.js"></script>
 <script src="./assets/qrcode.js"></script>
+<script src="./assets/konfirmu_sha256.js"></script>
 <script>
 function sha256Photo(str) {
-  // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
-  // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
-  function rightRotate(value, amount) { return (value>>>amount) | (value<<(32-amount)); }
-  var ascii = unescape(encodeURIComponent(str));   // bytes UTF-8 como chars 0-255
-  var mathPow = Math.pow, maxWord = mathPow(2,32);
-  var result = '', words = [];
-  var asciiBitLength = ascii.length*8;
-  var hash = sha256Photo.h = sha256Photo.h || [];
-  var k = sha256Photo.k = sha256Photo.k || [];
-  var primeCounter = k.length, isComposite = {};
-  for (var candidate = 2; primeCounter < 64; candidate++) {
-    if (!isComposite[candidate]) {
-      for (var i = 0; i < 313; i += candidate) isComposite[i] = candidate;
-      hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
-      k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
-    }
-  }
-  ascii += '\x80';
-  while (ascii.length%64 - 56) ascii += '\x00';
-  for (var i = 0; i < ascii.length; i++) {
-    var j = ascii.charCodeAt(i);
-    words[i>>2] |= j << ((3 - i)%4)*8;
-  }
-  words[words.length] = (asciiBitLength/maxWord)|0;
-  words[words.length] = (asciiBitLength);
-  for (var jj = 0; jj < words.length;) {
-    var w = words.slice(jj, jj += 16);
-    var oldHash = hash;
-    hash = hash.slice(0, 8);
-    for (var i2 = 0; i2 < 64; i2++) {
-      var w15 = w[i2-15], w2 = w[i2-2];
-      var a = hash[0], e = hash[4];
-      var temp1 = hash[7]
-        + (rightRotate(e,6)^rightRotate(e,11)^rightRotate(e,25))
-        + ((e&hash[5])^((~e)&hash[6]))
-        + k[i2]
-        + (w[i2] = (i2 < 16) ? w[i2] : (
-            w[i2-16] + (rightRotate(w15,7)^rightRotate(w15,18)^(w15>>>3))
-            + w[i2-7] + (rightRotate(w2,17)^rightRotate(w2,19)^(w2>>>10)))|0);
-      var temp2 = (rightRotate(a,2)^rightRotate(a,13)^rightRotate(a,22))
-        + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
-      hash = [(temp1+temp2)|0].concat(hash);
-      hash[4] = (hash[4]+temp1)|0;
-    }
-    for (var i3 = 0; i3 < 8; i3++) hash[i3] = (hash[i3]+oldHash[i3])|0;
-  }
-  for (var i4 = 0; i4 < 8; i4++) {
-    for (var j4 = 3; j4 + 1; j4--) {
-      var b = (hash[i4]>>(j4*8))&255;
-      result += ((b < 16) ? 0 : '') + b.toString(16);
-    }
-  }
-  return result;
+  // SHA-256 do texto em UTF-8. O motor está em assets/konfirmu_sha256.js (KON-572, 27-11-2026).
+  // Ficheiros: usar KonfirmuSHA256.ficheiro(blob), que conta os bytes reais e não tem limite de tamanho.
+  return KonfirmuSHA256.text(str);
 }
 var streamAtivo = null;
 var blobSelado = null;
@@ -120,51 +71,42 @@ function capturar(){
       var url = URL.createObjectURL(blob);
       var img = document.getElementById("foto");
       img.src = url; img.style.display = "block";
-      var rd = new FileReader();
-      rd.onload = function(){
-        var bin = String.fromCharCode.apply(null, new Uint8Array(rd.result));
-        var h = sha256Photo(bin, true);
+      KonfirmuSHA256.ficheiro(blob).then(function(h){
         document.getElementById("capturaInfo").textContent =
           "tipo: " + blob.type + " · tamanho: " + Math.round(blob.size/1024) + " KB · sha256: " + h;
-      };
-      rd.readAsArrayBuffer(blob);
+      });
     }, tipos[i], 0.8);
   })(0);
 }
 function selar(){
   if(!blobSelado){ alert("primeiro captura"); return; }
-  var rd = new FileReader();
-  rd.onload = function(){
-    var bin = String.fromCharCode.apply(null, new Uint8Array(rd.result));
-    var h = sha256Photo(bin, true);
+  // v2 (27-11-2026): o hash é o SHA-256 dos bytes do ficheiro. Os selos v1 usavam o cálculo antigo (KON-572).
+  KonfirmuSHA256.ficheiro(blobSelado).then(function(h){
     var ts = new Date().toISOString();
-    var alvo = "KONFIRMU-PHOTO|v1|" + h + "|" + ts;
+    var alvo = "KONFIRMU-PHOTO|v2|" + h + "|" + ts;
     var kp = nacl.sign.keyPair();
     var sig = nacl.sign.detached(nacl.util.decodeUTF8(alvo), kp.secretKey);
-    selo = { hash: h, ts: ts, pk: toHex(kp.publicKey), sig: toHex(sig) };
+    selo = { v: 2, hash: h, ts: ts, pk: toHex(kp.publicKey), sig: toHex(sig) };
     document.getElementById("selo").textContent =
       "sha256: " + h + "\nhora (aparelho): " + ts + "\npk: " + selo.pk + "\nsig: " + selo.sig;
-    var payload = "KONFIRMU|PHOTO|v1|" + h + "|" + selo.pk + "|" + selo.sig + "|" + ts;
+    var payload = "KONFIRMU|PHOTO|v2|" + h + "|" + selo.pk + "|" + selo.sig + "|" + ts;
     var c = document.getElementById("qr");
     var qr = qrcode(0,"M"); qr.addData(payload,"Byte"); qr.make();
     var n = qr.getModuleCount(), s = 3; c.width = n*s; c.height = n*s;
     var ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#000";
     for (var r=0;r<n;r++) for (var cc=0;cc<n;cc++) if (qr.isDark(r,cc)) ctx.fillRect(cc*s,r*s,s,s);
-  };
-  rd.readAsArrayBuffer(blobSelado);
+  });
 }
 function verificar(){
   if(!selo || !blobSelado){ alert("primeiro sela"); return; }
-  var rd = new FileReader();
-  rd.onload = function(){
-    var bin = String.fromCharCode.apply(null, new Uint8Array(rd.result));
-    var okH = sha256Photo(bin, true) === selo.hash;
-    var alvo = "KONFIRMU-PHOTO|v1|" + selo.hash + "|" + selo.ts;
+  KonfirmuSHA256.ambos(blobSelado).then(function(r){
+    var v = selo.v || 1; // v1 = selo feito antes de 27-11-2026, com o cálculo antigo (KON-572)
+    var okH = (v >= 2 ? r.sha256 : r.legado_v1) === selo.hash;
+    var alvo = "KONFIRMU-PHOTO|v" + v + "|" + selo.hash + "|" + selo.ts;
     var okS = nacl.sign.detached.verify(nacl.util.decodeUTF8(alvo), fromHex(selo.sig), fromHex(selo.pk));
     document.getElementById("verif").textContent = "hash: " + (okH ? "CONFERE" : "DIVERGE") + "\nassinatura: " + (okS ? "VÁLIDA" : "INVÁLIDA") + "\n" + (okH && okS ? "VERDE — fotografia íntegra" : "VERMELHO — adulterada");
     document.getElementById("verif").className = okH && okS ? "verde" : "vermelho";
-  };
-  rd.readAsArrayBuffer(blobSelado);
+  });
 }
 function guardarFoto(){
   if(!blobSelado){ alert("primeiro captura"); return; }
@@ -175,7 +117,7 @@ function guardarFoto(){
 }
 function guardarCert(){
   if(!selo){ alert("primeiro sela"); return; }
-  var cert = { versao: "chronolex-photo/1", hash: selo.hash, capturadoEm: selo.ts, pk: selo.pk, sig: selo.sig };
+  var cert = { versao: "chronolex-photo/" + (selo.v || 1), hash: selo.hash, hash_de: (selo.v >= 2 ? "SHA-256 dos bytes do ficheiro guardado" : "cálculo antigo v1 (KON-572)"), capturadoEm: selo.ts, pk: selo.pk, sig: selo.sig };
   var a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([JSON.stringify(cert, null, 2)], { type: "application/json" }));
   a.download = "certificado-" + selo.hash.slice(0,12) + ".json";
