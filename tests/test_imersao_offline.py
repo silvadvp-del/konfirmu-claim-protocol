@@ -26,6 +26,12 @@ def esperar(page, expressao):
     raise AssertionError(expressao)
 
 
+# ângulo «rotateY» do primeiro cartão à vista (NaN se nenhum estiver inclinado)
+ANGULO_Y = """(() => { const c = [...document.querySelectorAll('a.card')].find(e => { const r = e.getBoundingClientRect();
+  return e.offsetParent && r.bottom > 0 && r.top < innerHeight; });
+  const m = c && /rotateY\\((-?[\\d.]+)deg\\)/.exec(c.style.transform); return m ? parseFloat(m[1]) : NaN; })()"""
+
+
 def test_browser(folder, expected_activities=None):
     handler = functools.partial(QuietHandler, directory=folder)
     with ThreadingHTTPServer(("127.0.0.1", 0), handler) as server, sync_playwright() as pw:
@@ -56,12 +62,15 @@ def test_browser(folder, expected_activities=None):
         button.click()
         assert button.get_attribute("aria-pressed") == "true"
         assert page.evaluate("document.fullscreenElement === document.documentElement")
+        # a inclinação vai direta para cada cartão à vista (e não para a página inteira, que recalculava tudo a cada quadro):
+        # o ensaio põe um cartão à vista e lê o ângulo do próprio cartão
+        page.evaluate("document.querySelector('.portal:not([hidden]) a.card, a.card').scrollIntoView({block: 'center'})")
         page.mouse.move(350, 200)
-        esperar(page, "parseFloat(document.documentElement.style.getPropertyValue('--ry')) > 0")
+        esperar(page, ANGULO_Y + " > 0")
         page.evaluate("""() => {
           for (const gamma of [0, -25]) window.dispatchEvent(new DeviceOrientationEvent('deviceorientation', { beta: 30, gamma }));
         }""")
-        esperar(page, "parseFloat(document.documentElement.style.getPropertyValue('--ry')) < 0")
+        esperar(page, ANGULO_Y + " < 0")
         assert page.locator("a.card .ico").first.evaluate("(el) => new DOMMatrix(getComputedStyle(el).transform).m43 > 0")
         page.locator("summary").click()
         picker = page.locator('.im3d-viewer input')

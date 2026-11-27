@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "hu",
+  "nome": "Magyar",
+  "nome_pt": "Húngaro",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Család",
+ "fam.titulo": "Oktatás és család",
+ "fam.sub": "Tanuljatok és játsszatok családként, ugyanazzal a gondossággal a magánszféra iránt.",
+ "fam.comeca": "Kezdd itt",
+ "fam.lingua": "Nyelv",
+ "fam.procurar_lingua": "Nyelv keresése",
+ "fam.girafinhas.t": "Első lépések",
+ "fam.girafinhas.d": "Három érintés, hang és színek azoknak, akik még sosem használtak telefont.",
+ "fam.tutor.t": "Oktató",
+ "fam.tutor.d": "Lépésről lépésre tanít, hálózat nélkül is.",
+ "fam.quiz.t": "Családi kvíz",
+ "fam.quiz.d": "Kérdések a család közös játékához vagy csak felnőtteknek.",
+ "fam.natal.t": "Karácsony a családdal",
+ "fam.natal.d": "Játékok, papírsablonok és egy oklevél emlékbe.",
+ "fam.video.t": "Videóstúdió",
+ "fam.video.d": "Filmezz internet nélkül, és őrizd meg a filmet pecséttel.",
+ "fam.contas.t": "Számolás pecséttel",
+ "fam.contas.d": "Számolj, és őrizd meg az eredményt pecséttel.",
+ "fam.arte.t": "Művészeti stúdió",
+ "fam.arte.d": "Zene és rajz, a neveddel.",
+ "fam.regua.t": "A bolygó vonalzója",
+ "fam.regua.d": "Van még időnk megmenteni a bolygót?",
+ "fam.aventura.t": "Családi kaland",
+ "fam.aventura.d": "Kalandjáték közös játékra."
+}

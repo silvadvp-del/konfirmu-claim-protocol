@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "he",
+  "nome": "עברית",
+  "nome_pt": "Hebraico",
+  "dir": "rtl",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "משפחה",
+ "fam.titulo": "חינוך ומשפחה",
+ "fam.sub": "לומדים ומשחקים יחד כמשפחה, באותה הקפדה על פרטיות.",
+ "fam.comeca": "מתחילים כאן",
+ "fam.lingua": "שפה",
+ "fam.procurar_lingua": "חיפוש שפה",
+ "fam.girafinhas.t": "צעדים ראשונים",
+ "fam.girafinhas.d": "שלוש נגיעות, קול וצבעים, למי שמעולם לא השתמש בטלפון.",
+ "fam.tutor.t": "מורה פרטי",
+ "fam.tutor.d": "מלמד צעד אחר צעד, גם בלי רשת.",
+ "fam.quiz.t": "חידון משפחתי",
+ "fam.quiz.d": "שאלות למשחק משפחתי, או רק בין מבוגרים.",
+ "fam.natal.t": "חג המולד במשפחה",
+ "fam.natal.d": "משחקים, תבניות נייר ותעודה לשמירה.",
+ "fam.video.t": "אולפן וידאו",
+ "fam.video.d": "צלמו בלי אינטרנט ושמרו את הסרט עם חותם.",
+ "fam.contas.t": "חשבון עם חותם",
+ "fam.contas.d": "חשבו ושמרו את התוצאה עם חותם.",
+ "fam.arte.t": "סטודיו לאמנות",
+ "fam.arte.d": "מוזיקה וציור, עם השם שלך.",
+ "fam.regua.t": "סרגל כדור הארץ",
+ "fam.regua.d": "האם עוד יש זמן להציל את כדור הארץ?",
+ "fam.aventura.t": "הרפתקה משפחתית",
+ "fam.aventura.d": "משחק הרפתקאות לשחק יחד."
+}

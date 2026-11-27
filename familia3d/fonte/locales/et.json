@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "et",
+  "nome": "Eesti",
+  "nome_pt": "Estónio",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Pere",
+ "fam.titulo": "Haridus ja pere",
+ "fam.sub": "Õpime ja mängime perega, sama hoolega privaatsuse eest.",
+ "fam.comeca": "Alusta siit",
+ "fam.lingua": "Keel",
+ "fam.procurar_lingua": "Otsi keelt",
+ "fam.girafinhas.t": "Esimesed sammud",
+ "fam.girafinhas.d": "Kolm puudutust, hääl ja värvid neile, kes pole kunagi telefoni kasutanud.",
+ "fam.tutor.t": "Juhendaja",
+ "fam.tutor.d": "Õpetab samm-sammult, ka ilma võrguta.",
+ "fam.quiz.t": "Perekviis",
+ "fam.quiz.d": "Küsimused kogu perele või ainult täiskasvanutele.",
+ "fam.natal.t": "Jõulud perega",
+ "fam.natal.d": "Mängud, paberist šabloonid ja tunnistus mälestuseks.",
+ "fam.video.t": "Videostuudio",
+ "fam.video.d": "Filmi ilma internetita ja salvesta film pitseriga.",
+ "fam.contas.t": "Arvutused pitseriga",
+ "fam.contas.d": "Arvuta ja salvesta tulemus pitseriga.",
+ "fam.arte.t": "Kunstistuudio",
+ "fam.arte.d": "Muusika ja joonistamine, sinu nimega.",
+ "fam.regua.t": "Planeedi joonlaud",
+ "fam.regua.d": "Kas jõuame veel planeedi päästa?",
+ "fam.aventura.t": "Pereseiklus",
+ "fam.aventura.d": "Seiklusmäng koos mängimiseks."
+}

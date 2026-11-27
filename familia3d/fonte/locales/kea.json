@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "kea",
+  "nome": "Kabuverdianu",
+  "nome_pt": "Crioulo cabo-verdiano",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Família",
+ "fam.titulo": "Edukason i família",
+ "fam.sub": "Prende i brinka na família, ku mésmu kuidadu ku privasidadi.",
+ "fam.comeca": "Kumesa li",
+ "fam.lingua": "Língua",
+ "fam.procurar_lingua": "Djobe língua",
+ "fam.girafinhas.t": "Purmeru pasus",
+ "fam.girafinhas.d": "Três tokadura, vos i koris, pa kenha ki nunka uza telemóvel.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Ta inxina pasu pa pasu, mésmu sen redi.",
+ "fam.quiz.t": "Kiz di família",
+ "fam.quiz.d": "Pergunta pa djuga na família, o sô entri adultu.",
+ "fam.natal.t": "Natal na família",
+ "fam.natal.d": "Djogu, modelu di papel i un sertifikadu pa guarda.",
+ "fam.video.t": "Stúdiu di vídiu",
+ "fam.video.d": "Filma sen internet i guarda filmi ku selu.",
+ "fam.contas.t": "Kontas ku selu",
+ "fam.contas.d": "Faze kontas i guarda rezultadu ku selu.",
+ "fam.arte.t": "Stúdiu di arti",
+ "fam.arte.d": "Múzika i dizenhu, ku bu nómi.",
+ "fam.regua.t": "Régua di planeta",
+ "fam.regua.d": "Inda nu sta na ténpu di salva planeta?",
+ "fam.aventura.t": "Aventura na família",
+ "fam.aventura.d": "Un djogu di aventura pa djuga djuntu."
+}

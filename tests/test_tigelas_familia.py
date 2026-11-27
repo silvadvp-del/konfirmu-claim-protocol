@@ -8,8 +8,8 @@ Corre com:
 O que prova (cada linha diz PASSA ou FALHA; sai com 1 se alguma falhar):
   A. sem navegador: línguas com as mesmas chaves e nada vazio; os menus refazem-se iguais, byte a byte;
      as animações só mexem em transform e opacity; a luz é pêssego (#FF9E7D, cor única) no azul #0B192C;
-     o sw.js da raiz é a v9 e guarda todas as atividades da família.
-  B. a raiz do repositório: 6 tigelas e a entrada; modo avião pelo service worker v9.
+     o sw.js da raiz é a v10 e guarda todas as atividades da família.
+  B. a raiz do repositório: 6 tigelas e a entrada; modo avião pelo service worker v10.
   C. o pacote: 8 tigelas com símbolos diferentes; a tigela acende em menos de 100 ms e vibra;
      abre a atividade; ao voltar, fica marcada; teclado e «menos movimento» abrem logo;
      as 62 línguas com <bdi> e direção certa (RTL); procura de línguas e de atividades;
@@ -105,10 +105,10 @@ def parte_a():
     prova("8 tigelas, cada uma com o seu símbolo", len(simbolos) == 8 and len(set(simbolos)) == 8, ", ".join(simbolos))
 
     sw = (RAIZ / "sw.js").read_text(encoding="utf-8")
-    prova("sw.js da raiz é a v9 (a paleta única chega a quem tinha a v8)", '"konfirmu-app-unica-v9:"' in sw)
+    prova("sw.js da raiz é a v10 (o menu mais leve e o céu no trabalhador chegam a quem tinha a v9)", '"konfirmu-app-unica-v10:"' in sw)
     guardados = set(re.findall(r'"\./([^"]+)"', sw.split("const ASSETS", 1)[1].split("];", 1)[0]))
     raiz_fam = [h for _, h in hrefs_familia((RAIZ / "app_unica.html").read_text(encoding="utf-8"))]
-    prova("o sw.js v9 guarda as %d atividades da família da raiz" % len(raiz_fam),
+    prova("o sw.js v10 guarda as %d atividades da família da raiz" % len(raiz_fam),
           bool(raiz_fam) and set(raiz_fam) <= guardados, ", ".join(sorted(set(raiz_fam) - guardados)))
     return linguas
 
@@ -213,7 +213,7 @@ def contraste_aaa(browser, url):
 
 # ---------------------------------------------------------------- B. a raiz do repositório
 def parte_b(pw, chrome):
-    print("== B. raiz do repositório (6 tigelas, sw.js v9)")
+    print("== B. raiz do repositório (6 tigelas, sw.js v10)")
     srv, base = servidor(RAIZ)
     browser = pw.chromium.launch(executable_path=chrome)
     try:
@@ -231,7 +231,7 @@ def parte_b(pw, chrome):
         page.reload()
         page.wait_for_function("navigator.serviceWorker.controller!==null")
         chaves = page.evaluate("caches.keys()")
-        prova("raiz: o service worker v9 está ativo e manda na página", pronto and any(k.startswith("konfirmu-app-unica-v9:") for k in chaves),
+        prova("raiz: o service worker v10 está ativo e manda na página", pronto and any(k.startswith("konfirmu-app-unica-v10:") for k in chaves),
               ", ".join(chaves))
         ctx.set_offline(True)
         abrir_familia(page, base + "app_unica.html")

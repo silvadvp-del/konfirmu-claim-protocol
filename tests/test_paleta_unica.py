@@ -68,7 +68,7 @@ def parte_a(pacote=None):
     prova("motor KSHA/2 igual ao ksha_fluxo.js em %d páginas" % len(copias), len(copias) >= 4 and all(c for _, c in copias),
           ", ".join(n for n, c in copias if not c))
     sw = (RAIZ / "sw.js").read_text(encoding="utf-8")
-    prova("sw.js v9 guarda nacl-util e os avisos legais", '"konfirmu-app-unica-v9:"' in sw and "./assets/nacl-util.min.js" in sw
+    prova("sw.js v10 guarda nacl-util e os avisos legais", '"konfirmu-app-unica-v10:"' in sw and "./assets/nacl-util.min.js" in sw
           and "./avisos_legais.html" in sw)
     sem_marca = [p.name for p in RAIZ.glob("*.html") if p.name != "app_unica.html" and paleta.MARCA not in p.read_text(encoding="utf-8")]
     prova("todas as páginas estáticas passaram pela paleta única", not sem_marca, ", ".join(sem_marca))

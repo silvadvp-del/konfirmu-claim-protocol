@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "lv",
+  "nome": "Latviešu",
+  "nome_pt": "Letão",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Ģimene",
+ "fam.titulo": "Izglītība un ģimene",
+ "fam.sub": "Mācīties un spēlēties ģimenē ar tādu pašu rūpību par privātumu.",
+ "fam.comeca": "Sāc šeit",
+ "fam.lingua": "Valoda",
+ "fam.procurar_lingua": "Meklēt valodu",
+ "fam.girafinhas.t": "Pirmie soļi",
+ "fam.girafinhas.d": "Trīs pieskārieni, balss un krāsas tiem, kas nekad nav lietojuši tālruni.",
+ "fam.tutor.t": "Pasniedzējs",
+ "fam.tutor.d": "Māca soli pa solim, arī bez tīkla.",
+ "fam.quiz.t": "Ģimenes viktorīna",
+ "fam.quiz.d": "Jautājumi spēlēšanai ģimenē vai tikai pieaugušajiem.",
+ "fam.natal.t": "Ziemassvētki ģimenē",
+ "fam.natal.d": "Spēles, papīra šabloni un diploms piemiņai.",
+ "fam.video.t": "Video studija",
+ "fam.video.d": "Filmē bez interneta un saglabā filmu ar zīmogu.",
+ "fam.contas.t": "Aprēķini ar zīmogu",
+ "fam.contas.d": "Rēķini un saglabā rezultātu ar zīmogu.",
+ "fam.arte.t": "Mākslas studija",
+ "fam.arte.d": "Mūzika un zīmēšana, ar tavu vārdu.",
+ "fam.regua.t": "Planētas lineāls",
+ "fam.regua.d": "Vai vēl paspēsim izglābt planētu?",
+ "fam.aventura.t": "Ģimenes piedzīvojums",
+ "fam.aventura.d": "Piedzīvojumu spēle, ko spēlēt kopā."
+}

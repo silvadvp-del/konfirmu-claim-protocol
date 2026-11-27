@@ -20,7 +20,8 @@ O menu da raiz liga também a página dos avisos em 24 línguas. O menu da ediç
 o empacotador junta tudo o que o menu liga e o teste do pacote só aceita atividades.
 
 Uso: python3 -I scripts/gerar_menu.py [CAMINHO_DO_REPOSITORIO]   (por omissão, a pasta acima de scripts/)
-Depois: refazer as 3 linhas destes ficheiros em SHA256SUMS.txt e correr os testes do pacote.
+Escreve também assets/ceu_vivo.js (o céu vivo, num trabalhador à parte, para a página não refazer estilos a cada quadro).
+Depois: refazer as 4 linhas destes ficheiros em SHA256SUMS.txt e correr os testes do pacote.
 """
 import html
 import importlib.util
@@ -135,12 +136,13 @@ h1 .u{color:var(--pessego);text-shadow:0 0 16px rgba(255,158,125,.5),0 0 40px rg
 .sem-resultados{margin:10px 0 0;min-height:1.4em;font-size:.9375rem;color:var(--titanio)}
 .sem-resultados:empty{display:none}
 .portais{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0 0}
-.portais [role=tab]{--mx:50%;--my:22%;position:relative;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:14px;min-height:120px;padding:14px 12px 12px;border:1px solid var(--aresta);border-radius:20px;background:var(--vidro);-webkit-backdrop-filter:blur(16px) saturate(125%);backdrop-filter:blur(16px) saturate(125%);color:var(--titanio);text-align:left;font:650 1rem/1.15 var(--titulo);letter-spacing:-.01em;cursor:pointer;transition:transform .35s var(--mola),border-color .4s,box-shadow .5s}
-.portais [role=tab]::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(150px 115px at var(--mx) var(--my),rgba(255,158,125,.22),transparent 70%);opacity:0;transition:opacity .5s}
-.portais [role=tab]::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;padding:1px;background:conic-gradient(from var(--giro,0deg),transparent 0 68%,rgba(255,158,125,.95) 82%,transparent 95%);-webkit-mask:linear-gradient(#0B192C 0 0) content-box,linear-gradient(#0B192C 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .5s}
+.portais [role=tab]{position:relative;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:14px;min-height:120px;padding:14px 12px 12px;border:1px solid var(--aresta);border-radius:20px;background:var(--vidro);-webkit-backdrop-filter:blur(16px) saturate(125%);backdrop-filter:blur(16px) saturate(125%);color:var(--titanio);text-align:left;font:650 1rem/1.15 var(--titulo);letter-spacing:-.01em;cursor:pointer;transition:transform .35s var(--mola),border-color .4s,box-shadow .5s}
+.portais [role=tab]::before{content:"";position:absolute;left:calc(50% - 150px);top:calc(22% - 115px);width:300px;height:230px;z-index:-1;pointer-events:none;--dx:inherit;--dy:inherit;transform:translate(var(--dx),var(--dy));will-change:transform;background:radial-gradient(150px 115px at 50% 50%,rgba(255,158,125,.22),transparent 70%);opacity:0;transition:opacity .5s}
+.portais [role=tab] .giro{position:absolute;inset:0;z-index:-1;border-radius:inherit;padding:1px;overflow:hidden;pointer-events:none;-webkit-mask:linear-gradient(#0B192C 0 0) content-box,linear-gradient(#0B192C 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .5s}
+.portais [role=tab] .giro::before{content:"";position:absolute;inset:-100%;background:conic-gradient(transparent 0 68%,rgba(255,158,125,.95) 82%,transparent 95%)}
 .portais [role=tab]:hover::before,.portais [role=tab][aria-selected="true"]::before{opacity:1}
 .portais [role=tab][aria-selected="true"]{border-color:rgba(255,158,125,.45);box-shadow:0 18px 46px -20px rgba(255,158,125,.6)}
-.portais [role=tab][aria-selected="true"]::after{opacity:1}
+.portais [role=tab][aria-selected="true"] .giro{opacity:1}
 .portais [role=tab]:active{transform:scale(.97)}
 .emblema{display:flex;width:38px;height:38px;align-items:center;justify-content:center;border:1px solid rgba(255,158,125,.32);border-radius:12px;transition:border-color .4s,box-shadow .5s}
 .emblema svg{width:22px;height:22px;fill:none;stroke:var(--pessego);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
@@ -181,13 +183,23 @@ body.facil .card b{font-size:1.125rem}
 body.facil .card .d{font-size:1rem}
 body.facil .portais [role=tab],body.facil .letra,body.facil .aviao{font-size:1.0625rem}
 @media (max-width:380px){.portais{gap:8px}.portais [role=tab]{min-height:112px;padding:12px 10px 10px;font-size:.9375rem}}
-@property --giro{syntax:'<angle>';inherits:false;initial-value:0deg}
+@property --dx{syntax:'<length>';inherits:false;initial-value:0px}
+@property --dy{syntax:'<length>';inherits:false;initial-value:0px}
 @media (prefers-reduced-motion:no-preference){
-.portais [role=tab][aria-selected="true"]::after{animation:gira 7s linear infinite}
-@keyframes gira{to{--giro:360deg}}
+.portais [role=tab][aria-selected="true"] .giro::before{animation:gira 7s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
 .portais [role=tab][aria-selected="true"] .emblema svg *{stroke-dasharray:64;animation:traca 1.1s var(--mola) both}
 @keyframes traca{from{stroke-dashoffset:64}to{stroke-dashoffset:0}}
 h1 .u{animation:respira 5.5s ease-in-out infinite}
+@supports (content:"u"/""){
+h1 .u{position:relative;z-index:0;animation:none;text-shadow:none}
+h1 .u::before,h1 .u::after{content:"u"/"";position:absolute;left:0;top:0;z-index:-1;line-height:normal;color:transparent;pointer-events:none;animation:5.5s ease-in-out infinite}
+h1 .u::before{text-shadow:0 0 14px rgba(255,158,125,.42),0 0 34px rgba(255,158,125,.18);animation-name:respira-sai}
+h1 .u::after{text-shadow:0 0 22px rgba(255,158,125,.7),0 0 58px rgba(255,158,125,.32);opacity:0;animation-name:respira-entra}
+@keyframes respira-sai{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes respira-entra{0%,100%{opacity:0}50%{opacity:1}}
+}
+.fam-acoes{display:flex;align-items:center;gap:8px}.fam-3d{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0 14px;border:1px solid var(--aresta);border-radius:12px;background:var(--vidro);color:var(--titanio);font-weight:800;text-decoration:none}.fam-3d:focus-visible{outline:2px solid var(--pessego);outline-offset:2px}
 .k-acoes{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}.k-acoes button{min-height:44px;padding:0 14px;border:1px solid var(--aresta);border-radius:12px;background:var(--vidro);color:var(--titanio);font:600 .875rem/1 var(--letra);cursor:pointer}.k-acoes button[aria-pressed="true"]{border-color:var(--pessego);color:var(--pessego)}
 @keyframes respira{0%,100%{text-shadow:0 0 14px rgba(255,158,125,.42),0 0 34px rgba(255,158,125,.18)}50%{text-shadow:0 0 22px rgba(255,158,125,.7),0 0 58px rgba(255,158,125,.32)}}
 .js .portal{animation:surge .45s var(--mola)}
@@ -278,16 +290,11 @@ function prepararAviao(){var el=document.getElementById("aviaoEstado");
 document.getElementById("aviao").onclick=prepararAviao;"""
 
 
-JS_VIVO = """// Atmosfera viva (ordem do David, 27-11-2026, 13:21): aurora em WebGL e partículas quentes em Canvas 2D.
-// Respira sozinha e segue o toque e a inclinação do telemóvel. Sem rede e sem bibliotecas.
-// As cores ficam abaixo de um teto, para o texto manter o contraste AAA. Com «reduzir movimento», fica uma imagem parada.
-(function(){
- var A=document.getElementById('aurora'),P=document.getElementById('faiscas');
- if(!A||!P||!P.getContext)return;
- var calmo=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
- var dpr=Math.min(window.devicePixelRatio||1,2),W=0,H=0,rolar=0,vivo=true,t0=performance.now(),ult=t0;
- var incl={x:0,y:0},alvo={x:0,y:0},toque=null,ondas=[],ps=[],ratoTab=0;
- var tabs=[].slice.call(document.querySelectorAll('.portais [role=tab]'));
+NUCLEO_CEU = """// O céu do menu: aurora em WebGL e partículas quentes em Canvas 2D. Uma só fonte para os dois sítios onde corre:
+// no trabalhador (assets/ceu_vivo.js, fora da linha principal da página) e, se não houver trabalhador, na própria página.
+function criarCeu(A,P,novaTela,semGL,DPR){
+ var dpr=Math.min(DPR||1,1)*.75,W=0,H=0,rolar=0,t0=performance.now();
+ var incl={x:0,y:0},alvo={x:0,y:0},toque=null,ondas=[],ps=[];
  var gl=null,uT,uR,uL,uS;
  try{gl=A.getContext('webgl',{alpha:false,antialias:false,depth:false,stencil:false,powerPreference:'low-power'})}catch(_){}
  if(gl){
@@ -315,16 +322,16 @@ JS_VIVO = """// Atmosfera viva (ordem do David, 27-11-2026, 13:21): aurora em We
    uT=gl.getUniformLocation(pr,'t');uR=gl.getUniformLocation(pr,'r');uL=gl.getUniformLocation(pr,'l');uS=gl.getUniformLocation(pr,'s');
   }
  }
- function semWebgl(){gl=null;A.style.display='none';document.documentElement.classList.add('sem-webgl')}
- if(!gl)semWebgl();
- A.addEventListener('webglcontextlost',function(e){e.preventDefault();semWebgl()});
- var cx=P.getContext('2d'),fa=document.createElement('canvas');fa.width=fa.height=64;
+ function perdeuGL(){if(gl!==false){gl=null;semGL()}}
+ if(!gl)perdeuGL();
+ if(A.addEventListener)A.addEventListener('webglcontextlost',function(e){e.preventDefault();perdeuGL()});
+ var cx=P.getContext('2d'),fa=novaTela(64,64);
  (function(){var g=fa.getContext('2d'),gr=g.createRadialGradient(32,32,0,32,32,32);
   gr.addColorStop(0,'rgba(255,158,125,1)');gr.addColorStop(.3,'rgba(255,158,125,.5)');gr.addColorStop(1,'rgba(255,158,125,0)');
   g.fillStyle=gr;g.fillRect(0,0,64,64)})();
- function medir(){
-  var w=innerWidth,h=innerHeight,nW=Math.round(w*dpr),nH=Math.round(h*dpr);
-  if(gl){A.width=Math.max(1,Math.round(w*.5));A.height=Math.max(1,Math.round(h*.5))}
+ function medir(w,h){
+  var nW=Math.round(w*dpr),nH=Math.round(h*dpr);
+  if(gl){A.width=Math.max(1,Math.round(w*.35));A.height=Math.max(1,Math.round(h*.35))}
   if(nW!==W||nH!==H){
    var sx=W?nW/W:1,sy=H?nH/H:1;W=P.width=nW;H=P.height=nH;
    var alvoN=Math.round(Math.min(120,Math.max(40,w*h/9000)));
@@ -361,42 +368,98 @@ JS_VIVO = """// Atmosfera viva (ordem do David, 27-11-2026, 13:21): aurora em We
     if(Math.abs(dd-rr)<14*dpr){q.vx+=ex/dd*.6*dpr;q.vy+=ey/dd*.6*dpr}}
   }
  }
- function luzDosPortais(agora){
-  if(agora-ratoTab<1500)return;
-  var mx=(50+incl.x*35).toFixed(1)+'%',my=(24+incl.y*28).toFixed(1)+'%';
-  tabs.forEach(function(t){t.style.setProperty('--mx',mx);t.style.setProperty('--my',my)});
- }
- function quadro(agora){
-  if(!vivo)return;
-  var dt=Math.min(50,agora-ult);ult=agora;var k=dt/16.667;
-  incl.x+=(alvo.x-incl.x)*Math.min(1,.06*k);incl.y+=(alvo.y-incl.y)*Math.min(1,.06*k);
-  aurora(agora);faiscas(dt,k);luzDosPortais(agora);
+ var luzUlt='',luzX=50,luzY=24;
+ // passos de 2 % com margem (histerese): o tremor da mão não reescreve a luz a cada quadro
+ function segue(atual,alvo,passo){return Math.abs(alvo-atual)>=passo?Math.round(alvo/passo)*passo:atual}
+ return {
+  medir:medir,
+  // um quadro: devolve a posição nova da luz dos portais quando muda (em %), senão null
+  quadro:function(agora,dt){
+   var k=dt/16.667;
+   incl.x+=(alvo.x-incl.x)*Math.min(1,.06*k);incl.y+=(alvo.y-incl.y)*Math.min(1,.06*k);
+   aurora(agora);faiscas(dt,k);
+   luzX=segue(luzX,50+incl.x*35,2);luzY=segue(luzY,24+incl.y*28,2);
+   if(luzX+','+luzY===luzUlt)return null;luzUlt=luzX+','+luzY;return [luzX,luzY];
+  },
+  parado:function(){aurora(t0+9000);faiscas(0,0)},
+  receber:function(m){
+   if(m.tipo==='alvo'){alvo.x=m.x;alvo.y=m.y}
+   else if(m.tipo==='toque'){toque=m.t?{x:m.t.x*dpr,y:m.t.y*dpr,forte:m.t.forte}:null}
+   else if(m.tipo==='onda'){ondas.push({x:m.x*dpr,y:m.y*dpr,t:0})}
+   else if(m.tipo==='rolar'){rolar=m.v}
+   else if(m.tipo==='medida'){medir(m.larg,m.alt)}
+  }
+ };
+}
+"""
+
+JS_VIVO = NUCLEO_CEU + """// Atmosfera viva (ordem do David, 27-11-2026, 13:21): aurora em WebGL e partículas quentes em Canvas 2D.
+// Respira sozinha e segue o toque e a inclinação do telemóvel. Sem rede e sem bibliotecas.
+// As cores ficam abaixo de um teto, para o texto manter o contraste AAA. Com «reduzir movimento», fica uma imagem parada.
+// Memória (ordem do David, 27-11-2026, 17:42): o céu desenha num trabalhador à parte (assets/ceu_vivo.js). A página só
+// recebe a posição da luz dos portais quando ela muda; assim não refaz estilos a cada quadro e a memória fica estável.
+// Sem trabalhador (navegadores antigos, ou se o ficheiro falhar), o mesmo céu corre aqui, como antes.
+(function(){
+ var A=document.getElementById('aurora'),P=document.getElementById('faiscas');
+ if(!A||!P||!P.getContext)return;
+ var calmo=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+ var DPR=window.devicePixelRatio||1,ratoTab=0,ultimaLuz=null,esperaLuz=0,mandar=function(){},retomar=function(){},pausar=function(){};
+ var tabs=[].slice.call(document.querySelectorAll('.portais [role=tab]'));
+ function aplicarLuz(mx,my){tabs.forEach(function(t){t.style.setProperty('--dx',((mx-50)/100*t.clientWidth).toFixed(1)+'px');t.style.setProperty('--dy',((my-22)/100*t.clientHeight).toFixed(1)+'px')})}
+ function luz(mx,my){ultimaLuz=[mx,my];if(performance.now()-ratoTab>=1500)aplicarLuz(mx,my)}
+ function semWebgl(){A.style.display='none';document.documentElement.classList.add('sem-webgl')}
+ function aqui(){
+  var ceu=criarCeu(A,P,function(w,h){var c=document.createElement('canvas');c.width=w;c.height=h;return c},semWebgl,DPR);
+  ceu.medir(innerWidth,innerHeight);
+  if(calmo){ceu.parado();mandar=function(m){ceu.receber(m);if(m.tipo==='medida')ceu.parado()};return}
+  var vivo=true,ult=performance.now();
+  function quadro(agora){if(!vivo)return;var dt=Math.min(50,agora-ult);ult=agora;var l=ceu.quadro(agora,dt);if(l)luz(l[0],l[1]);requestAnimationFrame(quadro)}
   requestAnimationFrame(quadro);
+  mandar=function(m){ceu.receber(m)};
+  pausar=function(){vivo=false};
+  retomar=function(){if(!vivo){vivo=true;ult=performance.now();requestAnimationFrame(quadro)}};
  }
- medir();
- addEventListener('resize',function(){medir();if(calmo){aurora(t0+9000);faiscas(0,0)}});
- addEventListener('scroll',function(){rolar=Math.min(1,(window.scrollY||0)/160)},{passive:true});
- function ponto(e){return{x:e.clientX*dpr,y:e.clientY*dpr}}
- addEventListener('pointerdown',function(e){var p=ponto(e);toque={x:p.x,y:p.y,forte:true,id:e.pointerId};if(!calmo)ondas.push({x:p.x,y:p.y,t:0})},{passive:true});
+ function telaNova(c){var n=document.createElement('canvas');n.id=c.id;n.className=c.className;n.setAttribute('aria-hidden','true');c.parentNode.replaceChild(n,c);return n}
+ var trab=null;
+ if(!calmo&&window.Worker&&A.transferControlToOffscreen&&P.transferControlToOffscreen){
+  try{
+   trab=new Worker('./assets/ceu_vivo.js');
+   var oa=A.transferControlToOffscreen(),op=P.transferControlToOffscreen();
+   trab.postMessage({tipo:'inicio',aurora:oa,faiscas:op,dpr:DPR,larg:innerWidth,alt:innerHeight},[oa,op]);
+   trab.onmessage=function(e){var d=e.data;if(d.tipo==='luz')luz(d.mx,d.my);else if(d.tipo==='semWebgl')semWebgl()};
+   // se o ficheiro do trabalhador falhar, as telas já foram entregues: troca-as por telas novas e desenha aqui
+   trab.onerror=function(){if(!trab)return;trab.terminate();trab=null;A=telaNova(A);P=telaNova(P);aqui()};
+   mandar=function(m){if(trab)trab.postMessage(m)};
+   pausar=function(){mandar({tipo:'pausa'})};
+   retomar=function(){mandar({tipo:'retoma'})};
+  }catch(_){trab=null}
+ }
+ if(!trab)aqui();
+ addEventListener('resize',function(){mandar({tipo:'medida',larg:innerWidth,alt:innerHeight})});
+ var rolarUlt=-1;
+ addEventListener('scroll',function(){var v=Math.min(1,(window.scrollY||0)/160);if(v!==rolarUlt){rolarUlt=v;mandar({tipo:'rolar',v:v})}},{passive:true});
+ var toque=null;
+ addEventListener('pointerdown',function(e){toque={x:e.clientX,y:e.clientY,forte:true,id:e.pointerId};mandar({tipo:'toque',t:toque});if(!calmo)mandar({tipo:'onda',x:e.clientX,y:e.clientY})},{passive:true});
  addEventListener('pointermove',function(e){
-  if(toque&&toque.id===e.pointerId){var p=ponto(e);toque.x=p.x;toque.y=p.y}
-  else if(e.pointerType==='mouse'){var m=ponto(e);toque={x:m.x,y:m.y,forte:false,id:e.pointerId};
-   alvo.x=(e.clientX/innerWidth-.5)*1.2;alvo.y=(e.clientY/innerHeight-.5)*1.2}
-  if(e.target&&e.target.closest&&e.target.closest('.portais [role=tab]'))ratoTab=performance.now();
+  if(toque&&toque.id===e.pointerId){toque.x=e.clientX;toque.y=e.clientY;mandar({tipo:'toque',t:toque})}
+  else if(e.pointerType==='mouse'){toque={x:e.clientX,y:e.clientY,forte:false,id:e.pointerId};mandar({tipo:'toque',t:toque});
+   mandar({tipo:'alvo',x:(e.clientX/innerWidth-.5)*1.2,y:(e.clientY/innerHeight-.5)*1.2})}
+  if(e.target&&e.target.closest&&e.target.closest('.portais [role=tab]')){ratoTab=performance.now();clearTimeout(esperaLuz);
+   esperaLuz=setTimeout(function(){if(ultimaLuz)aplicarLuz(ultimaLuz[0],ultimaLuz[1])},1550)}
  },{passive:true});
- function largar(e){if(toque&&toque.id===e.pointerId&&e.pointerType!=='mouse')toque=null}
+ function largar(e){if(toque&&toque.id===e.pointerId&&e.pointerType!=='mouse'){toque=null;mandar({tipo:'toque',t:null})}}
  addEventListener('pointerup',largar,{passive:true});addEventListener('pointercancel',largar,{passive:true});
- document.addEventListener('mouseleave',function(){toque=null});
- function orientar(e){if(e.gamma==null)return;alvo.x=Math.max(-1,Math.min(1,e.gamma/25));alvo.y=Math.max(-1,Math.min(1,((e.beta||45)-45)/25))}
+ document.addEventListener('mouseleave',function(){toque=null;mandar({tipo:'toque',t:null})});
+ var alvoX=0,alvoY=0;
+ function orientar(e){if(e.gamma==null)return;var x=Math.max(-1,Math.min(1,e.gamma/25)),y=Math.max(-1,Math.min(1,((e.beta||45)-45)/25));
+  if(Math.abs(x-alvoX)<.004&&Math.abs(y-alvoY)<.004)return;alvoX=x;alvoY=y;mandar({tipo:'alvo',x:x,y:y})}
  var DOE=window.DeviceOrientationEvent;
  if(DOE&&typeof DOE.requestPermission==='function'){
   // iPhone: a inclinação só funciona depois de um toque; o pedido é do próprio Safari e os dados ficam no aparelho.
   document.addEventListener('click',function pedir(){document.removeEventListener('click',pedir);
    try{DOE.requestPermission().then(function(r){if(r==='granted')addEventListener('deviceorientation',orientar)}).catch(function(){})}catch(_){}});
  }else if(DOE){addEventListener('deviceorientation',orientar)}
- document.addEventListener('visibilitychange',function(){
-  if(document.hidden){vivo=false}else if(!calmo&&!vivo){vivo=true;ult=performance.now();requestAnimationFrame(quadro)}});
- if(calmo){aurora(t0+9000);faiscas(0,0)}else requestAnimationFrame(quadro);
+ document.addEventListener('visibilitychange',function(){if(document.hidden)pausar();else if(!calmo)retomar()});
 })();
 // Portais e cartões: luz que segue o dedo, onda ao tocar e um toque curto de vibração onde o aparelho deixa.
 (function(){
@@ -411,10 +474,29 @@ JS_VIVO = """// Atmosfera viva (ordem do David, 27-11-2026, 13:21): aurora em We
  document.addEventListener('pointermove',function(e){
   var el=e.target&&e.target.closest&&e.target.closest('.portais [role=tab]');if(!el)return;
   var r=el.getBoundingClientRect();
-  el.style.setProperty('--mx',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
-  el.style.setProperty('--my',((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
+  el.style.setProperty('--dx',(e.clientX-r.left-r.width*.5).toFixed(1)+'px');
+  el.style.setProperty('--dy',(e.clientY-r.top-r.height*.22).toFixed(1)+'px');
  },{passive:true});
 })();
+"""
+
+
+TRABALHADOR_CEU = """// assets/ceu_vivo.js — gerado por scripts/gerar_menu.py. Não editar à mão.
+// O céu vivo do menu desenhado fora da linha principal da página (OffscreenCanvas): a página não repinta a cada quadro.
+'use strict';
+""" + NUCLEO_CEU + """var ceu=null,vivo=false,ult=0;
+var pedir=self.requestAnimationFrame?function(f){self.requestAnimationFrame(f)}:function(f){setTimeout(function(){f(performance.now())},16)};
+function quadro(agora){if(!vivo)return;var dt=Math.min(50,agora-ult);ult=agora;var l=ceu.quadro(agora,dt);if(l)postMessage({tipo:'luz',mx:l[0],my:l[1]});pedir(quadro)}
+onmessage=function(e){var d=e.data;
+ if(d.tipo==='inicio'){
+  ceu=criarCeu(d.aurora,d.faiscas,function(w,h){return new OffscreenCanvas(w,h)},function(){postMessage({tipo:'semWebgl'})},d.dpr);
+  ceu.medir(d.larg,d.alt);vivo=true;ult=performance.now();pedir(quadro);return;
+ }
+ if(!ceu)return;
+ if(d.tipo==='pausa'){vivo=false}
+ else if(d.tipo==='retoma'){if(!vivo){vivo=true;ult=performance.now();pedir(quadro)}}
+ else ceu.receber(d);
+};
 """
 
 
@@ -476,7 +558,7 @@ def pagina(variante, avisos, pt, dados_json):
         n = sum(1 for it in itens if web or (edicao and it[0] not in SO_NA_RAIZ) or (not edicao and it[0] not in SO_NA_EDICAO_21))
         if chave == "fam":
             rotulo = '<bdi data-k="fam.rotulo">%s</bdi>' % html.escape(pt["fam.rotulo"])
-        partes.append('<button type="button" role="tab" id="t-%s" aria-controls="p-%s" aria-selected="false">'
+        partes.append('<button type="button" role="tab" id="t-%s" aria-controls="p-%s" aria-selected="false"><span class="giro" aria-hidden="true"></span>'
                       '<span class="emblema" aria-hidden="true"><svg viewBox="0 0 24 24">%s</svg></span>'
                       '<span><span class="nome">%s</span><span class="conta">%d atividades</span></span></button>'
                       % (chave, chave, EMBLEMAS[chave], rotulo, n))
@@ -487,6 +569,14 @@ def pagina(variante, avisos, pt, dados_json):
             # o portal das tigelas: textos de locales/pt.json, desenho de scripts/tigelas.py
             hrefs = [i[0] for i in itens if edicao or web or i[0] not in SO_NA_EDICAO_21]
             secao, _ = tigelas.secao_familia(hrefs, pt, html.escape)
+            if web:
+                # Na app web a entrada é o Modo Família 3D (index.html); daqui volta-se a ele (ordem do David, 27-11, 17:42).
+                botao = '<button type="button" class="fam-lingua"'
+                assert secao.count(botao) == 1
+                ini = secao.index(botao)
+                fim = secao.index('</button>', ini) + len('</button>')
+                secao = (secao[:ini] + '<div class="fam-acoes"><a class="fam-3d" href="./" aria-label="3D">3D</a>'
+                         + secao[ini:fim] + '</div>' + secao[fim:])
             partes.append(secao)
             total += len(hrefs)
             continue
@@ -542,7 +632,8 @@ def main():
     raiz, n_raiz = pagina("raiz", avisos, pt, dados_json)
     ed, n_ed = pagina("edicao21", avisos, pt, dados_json)
     assert n_raiz == 21 and n_ed == 21, (n_raiz, n_ed)
-    for caminho, conteudo in (("app_unica.html", raiz), ("edicao-21/app_unica.html", ed), ("edicao-21/index.html", ed)):
+    for caminho, conteudo in (("app_unica.html", raiz), ("edicao-21/app_unica.html", ed), ("edicao-21/index.html", ed),
+                              ("assets/ceu_vivo.js", TRABALHADOR_CEU)):
         with open(os.path.join(repo, caminho), "w", encoding="utf-8") as f:
             f.write(conteudo)
         print("%-26s %6d B" % (caminho, len(conteudo.encode("utf-8"))))
