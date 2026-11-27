@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "id",
+  "nome": "Bahasa Indonesia",
+  "nome_pt": "Indonésio",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Keluarga",
+ "fam.titulo": "Pendidikan dan keluarga",
+ "fam.sub": "Belajar dan bermain bersama keluarga, dengan kepedulian yang sama pada privasi.",
+ "fam.comeca": "Mulai di sini",
+ "fam.lingua": "Bahasa",
+ "fam.procurar_lingua": "Cari bahasa",
+ "fam.girafinhas.t": "Langkah pertama",
+ "fam.girafinhas.d": "Tiga sentuhan, suara, dan warna, untuk yang belum pernah memakai ponsel.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Mengajar langkah demi langkah, bahkan tanpa jaringan.",
+ "fam.quiz.t": "Kuis keluarga",
+ "fam.quiz.d": "Pertanyaan untuk dimainkan bersama keluarga, atau hanya antarorang dewasa.",
+ "fam.natal.t": "Natal bersama keluarga",
+ "fam.natal.d": "Permainan, pola kertas, dan sertifikat untuk disimpan.",
+ "fam.video.t": "Studio video",
+ "fam.video.d": "Rekam tanpa internet dan simpan videonya dengan segel.",
+ "fam.contas.t": "Hitungan bersegel",
+ "fam.contas.d": "Berhitung dan simpan hasilnya dengan segel.",
+ "fam.arte.t": "Studio seni",
+ "fam.arte.d": "Musik dan menggambar, dengan namamu.",
+ "fam.regua.t": "Penggaris planet",
+ "fam.regua.d": "Apakah masih sempat menyelamatkan planet?",
+ "fam.aventura.t": "Petualangan keluarga",
+ "fam.aventura.d": "Permainan petualangan untuk dimainkan bersama."
+}

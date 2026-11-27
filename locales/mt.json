@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "mt",
+  "nome": "Malti",
+  "nome_pt": "Maltês",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Familja",
+ "fam.titulo": "Edukazzjoni u familja",
+ "fam.sub": "Nitgħallmu u nilagħbu bħala familja, bl-istess attenzjoni għall-privatezza.",
+ "fam.comeca": "Ibda hawn",
+ "fam.lingua": "Lingwa",
+ "fam.procurar_lingua": "Fittex lingwa",
+ "fam.girafinhas.t": "L-ewwel passi",
+ "fam.girafinhas.d": "Tliet mess, vuċi u kuluri, għal min qatt ma uża mowbajl.",
+ "fam.tutor.t": "Tutur",
+ "fam.tutor.d": "Jgħallem pass pass, anke mingħajr netwerk.",
+ "fam.quiz.t": "Kwiż tal-familja",
+ "fam.quiz.d": "Mistoqsijiet biex tilagħbu bħala familja, jew bejn l-adulti biss.",
+ "fam.natal.t": "Il-Milied fil-familja",
+ "fam.natal.d": "Logħob, mudelli tal-karta u ċertifikat biex iżżommu.",
+ "fam.video.t": "Studjo tal-vidjo",
+ "fam.video.d": "Iffilmja mingħajr internet u żomm il-filmat b'siġill.",
+ "fam.contas.t": "Kontijiet b'siġill",
+ "fam.contas.d": "Agħmel il-kontijiet u żomm ir-riżultat b'siġill.",
+ "fam.arte.t": "Studjo tal-arti",
+ "fam.arte.d": "Mużika u tpinġija, b'ismek.",
+ "fam.regua.t": "Ir-riga tal-pjaneta",
+ "fam.regua.d": "Għad għandna ħin biex insalvaw il-pjaneta?",
+ "fam.aventura.t": "Avventura tal-familja",
+ "fam.aventura.d": "Logħba ta' avventura biex tilagħbu flimkien."
+}

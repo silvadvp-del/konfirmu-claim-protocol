@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "lt",
+  "nome": "Lietuvių",
+  "nome_pt": "Lituano",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Šeima",
+ "fam.titulo": "Švietimas ir šeima",
+ "fam.sub": "Mokykitės ir žaiskite šeimoje, su tokiu pat rūpesčiu privatumu.",
+ "fam.comeca": "Pradėk čia",
+ "fam.lingua": "Kalba",
+ "fam.procurar_lingua": "Ieškoti kalbos",
+ "fam.girafinhas.t": "Pirmieji žingsniai",
+ "fam.girafinhas.d": "Trys palietimai, balsas ir spalvos tiems, kurie niekada nenaudojo telefono.",
+ "fam.tutor.t": "Mokytojas",
+ "fam.tutor.d": "Moko žingsnis po žingsnio, net be ryšio.",
+ "fam.quiz.t": "Šeimos viktorina",
+ "fam.quiz.d": "Klausimai žaisti visai šeimai arba tik suaugusiesiems.",
+ "fam.natal.t": "Kalėdos su šeima",
+ "fam.natal.d": "Žaidimai, popieriaus šablonai ir diplomas atminimui.",
+ "fam.video.t": "Vaizdo studija",
+ "fam.video.d": "Filmuok be interneto ir išsaugok filmą su antspaudu.",
+ "fam.contas.t": "Skaičiavimai su antspaudu",
+ "fam.contas.d": "Skaičiuok ir išsaugok rezultatą su antspaudu.",
+ "fam.arte.t": "Meno studija",
+ "fam.arte.d": "Muzika ir piešimas, su tavo vardu.",
+ "fam.regua.t": "Planetos liniuotė",
+ "fam.regua.d": "Ar dar spėsime išgelbėti planetą?",
+ "fam.aventura.t": "Šeimos nuotykis",
+ "fam.aventura.d": "Nuotykių žaidimas žaisti kartu."
+}

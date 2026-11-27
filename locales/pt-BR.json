@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "pt-BR",
+  "nome": "Português (Brasil)",
+  "nome_pt": "Português do Brasil",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Família",
+ "fam.titulo": "Educação e família",
+ "fam.sub": "Aprender e brincar em família, com o mesmo cuidado com a privacidade.",
+ "fam.comeca": "Comece aqui",
+ "fam.lingua": "Idioma",
+ "fam.procurar_lingua": "Buscar idioma",
+ "fam.girafinhas.t": "Primeiros passos",
+ "fam.girafinhas.d": "Três toques, voz e cores, para quem nunca usou um celular.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Ensina passo a passo, mesmo sem internet.",
+ "fam.quiz.t": "Quiz em família",
+ "fam.quiz.d": "Perguntas para jogar em família, ou só entre adultos.",
+ "fam.natal.t": "Natal em família",
+ "fam.natal.d": "Jogos, moldes de papel e um certificado para guardar.",
+ "fam.video.t": "Estúdio de vídeo",
+ "fam.video.d": "Filme sem internet e guarde o vídeo com selo.",
+ "fam.contas.t": "Contas com selo",
+ "fam.contas.d": "Faça contas e guarde o resultado com selo.",
+ "fam.arte.t": "Estúdio de arte",
+ "fam.arte.d": "Música e desenho, com o seu nome.",
+ "fam.regua.t": "Régua do planeta",
+ "fam.regua.d": "Ainda dá tempo de salvar o planeta?",
+ "fam.aventura.t": "Aventura em família",
+ "fam.aventura.d": "Um jogo de aventura para jogar juntos."
+}

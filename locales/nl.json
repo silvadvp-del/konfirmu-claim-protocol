@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "nl",
+  "nome": "Nederlands",
+  "nome_pt": "Neerlandês",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Gezin",
+ "fam.titulo": "Onderwijs en gezin",
+ "fam.sub": "Samen leren en spelen, met dezelfde zorg voor privacy.",
+ "fam.comeca": "Begin hier",
+ "fam.lingua": "Taal",
+ "fam.procurar_lingua": "Taal zoeken",
+ "fam.girafinhas.t": "Eerste stappen",
+ "fam.girafinhas.d": "Drie tikken, stem en kleuren, voor wie nog nooit een telefoon heeft gebruikt.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Legt stap voor stap uit, ook zonder netwerk.",
+ "fam.quiz.t": "Gezinsquiz",
+ "fam.quiz.d": "Vragen om met het gezin te spelen, of alleen met volwassenen.",
+ "fam.natal.t": "Kerst met het gezin",
+ "fam.natal.d": "Spelletjes, papieren knutselvormen en een certificaat om te bewaren.",
+ "fam.video.t": "Videostudio",
+ "fam.video.d": "Film zonder internet en bewaar de film met een zegel.",
+ "fam.contas.t": "Rekenen met zegel",
+ "fam.contas.d": "Reken en bewaar de uitkomst met een zegel.",
+ "fam.arte.t": "Kunststudio",
+ "fam.arte.d": "Muziek en tekenen, met jouw naam.",
+ "fam.regua.t": "Liniaal van de planeet",
+ "fam.regua.d": "Kunnen we de planeet nog op tijd redden?",
+ "fam.aventura.t": "Gezinsavontuur",
+ "fam.aventura.d": "Een avonturenspel om samen te spelen."
+}
