@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
+<head><meta name="konfirmu-paleta" content="unica-2026-11-27">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="referrer" content="no-referrer">
@@ -9,11 +9,11 @@
 <title>Economia anti-casino, passo a passo · Konfirmu</title>
 <meta name="description" content="Na Konfirmu um crédito só nasce de um trabalho feito e conferido. A Lei Anti-Casino explicada passo a passo: o que é, como funciona, o que está provado e o que ainda não é.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230B192C'/%3E%3Ctext x='16' y='23' font-family='Inter,Arial,sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23FF9E7D'%3Eu%3C/text%3E%3C/svg%3E">
-<style>
+<style>:root{color-scheme:dark}input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]),select,textarea,button{color:#F4F7FA;background-color:rgba(15,34,61,.72)}input,select,textarea,button{border-color:rgba(159,179,200,.24)}::placeholder{color:#9FB3C8;opacity:1}::file-selector-button{color:#F4F7FA;background:rgba(15,34,61,.72);border:1px solid #FF9E7D;border-radius:8px}input[type=range],input[type=checkbox],input[type=radio],progress{accent-color:#FF9E7D}option{background:#0B192C;color:#F4F7FA}
 /* Pagina autocontida: sem scripts, sem pedidos a rede, sem emojis. Aberta por file:// ou por https. */
 :root{color-scheme:dark;
- --abissal:#0B192C;--pesego:#FF9E7D;--pesego-claro:#FFEBDD;
- --papel:#0B192C;--painel:#0F223D;--tinta:#F4F7FA;--tinta2:#9FB3C8;--linha:#23395B;--azulejo:#13294A;
+ --abissal:#0B192C;--pesego:#FF9E7D;--pesego-claro:#F4F7FA;
+ --papel:#0B192C;--painel:#0F223D;--tinta:#F4F7FA;--tinta2:#9FB3C8;--linha:rgba(159,179,200,.24);--azulejo:#0B192C;
  --letra:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
 /* 27-11-2026, 14:53 (ordem do David): uma só paleta, sempre escura — Azul Abissal, Branco Titânio e Cinza Nevoeiro. */
 *{box-sizing:border-box}
@@ -24,7 +24,7 @@ a{color:inherit;text-underline-offset:.18em}
 
 /* Letras bold 4D: peso 900, profundidade por camadas e um movimento lento, como debaixo de agua. */
 .t4d{display:inline-block;font-weight:900;line-height:.95;letter-spacing:-.025em;color:var(--pesego);
- text-shadow:0 .012em 0 #e8875f,0 .024em 0 #cf7350,0 .036em 0 #b26040,0 .048em 0 #934e33,0 .06em 0 #733c27,0 .076em 0 #45251a,0 .105em .13em rgba(0,0,0,.65);
+ text-shadow:0 .012em 0 #0B192C,0 .024em 0 #0B192C,0 .036em 0 #0B192C,0 .048em 0 #0B192C,0 .06em 0 #0B192C,0 .076em 0 #0B192C,0 .105em .13em rgba(11,25,44,.65);
  animation:flutuar 7s ease-in-out infinite}
 @keyframes flutuar{0%,100%{transform:translateY(0)}50%{transform:translateY(-.14em)}}
 @keyframes subir{from{transform:translateY(45%)}to{transform:translateY(-135%)}}
@@ -32,20 +32,20 @@ a{color:inherit;text-underline-offset:.18em}
 .hero{position:relative;overflow:hidden;background:var(--abissal);color:var(--pesego-claro);text-align:center;padding:clamp(3rem,9vw,5.5rem) 20px}
 .hero::before,.nome::before{content:"";position:absolute;inset:0;pointer-events:none;
  background:radial-gradient(70% 60% at 50% -10%,rgba(255,158,125,.30),transparent 70%),
- radial-gradient(45% 40% at 86% 100%,rgba(90,170,230,.14),transparent 70%),
+ radial-gradient(45% 40% at 86% 100%,rgba(15,34,61,.101),transparent 70%),
  radial-gradient(35% 35% at 10% 80%,rgba(255,158,125,.10),transparent 70%)}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:70%;pointer-events:none;opacity:.55;
- background:radial-gradient(circle at 12% 80%,rgba(255,255,255,.22) 0 3px,transparent 4px),
- radial-gradient(circle at 28% 55%,rgba(255,255,255,.16) 0 2px,transparent 3px),
- radial-gradient(circle at 46% 70%,rgba(255,255,255,.20) 0 4px,transparent 5px),
- radial-gradient(circle at 63% 50%,rgba(255,255,255,.14) 0 2px,transparent 3px),
- radial-gradient(circle at 81% 75%,rgba(255,255,255,.22) 0 3px,transparent 4px),
- radial-gradient(circle at 93% 60%,rgba(255,255,255,.15) 0 2px,transparent 3px);
+ background:radial-gradient(circle at 12% 80%,rgba(15,34,61,.158) 0 3px,transparent 4px),
+ radial-gradient(circle at 28% 55%,rgba(15,34,61,.115) 0 2px,transparent 3px),
+ radial-gradient(circle at 46% 70%,rgba(15,34,61,.144) 0 4px,transparent 5px),
+ radial-gradient(circle at 63% 50%,rgba(15,34,61,.101) 0 2px,transparent 3px),
+ radial-gradient(circle at 81% 75%,rgba(15,34,61,.158) 0 3px,transparent 4px),
+ radial-gradient(circle at 93% 60%,rgba(15,34,61,.108) 0 2px,transparent 3px);
  animation:subir 16s linear infinite}
 .hero>*,.nome>*{position:relative;z-index:1}
 .kicker{margin:0;font-weight:800;letter-spacing:.16em;text-transform:uppercase;font-size:.85rem}
 .hero .t4d{font-size:clamp(2.6rem,11vw,6rem);margin:.25em 0 0}
-.lead{max-width:36ch;margin:1.3rem auto 0;font-size:1.15rem;line-height:1.55;color:#F3F1EE}
+.lead{max-width:36ch;margin:1.3rem auto 0;font-size:1.15rem;line-height:1.55;color:#F4F7FA}
 
 .bloco{max-width:760px;margin:0 auto;padding:clamp(1.8rem,5vw,3rem) 20px}
 h2{margin:0 0 .6rem;font-size:1.55rem;line-height:1.2;letter-spacing:-.01em}
@@ -79,7 +79,7 @@ code{font:.92em ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:
 .nome{background:var(--abissal);color:var(--pesego-claro);text-align:center;overflow:hidden;position:relative;padding:clamp(3rem,9vw,5.5rem) 20px}
 .nome .t4d{font-size:clamp(2.4rem,9vw,4.8rem)}
 .significado{font-size:1.4rem;font-weight:700;color:var(--pesego);margin:.9rem 0 0}
-.nome p{max-width:46ch;margin:.9rem auto 0;color:#F3F1EE}
+.nome p{max-width:46ch;margin:.9rem auto 0;color:#F4F7FA}
 .garantia-texto{font-weight:800;color:var(--tinta);margin-top:1.2rem}
 .rodape{max-width:760px;margin:0 auto;padding:1.6rem 20px 3rem;color:var(--tinta2);font-size:.95rem;display:flex;flex-wrap:wrap;gap:.4rem 1.4rem}
 @media (max-width:480px){.passo{grid-template-columns:64px 1fr;column-gap:14px}.passo .n{width:64px;height:64px;border-radius:18px}.passo .n .t4d{font-size:1.9rem}}

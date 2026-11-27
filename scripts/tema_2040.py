@@ -433,10 +433,10 @@ def substituir_jogos_natal(texto):
 
 
 # ---- 3. bloco do tema, segurança e rodapé --------------------------------------------------------------
-CSS_TEMA = """:root{color-scheme:dark;--k-abissal:#0B192C;--k-vidro:rgba(15,34,61,.72);--k-vidro-s:#0F223D;--k-pessego:#FF9E7D;--k-pessego-c:#FFB088;--k-titanio:#F4F7FA;--k-nevoa:#9FB3C8;--k-aresta:rgba(244,247,250,.14)}
+CSS_TEMA = """:root{color-scheme:dark;--k-abissal:#0B192C;--k-vidro:rgba(15,34,61,.72);--k-vidro-s:#0F223D;--k-pessego:#FF9E7D;--k-pessego-c:#FF9E7D;--k-titanio:#F4F7FA;--k-nevoa:#9FB3C8;--k-aresta:rgba(244,247,250,.14)}
 html{background:#0B192C;-webkit-text-size-adjust:100%}
 body{background-color:#0B192C;color:#F4F7FA}
-a{color:#FF9E7D}a:visited{color:#FFB088}
+a{color:#FF9E7D}a:visited{color:#FF9E7D}
 :focus-visible{outline:2px solid #FF9E7D;outline-offset:2px}
 ::selection{background:rgba(255,158,125,.35);color:#F4F7FA}
 input:not([type]),input[type=text],input[type=search],input[type=number],input[type=password],input[type=email],input[type=tel],input[type=url],textarea,select{background-color:#0B192C;color:#F4F7FA;border:1px solid rgba(244,247,250,.22);border-radius:8px}
@@ -452,8 +452,8 @@ h1 .ki,h2 .ki,h3 .ki,b>.ki,strong>.ki,.card-label .ki{color:#FF9E7D}
 .k-rodape .k-marca{margin:8px 0 0}.k-rodape .k-marca b{color:#F4F7FA}.k-rodape .k-marca b span{color:#FF9E7D}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 html.k-sem-movimento *,html.k-sem-movimento *::before,html.k-sem-movimento *::after{animation-play-state:paused!important;transition:none!important}
-html.k-contraste{--k-nevoa:#E6ECF3}html.k-contraste body{background-color:#050C16;color:#FFFFFF}html.k-contraste .k-rodape{color:#E6ECF3}
-html.k-contraste a{color:#FFC2A8}html.k-contraste .aviso,html.k-contraste .hash,html.k-contraste .meta{color:#E6ECF3!important}"""
+html.k-contraste{--k-nevoa:#F4F7FA}html.k-contraste body{background-color:#0B192C;color:#F4F7FA}html.k-contraste .k-rodape{color:#F4F7FA}
+html.k-contraste a{color:#FF9E7D}html.k-contraste .aviso,html.k-contraste .hash,html.k-contraste .meta{color:#F4F7FA!important}"""
 
 CSP_BASE = ("default-src 'self'; script-src 'self' 'unsafe-inline' blob:%s; style-src 'self' 'unsafe-inline'; "
             "img-src 'self' data: blob:; media-src 'self' data: blob: mediastream:; connect-src 'self' blob: data:; "

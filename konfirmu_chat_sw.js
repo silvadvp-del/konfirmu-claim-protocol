@@ -1,5 +1,5 @@
 // Konfirmu · chat de bolso · guarda a página para abrir sem rede (só na versão com link https)
-const C='konfirmu-chat-v0.2',P='konfirmu_chat_offline.html';
+const C='konfirmu-chat-v0.3',P='konfirmu_chat_offline.html';
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.add(P)));self.skipWaiting()});
 self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));
 self.addEventListener('fetch',e=>{const u=new URL(e.request.url);

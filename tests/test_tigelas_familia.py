@@ -7,9 +7,9 @@ Corre com:
 
 O que prova (cada linha diz PASSA ou FALHA; sai com 1 se alguma falhar):
   A. sem navegador: línguas com as mesmas chaves e nada vazio; os menus refazem-se iguais, byte a byte;
-     as animações só mexem em transform e opacity; a luz é pêssego (#FF9E7D/#FFB088) no azul #0B192C;
-     o sw.js da raiz é a v8 e guarda todas as atividades da família.
-  B. a raiz do repositório: 6 tigelas e a entrada; modo avião pelo service worker v8.
+     as animações só mexem em transform e opacity; a luz é pêssego (#FF9E7D, cor única) no azul #0B192C;
+     o sw.js da raiz é a v9 e guarda todas as atividades da família.
+  B. a raiz do repositório: 6 tigelas e a entrada; modo avião pelo service worker v9.
   C. o pacote: 8 tigelas com símbolos diferentes; a tigela acende em menos de 100 ms e vibra;
      abre a atividade; ao voltar, fica marcada; teclado e «menos movimento» abrem logo;
      as 62 línguas com <bdi> e direção certa (RTL); procura de línguas e de atividades;
@@ -66,7 +66,8 @@ def servidor(pasta):
 def hrefs_familia(html):
     i = html.find('id="p-fam"')
     j = html.find("</section>", i)
-    return re.findall(r'<a class="card ([^"]*)" href="([^"]+)"', html[i:j])
+    # os cartões de leitura (class="card", sem mais nada) também contam: têm de ficar guardados para o modo avião
+    return re.findall(r'<a class="card(?: ([^"]*))?" href="([^"]+)"', html[i:j])
 
 
 # ---------------------------------------------------------------- A. sem navegador
@@ -98,13 +99,13 @@ def parte_a():
     prova("as animações só mexem em transform e opacity", bool(quadros) and usados <= {"transform", "opacity"},
           ", ".join(sorted(usados)))
     svg = "".join(tigelas.svg_tigela(n, *v) for n, v in enumerate(tigelas.TIGELAS.values(), 1))
-    prova("a luz de dentro é pêssego #FF9E7D e #FFB088", tigelas.PESSEGO in svg and tigelas.PESSEGO_CLARO in svg)
+    prova("a luz de dentro é pêssego #FF9E7D (cor única; o #FFB088 e o #f7b397 saíram)", tigelas.PESSEGO in svg and "#FFB088" not in svg.upper() and "F7B397" not in svg.upper())
     prova("o palco é azul abissal #0B192C", "#0B192C" in css)
     simbolos = [v[0] for v in tigelas.TIGELAS.values()]
     prova("8 tigelas, cada uma com o seu símbolo", len(simbolos) == 8 and len(set(simbolos)) == 8, ", ".join(simbolos))
 
     sw = (RAIZ / "sw.js").read_text(encoding="utf-8")
-    prova("sw.js da raiz é a v9 (27-11, 14:53: terminal, tranca e paleta chegam a quem tinha a v8)", '"konfirmu-app-unica-v9:"' in sw)
+    prova("sw.js da raiz é a v9 (a paleta única chega a quem tinha a v8)", '"konfirmu-app-unica-v9:"' in sw)
     guardados = set(re.findall(r'"\./([^"]+)"', sw.split("const ASSETS", 1)[1].split("];", 1)[0]))
     raiz_fam = [h for _, h in hrefs_familia((RAIZ / "app_unica.html").read_text(encoding="utf-8"))]
     prova("o sw.js v9 guarda as %d atividades da família da raiz" % len(raiz_fam),
@@ -212,7 +213,7 @@ def contraste_aaa(browser, url):
 
 # ---------------------------------------------------------------- B. a raiz do repositório
 def parte_b(pw, chrome):
-    print("== B. raiz do repositório (6 tigelas, sw.js v8)")
+    print("== B. raiz do repositório (6 tigelas, sw.js v9)")
     srv, base = servidor(RAIZ)
     browser = pw.chromium.launch(executable_path=chrome)
     try:
@@ -237,7 +238,7 @@ def parte_b(pw, chrome):
         n = page.eval_on_selector_all("#p-fam a.card.tigela", "as=>as.length")
         faltam = page.evaluate("async hs=>{const f=[];for(const h of hs){if(!(await caches.match(h)))f.push(h)}return f}",
                                [h for _, h in cartoes])
-        prova("raiz em modo avião: o início abre com as 6 tigelas e as 7 atividades estão guardadas", n == 6 and not faltam,
+        prova(f"raiz em modo avião: o início abre com as 6 tigelas e as {len(cartoes)} atividades estão guardadas", n == 6 and not faltam,
               ", ".join(faltam))
         with page.expect_navigation(wait_until="load"):
             page.tap("#p-fam a.card.tigela >> nth=0")
@@ -280,11 +281,11 @@ def parte_c(pw, chrome, pasta, linguas, fotos):
           const luz=tg.map(a=>[...a.querySelectorAll('radialGradient[id$="l"] stop')].map(s=>s.getAttribute('stop-color')).join());
           const palco=getComputedStyle(document.getElementById('p-fam')).backgroundColor;
           return {n:tg.length, entrada:document.querySelectorAll('#p-fam a.card.entrada').length, simb:new Set(simb).size,
-                  vazios:simb.filter(s=>!s).length, luz:luz.every(l=>l.includes('#FFB088')&&l.includes('#FF9E7D')), palco,
+                  vazios:simb.filter(s=>!s).length, luz:luz.every(l=>l.includes('#FF9E7D')&&!l.includes('#FFB088')), palco,
                   alvo:tg.map(a=>{const r=a.getBoundingClientRect();return Math.min(r.width,r.height)})}}""")
         prova("pacote: a entrada e 8 tigelas", info["n"] == 8 and info["entrada"] == 1, info["n"])
         prova("pacote: 8 símbolos diferentes, um em cada tigela", info["simb"] == 8 and info["vazios"] == 0, info["simb"])
-        prova("pacote: a luz de cada tigela é pêssego #FF9E7D/#FFB088", info["luz"])
+        prova("pacote: a luz de cada tigela é pêssego #FF9E7D (cor única)", info["luz"])
         prova("pacote: o palco é azul abissal (rgb 11 25 44)", "11, 25, 44" in info["palco"], info["palco"])
         prova("pacote: cada tigela é um alvo de toque com 44 px ou mais", min(info["alvo"]) >= 44, round(min(info["alvo"])))
 

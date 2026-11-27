@@ -64,7 +64,7 @@
   /* ---------- estilos dos diálogos (vidro, pêssego) ---------- */
   var css = document.createElement("style");
   css.textContent =
-    ".k-veu{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:20px;background:rgba(5,12,22,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}" +
+    ".k-veu{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:20px;background:rgba(11,25,44,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}" +
     ".k-dialogo{width:min(420px,100%);max-height:92vh;overflow:auto;padding:22px 20px 18px;border-radius:22px;background:rgba(15,34,61,.92);border:1px solid rgba(255,158,125,.45);box-shadow:0 30px 80px -30px rgba(255,158,125,.55);color:#F4F7FA;font:400 1rem/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;text-align:center}" +
     ".k-dialogo h2{margin:4px 0 6px;font-size:1.25rem;line-height:1.25;color:#F4F7FA}.k-dialogo p{margin:6px 0;color:#9FB3C8}" +
     ".k-dialogo .k-linha{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}" +
@@ -72,7 +72,7 @@
     ".k-dialogo button.k-principal{background:#FF9E7D;border-color:#FF9E7D;color:#0B192C}" +
     ".k-pontos{display:flex;gap:12px;justify-content:center;margin:12px 0 4px}.k-pontos i{width:14px;height:14px;border-radius:50%;border:1.5px solid #FF9E7D}.k-pontos i.k-cheio{background:#FF9E7D;box-shadow:0 0 14px rgba(255,158,125,.7)}" +
     ".k-teclado{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px auto 0;max-width:270px}.k-teclado button{min-height:56px;font-size:1.35rem}" +
-    ".k-msg{min-height:1.5em;color:#FFD3C2;font-weight:600}" +
+    ".k-msg{min-height:1.5em;color:#FF9E7D;font-weight:600}" +
     ".k-aviso-crianca{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:2147483001;padding:10px 16px;border-radius:12px;background:rgba(15,34,61,.95);border:1px solid #FF9E7D;color:#F4F7FA;font:600 .9375rem/1.3 system-ui,sans-serif}" +
     "html.k-crianca [data-adulto]{display:none!important}" +
     "html.k-crianca #t-pro,html.k-crianca #t-cid,html.k-crianca #p-pro,html.k-crianca #p-cid,html.k-crianca .procura{display:none!important}";

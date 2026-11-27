@@ -109,13 +109,13 @@ SO_NA_EDICAO_21 = {"Tutor-Girafinha-offline.html", "kcp_family_quiz.html"}
 SO_NA_RAIZ = {"economia_anti_casino.html", "terminal.html"}
 
 CSS = """
-:root{color-scheme:dark;--abissal:#0B192C;--vidro:rgba(15,34,61,.72);--vidro-solido:#0F223D;--pessego:#FF9E7D;--pessego-2:#FFB088;--titanio:#F4F7FA;--nevoeiro:#9FB3C8;--aresta:rgba(244,247,250,.12);--aresta-quente:rgba(255,158,125,.5);
+:root{color-scheme:dark;--abissal:#0B192C;--vidro:rgba(15,34,61,.72);--vidro-solido:#0F223D;--pessego:#FF9E7D;--pessego-2:#FF9E7D;--titanio:#F4F7FA;--nevoeiro:#9FB3C8;--aresta:rgba(244,247,250,.12);--aresta-quente:rgba(255,158,125,.5);
 --pagina:#0B192C;--painel:#0F223D;--tinta:#F4F7FA;--tinta2:#9FB3C8;--tinta3:#9FB3C8;--linha:rgba(244,247,250,.12);--azulejo:#0F223D;--u:#FF9E7D;
 --letra:"SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI Variable Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --titulo:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI Variable Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--mola:cubic-bezier(.2,.8,.2,1)}
 *{box-sizing:border-box}
 html{background:var(--abissal);-webkit-text-size-adjust:100%}
-html.sem-webgl{background:radial-gradient(130% 75% at 50% 0%,#3A2A26 0%,#0B192C 62%) fixed var(--abissal)}
+html.sem-webgl{background:radial-gradient(130% 75% at 50% 0%,rgba(255,158,125,.16) 0%,#0B192C 62%) fixed var(--abissal)}
 body{margin:0 auto;max-width:780px;padding:34px 18px 48px;font:16px/1.55 var(--letra);color:var(--titanio);background:transparent;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
 .ceu{position:fixed;inset:0;width:100%;height:100%;z-index:-1;display:block;pointer-events:none}
 h1{margin:0;font:700 clamp(2.75rem,11vw,4.25rem)/1 var(--titulo);letter-spacing:-.035em;color:var(--titanio)}
@@ -137,7 +137,7 @@ h1 .u{color:var(--pessego);text-shadow:0 0 16px rgba(255,158,125,.5),0 0 40px rg
 .portais{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0 0}
 .portais [role=tab]{--mx:50%;--my:22%;position:relative;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:14px;min-height:120px;padding:14px 12px 12px;border:1px solid var(--aresta);border-radius:20px;background:var(--vidro);-webkit-backdrop-filter:blur(16px) saturate(125%);backdrop-filter:blur(16px) saturate(125%);color:var(--titanio);text-align:left;font:650 1rem/1.15 var(--titulo);letter-spacing:-.01em;cursor:pointer;transition:transform .35s var(--mola),border-color .4s,box-shadow .5s}
 .portais [role=tab]::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(150px 115px at var(--mx) var(--my),rgba(255,158,125,.22),transparent 70%);opacity:0;transition:opacity .5s}
-.portais [role=tab]::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;padding:1px;background:conic-gradient(from var(--giro,0deg),transparent 0 68%,rgba(255,158,125,.95) 82%,transparent 95%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .5s}
+.portais [role=tab]::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;padding:1px;background:conic-gradient(from var(--giro,0deg),transparent 0 68%,rgba(255,158,125,.95) 82%,transparent 95%);-webkit-mask:linear-gradient(#0B192C 0 0) content-box,linear-gradient(#0B192C 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .5s}
 .portais [role=tab]:hover::before,.portais [role=tab][aria-selected="true"]::before{opacity:1}
 .portais [role=tab][aria-selected="true"]{border-color:rgba(255,158,125,.45);box-shadow:0 18px 46px -20px rgba(255,158,125,.6)}
 .portais [role=tab][aria-selected="true"]::after{opacity:1}

@@ -36,6 +36,7 @@ sys.path.insert(0, AQUI)
 import gerar_menu  # noqa: E402
 import tema_2040  # noqa: E402
 import tigelas  # noqa: E402
+import paleta_unica  # noqa: E402  (paleta única de 27-11, 13:14: o sítio passa pelo mesmo conversor da app)
 
 FONTE = os.path.join(REPO, "site_nl", "fonte_ao_vivo")
 DATA_ZIP = (2026, 11, 27, 0, 0, 0)
@@ -68,12 +69,12 @@ SETA_FORA = ("↗", "→")  # a seta «↗» (pictográfica) passa a «→»
 ENTRADA_ESCURA = """
 /* 27-11-2026 (ordem do David, 14:53 e 15:32): paleta única — Azul Abissal, vidro, Pêssego Solar, Branco Titânio */
 :root{color-scheme:dark;--kv-v:255,158,125;--kv-m:255,176,136;--kv-p:255,211,194;--kv-g:255,158,125;--kv-l:159,179,200;
---kv-bg:#0B192C;--kv-bg-deep:#0F223D;--kv-bg-top:#13294A;--kv-text:#F4F7FA;--kv-muted:#9FB3C8;--kv-faint:#9FB3C8;
---kv-accent:#FF9E7D;--kv-accent2:#FFB088;--kv-ink:#0B192C;
+--kv-bg:#0B192C;--kv-bg-deep:#0F223D;--kv-bg-top:#0F223D;--kv-text:#F4F7FA;--kv-muted:#9FB3C8;--kv-faint:#9FB3C8;
+--kv-accent:#FF9E7D;--kv-accent2:#FF9E7D;--kv-ink:#0B192C;
 --kv-glass:linear-gradient(160deg,rgba(15,34,61,.92),rgba(15,34,61,.72) 52%,rgba(15,34,61,.86));
 --kv-card:linear-gradient(#0F223D,#13294A);--kv-line:rgba(244,247,250,.12);--kv-line2:rgba(255,158,125,.32);
---kv-cta:linear-gradient(110deg,#FF9E7D 0%,#FFB088 100%);--kv-orb:linear-gradient(135deg,#FF9E7D 0%,#E8875F 100%);
---kv-vivid:linear-gradient(125deg,#FF9E7D 0%,#FFB088 60%,#FFD3C2 100%);
+--kv-cta:linear-gradient(110deg,#FF9E7D 0%,#FF9E7D 100%);--kv-orb:linear-gradient(135deg,#FF9E7D 0%,rgba(255,158,125,.8) 100%);
+--kv-vivid:linear-gradient(125deg,#FF9E7D 0%,#FF9E7D 60%,#F4F7FA 100%);
 --kv-edge:linear-gradient(150deg,rgba(255,158,125,.6),rgba(255,158,125,.2) 40%,rgba(244,247,250,.25) 70%,rgba(255,158,125,.5));
 --kv-shadow:0 14px 40px rgba(0,0,0,.35),0 1px 0 rgba(244,247,250,.06) inset;
 --kv-ring:0 0 0 2px rgba(255,158,125,.6),0 0 0 7px rgba(255,158,125,.16);--peach-start:#FF9E7D;--peach-end:#FF9E7D}
@@ -200,6 +201,22 @@ def pacote_offline(saida_tmp):
     return ler(os.path.join(saida_tmp, "KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip"), True)
 
 
+def paleta_estrita(destino, texto):
+    """Cada cor das peças da entrada fica na paleta oficial (pêssego, azul abissal, vidro, titânio, nevoeiro).
+    O portão visual (scripts/paleta_unica.py verificar) mede a pasta konfirmu/ inteira."""
+    if destino.endswith(".css"):
+        return paleta_unica.converter_css(texto, False)
+    if destino.endswith(".js"):
+        return paleta_unica.converter_js(texto, False)
+    ctx = paleta_unica.Contexto(False)
+    texto = re.sub(r"(<style\b[^>]*>)(.*?)(</style>)",
+                   lambda m: m.group(1) + paleta_unica.converter_css(m.group(2), False) + m.group(3), texto, flags=re.S | re.I)
+    texto = re.sub(r'(\s(?:fill|stroke|stop-color|flood-color|lighting-color|color)\s*=\s*")([^"]*)(")',
+                   lambda m: m.group(1) + paleta_unica.trocar_cores(m.group(2), "desenho", ctx) + m.group(3), texto)
+    return re.sub(r'(\sstyle\s*=\s*")([^"]*)(")',
+                  lambda m: m.group(1) + paleta_unica.corpo_decls(m.group(2), ctx, {}, "inline") + m.group(3), texto)
+
+
 # ---------------------------------------------------------------- a entrada (index.html)
 def entrada(ficheiros):
     t = ler(os.path.join(FONTE, "konfirmu", "index.html"))
@@ -211,10 +228,11 @@ def entrada(ficheiros):
             if destino == "entrada/page.css":
                 # a marca nunca aparece partida: «Konfirmu» numa só palavra, o «u» em pêssego, sem espaço
                 texto += ENTRADA_ESCURA
+            texto = paleta_estrita(destino, texto)
             conteudo = texto.encode("utf-8")
         ficheiros[destino] = conteudo
         t = t.replace('"%s"' % raiz, '"/konfirmu/%s"' % destino)
-    t = recolorir(t).replace(*SETA_FORA)
+    t = paleta_unica.converter_html(recolorir(t).replace(*SETA_FORA), [])
     t = t.replace('href="/konfirmu/app/offline.zip"', 'href="/konfirmu/app/konfirmu-offline-2030.zip"')
     ancora = ('data-dt="189">What we know about Konfirmu (PDF in Portuguese)</a>')
     assert t.count(ancora) == 1, "não encontrei a ligação do PDF «What we know»"
@@ -279,8 +297,8 @@ def manifesto():
               "body{font:17px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;max-width:760px;margin:0 auto;padding:28px 18px 10px;background:#0B192C;color:#F4F7FA}\n"
               "h1{font-size:1.75rem;line-height:1.2;margin:0 0 14px;font-weight:700;letter-spacing:-.01em}\n"
               "h2{font-size:1.2rem;margin:28px 0 8px;color:#FF9E7D}\n"
-              "p,li{color:#F4F7FA}ul{padding-left:1.2em}li{margin:4px 0}code{font:.9em ui-monospace,Menlo,monospace;color:#FFB088}\n"
-              "b{color:#FFFFFF}.topo{margin:0 0 22px}.topo a{color:#FF9E7D}\n"
+              "p,li{color:#F4F7FA}ul{padding-left:1.2em}li{margin:4px 0}code{font:.9em ui-monospace,Menlo,monospace;color:#FF9E7D}\n"
+              "b{color:#F4F7FA}.topo{margin:0 0 22px}.topo a{color:#FF9E7D}\n"
               "</style>\n</head>\n<body>\n<p class=\"topo\"><a href=\"/konfirmu/\">Konfirmu</a> · <a href=\"/konfirmu/app/\">abrir a app</a></p>\n"
               + corpo + "\n</body>\n</html>\n")
     pagina = tema_2040.injetar(pagina, "manifesto.html", "info", avisos).replace(

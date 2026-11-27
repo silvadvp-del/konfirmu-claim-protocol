@@ -6,9 +6,9 @@
 .im3d-viewer summary { cursor: pointer; }
 .im3d-viewer input { display: block; max-width: 100%; margin: .8rem 0; }
 .im3d-viewer img, .im3d-viewer video { display: block; width: 100%; max-height: 68vh; object-fit: contain; }
-.im3d-scene { margin: 0 auto; width: min(100%, 26rem); position: relative; aspect-ratio: 4 / 3; background: linear-gradient(#13294A, #23395B); border-radius: 1rem; }
+.im3d-scene { margin: 0 auto; width: min(100%, 26rem); position: relative; aspect-ratio: 4 / 3; background: linear-gradient(#0B192C, rgba(15,34,61,.72)); border-radius: 1rem; }
 .im3d-scene > svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.im3d-frame { position: relative; margin: .8rem 0; border-radius: .7rem; background: #161c24; }
+.im3d-frame { position: relative; margin: .8rem 0; border-radius: .7rem; background: #0B192C; }
 .im3d-frame:empty { display: none; }
 
 html.im3d-active { min-height: 100%; background: #0B192C; }
@@ -17,7 +17,7 @@ html.im3d-active { min-height: 100%; background: #0B192C; }
 .im3d-active :is(.card,.game-card,.im3d-frame,.im3d-scene,.cert,.parchment,.hero) {
   position: relative; transform-style: preserve-3d;
   transform: perspective(850px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
-  box-shadow: 0 .5rem 1.25rem rgb(0 0 0 / .25);
+  box-shadow: 0 .5rem 1.25rem rgb(11 25 44 / .25);
 }
 .im3d-active :is(.card,.game-card,.im3d-frame,.cert,.parchment,.hero)::before,
 .im3d-active :is(.card,.game-card,.im3d-frame,.cert,.parchment,.hero)::after {
@@ -25,11 +25,11 @@ html.im3d-active { min-height: 100%; background: #0B192C; }
 }
 .im3d-active :is(.card,.game-card,.im3d-frame,.cert,.parchment,.hero)::before {
   transform: translateZ(-16px);
-  background: radial-gradient(ellipse at var(--lx,50%) var(--ly,35%), rgb(255 221 164 / .27), transparent 74%);
+  background: radial-gradient(ellipse at var(--lx,50%) var(--ly,35%), rgb(15 34 61 / .194), transparent 74%);
 }
 .im3d-active :is(.card,.game-card,.im3d-frame,.cert,.parchment,.hero)::after {
   transform: translateZ(32px);
-  background: radial-gradient(ellipse at var(--lx,50%) var(--ly,35%), rgb(255 255 255 / .18), transparent 46%);
+  background: radial-gradient(ellipse at var(--lx,50%) var(--ly,35%), rgb(15 34 61 / .13), transparent 46%);
 }
 .im3d-active .card :is(.ico,b,.d) { display: inline-block; }
 .im3d-active .card :is(b,.d) { display: block; }
