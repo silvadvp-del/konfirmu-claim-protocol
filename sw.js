@@ -4,9 +4,10 @@
 // v7 (27-11-2026): leva os 2 ficheiros da imersão, que vieram no pedido n.º 13 (sem eles, 6 páginas abriam incompletas sem rede).
 //     O "./" passa a opcional (KON-608): há alojamentos que respondem 404 ao endereço da pasta, e o addAll falhado deixava 0 peças.
 //     O botão conta só as peças obrigatórias. Nome novo, para chegar a quem já tinha a v6.
+//     Leva também a página dos avisos legais (24 línguas), ligada a partir do início.
 const CACHE_NAME = "konfirmu-app-unica-v7:" + self.registration.scope;
 const OPCIONAIS = ["./"];
-const ASSETS = ["./app_unica.html", "./girafinhas_criancas_facil.html", "./sala_natal_girafinhas.html", "./estudio_video_criancas.html", "./executor_criancas.html", "./radio_selo.html", "./carta_selada.html", "./manifest.json", "./assets/qrcode.js", "./assets/nacl-fast.min.js", "./assets/nacl-util.min.js", "./assets/imersao.css", "./assets/imersao.js", "./konfirmu_chat_offline_v0.1.html", "./konfirmu_chat_offline.html", "./verificador_offline.html", "./patient_vault_offline.html", "./ficha_campo.html", "./urna_voto_offline.html", "./testemunha_offline.html", "./chronolex_ata.html", "./chronolex_photo_seal.html", "./chronolex_verify.html", "./regua_do_planeta.html", "./neverland_family_quest.html", "./kcp_art_music_studio.html", "./webrtc_local.html"];
+const ASSETS = ["./app_unica.html", "./girafinhas_criancas_facil.html", "./sala_natal_girafinhas.html", "./estudio_video_criancas.html", "./executor_criancas.html", "./radio_selo.html", "./carta_selada.html", "./manifest.json", "./assets/qrcode.js", "./assets/nacl-fast.min.js", "./assets/nacl-util.min.js", "./assets/imersao.css", "./assets/imersao.js", "./konfirmu_chat_offline_v0.1.html", "./konfirmu_chat_offline.html", "./verificador_offline.html", "./patient_vault_offline.html", "./ficha_campo.html", "./urna_voto_offline.html", "./testemunha_offline.html", "./chronolex_ata.html", "./chronolex_photo_seal.html", "./chronolex_verify.html", "./regua_do_planeta.html", "./neverland_family_quest.html", "./kcp_art_music_studio.html", "./webrtc_local.html", "./avisos_legais.html"];
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then(async (cache) => {
     await cache.addAll(ASSETS);
