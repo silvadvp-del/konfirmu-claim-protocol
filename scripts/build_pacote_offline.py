@@ -147,14 +147,17 @@ IA_MSG = ("{pt:'A IA local (Qwen) não vem neste pacote: o modelo tem centenas d
           "en:'The local AI (Qwen) is not in this package: the model is hundreds of MB. The rest of the chat works offline.',"
           "fr:'L\\'IA locale (Qwen) n\\'est pas dans ce paquet : le modèle fait des centaines de Mo. Le reste du chat fonctionne hors ligne.'}")
 RE_CDN_IA = re.compile(r"""import\(\s*['"]https://cdn\.jsdelivr\.net/npm/@huggingface/transformers@[^'"]*['"]\s*\)""")
+# Desde 27-11 (KON-577) o chat busca os ficheiros da IA a IA_BASE e confere-os por hash (IA_FIXOS).
+RE_IA_BASE = re.compile(r"""(const\s+IA_BASE\s*=\s*)['"]https://cdn\.jsdelivr\.net/npm/@huggingface/transformers@[^'"]*['"]""")
 
 
 def tratar_ia(nome: str, t: str, com_ia: bool, registo: list) -> str:
-    if not RE_CDN_IA.search(t):
+    if not (RE_CDN_IA.search(t) or RE_IA_BASE.search(t)):
         return t
     if "async function ligarIA(){" not in t:
         raise Falha(f"{nome}: chama a IA da CDN mas não encontro ligarIA() para a tratar")
     t = RE_CDN_IA.sub("import('./assets/ia/transformers.min.js')", t)
+    t = RE_IA_BASE.sub(r"\1'./assets/ia/'", t)  # os mesmos ficheiros, conferidos pelo mesmo hash, mas do próprio pacote
     if com_ia:
         t = t.replace("ia=await m.pipeline(", "m.env.allowRemoteModels=false;m.env.allowLocalModels=true;m.env.localModelPath='./modelos/';"
                       "m.env.backends.onnx.wasm.wasmPaths='./assets/ia/';ia=await m.pipeline(", 1)
@@ -163,6 +166,14 @@ def tratar_ia(nome: str, t: str, com_ia: bool, registo: list) -> str:
         t = t.replace("async function ligarIA(){", "async function ligarIA(){bolha('casa'," + IA_MSG + "[L]);return;", 1)
         registo.append(f"{nome}: IA da CDN retirada; o botão IA explica que o modelo não vem no pacote")
     return t
+
+
+def tratar_sw(nome: str, t: str, registo: list) -> str:
+    """No pacote há um só service worker (o gerado): o chat deixa de registar o seu."""
+    novo, n = re.subn(r"""serviceWorker\.register\(\s*(['"])(?:\./)?konfirmu_chat_sw\.js\1""", "serviceWorker.register('./sw.js'", t)
+    if n:
+        registo.append(f"{nome}: regista o service worker do pacote (um só para tudo)")
+    return novo
 
 
 def tratar_rtl(nome: str, t: str, registo: list) -> str:
@@ -382,7 +393,7 @@ def construir(repo: Path, base: Path | None, com_ia: Path | None):
     pacote, falta = {}, []
     while a_visitar:
         p = a_visitar.pop(0)
-        if p in pacote or p == "sw.js":
+        if p in pacote or p in ("sw.js", "konfirmu_chat_sw.js"):  # o pacote gera o seu próprio service worker
             continue
         conteudo, origem = escolher(p)
         if conteudo is None:
@@ -408,6 +419,7 @@ def construir(repo: Path, base: Path | None, com_ia: Path | None):
         if p.endswith(".html"):
             t = pacote[p].decode("utf-8")
             t = tratar_ia(p, t, bool(com_ia), registo)
+            t = tratar_sw(p, t, registo)
             t = tratar_rtl(p, t, registo)
             t = por_csp(p, t)
             pacote[p] = t.encode("utf-8")

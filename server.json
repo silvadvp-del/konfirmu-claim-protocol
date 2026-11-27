@@ -1,0 +1,14 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.silvadvp-del/konfirmu",
+  "title": "Konfirmu",
+  "description": "Fichas oficiais com fonte e ATA verificável (SHA-256). Read-only; a IA propõe, o humano confirma.",
+  "version": "1.0.1",
+  "websiteUrl": "https://dpsindustrial.nl/konfirmu",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.2-29-155-209.sslip.io/mcp"
+    }
+  ]
+}

@@ -168,8 +168,20 @@ async function responder(q){const g=portao(q);let a,ver;
  else{ver='NS';a=t('semRegra')}
  const e=await registar(q,a,ver);return{a,ver,hash:e.hash}}
 async function enviar(){const q=$('p').value.trim();if(!q)return;$('p').value='';bolha('eu',q);const r=await responder(q);bolha('casa',r.a,r.ver,r.hash)}
+/* IA local: codigo de fora so entra se o tamanho e o SHA-256 baterem com o que esta fixado aqui (versao exata, 3 ficheiros). */
+const IA_BASE='https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/';
+const IA_FIXOS={'transformers.min.js':['aa5002b70e789798da263f5f99c62bd3e8fcd0c119258a493c40c180648365fa',888173,'text/javascript'],
+ 'ort-wasm-simd-threaded.jsep.mjs':['08fb86ec433c78bfb032c5d84a68b8e8e5a8d81268fa39e24314179a5767a5b9',44484,'text/javascript'],
+ 'ort-wasm-simd-threaded.jsep.wasm':['c46655e8a94afc45338d4cb2b840475f88e5012d524509916e505079c00bfa39',21596019,'application/wasm']};
+async function buscarConferido(nome){const [h,n,tipo]=IA_FIXOS[nome];const r=await fetch(IA_BASE+nome);if(!r.ok)throw new Error('rede');
+ const b=new Uint8Array(await r.arrayBuffer()),d=new Uint8Array(await crypto.subtle.digest('SHA-256',b));
+ if(b.length!==n||Array.from(d).map(x=>x.toString(16).padStart(2,'0')).join('')!==h)throw new Error('codigo de fora nao confere: '+nome);
+ return URL.createObjectURL(new Blob([b],{type:tipo}))}
+async function importarIA(){const u={};for(const nome in IA_FIXOS)u[nome]=await buscarConferido(nome);
+ const m=await import(u['transformers.min.js']);
+ m.env.backends.onnx.wasm.wasmPaths={mjs:u['ort-wasm-simd-threaded.jsep.mjs'],wasm:u['ort-wasm-simd-threaded.jsep.wasm']};return m}
 async function ligarIA(){if(location.protocol==='file:'||!globalThis.isSecureContext){bolha('casa',t('iaFicheiro'));return}
- bolha('casa',t('iaABaixar'));try{const m=await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3');
+ bolha('casa',t('iaABaixar'));try{const m=await importarIA();
   const gpu=!!navigator.gpu;ia=await m.pipeline('text-generation','onnx-community/Qwen2.5-0.5B-Instruct',{dtype:gpu?'q4f16':'q8',device:gpu?'webgpu':'wasm'});bolha('casa',t('iaPronta'))}
  catch(_){ia=null;bolha('casa',t('iaFalhou'))}}
 async function exportar(){const base=pacote();base.aviso_beta='BETA v0.1 — teste público, não é aconselhamento; SELADO ≠ VERDADEIRO';const hash=await sha256(JSON.stringify(base));const kp=nacl.sign.keyPair();const sig=nacl.sign.detached(new TextEncoder().encode(hash),kp.secretKey);const out=Object.assign({},base,{assinatura_beta:{hash:hash,pk:toHexB(kp.publicKey),sig:toHexB(sig)}});const txt=JSON.stringify(out,null,1),nome='konfirmu_conversa.json';
@@ -229,7 +241,7 @@ $('cSelo').onclick=()=>{const s=$('painelSelo').style;s.display=s.display==='blo
 $('cIA').onclick=ligarIA;$('cExp').onclick=exportar;$('cImp').onclick=()=>$('fImp').click();$('fImp').onchange=importar;$('cSomE').onclick=somEnviar;$('cSomO').onclick=somOuvir;$('cApg').onclick=apagar;
 const nav=(navigator.language||'pt').slice(0,2);if(T[nav]){L=nav;$('lingua').value=nav}
 const pronto=arrancar();
-if(location.protocol!=='file:'&&globalThis.isSecureContext&&'serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+if(location.protocol!=='file:'&&globalThis.isSecureContext&&'serviceWorker'in navigator)navigator.serviceWorker.register('konfirmu_chat_sw.js').catch(()=>{});
 globalThis.KONFIRMU={sha256,sha256js,portao,selo,responder,conferirCadeia,pacote,limpar,pronto,crc16,somBits,somOnda,somLer,definirLingua:l=>{L=l;pintar()}};
 </script>
 <script>

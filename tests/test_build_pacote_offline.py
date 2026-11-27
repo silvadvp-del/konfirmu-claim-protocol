@@ -50,12 +50,17 @@ with tempfile.TemporaryDirectory() as t:
     prova("o service worker guarda todas as páginas", all(f'"./{p}"' in sw for p in paginas))
     for p in ("verificador_offline.html", "chronolex_verify.html", "chronolex_photo_seal.html", "estudio_video_criancas.html"):
         txt = z.read(TOPO + p).decode()
-        if "fromCharCode.apply" in txt or "konfirmu_sha256.js" not in txt:
+        if "fromCharCode.apply" in txt or not ("KSHA" in txt or "konfirmu_sha256.js" in txt):
             prova(f"{p} usa o hash corrigido (KON-572)", False)
             break
     else:
-        prova("as 4 páginas do KON-572 usam o hash corrigido", True)
-    prova("chronolex_verify carrega o nacl-util (atas assinadas)", b"nacl-util.min.js" in z.read(TOPO + "chronolex_verify.html"))
+        prova("as 4 páginas do KON-572 usam o hash corrigido (sem fromCharCode.apply)", True)
+    sem_util = [n for n in paginas if b"nacl.util." in z.read(TOPO + n) and b"nacl-util.min.js" not in z.read(TOPO + n)]
+    prova("páginas que usam nacl.util carregam o nacl-util", not sem_util, ", ".join(sem_util))
+    chats = [n for n in paginas if b"konfirmu_chat_sw.js" in z.read(TOPO + n)]
+    prova("no pacote há um só service worker (o chat usa o do pacote)", not chats, ", ".join(chats))
+    v = z.read(TOPO + "verificador_offline.html").decode()
+    prova("verificador: ficheiro que não é da casa sem 4 linhas a vermelho (KON-572, efeito 3)", '"✗ não bate"' not in v)
     # Sabotagem: 1 byte mudado dentro do ZIP tem de ser apanhado
     mem = io.BytesIO()
     with zipfile.ZipFile(io.BytesIO(z1)) as zi, zipfile.ZipFile(mem, "w", zipfile.ZIP_DEFLATED) as zo:
