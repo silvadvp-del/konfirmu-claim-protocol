@@ -1,0 +1,30 @@
+name: Copia do que esta no ar (so leitura, KON-613)
+on:
+  push:
+    branches: [ "ferramenta/copia-ao-vivo-20261127" ]
+permissions:
+  contents: read
+jobs:
+  copia:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copiar, duas vezes, cada caminho da lista (sem mexer no site)
+        run: |
+          set -u
+          mkdir -p copia/1 copia/2
+          while read -r p; do
+            [ -z "$p" ] && continue
+            n=$(printf '%s' "$p" | sed 's#[/.]#_#g')
+            for v in 1 2; do
+              code=$(curl -sS -m 40 -A "Konfirmu-copia-KON-613" -o "copia/$v/$n" -D "copia/$v/$n.cabecalhos" -w '%{http_code}' "https://dpsindustrial.nl$p" || echo 000)
+              echo "$v $code $p" >> copia/ESTADOS.txt
+            done
+          done < ferramentas/copia_ao_vivo/caminhos.txt
+          (cd copia && find . -type f ! -name SHA256SUMS.txt -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS.txt)
+          cat copia/ESTADOS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: copia-ao-vivo
+          path: copia
+          retention-days: 7
