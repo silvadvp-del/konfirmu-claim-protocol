@@ -47,6 +47,8 @@ jobs:
           python3 tests/test_imersao_offline.py dist/KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip --atividades 21
       - name: Ensaio das tigelas da Educacao e familia — 8 tigelas, 62 linguas, modo aviao, memoria
         run: python3 tests/test_tigelas_familia.py dist/KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip
+      - name: Ensaio da Radio com Prova — 128 bits inteiros, taxa real do aparelho, trama cortada recusada
+        run: python3 tests/test_radio_selo.py
       - name: Pacote do sitio dpsindustrial.nl/konfirmu/ — duas construcoes iguais, varredura e ensaio (KON-613)
         run: |
           python3 -I scripts/build_site_nl.py /tmp/nl_a
