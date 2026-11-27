@@ -11,14 +11,18 @@ sem mascote, sem emojis; o 112 não aparece no menu (regra de 31-10).
 Ganchos que não se podem partir: a.card > .ico + b + .d (imersão 3D e teste do GitHub), um h1
 (a imersão põe os botões a seguir), nenhum <summary> próprio, ids «aviao»/«aviaoEstado» e «id».
 
-Se existir avisos_legais.html na raiz (pedido #14), o menu da raiz liga-a no rodapé. O menu da
-edição 21 não a liga: o empacotador junta tudo o que o menu liga e o teste do pacote só aceita
-páginas que sejam atividades.
+Protocolo de 27-11 (Definition of Done): o rodapé traz os 5 avisos legais, lidos da
+avisos_legais.html (uma só fonte; sem ela, o gerador para), e há procura instantânea.
+O menu da raiz liga também a página dos avisos em 24 línguas. O menu da edição 21 não a liga:
+o empacotador junta tudo o que o menu liga e o teste do pacote só aceita atividades.
 
 Uso: python3 -I scripts/gerar_menu.py [CAMINHO_DO_REPOSITORIO]   (por omissão, a pasta acima de scripts/)
 Depois: refazer as 3 linhas destes ficheiros em SHA256SUMS.txt e correr os testes do pacote.
 """
+import html
+import json
 import os
+import re
 import sys
 
 ICONES = {
@@ -120,7 +124,18 @@ h1 .u{color:var(--u)}
 .id:empty{display:none}
 :focus-visible{outline:2px solid var(--tinta);outline-offset:2px}
 .card:focus-visible{outline-offset:-3px;border-radius:12px}
-.portal[hidden]{display:none}
+.portal[hidden],.card[hidden]{display:none}
+.procura{margin:24px 0 0}
+.procura label{display:block;margin:0 0 6px;font-size:.875rem;font-weight:600;color:var(--tinta2)}
+.procura input{width:100%;min-height:44px;padding:0 14px;border:1px solid var(--linha);border-radius:10px;background:var(--painel);color:var(--tinta);font:400 1rem/1.2 var(--letra)}
+.procura input::placeholder{color:var(--tinta3)}
+.sem-resultados{margin:10px 0 0;min-height:1.4em;font-size:.875rem;color:var(--tinta2)}
+.sem-resultados:empty{display:none}
+.a-procurar .portais{display:none}
+.avisos h2{margin:0 0 4px;font-size:.9375rem;line-height:1.3;font-weight:650;color:var(--tinta2)}
+.avisos dl{margin:0 0 12px}
+.avisos dt{margin:10px 0 0;font-weight:600;color:var(--tinta2)}
+.avisos dd{margin:2px 0 0;max-width:46em}
 @media (prefers-reduced-motion:no-preference){.js .portal{animation:surge .16s ease-out}@keyframes surge{from{opacity:0}to{opacity:1}}}
 body.facil{font-size:19px}
 body.facil .card b{font-size:1.1rem}
@@ -158,6 +173,31 @@ JS_PORTAIS = """
  var guardado=null;try{guardado=document.getElementById(localStorage.getItem('konfirmu_portal'))}catch(_){}
  abrir(guardado&&tabs.indexOf(guardado)>=0?guardado:tabs[0]);
 })();
+// Procura instantânea: mostra os cartões que batem, de todos os portais, agrupados pelo portal.
+(function(){
+ var campo=document.getElementById('procura');if(!campo)return;
+ campo.parentNode.hidden=false;
+ var secs=[].slice.call(document.querySelectorAll('.portal'));
+ var tabs=[].slice.call(document.querySelectorAll('.portais [role=tab]'));
+ var estado=document.getElementById('sem');
+ function norm(t){return t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()}
+ function aplicar(){
+  var q=norm(campo.value.trim());
+  document.body.classList.toggle('a-procurar',!!q);
+  if(!q){
+   [].forEach.call(document.querySelectorAll('a.card'),function(a){a.hidden=false});
+   var sel=tabs.filter(function(t){return t.getAttribute('aria-selected')==='true'})[0]||tabs[0];
+   secs.forEach(function(s){s.hidden=!sel||s.id!==sel.getAttribute('aria-controls')});
+   estado.textContent='';return}
+  var total=0;
+  secs.forEach(function(s){var n=0;
+   [].forEach.call(s.querySelectorAll('a.card'),function(a){var ok=norm(a.textContent).indexOf(q)>=0;a.hidden=!ok;if(ok)n++});
+   s.hidden=!n;total+=n});
+  estado.textContent=total?(total===1?'1 atividade encontrada.':total+' atividades encontradas.'):'Nenhuma atividade tem «'+campo.value.trim()+'». Tenta outra palavra.';
+ }
+ campo.addEventListener('input',aplicar);
+ campo.addEventListener('keydown',function(e){if(e.key==='Escape'&&campo.value){campo.value='';aplicar()}});
+})();
 // A imersão 3D põe os seus controlos a seguir ao título; aqui passam para a fila de ações.
 document.addEventListener('DOMContentLoaded',function(){
  var acoes=document.querySelector('.acoes'),t=document.querySelector('.im3d-tools'),v=document.querySelector('.im3d-viewer');
@@ -186,19 +226,35 @@ function prepararAviao(){var el=document.getElementById("aviaoEstado");
 document.getElementById("aviao").onclick=prepararAviao;"""
 
 
+def avisos_pt(repo):
+    """Os 5 avisos legais em português, tirados da avisos_legais.html (pedido #14). Sem ela, para."""
+    caminho = os.path.join(repo, "avisos_legais.html")
+    texto = open(caminho, encoding="utf-8").read()
+    m = re.search(r'"pt"\s*:\s*\{.*?"a"\s*:\s*(\[\s*\[.*?\]\s*\])', texto, re.S)
+    if not m:
+        raise SystemExit("não encontrei os avisos em português na avisos_legais.html")
+    itens = json.loads(m.group(1))
+    if len(itens) != 5:
+        raise SystemExit("esperava 5 avisos legais, encontrei %d" % len(itens))
+    return itens
+
+
 def cartao(href, icone, titulo, descricao, estado):
     extra = '<span class="estado">%s</span>' % estado if estado else ""
     return ('<a class="card" href="%s"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24">%s</svg></span>'
             '<b>%s</b><span class="d">%s%s</span></a>' % (href, ICONES[icone], titulo, descricao, extra))
 
 
-def pagina(variante, avisos=False):
+def pagina(variante, avisos):
     edicao = variante == "edicao21"
     partes = ['<!DOCTYPE html>', '<html lang="pt">', '<head>', '<meta charset="UTF-8">',
               '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
               '<meta name="theme-color" content="#F3F1EE" media="(prefers-color-scheme: light)">',
               '<meta name="theme-color" content="#121317" media="(prefers-color-scheme: dark)">',
-              '<title>Konfirmu</title>', '<style>' + CSS.strip() + '</style>',
+              '<title>Konfirmu</title>',
+              # ícone dentro da página: o «u» pêssego; sem pedido ao servidor (sem favicon.ico 404)
+              '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Crect width=\'32\' height=\'32\' rx=\'7\' fill=\'%231D1D21\'/%3E%3Ctext x=\'16\' y=\'22.5\' font-family=\'Inter,Arial,sans-serif\' font-size=\'21\' font-weight=\'700\' text-anchor=\'middle\' fill=\'%23D97D4A\'%3Eu%3C/text%3E%3C/svg%3E">',
+              '<style>' + CSS.strip() + '</style>',
               '<link rel="stylesheet" href="./assets/imersao.css">',
               '<script defer src="./assets/imersao.js" data-viewer></script>']
     if edicao:
@@ -212,6 +268,9 @@ def pagina(variante, avisos=False):
     if not edicao:
         partes.append('<span id="aviaoEstado" class="aviao-estado" role="status" aria-live="polite"></span>')
     partes.append('</header>')
+    partes.append('<div class="procura" hidden><label for="procura">Procurar atividade</label>'
+                  '<input id="procura" type="search" autocomplete="off" enterkeyhint="search" placeholder="Por exemplo: verificar, carta, família"></div>')
+    partes.append('<p id="sem" class="sem-resultados" role="status" aria-live="polite"></p>')
     partes.append('<nav class="portais" role="tablist" aria-label="Portais">')
     for chave, rotulo, _, _, _ in PORTAIS:
         partes.append('<button type="button" role="tab" id="t-%s" aria-controls="p-%s" aria-selected="false">%s</button>' % (chave, chave, rotulo))
@@ -227,9 +286,14 @@ def pagina(variante, avisos=False):
             partes.append(cartao(href, icone, nome, descricao, estado))
             total += 1
         partes += ['</div>', '</section>']
-    partes += ['<footer class="rodape">',
-               '<p>Bom saber: cada atividade tem as suas regras; este menu só as junta. O selo mostra que nada mudou depois de feito, mas não prova que é verdade. A tua chave fica só neste aparelho.</p>',
-               ] + (['<p class="legal"><a href="./avisos_legais.html">Avisos legais</a></p>'] if avisos and not edicao else []) + [
+    bloco = ['<section class="avisos" aria-labelledby="avisos-t">', '<h2 id="avisos-t">Avisos legais</h2>', '<dl>']
+    for titulo_aviso, texto_aviso in avisos:
+        bloco.append('<dt>%s</dt><dd>%s</dd>' % (html.escape(titulo_aviso), html.escape(texto_aviso)))
+    bloco.append('</dl>')
+    if not edicao:
+        bloco.append('<p class="legal"><a href="./avisos_legais.html">Os mesmos avisos em 24 línguas</a></p>')
+    bloco.append('</section>')
+    partes += ['<footer class="rodape">'] + bloco + [
                '<p class="id" id="id"></p>',
                '</footer>',
                '<script src="./assets/nacl-fast.min.js"></script>',
@@ -245,15 +309,15 @@ def pagina(variante, avisos=False):
 
 def main():
     repo = sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    avisos = os.path.exists(os.path.join(repo, "avisos_legais.html"))
+    avisos = avisos_pt(repo)
     raiz, n_raiz = pagina("raiz", avisos)
-    ed, n_ed = pagina("edicao21")
+    ed, n_ed = pagina("edicao21", avisos)
     assert n_raiz == 19 and n_ed == 21, (n_raiz, n_ed)
     for caminho, conteudo in (("app_unica.html", raiz), ("edicao-21/app_unica.html", ed), ("edicao-21/index.html", ed)):
         with open(os.path.join(repo, caminho), "w", encoding="utf-8") as f:
             f.write(conteudo)
         print("%-26s %6d B" % (caminho, len(conteudo.encode("utf-8"))))
-    print("atividades: raiz %d, edição 21 %d; avisos legais ligados na raiz: %s" % (n_raiz, n_ed, "sim" if avisos else "não"))
+    print("atividades: raiz %d, edição 21 %d; avisos legais no rodapé: %d" % (n_raiz, n_ed, len(avisos)))
 
 
 if __name__ == "__main__":
