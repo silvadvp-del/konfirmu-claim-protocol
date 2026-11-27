@@ -1,0 +1,76 @@
+name: Publicar ficha MCP (manual)
+# KON-579 — decisao do David de 27-11-2026, 01:50: «Publica a ficha (com a descricao dentro do limite de
+# 100 caracteres e os URLs completos e validos)».
+# So arranca a mao: pelo botao «Run workflow» (escrevendo PUBLICAR) ou por um push para o ramo publicar/ficha-mcp.
+# A prova de identidade e do proprio GitHub (OIDC). Nao ha chaves guardadas neste repositorio.
+# Cada versao publicada fica no registo; corrige-se com uma versao nova do server.json.
+on:
+  workflow_dispatch:
+    inputs:
+      confirmar:
+        description: "Escrever PUBLICAR para publicar o server.json no registo MCP"
+        required: true
+        default: ""
+  push:
+    branches: [ "publicar/ficha-mcp" ]
+permissions:
+  contents: read
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # prova de identidade do GitHub (OIDC)
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Conferir a ficha (hash, limite da descricao, enderecos completos)
+        run: |
+          grep -E '  server\.json$' SHA256SUMS.txt | sha256sum -c -
+          python3 -I - <<'PY'
+          import json, re, sys
+          f = json.load(open('server.json', encoding='utf-8'))
+          erros = []
+          d = f.get('description', '')
+          if not d: erros.append('sem descricao')
+          if len(d) > 100: erros.append('descricao com %d caracteres (limite 100)' % len(d))
+          urls = [('$schema', f.get('$schema', '')), ('websiteUrl', f.get('websiteUrl', ''))]
+          urls += [('remotes[%d].url' % i, r.get('url', '')) for i, r in enumerate(f.get('remotes', []))]
+          if 'repository' in f: urls.append(('repository.url', f['repository'].get('url', '')))
+          for nome, u in urls:
+              m = re.match(r'^https://([a-z0-9.-]+\.[a-z]{2,})(/\S+)$', u)
+              if not m: erros.append('%s incompleto: %r' % (nome, u))
+          if not f.get('remotes'): erros.append('sem remotes')
+          if f.get('name') != 'io.github.silvadvp-del/konfirmu': erros.append('nome inesperado: %r' % f.get('name'))
+          print('ficha:', f.get('name'), f.get('version'), '| descricao:', len(d), 'caracteres')
+          for nome, u in urls: print('  ', nome, '=', u)
+          if erros: sys.exit('FICHA RECUSADA: ' + '; '.join(erros))
+          print('ficha conferida')
+          PY
+      - name: Os enderecos respondem? (informativo, nao trava)
+        continue-on-error: true
+        run: |
+          for u in "$(jq -r '."$schema"' server.json)" "$(jq -r .websiteUrl server.json)"; do
+            printf '%s -> ' "$u"; curl -sS -o /dev/null -L -m 20 -w '%{http_code}\n' "$u" || true
+          done
+          R="$(jq -r '.remotes[0].url' server.json)"
+          printf '%s (initialize) -> ' "$R"
+          curl -sS -m 25 -o /tmp/mcp.txt -w '%{http_code}\n' -X POST "$R" \
+            -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' \
+            -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"konfirmu-ficha-check","version":"1.0.1"}}}' || true
+          head -c 700 /tmp/mcp.txt || true; echo
+      - name: Instalar mcp-publisher
+        run: |
+          curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" | tar xz mcp-publisher
+          ./mcp-publisher --version || true
+      - name: Prova de identidade (GitHub OIDC, sem chaves guardadas)
+        run: ./mcp-publisher login github-oidc
+      - name: Publicar a ficha
+        if: ${{ github.event_name == 'push' || inputs.confirmar == 'PUBLICAR' }}
+        run: ./mcp-publisher publish
+      - name: Ler a ficha no registo (prova, nao trava)
+        if: ${{ github.event_name == 'push' || inputs.confirmar == 'PUBLICAR' }}
+        continue-on-error: true
+        run: |
+          sleep 6
+          (curl -fsS -m 25 "https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.silvadvp-del/konfirmu" \
+            || curl -fsS -m 25 "https://registry.modelcontextprotocol.io/v0/servers?search=io.github.silvadvp-del/konfirmu") | python3 -I -m json.tool | head -n 120
