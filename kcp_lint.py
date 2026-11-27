@@ -7,12 +7,15 @@
 import ast, hashlib, json, operator, sys
 from pathlib import Path
 
-VERSAO = "1.0.0"
+VERSAO = "1.0.1"
 
 CAMPOS = ["cartridge_id", "version", "standard_ref", "reason_code_veto",
           "inputs", "formula", "limits", "test_vectors"]
 
 class FormulaError(ValueError):
+    pass
+
+class LimitsError(ValueError):
     pass
 
 def avaliar(node, env):
@@ -44,6 +47,11 @@ def calcular_formula(formula, env):
 
 def veredicto(formula, env, limits):
     # env = {variavel: [valor, incerteza]}; pior caso direccional: alto = v0+u, baixo = v0-u
+    # KON-542: sem limites nao ha veredicto. Limites em branco dao erro, nunca "OK".
+    if not isinstance(limits, dict):
+        raise LimitsError("sem limites: 'limits' tem de ser um objeto")
+    if limits.get("max_allowed") is None and limits.get("min_allowed") is None:
+        raise LimitsError("sem limites: falta max_allowed e min_allowed")
     nom = calcular_formula(formula, {k: v[0] for k, v in env.items()})
     alto = calcular_formula(formula, {k: v[0] + v[1] for k, v in env.items()})
     baixo = calcular_formula(formula, {k: v[0] - v[1] for k, v in env.items()})
@@ -77,6 +85,10 @@ def lint_cartridge(spec):
         r.errors.append("inputs vazio")
     if not isinstance(spec.get("test_vectors"), list) or not spec["test_vectors"]:
         r.errors.append("sem test_vectors")
+    lim = spec.get("limits")
+    if "limits" in spec and (not isinstance(lim, dict) or
+                             (lim.get("max_allowed") is None and lim.get("min_allowed") is None)):
+        r.errors.append("sem limites: falta max_allowed e min_allowed")
     if r.errors:
         return r
     r.canonical_hash = hashlib.sha256(canon_tipado(spec).encode()).hexdigest()
@@ -88,7 +100,7 @@ def lint_cartridge(spec):
                 continue
         try:
             v, nom, nota = veredicto(spec["formula"], env, spec["limits"])
-        except FormulaError as e:
+        except (FormulaError, LimitsError) as e:
             v, nota = "ERRO", str(e)
         if v != tv.get("expected_verdict"):
             r.errors.append("vetor " + str(tv.get("env")) + ": esperado " +
@@ -118,6 +130,18 @@ def selftest():
             assert False, "devia ter recusado: " + f
         except FormulaError:
             pass
+    # KON-542: limites em branco nunca dao "OK" (prova de 24-11: 5000 mg para 12,4 kg)
+    caso = {"dose_mg": [5000.0, 0.0], "peso_kg": [12.4, 0.0]}
+    for lim in [{}, {"max_allowed": None, "min_allowed": None}, None]:
+        try:
+            veredicto("dose_mg / peso_kg", caso, lim)
+            assert False, "limites em branco deviam dar erro: " + repr(lim)
+        except LimitsError:
+            pass
+    assert veredicto("dose_mg / peso_kg", {"dose_mg": [350.0, 0.0], "peso_kg": [12.4, 0.0]},
+                     {"max_allowed": 15})[0] == "VETO"
+    sem = dict(spec); sem["limits"] = {}
+    assert not lint_cartridge(sem).valid, "cartucho sem limites nao pode ser valido"
     print("kcp_lint SELFTEST VERDE")
 
 if __name__ == "__main__":

@@ -8,6 +8,7 @@ Toda a afirmacao factual carrega a sua prova — ou a sua honestidade.
 
 ## O que NAO garante (lido primeiro, como manda a casa)
 
+- NAO serve para decidir tratamentos. Nao foi feito para diagnosticar nem para tratar. O cartucho de dose pediatrica e um exemplo de conta conferida contra limites declarados; nao e aconselhamento clinico.
 - NAO elimina alucinacoes: elimina afirmacoes sem prova. O que nao se verifica, nao passa.
 - NAO garante matematicamente que nenhum operador ultrapassa limites: torna a violacao visivel, lenta e cara — e a conformidade a opcao mais barata.
 - NAO promete que a fonte tenha razao: garante integridade e proveniencia.
