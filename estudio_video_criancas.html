@@ -30,11 +30,17 @@ pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
 </div>
 <p class="aviso">O que NÃO garante: o filme fica SÓ neste aparelho (nada sobe para lado nenhum); o selo prova que ESTE filme foi selado nesta corrente à hora do aparelho — não prova que o que se vê aconteceu (SELADO ≠ VERDADEIRO); a gravação precisa de um browser com câmara e microfone.</p>
 <script>
-function sha256Video(str) {
+function bytesParaTexto(u8) {
+  // KON-572: converte os bytes aos bocados de 8 192. De uma so vez, o navegador recusa ficheiros maiores (por volta dos 120 KB).
+  var s = "", P = 8192;
+  for (var k = 0; k < u8.length; k += P) s += String.fromCharCode.apply(null, u8.subarray(k, k + P));
+  return s;
+}
+function sha256Video(str, bin) {
   // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
   // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
   function rightRotate(value, amount) { return (value>>>amount) | (value<<(32-amount)); }
-  var ascii = unescape(encodeURIComponent(str));   // bytes UTF-8 como chars 0-255
+  var ascii = bin ? str : unescape(encodeURIComponent(str));   // bin=true: str ja e bytes crus; senao converte texto em bytes UTF-8
   var mathPow = Math.pow, maxWord = mathPow(2,32);
   var result = '', words = [];
   var asciiBitLength = ascii.length*8;
@@ -105,9 +111,17 @@ async function selar(){
   if(!blobFilme){alert("grava e para primeiro");return}
   var titulo=document.getElementById("titulo").value.trim()||"Sem título";
   var autor=document.getElementById("autor").value.trim()||"Criança da aldeia";
-  var buf=new Uint8Array(await blobFilme.arrayBuffer());
-  var bin=String.fromCharCode.apply(null,buf);
-  var hash=sha256Video(bin,true);
+  var outEl=document.getElementById("out");
+  outEl.textContent="a selar… ("+Math.max(1,Math.round(blobFilme.size/1024))+" KB)"; outEl.className="";
+  var hash;
+  try{
+    // KON-572: SHA-256 dos bytes do filme, igual ao de qualquer outra ferramenta.
+    var buf=new Uint8Array(await blobFilme.arrayBuffer());
+    hash=sha256Video(bytesParaTexto(buf),true);
+  }catch(e){
+    outEl.textContent="Não foi possível selar este filme neste aparelho ("+e+"). O filme continua só neste aparelho.";
+    return;
+  }
   var ts=new Date().toISOString();
   var evento={n:cadeia.length+1,titulo:titulo,autor:autor,ts:ts,hash:hash,prev:prevHash};
   var enc=sha256Video(prevHash+"|"+hash+"|"+titulo+"|"+autor+"|"+ts,false);

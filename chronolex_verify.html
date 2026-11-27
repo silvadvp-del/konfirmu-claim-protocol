@@ -33,11 +33,17 @@ input[type=file]{width:100%}
 <p class="aviso">O que NÃO garante: o navegador não verifica carimbo RFC 3161 (a cadeia da TSA verifica-se com: openssl ts -verify -in ficheiro.tsr -data ficheiro -CAfile cacert.pem -untrusted tsa.crt). SELADO ≠ VERDADEIRO. A verificação prova integridade e assinaturas, não a verdade dos factos.</p>
 <script src="./assets/nacl-fast.min.js"></script>
 <script>
-function sha256Ver(str) {
+function bytesParaTexto(u8) {
+  // KON-572: converte os bytes aos bocados de 8 192. De uma so vez, o navegador recusa ficheiros maiores (por volta dos 120 KB).
+  var s = "", P = 8192;
+  for (var k = 0; k < u8.length; k += P) s += String.fromCharCode.apply(null, u8.subarray(k, k + P));
+  return s;
+}
+function sha256Ver(str, bin) {
   // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
   // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
   function rightRotate(value, amount) { return (value>>>amount) | (value<<(32-amount)); }
-  var ascii = unescape(encodeURIComponent(str));   // bytes UTF-8 como chars 0-255
+  var ascii = bin ? str : unescape(encodeURIComponent(str));   // bin=true: str ja e bytes crus; senao converte texto em bytes UTF-8
   var mathPow = Math.pow, maxWord = mathPow(2,32);
   var result = '', words = [];
   var asciiBitLength = ascii.length*8;
@@ -140,15 +146,29 @@ setupDrop("drop1", function(f){
   rd.readAsText(f);
 });
 setupDrop("drop2", function(f){
+  var out = document.getElementById("outFile");
+  if(!f){ out.textContent = "larga aqui um ficheiro"; out.className = ""; return; }
   var rd = new FileReader();
+  out.textContent = "a calcular… (" + Math.max(1, Math.round(f.size/1024)) + " KB)"; out.className = "";
+  rd.onerror = function(){ out.textContent = "Não foi possível ler este ficheiro neste aparelho. Nada foi enviado."; out.className = ""; };
   rd.onload = function(){
-    var bin = String.fromCharCode.apply(null, new Uint8Array(rd.result));
-    var h = sha256Ver(bin, true);
-    var esperado = document.getElementById("hashEsperado").value.trim().toLowerCase();
-    var ok = esperado ? h === esperado : false;
-    var out = document.getElementById("outFile");
-    out.textContent = "sha256: " + h + (esperado ? ("\n" + (ok ? "CONFERE com o esperado" : "DIVERGE do esperado")) : "\n(cola o hash esperado para comparar)");
-    out.className = esperado ? (ok ? "verde" : "vermelho") : "";
+    try {
+      var bin = bytesParaTexto(new Uint8Array(rd.result));
+      var h = sha256Ver(bin, true);
+      var esperado = document.getElementById("hashEsperado").value.trim().toLowerCase();
+      var ok = esperado ? h === esperado : false;
+      // KON-572: as paginas anteriores a 27-11-2026 davam aos ficheiros binarios um codigo antigo (v1):
+      // o SHA-256 dos bytes depois de convertidos para UTF-8. Um selo antigo continua a poder ser conferido.
+      var antigo = (esperado && !ok) ? sha256Ver(bin, false) === esperado : false;
+      var linha = !esperado ? "(cola o hash esperado para comparar)"
+        : ok ? "CONFERE com o esperado"
+        : antigo ? "CONFERE com o código antigo (v1), o das páginas anteriores a 27-11-2026: o ficheiro é o mesmo.\nO código antigo não é o SHA-256 que outras ferramentas calculam. O SHA-256 deste ficheiro é o de cima."
+        : "DIVERGE do esperado";
+      out.textContent = "sha256: " + h + "\n" + linha;
+      out.className = esperado ? ((ok || antigo) ? "verde" : "vermelho") : "";
+    } catch(e){
+      out.textContent = "Não foi possível calcular o SHA-256 deste ficheiro neste aparelho (" + e + "). Nada foi enviado."; out.className = "";
+    }
   };
   rd.readAsArrayBuffer(f);
 });
