@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Enxame Konfirmu</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Cada aparelho é uma nave. As naves trocam sinais assinados sem rede: entre separadores do mesmo aparelho, por QR ou por texto copiado.">
+<style>
+/* VOICE: de bordo, calma e exata; frases curtas.
+   IDEA: o diário de bordo de uma frota que fala sem rede.
+   PICTURE: o céu noturno com o enxame; as naves reais têm nome e os sinais passam entre elas.
+   COLOUR and TYPE: noite violeta, lavanda, pêssego para a minha nave e o «u», azul-gelo para as outras; letra do sistema (funciona sem rede).
+   LAYOUT: céu em cima, estado, lançar, diário, encontro entre telemóveis; uma coluna até 760px. */
+:root{color-scheme:dark;--fundo:#0b0920;--painel:#14112e;--linha:#2b2654;--texto:#eeebff;--suave:#aaa4cf;--lavanda:#bcaeff;--pessego:#f4a77a;--gelo:#8fd3ff;--perigo:#ff8a8a}
+*{box-sizing:border-box;min-width:0}
+[hidden]{display:none!important}
+html{background:var(--fundo)}
+body{margin:0;background:var(--fundo);color:var(--texto);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:clip}
+main{max-width:760px;margin:0 auto;padding:max(14px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(40px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+h1{font-size:clamp(32px,7vw,44px);line-height:1.05;margin:10px 0 6px;font-weight:750;text-wrap:balance}
+.u{color:var(--pessego)}
+.sub{margin:0 0 14px;color:var(--suave);max-width:60ch}
+.fig{position:relative;height:clamp(260px,46vh,460px);border-radius:18px;overflow:hidden;border:1px solid var(--linha);background:radial-gradient(130% 90% at 50% 115%,#251c58 0%,#110d2c 48%,#07061a 100%)}
+.fig canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.estado{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+.pill{border:1px solid var(--linha);border-radius:999px;padding:5px 12px;font-size:14px;background:var(--painel);color:var(--suave)}
+.pill.voo{border-color:var(--pessego);color:var(--pessego)}
+.pill.perto{border-color:var(--gelo);color:var(--gelo)}
+.cartao{background:var(--painel);border:1px solid var(--linha);border-radius:16px;padding:16px;margin:14px 0}
+.cartao h2{font-size:18px;line-height:1.3;margin:0 0 10px}
+textarea{width:100%;background:#0a081c;color:var(--texto);border:1px solid var(--linha);border-radius:12px;padding:12px;font:16px/1.45 system-ui,sans-serif;resize:vertical}
+textarea:focus-visible,button:focus-visible,a:focus-visible,.botao:focus-within{outline:2px solid var(--lavanda);outline-offset:2px}
+.acoes{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+button,.botao{min-height:44px;padding:10px 16px;border-radius:12px;border:1px solid var(--lavanda);background:transparent;color:var(--lavanda);font:600 15px system-ui,sans-serif;cursor:pointer;display:inline-flex;align-items:center}
+button.cheio{background:var(--lavanda);color:#140f33}
+button:disabled{opacity:.45;cursor:default}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;color:var(--suave);overflow-wrap:anywhere}
+.nota{font-size:14px;color:var(--suave);margin:8px 0 0}
+.nota a,.limites a{color:var(--lavanda)}
+#diario{list-style:none;margin:0;padding:0}
+#diario li{border-top:1px solid var(--linha);padding:12px 0}
+#diario li:first-child{border-top:0;padding-top:0}
+.sinal{margin:0 0 4px;font-size:17px;overflow-wrap:anywhere;white-space:pre-wrap}
+.meta{margin:0;font-size:13px;color:var(--suave)}
+.ok{color:var(--gelo)}
+.vazio{color:var(--suave)}
+.socorro{border:1px solid var(--perigo);border-radius:12px;padding:10px 12px;margin:6px 0 8px;color:#ffe3e3;background:#2b0f1c;font-size:15px}
+.socorro a{color:#fff;font-weight:700;white-space:nowrap}
+#qr{display:block;background:#fff;border-radius:10px;margin:12px 0 0;width:min(100%,340px);height:auto;image-rendering:pixelated}
+#cam{display:block;width:100%;border-radius:12px;margin-top:10px}
+#pacoteTxt{margin-top:10px}
+hr{border:0;border-top:1px solid var(--linha);margin:16px 0}
+.limites{font-size:14px;color:var(--suave)}
+.limites b{color:var(--texto)}
+.hp{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+<main>
+<h1>Enxame Konfirm<span class="u">u</span></h1>
+<p class="sub">Cada aparelho é uma nave. As naves trocam sinais selados, sem rede e sem servidor.</p>
+
+<div class="fig"><canvas id="ceu" role="img" aria-label="O céu do enxame: as naves pequenas são desenho; as naves com nome são separadores reais."></canvas></div>
+<div class="estado" aria-live="polite">
+  <span class="pill" id="pRede">—</span>
+  <span class="pill" id="pPerto">0 naves por perto</span>
+  <span class="pill" id="pDiario">0 sinais no diário</span>
+</div>
+
+<section class="cartao">
+  <h2>A minha nave</h2>
+  <p id="minha">—</p>
+  <div class="acoes"><button id="bOutra" type="button">Abrir outra nave neste aparelho</button></div>
+  <p id="dicaOutra" class="nota" aria-live="polite"></p>
+</section>
+
+<section class="cartao">
+  <h2>Lançar um sinal</h2>
+  <label class="hp" for="texto">Sinal</label>
+  <textarea id="texto" rows="3" maxlength="280" placeholder="Escreve um sinal curto (até 280 letras)"></textarea>
+  <div id="sosEu"></div>
+  <div class="acoes"><button id="bLancar" class="cheio" type="button">Selar e lançar</button></div>
+  <p id="lancado" class="mono" aria-live="polite"></p>
+</section>
+
+<section class="cartao">
+  <h2>Diário de bordo</h2>
+  <ul id="diario"></ul>
+</section>
+
+<section class="cartao">
+  <h2>Encontro entre telemóveis, sem rede</h2>
+  <p class="nota">Um telemóvel mostra o pacote; o outro lê o QR ou cola o texto. Cada sinal é conferido antes de entrar no diário.</p>
+  <div class="acoes">
+    <button id="bMostrar" type="button">Mostrar o meu pacote</button>
+    <button id="bSeguintes" type="button" hidden>Seguintes</button>
+    <button id="bCopiar" type="button" disabled>Copiar o texto</button>
+  </div>
+  <p id="pacoteInfo" class="nota" aria-live="polite"></p>
+  <canvas id="qr" hidden aria-label="QR do pacote de sinais"></canvas>
+  <textarea id="pacoteTxt" rows="3" readonly hidden aria-label="Texto do pacote"></textarea>
+  <hr>
+  <div class="acoes">
+    <label class="botao" for="foto">Ler QR numa foto</label>
+    <input id="foto" class="hp" type="file" accept="image/*" capture="environment">
+    <button id="bLer" type="button">Câmara ao vivo</button>
+    <button id="bParar" type="button" hidden>Parar a câmara</button>
+  </div>
+  <video id="cam" playsinline muted hidden></video>
+  <label class="hp" for="colar">Texto do pacote de outra nave</label>
+  <textarea id="colar" rows="3" placeholder="…ou cola aqui o texto do pacote (começa por KENX1:)" style="margin-top:10px"></textarea>
+  <div class="acoes"><button id="bJuntar" type="button">Juntar ao meu diário</button></div>
+  <p id="juntado" class="mono" aria-live="polite"></p>
+</section>
+
+<p id="ligacaoLocal" class="nota">Ligação direta entre dois aparelhos na mesma rede Wi-Fi, sem internet: página <a href="./webrtc_local.html">Ligação Local</a>.</p>
+<p class="limites"><b>O que NÃO garante.</b> O selo prova que o sinal não mudou e de que nave veio; não prova quem está do outro lado. A hora é a do aparelho que lançou o sinal. A chave e o diário vivem neste separador: fechá-lo apaga-os. Entre separadores do mesmo aparelho, os sinais passam sozinhos; entre telemóveis, passam por QR ou por texto copiado: uma página web não consegue ligar dois telemóveis entre si por Bluetooth. As naves pequenas do céu são só desenho; as naves com nome são separadores reais. Se alguém escreve que está em perigo, a página mostra o 112: não liga nem avisa ninguém.</p>
+</main>
+
+<script src="./assets/nacl-fast.min.js"></script>
+<script src="./assets/qrcode.js"></script>
+<script src="./assets/jsQR.js"></script>
+<script>
+/* >>> KSHA: inicio (copia exata de ksha_fluxo.js) */
+/* KSHA/2 - SHA-256 sobre BYTES, aos bocados (KON-572). Fonte unica: ksha_fluxo.js. Nao editar dentro das paginas. */
+var KSHA = (function () {
+  "use strict";
+  var REGRA = "sha256-bytes/2";
+  var BOCADO = 1048576;
+  var LIMITE_CONFIRMA = 16 * BOCADO;
+  var K = new Int32Array([
+    0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+    0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+    0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+    0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+    0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+    0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+    0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+    0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+  ]);
+
+  function Fluxo() {
+    this.h = new Int32Array([0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19]);
+    this.b = new Uint8Array(64);
+    this.w = new Int32Array(64);
+    this.n = 0;
+    this.total = 0;
+  }
+  Fluxo.prototype.bloco = function (p, o) {
+    var w = this.w, h = this.h, i, x, y, t1, t2;
+    var a = h[0], b = h[1], c = h[2], d = h[3], e = h[4], f = h[5], g = h[6], q = h[7];
+    for (i = 0; i < 16; i++) {
+      w[i] = (p[o] << 24) | (p[o + 1] << 16) | (p[o + 2] << 8) | p[o + 3];
+      o += 4;
+    }
+    for (i = 16; i < 64; i++) {
+      x = w[i - 15];
+      y = w[i - 2];
+      x = ((x >>> 7) | (x << 25)) ^ ((x >>> 18) | (x << 14)) ^ (x >>> 3);
+      y = ((y >>> 17) | (y << 15)) ^ ((y >>> 19) | (y << 13)) ^ (y >>> 10);
+      w[i] = (w[i - 16] + x + w[i - 7] + y) | 0;
+    }
+    for (i = 0; i < 64; i++) {
+      y = ((e >>> 6) | (e << 26)) ^ ((e >>> 11) | (e << 21)) ^ ((e >>> 25) | (e << 7));
+      t1 = (q + y + ((e & f) ^ (~e & g)) + K[i] + w[i]) | 0;
+      x = ((a >>> 2) | (a << 30)) ^ ((a >>> 13) | (a << 19)) ^ ((a >>> 22) | (a << 10));
+      t2 = (x + ((a & b) ^ (a & c) ^ (b & c))) | 0;
+      q = g;
+      g = f;
+      f = e;
+      e = (d + t1) | 0;
+      d = c;
+      c = b;
+      b = a;
+      a = (t1 + t2) | 0;
+    }
+    h[0] = (h[0] + a) | 0;
+    h[1] = (h[1] + b) | 0;
+    h[2] = (h[2] + c) | 0;
+    h[3] = (h[3] + d) | 0;
+    h[4] = (h[4] + e) | 0;
+    h[5] = (h[5] + f) | 0;
+    h[6] = (h[6] + g) | 0;
+    h[7] = (h[7] + q) | 0;
+  };
+  Fluxo.prototype.junta = function (u8) {
+    var n = u8.length, i = 0, falta;
+    this.total += n;
+    if (this.n) {
+      falta = 64 - this.n;
+      if (n < falta) {
+        this.b.set(u8, this.n);
+        this.n += n;
+        return this;
+      }
+      this.b.set(u8.subarray(0, falta), this.n);
+      this.bloco(this.b, 0);
+      this.n = 0;
+      i = falta;
+    }
+    for (; i + 64 <= n; i += 64) this.bloco(u8, i);
+    if (i < n) {
+      this.b.set(u8.subarray(i), 0);
+      this.n = n - i;
+    }
+    return this;
+  };
+  Fluxo.prototype.fim = function () {
+    var b = this.b, n = this.n, t = this.total, i, s = "";
+    var alto = Math.floor(t / 536870912), baixo = (t % 536870912) * 8;
+    b[n++] = 128;
+    if (n > 56) {
+      while (n < 64) b[n++] = 0;
+      this.bloco(b, 0);
+      n = 0;
+    }
+    while (n < 56) b[n++] = 0;
+    b[56] = (alto >>> 24) & 255;
+    b[57] = (alto >>> 16) & 255;
+    b[58] = (alto >>> 8) & 255;
+    b[59] = alto & 255;
+    b[60] = (baixo >>> 24) & 255;
+    b[61] = (baixo >>> 16) & 255;
+    b[62] = (baixo >>> 8) & 255;
+    b[63] = baixo & 255;
+    this.bloco(b, 0);
+    for (i = 0; i < 8; i++) s += ("0000000" + (this.h[i] >>> 0).toString(16)).slice(-8);
+    return s;
+  };
+
+  function hex(u8) {
+    var s = "", i;
+    for (i = 0; i < u8.length; i++) s += (u8[i] < 16 ? "0" : "") + u8[i].toString(16);
+    return s;
+  }
+  /* Texto -> bytes UTF-8. Texto mal formado (surrogate solto) e recusado, nunca "arranjado". */
+  function utf8(str) {
+    var n = str.length, u = new Uint8Array(n * 3), j = 0, i, c, d;
+    for (i = 0; i < n; i++) {
+      c = str.charCodeAt(i);
+      if (c < 128) {
+        u[j++] = c;
+      } else if (c < 2048) {
+        u[j++] = 192 | (c >> 6);
+        u[j++] = 128 | (c & 63);
+      } else if (c >= 55296 && c <= 57343) {
+        d = i + 1 < n ? str.charCodeAt(i + 1) : 0;
+        if (c > 56319 || d < 56320 || d > 57343) throw new Error("texto mal formado");
+        c = 65536 + ((c - 55296) << 10) + (d - 56320);
+        i++;
+        u[j++] = 240 | (c >> 18);
+        u[j++] = 128 | ((c >> 12) & 63);
+        u[j++] = 128 | ((c >> 6) & 63);
+        u[j++] = 128 | (c & 63);
+      } else {
+        u[j++] = 224 | (c >> 12);
+        u[j++] = 128 | ((c >> 6) & 63);
+        u[j++] = 128 | (c & 63);
+      }
+    }
+    return u.subarray(0, j);
+  }
+  /* Regra antiga (selos v1, das paginas anteriores ao KSHA/2): cada byte >= 128 era trocado por dois. So para conferir selos antigos. */
+  function regraAntiga(u8) {
+    var n = u8.length, o = new Uint8Array(n * 2), j = 0, i, b;
+    for (i = 0; i < n; i++) {
+      b = u8[i];
+      if (b < 128) {
+        o[j++] = b;
+      } else {
+        o[j++] = 192 | (b >> 6);
+        o[j++] = 128 | (b & 63);
+      }
+    }
+    return o.subarray(0, j);
+  }
+
+  var testado = false;
+  function autoteste() {
+    var z, i, f;
+    if (testado) return;
+    z = new Uint8Array(1000);
+    for (i = 0; i < 1000; i++) z[i] = (i * 7 + 3) & 255;
+    f = new Fluxo();
+    f.junta(z.subarray(0, 1));
+    f.junta(z.subarray(1, 130));
+    f.junta(z.subarray(130));
+    if (
+      new Fluxo().junta(utf8("abc")).fim() !== "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad" ||
+      f.fim() !== "1e9bc38cbf860b9ec31918b065f9b52476c549a782e0e7990bed8ce3868d2371"
+    ) {
+      throw new Error("motor SHA-256 avariado neste aparelho");
+    }
+    testado = true;
+  }
+  function deBytes(u8) {
+    autoteste();
+    return new Fluxo().junta(u8).fim();
+  }
+  function deTexto(str) {
+    return deBytes(utf8(String(str)));
+  }
+
+  function ler(blob, a, b) {
+    var parte = blob.slice(a, b);
+    if (typeof parte.arrayBuffer === "function") {
+      return parte.arrayBuffer().then(function (x) {
+        return new Uint8Array(x);
+      });
+    }
+    return new Promise(function (ok, erro) {
+      var r = new FileReader();
+      r.onload = function () {
+        ok(new Uint8Array(r.result));
+      };
+      r.onerror = function () {
+        erro(r.error || new Error("leitura falhou"));
+      };
+      r.readAsArrayBuffer(parte);
+    });
+  }
+  /* Segundo motor (o do navegador), quando existe e o ficheiro cabe em memoria. Se discordarem, recusa. */
+  function confirma(blob, r) {
+    var cs = typeof crypto !== "undefined" && crypto.subtle && crypto.subtle.digest ? crypto.subtle : null;
+    if (!cs || r.bytes > LIMITE_CONFIRMA) return r;
+    return ler(blob, 0, r.bytes)
+      .then(function (u8) {
+        return cs.digest("SHA-256", u8);
+      })
+      .then(
+        function (d) {
+          return hex(new Uint8Array(d));
+        },
+        function () {
+          return null;
+        }
+      )
+      .then(function (h2) {
+        if (h2 === null) return r;
+        if (h2 !== r.sha256) throw new Error("dois motores discordam: resultado recusado");
+        r.confirmado = true;
+        return r;
+      });
+  }
+  /* Ficheiro (Blob/File) -> Promise de {sha256, bytes, regra, confirmado, antigo?}. Memoria constante. */
+  function deBlob(blob, opc) {
+    opc = opc || {};
+    return new Promise(function (ok) {
+      autoteste();
+      ok();
+    }).then(function () {
+      var f = new Fluxo(), g = opc.antigo ? new Fluxo() : null, pos = 0, total = blob.size;
+      function passo() {
+        var ate;
+        if (pos >= total) {
+          var r = { sha256: f.fim(), bytes: total, regra: REGRA, confirmado: false };
+          if (g) r.antigo = g.fim();
+          return confirma(blob, r);
+        }
+        ate = Math.min(pos + BOCADO, total);
+        return ler(blob, pos, ate).then(function (u8) {
+          if (u8.length !== ate - pos) throw new Error("leitura incompleta do ficheiro");
+          f.junta(u8);
+          if (g) g.junta(regraAntiga(u8));
+          pos = ate;
+          if (opc.progresso) opc.progresso(pos, total);
+          return passo();
+        });
+      }
+      return passo();
+    });
+  }
+
+  return { REGRA: REGRA, Fluxo: Fluxo, hex: hex, utf8: utf8, regraAntiga: regraAntiga, deBytes: deBytes, deTexto: deTexto, deBlob: deBlob };
+})();
+/* <<< KSHA: fim */
+</script>
+<script>
+/* >>> PORTOES: copia exata de konfirmu_chat_offline_v0.1.html (nao editar aqui) */
+/* ---------- portão de emergência: só abre quando a pessoa ESCREVE que está em perigo. Mostra o 112. Não liga nem avisa ninguém. ---------- */
+/* 112: número único europeu de emergência, chamada gratuita (Diretiva (UE) 2018/1972, art. 109.º). */
+const PERIGO=[
+ ['pt',/\b(estou|estamos|corro|corremos) (em )?perigo\b|\bsocorro\b/,/\bnao (estou|estamos|corro|corremos) (em )?perigo\b/,'Escreveste que estás em perigo. Liga 112: é o número de emergência europeu e a chamada é grátis. Fora da Europa o número pode ser outro. Esta página não liga por ti nem avisa ninguém.'],
+ ['es',/\b(estoy|estamos) en peligro\b|\bauxilio\b/,/\bno (estoy|estamos) en peligro\b/,'Has escrito que estás en peligro. Llama al 112: es el número de emergencia europeo y la llamada es gratuita. Fuera de Europa el número puede ser otro. Esta página no llama por ti ni avisa a nadie.'],
+ ['en',/\b(i am|i m|im|we are|we re) in danger\b/,null,'You wrote that you are in danger. Call 112: it is the European emergency number and the call is free. Outside Europe the number may be different. This page does not call for you and does not alert anyone.'],
+ ['fr',/\b(je suis|nous sommes|on est) en danger\b|\bau secours\b/,null,'Tu as écrit que tu es en danger. Appelle le 112 : c\'est le numéro d\'urgence européen et l\'appel est gratuit. Hors d\'Europe, le numéro peut être différent. Cette page n\'appelle pas à ta place et ne prévient personne.'],
+ ['nl',/\b(ik ben|wij zijn|we zijn|ik verkeer) in (levens)?gevaar\b/,null,'Je schreef dat je in gevaar bent. Bel 112: dat is het Europese alarmnummer en bellen is gratis. Buiten Europa kan het nummer anders zijn. Deze pagina belt niet voor jou en waarschuwt niemand.'],
+ ['de',/\b(ich bin|wir sind) in (lebens)?gefahr\b/,null,'Du hast geschrieben, dass du in Gefahr bist. Ruf 112 an: Das ist die europäische Notrufnummer und der Anruf ist kostenlos. Außerhalb Europas kann die Nummer anders sein. Diese Seite ruft nicht für dich an und benachrichtigt niemanden.'],
+ ['it',/\b(sono|siamo) in pericolo\b/,/\bnon (sono|siamo) in pericolo\b/,'Hai scritto che sei in pericolo. Chiama il 112: è il numero di emergenza europeo e la chiamata è gratuita. Fuori dall\'Europa il numero può essere diverso. Questa pagina non chiama al posto tuo e non avvisa nessuno.']];
+function portaoEmergencia(txt){const s=String(txt).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+ for(const [l,sim,nao,texto] of PERIGO)if(sim.test(s)&&!(nao&&nao.test(s)))return{lingua:l,texto};return null}
+/* ---------- portão das crianças (KON-583): abre quando quem escreve conta que um adulto lhe pede fotografias, segredos ou um encontro,
+   e não diz ter 18 anos ou mais. Mostra linhas de ajuda oficiais e o 112. Não liga nem avisa ninguém. Fontes consultadas a 27-11-2026:
+   116 111: número europeu das linhas de ajuda para crianças, reservado pela Decisão 2007/698/CE da Comissão (29-10-2007); número gratuito
+            (Decisão 2007/116/CE, art. 2.º); a funcionar em 24 países da UE segundo a Comissão Europeia (commission.europa.eu, «Fleeing Ukraine:
+            protection of children») e em 23 dos 27 segundo a Child Helpline International (sem França, Bélgica, Áustria e Itália).
+   119 (França): gratuito, 24 h por dia (service-public.gouv.fr, ficha F781, verificada a 13-09-2024).
+   114 (Itália): «Emergenza infanzia», gratuito, 24 h por dia (Presidenza del Consiglio, Dipartimento per le politiche della famiglia; minori.gov.it). ---------- */
+const CRIANCA=[
+ ['pt',/\b(pede|pedem|pediu|pediram|pedia|pedir|quer|queria|quis|manda|mandou|obriga|obrigou|diz|disse|insiste)\b( \w+){0,6} (fotos?|fotografias?|imagem|imagens|videos?|selfies?|nudes?|segredos?|nao contar|nao dizer|encontr\w*)\b/,
+  /\b(adulto|adulta|homem|senhor|senhora|desconhecido|desconhecida|estranho|estranha)\b|\b(alguem|pessoa|rapaz|rapariga|mulher) que (eu )?nao conheco\b|\bconheci (na internet|online|num jogo|no jogo)\b/,
+  /\btenho (\d{1,2}) anos\b/,/\bsou (?:uma |um )?(?:crianca|menina|menino|miuda|miudo)\b/,
+  'Se tens menos de 18 anos: não tens de enviar fotografias, guardar segredos nem ir a encontros que um adulto te peça. Conta a um adulto em quem confias. Linha de ajuda para crianças: 116 111, grátis, na maior parte dos países da UE. Se estás em perigo agora, liga 112. Esta página não liga por ti nem avisa ninguém.'],
+ ['es',/\b(pide|piden|pidio|pidieron|pedia|quiere|quieren|queria|quiso|dice|dijo|obliga|manda|mando|insiste)\b( \w+){0,6} (fotos?|fotografias?|imagen|imagenes|videos?|selfies?|nudes?|secretos?|no contar|no decir|quedar|vernos|encontrarnos|cita)\b/,
+  /\b(adulto|adulta|hombre|senor|senora|desconocido|desconocida|extrano|extrana)\b|\b(alguien|persona|chico|chica|mujer) que no conozco\b|\bconoci (en internet|online|en un juego)\b/,
+  /\btengo (\d{1,2}) anos\b/,/\bsoy (?:un |una )?(?:nino|nina)\b/,
+  'Si tienes menos de 18 años: no tienes que enviar fotos, guardar secretos ni ir a citas que te pida un adulto. Cuéntaselo a un adulto de confianza. Línea de ayuda para niños: 116 111, gratis, en la mayoría de los países de la UE. Si estás en peligro ahora, llama al 112. Esta página no llama por ti ni avisa a nadie.'],
+ ['en',/\b(asks?|asked|asking|wants?|wanted|told|tells|says|said|makes?|made|keeps|begs?|begged)\b( \w+){0,6} (photos?|pictures?|pics?|images?|videos?|selfies?|nudes?|secrets?|not tell|not to tell|meet|meeting|meet up)\b/,
+  /\b(adult|man|stranger|grown up|older guy|older man)\b|\b(someone|somebody|person|guy|woman|girl|boy) i (don t|dont|do not) know\b|\bmet (?:him |her )?(online|on the internet|in a game)\b/,
+  /\b(?:i m|im|i am) (\d{1,2})\b|\b(\d{1,2}) (?:years old|yo|y o)\b/,/\b(?:i m|im|i am) (?:a )?(?:kid|child)\b/,
+  'If you are under 18: you do not have to send photos, keep secrets or go to meetings that an adult asks of you. Tell an adult you trust. Helpline for children: 116 111, free, in most EU countries. If you are in danger now, call 112. This page does not call for you and does not alert anyone.'],
+ ['fr',/\b(demande|demandait|demandent|veut|voulait|veulent|dit|insiste|oblige|exige)\b( \w+){0,6} (photos?|images?|videos?|selfies?|nudes?|secrets?|rien dire|pas dire|pas le dire|rencontrer|voir en vrai|rendez vous)\b/,
+  /\b(adulte|homme|monsieur|inconnu|inconnue)\b|\b(quelqu un|une personne|un garcon|une fille|une femme) que je ne connais pas\b|\brencontre (sur internet|en ligne|dans un jeu)\b/,
+  /\bj ai (\d{1,2}) ans\b/,/\bje suis (?:un |une )?enfant\b/,
+  'Si tu as moins de 18 ans : tu n\'as pas à envoyer de photos, à garder des secrets ni à aller à des rendez-vous qu\'un adulte te demande. Parles-en à un adulte de confiance. En France : 119, gratuit, 24 h sur 24. Dans la plupart des autres pays de l\'UE : 116 111, gratuit. Si tu es en danger maintenant, appelle le 112. Cette page n\'appelle pas à ta place et ne prévient personne.'],
+ ['nl',/\b(vraagt|vroeg|vragen|wil|wilde|willen|zegt|zei|dwingt|eist)\b( \w+){0,6} (fotos?|foto s|plaatjes?|videos?|video s|selfies?|naaktfotos?|naaktfoto s|geheim|geheimen|niet vertellen|niet zeggen|afspreken|ontmoeten)\b/,
+  /\b(volwassene|volwassen|man|meneer|vreemde|vreemdeling|onbekende)\b|\b(iemand|persoon|jongen|meisje|vrouw) die ik niet ken\b|\bonline (ontmoet|leren kennen)\b/,
+  /\bik ben (\d{1,2})(?: jaar)?\b/,/\bik ben (?:een )?kind\b/,
+  'Als je jonger bent dan 18: je hoeft geen foto\'s te sturen, geen geheimen te bewaren en niet af te spreken als een volwassene dat vraagt. Vertel het aan een volwassene die je vertrouwt. Hulplijn voor kinderen: 116 111, gratis, in de meeste EU-landen. Ben je nu in gevaar, bel dan 112. Deze pagina belt niet voor jou en waarschuwt niemand.'],
+ ['de',/\b(fragt|fragte|will|wollte|wollen|sagt|sagte|zwingt|verlangt|verlangte|bittet|bat)\b( \w+){0,6} (fotos?|bilder|bild|videos?|selfies?|nacktbilder|nacktfotos|geheimnis|geheim|nicht erzahlen|nicht sagen|nicht verraten|treffen)\b/,
+  /\b(erwachsener|erwachsene|mann|fremder|fremde|unbekannter|unbekannte)\b|\b(jemand|person|typ|junge|madchen|frau) (?:den|die) ich nicht kenne\b|\bonline kennengelernt\b/,
+  /\bich bin (\d{1,2})(?: jahre)?\b/,/\bich bin (?:ein )?kind\b/,
+  'Wenn du unter 18 bist: Du musst keine Fotos schicken, keine Geheimnisse bewahren und zu keinem Treffen gehen, um das dich ein Erwachsener bittet. Erzähl es einem Erwachsenen, dem du vertraust. Hilfe-Telefon für Kinder: 116 111, kostenlos, in den meisten EU-Ländern. Wenn du jetzt in Gefahr bist, ruf 112 an. Diese Seite ruft nicht für dich an und benachrichtigt niemanden.'],
+ ['it',/\b(chiede|chiedeva|chiedono|chiesto|vuole|voleva|vogliono|dice|detto|obbliga|insiste|pretende)\b( \w+){0,6} (foto|fotografie|immagini|video|selfie|nudi|segreto|segreti|non dire|non dirlo|non raccontare|incontrarci|incontrarmi|vederci|incontro)\b/,
+  /\b(adulto|adulta|uomo|signore|signora|sconosciuto|sconosciuta|estraneo|estranea)\b|\b(qualcuno|una persona|un ragazzo|una ragazza|una donna) che non conosco\b|\bconosciuto (su internet|online|in un gioco)\b/,
+  /\bho (\d{1,2}) anni\b/,/\bsono (?:un |una )?(?:bambino|bambina)\b/,
+  'Se hai meno di 18 anni: non devi mandare foto, tenere segreti né andare a incontri che un adulto ti chiede. Parlane con un adulto di cui ti fidi. In Italia: 114 (Emergenza infanzia), gratuito, 24 ore su 24. Nella maggior parte degli altri paesi dell\'UE: 116 111, gratuito. Se sei in pericolo adesso, chiama il 112. Questa pagina non chiama al posto tuo e non avvisa nessuno.']];
+function portaoCrianca(txt){const s=String(txt).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+ for(const [l,pede,adulto,idade,crianca,texto] of CRIANCA){if(!pede.test(s))continue;
+  const m=s.match(idade),anos=m?Number(m.slice(1).find(x=>x!==undefined)):null;
+  if(anos!==null&&anos>=18)continue;
+  if(adulto.test(s)||crianca.test(s)||anos!==null)return{lingua:l,texto}}
+ return null}
+/* <<< PORTOES: fim */
+</script>
+<script>
+(function () {
+"use strict";
+var VERSAO = "konfirmu-enxame/1", DOMINIO = "KONFIRMU-ENXAME|v1|", PREFIXO = "KENX1:", MAX_DIARIO = 300, MAX_QR = 1000;
+var $ = function (id) { return document.getElementById(id); };
+var enc = new TextEncoder(), dec = new TextDecoder();
+function hex(u8) { var s = ""; for (var i = 0; i < u8.length; i++) s += ("0" + u8[i].toString(16)).slice(-2); return s; }
+function deHex(h) { var u = new Uint8Array(h.length / 2); for (var i = 0; i < u.length; i++) u[i] = parseInt(h.substr(i * 2, 2), 16); return u; }
+function b64url(u8) { var s = ""; for (var i = 0; i < u8.length; i++) s += String.fromCharCode(u8[i]); return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); }
+function deB64url(t) { t = t.replace(/-/g, "+").replace(/_/g, "/"); while (t.length % 4) t += "="; var s = atob(t), u = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u; }
+function guardar(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} }
+function ler(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
+function apagar(k) { try { sessionStorage.removeItem(k); } catch (e) {} }
+
+/* ---------- a nave: chave Ed25519 nascida neste separador ---------- */
+/* Um separador aberto por window.open herda a sessionStorage; o marcador ?nova= obriga a uma chave nova. */
+var nova = null;
+try { nova = new URLSearchParams(location.search).get("nova"); } catch (e) {}
+if (nova && ler("kenx.nova") !== nova) { apagar("kenx.semente"); apagar("kenx.diario"); guardar("kenx.nova", nova); }
+var semente = ler("kenx.semente");
+if (!semente || !/^[0-9a-f]{64}$/.test(semente)) { semente = hex(nacl.randomBytes(32)); guardar("kenx.semente", semente); }
+var par = nacl.sign.keyPair.fromSeed(deHex(semente));
+var PK = hex(par.publicKey);
+function nomeDe(pk) { return "Nave " + pk.slice(0, 4).toUpperCase(); }
+var NOME = nomeDe(PK);
+
+/* ---------- portões: os mesmos do chat (bloco PORTOES). O 112 só aparece quando alguém escreve que está em perigo. ---------- */
+var MAIS = { pt: "Se lançares este sinal, só chega às naves do enxame.", es: "Si lanzas esta señal, solo llega a las naves del enjambre.", en: "If you launch this signal, it only reaches the ships in the swarm.", fr: "Si tu lances ce signal, il n'arrive qu'aux vaisseaux de l'essaim.", nl: "Als je dit signaal verstuurt, komt het alleen bij de schepen van de zwerm.", de: "Wenn du dieses Signal sendest, erreicht es nur die Schiffe des Schwarms.", it: "Se lanci questo segnale, arriva solo alle navi dello sciame." };
+/* Fontes dos números: as do bloco PORTOES (112: Diretiva (UE) 2018/1972, art. 109.º; 116 111: Decisões 2007/698/CE e 2007/116/CE; 119 e 114: serviços oficiais de França e Itália). */
+var AVISO_RECEBIDO = {
+  sos: "Este sinal diz que alguém está em perigo. Se é agora: 112, o número de emergência europeu (chamada grátis).",
+  cri: "Este sinal fala de um adulto que pede fotos, segredos ou um encontro a uma criança. Linha de ajuda para crianças: 116 111 na maior parte da UE (França: 119; Itália: 114). Em perigo agora: 112."
+};
+function alerta(t) {
+  var s = portaoEmergencia(t); if (s) return { tipo: "sos", lingua: s.lingua, texto: s.texto };
+  var c = portaoCrianca(t); if (c) return { tipo: "cri", lingua: c.lingua, texto: c.texto };
+  return null;
+}
+function caixaSocorro(txt, papel) {
+  var d = document.createElement("div"); d.className = "socorro"; d.setAttribute("role", papel || "note");
+  var p = document.createElement("span"); p.textContent = txt + " "; d.appendChild(p);
+  var a = document.createElement("a"); a.href = "tel:112"; a.textContent = "Ligar 112"; d.appendChild(a);
+  return d;
+}
+
+/* ---------- sinais: código KSHA/2 (SHA-256 do JSON canónico) e assinatura Ed25519 ---------- */
+function canonico(o) {
+  if (Array.isArray(o)) return "[" + o.map(canonico).join(",") + "]";
+  if (o && typeof o === "object") return "{" + Object.keys(o).sort().map(function (k) { return JSON.stringify(k) + ":" + canonico(o[k]); }).join(",") + "}";
+  return JSON.stringify(o);
+}
+function codigo(s) { return KSHA.deTexto(canonico({ v: s.v, de: s.de, hora: s.hora, texto: s.texto })); }
+function selar(texto) {
+  var s = { v: VERSAO, de: PK, hora: new Date().toISOString(), texto: texto };
+  s.id = codigo(s);
+  s.sig = hex(nacl.sign.detached(enc.encode(DOMINIO + s.id), par.secretKey));
+  return s;
+}
+var HORA = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,3})?Z$/;
+function conferir(s) {
+  try {
+    if (!s || s.v !== VERSAO || typeof s.texto !== "string" || !s.texto.trim() || s.texto.length > 280) return "formato";
+    if (typeof s.hora !== "string" || !HORA.test(s.hora)) return "formato";
+    if (!/^[0-9a-f]{64}$/.test(s.de) || !/^[0-9a-f]{64}$/.test(s.id) || !/^[0-9a-f]{128}$/.test(s.sig)) return "formato";
+    if (codigo(s) !== s.id) return "o conteúdo não dá o código do sinal";
+    if (!nacl.sign.detached.verify(enc.encode(DOMINIO + s.id), deHex(s.sig), deHex(s.de))) return "assinatura inválida";
+    return null;
+  } catch (e) { return "formato"; }
+}
+
+/* ---------- diário de bordo: guardar e levar (store-carry-forward) ---------- */
+var diario = {};
+try { var d0 = JSON.parse(ler("kenx.diario") || "{}"); for (var k0 in d0) if (d0[k0] && d0[k0].s && d0[k0].s.id === k0 && !conferir(d0[k0].s)) diario[k0] = d0[k0]; } catch (e) {}
+function gravar() { guardar("kenx.diario", JSON.stringify(diario)); }
+function aparar() {
+  var ks = Object.keys(diario); if (ks.length <= MAX_DIARIO) return;
+  ks.sort(function (a, b) { return diario[a].chegou < diario[b].chegou ? -1 : 1; });
+  for (var i = 0; i < ks.length - MAX_DIARIO; i++) delete diario[ks[i]];
+}
+function receber(s, via) {
+  var erro = conferir(s);
+  if (erro) return { erro: erro };
+  if (diario[s.id]) return { repetido: true };
+  diario[s.id] = { s: { v: s.v, de: s.de, hora: s.hora, texto: s.texto, id: s.id, sig: s.sig }, via: via, chegou: new Date().toISOString() };
+  aparar(); gravar(); pedirDesenho(); voo(s.de);
+  return { novo: true };
+}
+var desenhoPendente = false;
+function pedirDesenho() { if (desenhoPendente) return; desenhoPendente = true; setTimeout(function () { desenhoPendente = false; desenharDiario(); }, 0); }
+var VIA = { "esta nave": "lançado aqui", "nave por perto": "veio de uma nave por perto", "QR": "veio por QR", "texto colado": "veio por texto colado" };
+function quando(iso) { try { return new Date(iso).toLocaleString("pt-PT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }); } catch (e) { return iso; } }
+function desenharDiario() {
+  var ul = $("diario"); ul.textContent = "";
+  var lista = Object.keys(diario).map(function (k) { return { e: diario[k], a: alerta(diario[k].s.texto) }; });
+  lista.sort(function (x, y) { return ((y.a ? 1 : 0) - (x.a ? 1 : 0)) || (x.e.s.hora < y.e.s.hora ? 1 : x.e.s.hora > y.e.s.hora ? -1 : 0); });
+  if (!lista.length) { var v = document.createElement("li"); v.className = "vazio"; v.textContent = "Ainda não há sinais. Lança o primeiro, ou junta o pacote de outra nave."; ul.appendChild(v); }
+  lista.forEach(function (x) {
+    var e = x.e, li = document.createElement("li");
+    if (x.a) li.appendChild(caixaSocorro(AVISO_RECEBIDO[x.a.tipo]));
+    var t = document.createElement("p"); t.className = "sinal"; t.textContent = e.s.texto; li.appendChild(t);
+    var m = document.createElement("p"); m.className = "meta";
+    m.textContent = nomeDe(e.s.de) + (e.s.de === PK ? " (esta nave)" : "") + " · " + quando(e.s.hora) + " · " + (VIA[e.via] || e.via) + " · ";
+    var ok = document.createElement("span"); ok.className = "ok"; ok.textContent = "selo conferido"; m.appendChild(ok);
+    li.appendChild(m); ul.appendChild(li);
+  });
+  $("pDiario").textContent = lista.length + (lista.length === 1 ? " sinal" : " sinais") + " no diário";
+}
+
+/* ---------- naves por perto: separadores do mesmo aparelho (BroadcastChannel; não usa a rede) ---------- */
+var perto = {}, canal = null;
+try { canal = new BroadcastChannel("konfirmu-enxame-v1"); } catch (e) { canal = null; }
+function falar(m) { if (canal) try { canal.postMessage(m); } catch (e) {} }
+function ola() { falar({ t: "ola", pk: PK, ids: Object.keys(diario) }); pulso(); }
+if (canal) canal.onmessage = function (ev) {
+  var m = ev.data;
+  if (!m || typeof m !== "object" || typeof m.pk !== "string" || !/^[0-9a-f]{64}$/.test(m.pk) || m.pk === PK) return;
+  if (m.t === "ola") {
+    var novo = !perto[m.pk];
+    perto[m.pk] = Date.now();
+    if (novo) { naveReal(m.pk); ola(); }
+    var tem = {}; if (Array.isArray(m.ids)) m.ids.forEach(function (i) { tem[i] = 1; });
+    var faltam = Object.keys(diario).filter(function (i) { return !tem[i]; }).map(function (i) { return diario[i].s; });
+    if (faltam.length) falar({ t: "sinais", pk: PK, para: m.pk, lista: faltam });
+    estado();
+  } else if (m.t === "sinais" && m.para === PK && Array.isArray(m.lista)) {
+    m.lista.slice(0, MAX_DIARIO).forEach(function (s) { receber(s, "nave por perto"); });
+  } else if (m.t === "sinal" && m.s) {
+    receber(m.s, "nave por perto");
+  }
+};
+setInterval(function () {
+  ola();
+  var agora = Date.now();
+  Object.keys(perto).forEach(function (k) { if (agora - perto[k] > 9000) { delete perto[k]; esquecerNave(k); } });
+  estado();
+}, 3000);
+document.addEventListener("visibilitychange", function () { if (!document.hidden) ola(); });
+function estado() {
+  var n = Object.keys(perto).length, pr = $("pRede"), pp = $("pPerto");
+  if (navigator.onLine === false) { pr.textContent = "Voo autónomo · sem rede"; pr.className = "pill voo"; }
+  else { pr.textContent = "Com rede · o enxame não a usa"; pr.className = "pill"; }
+  if (!canal) { pp.textContent = "Este navegador não liga separadores"; pp.className = "pill"; return; }
+  pp.textContent = n + (n === 1 ? " nave por perto" : " naves por perto"); pp.className = n ? "pill perto" : "pill";
+}
+window.addEventListener("online", estado); window.addEventListener("offline", estado);
+
+/* ---------- lançar um sinal ---------- */
+function avisoEscrita() {
+  var box = $("sosEu"); box.textContent = "";
+  var a = alerta($("texto").value);
+  if (a) box.appendChild(caixaSocorro(a.texto + " " + (MAIS[a.lingua] || MAIS.pt), "alert"));
+}
+$("texto").addEventListener("input", avisoEscrita);
+$("bLancar").addEventListener("click", function () {
+  var t = $("texto").value.trim();
+  if (!t) { $("lancado").textContent = "Escreve um sinal primeiro."; return; }
+  var s = selar(t), r = receber(s, "esta nave");
+  if (r.erro) { $("lancado").textContent = "Não foi possível selar: " + r.erro; return; }
+  falar({ t: "sinal", pk: PK, s: s });
+  $("lancado").textContent = "Lançado e selado.";
+  $("texto").value = ""; avisoEscrita();
+});
+
+/* ---------- outra nave neste aparelho ---------- */
+var embutida = (function () { try { return window.self !== window.top; } catch (e) { return true; } })();
+$("bOutra").addEventListener("click", function () {
+  var dica = "Abre o mesmo link noutro separador do navegador: cada separador é uma nave e liga-se às outras sozinha.";
+  if (embutida) { $("dicaOutra").textContent = dica; return; }
+  var url = location.href.split("#")[0].split("?")[0] + "?nova=" + hex(nacl.randomBytes(6)), w = null;
+  try { w = window.open(url, "_blank"); } catch (e) { w = null; }
+  $("dicaOutra").textContent = w ? "Abriu outra nave noutro separador. As duas ligam-se sozinhas." : dica;
+});
+
+/* ---------- encontro entre telemóveis: pacote por QR ou por texto ---------- */
+function compacto(s) { return [b64url(deHex(s.de)), s.hora, s.texto, b64url(deHex(s.sig))]; }
+function deCompacto(a) {
+  try {
+    if (!Array.isArray(a) || a.length !== 4 || typeof a[0] !== "string" || typeof a[3] !== "string") return null;
+    var s = { v: VERSAO, de: hex(deB64url(a[0])), hora: a[1], texto: a[2], sig: hex(deB64url(a[3])) };
+    s.id = codigo(s); return s;
+  } catch (e) { return null; }
+}
+function ordenados() { return Object.keys(diario).map(function (k) { return diario[k].s; }).sort(function (a, b) { return a.hora < b.hora ? 1 : a.hora > b.hora ? -1 : 0; }); }
+function embrulhar(lista) { return PREFIXO + b64url(enc.encode(JSON.stringify(lista.map(compacto)))); }
+function paginaQR(desde) {
+  var todos = ordenados(), escolhidos = [];
+  for (var i = desde; i < todos.length; i++) {
+    var tentativa = escolhidos.concat([todos[i]]);
+    if (escolhidos.length && embrulhar(tentativa).length > MAX_QR) break;
+    escolhidos = tentativa;
+  }
+  return { texto: embrulhar(escolhidos), n: escolhidos.length, de: desde, total: todos.length };
+}
+function desenharQR(txt) {
+  var c = $("qr");
+  try {
+    var q = qrcode(0, "L"); q.addData(txt, "Byte"); q.make();
+    var n = q.getModuleCount(), m = 4, px = 6, lado = (n + 2 * m) * px, g = c.getContext("2d");
+    c.width = c.height = lado; g.fillStyle = "#fff"; g.fillRect(0, 0, lado, lado); g.fillStyle = "#000";
+    for (var r = 0; r < n; r++) for (var k = 0; k < n; k++) if (q.isDark(r, k)) g.fillRect((k + m) * px, (r + m) * px, px, px);
+    c.hidden = false; return true;
+  } catch (e) { c.hidden = true; return false; }
+}
+var seguinte = 0, textoTodos = "";
+function mostrarPacote(desde) {
+  var p = paginaQR(desde);
+  if (!p.total) { $("qr").hidden = true; $("pacoteTxt").hidden = true; $("bSeguintes").hidden = true; $("bCopiar").disabled = true; $("pacoteInfo").textContent = "O diário está vazio: lança um sinal primeiro."; return; }
+  textoTodos = embrulhar(ordenados());
+  var ok = desenharQR(p.texto);
+  $("pacoteInfo").textContent = (ok ? "QR com os sinais " + (p.de + 1) + " a " + (p.de + p.n) + " de " + p.total + "." : "Este pacote não coube num QR: usa o texto.") + " O texto abaixo leva os " + p.total + ".";
+  $("pacoteTxt").value = textoTodos; $("pacoteTxt").hidden = false; $("bCopiar").disabled = false;
+  seguinte = p.de + p.n; $("bSeguintes").hidden = !(seguinte < p.total);
+}
+$("bMostrar").addEventListener("click", function () { mostrarPacote(0); });
+$("bSeguintes").addEventListener("click", function () { mostrarPacote(seguinte); });
+$("bCopiar").addEventListener("click", function () {
+  var b = $("bCopiar");
+  var falhou = function () { var t = $("pacoteTxt"); t.focus(); t.select(); $("pacoteInfo").textContent = "Não consegui copiar sozinho: o texto está selecionado, copia-o à mão."; };
+  try { navigator.clipboard.writeText(textoTodos).then(function () { b.textContent = "Copiado"; setTimeout(function () { b.textContent = "Copiar o texto"; }, 1500); }, falhou); } catch (e) { falhou(); }
+});
+function juntar(txt, via) {
+  txt = String(txt || "").replace(/\s+/g, "");
+  if (txt.indexOf(PREFIXO) !== 0) return "Isto não é um pacote do enxame (começa por " + PREFIXO + ").";
+  var lista;
+  try { lista = JSON.parse(dec.decode(deB64url(txt.slice(PREFIXO.length)))); } catch (e) { return "O pacote está partido: não se consegue ler."; }
+  if (!Array.isArray(lista)) return "O pacote está partido: não se consegue ler.";
+  var novos = 0, iguais = 0, recusados = 0;
+  lista.slice(0, MAX_DIARIO).forEach(function (a) { var s = deCompacto(a), r = s ? receber(s, via) : { erro: "formato" }; if (r.novo) novos++; else if (r.erro) recusados++; else iguais++; });
+  return novos + (novos === 1 ? " novo" : " novos") + " · " + iguais + " já cá estavam · " + recusados + " recusados (não conferem)";
+}
+$("bJuntar").addEventListener("click", function () { $("juntado").textContent = juntar($("colar").value, "texto colado"); $("colar").value = ""; });
+function lerImagem(fonte, w0, h0, max) {
+  var e = Math.min(1, max / Math.max(w0, h0)), w = Math.max(1, Math.round(w0 * e)), h = Math.max(1, Math.round(h0 * e));
+  var c = document.createElement("canvas"); c.width = w; c.height = h;
+  var g = c.getContext("2d", { willReadFrequently: true }); g.drawImage(fonte, 0, 0, w, h);
+  var r = jsQR(g.getImageData(0, 0, w, h).data, w, h, { inversionAttempts: "attemptBoth" });
+  return r && r.data ? r.data : null;
+}
+$("foto").addEventListener("change", function () {
+  var f = this.files && this.files[0]; this.value = "";
+  if (!f) return;
+  $("juntado").textContent = "A ler o QR…";
+  var url = URL.createObjectURL(f), img = new Image();
+  img.onload = function () {
+    var txt = null;
+    try { txt = lerImagem(img, img.naturalWidth, img.naturalHeight, 2000); } catch (e) { txt = null; }
+    URL.revokeObjectURL(url);
+    $("juntado").textContent = txt ? juntar(txt, "QR") : "Não encontrei um QR nesta foto. Tenta mais perto, com o QR inteiro e direito.";
+  };
+  img.onerror = function () { URL.revokeObjectURL(url); $("juntado").textContent = "Não consegui abrir esta foto."; };
+  img.src = url;
+});
+var fluxo = null;
+function pararCam() { if (fluxo) fluxo.getTracks().forEach(function (t) { t.stop(); }); fluxo = null; $("cam").hidden = true; $("bParar").hidden = true; }
+$("bParar").addEventListener("click", pararCam);
+$("bLer").addEventListener("click", function () {
+  var sem = "Aqui a câmara ao vivo não abre. Usa «Ler QR numa foto» ou cola o texto.";
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { $("juntado").textContent = sem; return; }
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false }).then(function (st) {
+    fluxo = st; var v = $("cam"); v.srcObject = st; v.hidden = false; $("bParar").hidden = false;
+    v.play().catch(function () {});
+    (function procurar() {
+      if (!fluxo) return;
+      if (v.readyState >= 2 && v.videoWidth) {
+        var txt = null; try { txt = lerImagem(v, v.videoWidth, v.videoHeight, 800); } catch (e) { txt = null; }
+        if (txt && txt.indexOf(PREFIXO) === 0) { $("juntado").textContent = juntar(txt, "QR"); pararCam(); return; }
+      }
+      setTimeout(procurar, 200);
+    })();
+  }, function () { pararCam(); $("juntado").textContent = sem; });
+});
+
+/* ---------- o céu: enxame desenhado (boids) e naves reais ---------- */
+var ceu = $("ceu"), g = ceu.getContext("2d"), W = 300, H = 200, DPR = Math.min(2, window.devicePixelRatio || 1);
+var parado = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+function medir() { var r = ceu.getBoundingClientRect(); W = Math.max(200, r.width); H = Math.max(160, r.height); ceu.width = Math.round(W * DPR); ceu.height = Math.round(H * DPR); g.setTransform(DPR, 0, 0, DPR, 0, 0); }
+window.addEventListener("resize", medir); medir();
+function nave(real, pk) { return { x: Math.random() * W, y: Math.random() * H, vx: Math.random() * 2 - 1, vy: Math.random() * 2 - 1, real: real, pk: pk || null }; }
+var frota = []; for (var i0 = 0; i0 < 26; i0++) frota.push(nave(false));
+var eu = nave(true, PK); eu.x = W / 2; eu.y = H / 2; frota.push(eu);
+function naveReal(pk) { if (!frota.some(function (n) { return n.pk === pk; })) frota.push(nave(true, pk)); }
+function esquecerNave(pk) { frota = frota.filter(function (n) { return n === eu || n.pk !== pk; }); }
+var faiscas = [], pulsos = [];
+function voo(de) {
+  var a = frota.filter(function (n) { return n.pk === de; })[0] || eu;
+  frota.forEach(function (b) { if (b.real && b !== a) faiscas.push({ a: a, b: b, t: 0 }); });
+}
+function pulso() { if (!parado) pulsos.push({ t: 0 }); }
+var estrelas = []; for (var e0 = 0; e0 < 80; e0++) estrelas.push({ x: Math.random(), y: Math.random(), r: Math.random() * 1.3 + 0.3, a: Math.random() * 0.5 + 0.25 });
+function passo() {
+  for (var i = 0; i < frota.length; i++) {
+    var n = frota[i], cx = 0, cy = 0, ax = 0, ay = 0, sx = 0, sy = 0, k = 0;
+    for (var j = 0; j < frota.length; j++) {
+      if (i === j) continue;
+      var o = frota[j], dx = o.x - n.x, dy = o.y - n.y, d2 = dx * dx + dy * dy;
+      if (d2 < 8100) { cx += o.x; cy += o.y; ax += o.vx; ay += o.vy; k++; if (d2 < 484) { sx -= dx; sy -= dy; } }
+    }
+    if (k) { n.vx += (cx / k - n.x) * 0.0009 + (ax / k - n.vx) * 0.045; n.vy += (cy / k - n.y) * 0.0009 + (ay / k - n.vy) * 0.045; }
+    n.vx += sx * 0.012; n.vy += sy * 0.012;
+    if (n.x < 30) n.vx += 0.12; if (n.x > W - 30) n.vx -= 0.12; if (n.y < 30) n.vy += 0.12; if (n.y > H - 30) n.vy -= 0.12;
+    var v = Math.hypot(n.vx, n.vy), max = n.real ? 1.2 : 1.7; if (v > max) { n.vx *= max / v; n.vy *= max / v; }
+    n.x += n.vx; n.y += n.vy;
+  }
+}
+function desenharNave(n) {
+  var cor = n === eu ? "#f4a77a" : (n.real ? "#8fd3ff" : "rgba(205,200,240,.5)"), tam = n.real ? 11 : 5;
+  g.save(); g.translate(n.x, n.y); g.rotate(Math.atan2(n.vy, n.vx));
+  if (n.real) { g.fillStyle = n === eu ? "rgba(244,167,122,.35)" : "rgba(143,211,255,.3)"; g.beginPath(); g.arc(-tam * 0.9, 0, tam * 0.45, 0, 6.283); g.fill(); g.shadowBlur = 14; g.shadowColor = cor; }
+  g.fillStyle = cor; g.beginPath(); g.moveTo(tam, 0); g.lineTo(-tam * 0.8, tam * 0.62); g.lineTo(-tam * 0.42, 0); g.lineTo(-tam * 0.8, -tam * 0.62); g.closePath(); g.fill();
+  g.restore();
+  if (n.real) { g.fillStyle = "#d9d4f7"; g.font = "12px system-ui,sans-serif"; g.fillText(n === eu ? NOME + " (eu)" : nomeDe(n.pk), Math.min(n.x + 12, W - 90), Math.max(n.y - 10, 14)); }
+}
+function quadro() {
+  if (!document.hidden) {
+    if (!parado) passo();
+    g.clearRect(0, 0, W, H);
+    estrelas.forEach(function (s) { g.fillStyle = "rgba(225,222,255," + s.a + ")"; g.fillRect(s.x * W, s.y * H, s.r, s.r); });
+    pulsos = pulsos.filter(function (p) { return p.t < 1; });
+    pulsos.forEach(function (p) { p.t += 0.012; g.strokeStyle = "rgba(244,167,122," + (0.45 * (1 - p.t)) + ")"; g.lineWidth = 1.2; g.beginPath(); g.arc(eu.x, eu.y, 14 + p.t * 70, 0, 6.283); g.stroke(); });
+    faiscas = faiscas.filter(function (f) { return f.t < 1; });
+    faiscas.forEach(function (f) {
+      f.t += 0.02; var x = f.a.x + (f.b.x - f.a.x) * f.t, y = f.a.y + (f.b.y - f.a.y) * f.t;
+      g.strokeStyle = "rgba(188,174,255,.22)"; g.lineWidth = 1; g.beginPath(); g.moveTo(f.a.x, f.a.y); g.lineTo(f.b.x, f.b.y); g.stroke();
+      g.fillStyle = "#efeaff"; g.beginPath(); g.arc(x, y, 3, 0, 6.283); g.fill();
+    });
+    frota.forEach(desenharNave);
+  }
+  requestAnimationFrame(quadro);
+}
+requestAnimationFrame(quadro);
+
+$("minha").textContent = "És a " + NOME + ". Nasceu neste separador."; $("minha").title = "Chave da nave: " + PK;
+if (embutida) $("bOutra").textContent = "Como abrir outra nave";
+desenharDiario(); estado(); ola();
+window.KENX = { PK: PK, NOME: NOME, selar: selar, conferir: conferir, juntar: juntar, embrulhar: embrulhar, ordenados: ordenados, alerta: alerta, total: function () { return Object.keys(diario).length; }, perto: function () { return Object.keys(perto).length; } };
+})();
+</script>
+</body>
+</html>

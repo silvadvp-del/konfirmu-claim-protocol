@@ -15,7 +15,7 @@ import vm from "node:vm";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..");
 const MOTOR_PY = join(RAIZ, "ferramentas", "konfirmu_nova_geracao_2030.py");
-const PAGINAS = ["chronolex_verify.html", "chronolex_photo_seal.html", "estudio_video_criancas.html", "verificador_offline.html"];
+const PAGINAS = ["chronolex_verify.html", "chronolex_photo_seal.html", "estudio_video_criancas.html", "verificador_offline.html", "enxame_naves.html"];
 const INI = "/* >>> KSHA: inicio", FIM = "/* <<< KSHA: fim */";
 let ok = 0, falhas = 0;
 function prova(texto, cond, extra) {
@@ -93,6 +93,16 @@ try {
   const v2 = py("verificar", outro, "--recibo", join(tmp, "recibo_js.json"));
   prova("o mesmo recibo com o ficheiro mudado em 1 bit dá ALTERADO", v2.veredicto === "ALTERADO", v2.veredicto);
 } finally { rmSync(tmp, { recursive: true, force: true }); }
+
+// 5. o Enxame usa os mesmos portões do chat (112 e crianças), cópia exata
+{
+  const chat = readFileSync(join(RAIZ, "konfirmu_chat_offline_v0.1.html"), "utf8");
+  const a = chat.indexOf("/* ---------- portão de emergência"), j = chat.indexOf("function portaoCrianca", a), b = chat.indexOf("return null}", j) + "return null}".length;
+  const enx = readFileSync(join(RAIZ, "enxame_naves.html"), "utf8");
+  const PI = "/* >>> PORTOES: copia exata de konfirmu_chat_offline_v0.1.html (nao editar aqui) */\n", PF = "\n/* <<< PORTOES: fim */";
+  const x = enx.indexOf(PI), y = enx.indexOf(PF, x);
+  prova("enxame_naves.html leva os portões 112 e crianças iguais ao chat", a >= 0 && j > a && x >= 0 && y > x && enx.slice(x + PI.length, y) === chat.slice(a, b));
+}
 
 console.log("\n" + ok + " de " + (ok + falhas) + " passam");
 process.exit(falhas ? 1 : 0);
