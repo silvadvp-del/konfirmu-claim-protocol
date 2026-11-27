@@ -66,7 +66,8 @@ def servidor(pasta):
 def hrefs_familia(html):
     i = html.find('id="p-fam"')
     j = html.find("</section>", i)
-    return re.findall(r'<a class="card ([^"]*)" href="([^"]+)"', html[i:j])
+    # os cartões de leitura (class="card", sem mais nada) também contam: têm de ficar guardados para o modo avião
+    return re.findall(r'<a class="card(?: ([^"]*))?" href="([^"]+)"', html[i:j])
 
 
 # ---------------------------------------------------------------- A. sem navegador
@@ -237,7 +238,7 @@ def parte_b(pw, chrome):
         n = page.eval_on_selector_all("#p-fam a.card.tigela", "as=>as.length")
         faltam = page.evaluate("async hs=>{const f=[];for(const h of hs){if(!(await caches.match(h)))f.push(h)}return f}",
                                [h for _, h in cartoes])
-        prova("raiz em modo avião: o início abre com as 6 tigelas e as 7 atividades estão guardadas", n == 6 and not faltam,
+        prova(f"raiz em modo avião: o início abre com as 6 tigelas e as {len(cartoes)} atividades estão guardadas", n == 6 and not faltam,
               ", ".join(faltam))
         with page.expect_navigation(wait_until="load"):
             page.tap("#p-fam a.card.tigela >> nth=0")
