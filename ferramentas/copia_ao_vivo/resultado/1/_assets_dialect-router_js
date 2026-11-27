@@ -1,0 +1,62 @@
+"use strict";
+(function(){
+const DIALECT_PINS={"ar":"b147b3913bcb05ecb07612ad5893b932300d97291a8f41069f521b4b624a7061","de-li-hueckelhoven":"be15078928dcfc7b8f8373bc57fd2cc6fcf6462a1990887c61c8309b3ef9bacc","es":"ff21e99fd8d3e0e709b39191b456e8875ec46932e58542200cd7d6650ab5523a","sw":"a1cc8c55483761d24a43ad307fca14813273cad7d732fc25ff1a2665844f4d40","ts":"162d448cf40e73a967c6335f05a9c2dcf47624cff2a8b033b0fff2232b26297a"}, DIALECT_ALLOWED=new Set(["app_title","cmd","compare","game","game.bowl","game.countHint","game.countTab","game.countTitle","game.counted","game.of","game.restart","game.retryTicket","game.rulerTab","girafinhas_prompt","girafinhas_win","hub","language","ledger","lens","market","mesh","mode_offline","oral.0","oral.1","oral.2","oral.3","oral.4","oral.5","oral.6","oral.7","ready","save","send","status_diff","status_equal","subtitle"]);
+const KProof={async hashBytes(bytes){const buf=await crypto.subtle.digest('SHA-256',bytes);return {sha256:Array.from(new Uint8Array(buf),b=>b.toString(16).padStart(2,'0')).join('')};}};
+// Local dialect packs only contain text. A release digest authorizes public labels.
+const KonfirmuDialectStudio=(()=>{
+ const packs=new Map(), native=['pt','en','nl','de','uk'], pins=DIALECT_PINS;
+ const codeOK=s=>typeof s==='string'&&/^[a-z]{2,3}(?:-[a-z0-9]{1,16}){0,4}$/.test(s)&&s.length<=60;
+ const word=s=>typeof s==='string'&&s.trim().length>0&&s.length<=240&&!/[<>\u0000-\u001f\u007f\u202a-\u202e\u2066-\u2069]/.test(s);
+ let active='';
+ function chain(code){
+   const ids=[],seen=new Set();
+   while(packs.has(code)){if(seen.has(code))throw Error('dialect_cycle');seen.add(code);ids.push(code);code=packs.get(code).meta.extends;}
+   return [...ids,code];
+ }
+ function validate(pack){
+   const m=pack?.meta,o=pack?.overrides;
+   if(pack?.type!=='dialect_cartridge'||pack.envelope_version!=='2030.3'||!codeOK(m?.code)||!codeOK(m.extends)||m.code===m.extends||native.includes(m.code)||!word(m.name)||m.name.length>80||m.minor_safe!==true||typeof m.oral_supported!=='boolean'||(m.dir!==undefined&&!['rtl','ltr'].includes(m.dir)))throw Error('dialect');
+   if(!native.includes(m.extends)&&!packs.has(m.extends))throw Error('dialect_parent');
+   if(chain(m.extends).includes(m.code))throw Error('dialect_cycle');
+   if(!o||Array.isArray(o)||typeof o!=='object'||Object.keys(o).length>135||Object.entries(o).some(([k,v])=>!DIALECT_ALLOWED.has(k)||!word(v)))throw Error('dialect_words');
+   return pack;
+ }
+ async function registerPack(raw){
+   if(raw?.type==='dialect_cartridge')raw=new Blob([JSON.stringify(raw)]);
+   if(!raw||raw.size>=5000||!raw.size)throw Error('dialect_size');
+   const bytes=new Uint8Array(await raw.arrayBuffer());if(bytes.length!==raw.size)throw Error('dialect_size');
+   const p=validate(JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes)));
+   if(!Object.hasOwn(pins,p.meta.code)||(await KProof.hashBytes(bytes)).sha256!==pins[p.meta.code])throw Error('dialect_origin');
+   packs.set(p.meta.code,p);return p.meta.code;
+ }
+ function choice(code){active=packs.has(code)?code:'';return active?chain(active).at(-1):code;}
+ function lookup(key,id=active){if(!id)return;for(const code of chain(id)){const o=packs.get(code)?.overrides;if(o&&Object.hasOwn(o,key))return o[key];}}
+ function direction(code){const p=packs.get(code);return p?.meta.dir??(/^(ar|fa|ur|he|yi|ps)(-|$)/i.test(code)?'rtl':'ltr');}
+ function language(code){try{return Intl.getCanonicalLocales(code)[0];}catch{return chain(code).at(-1);}}
+ return Object.freeze({registerPack,lookup,choice,direction,language,options:()=>Array.from(packs,([c,p])=>[c,p.meta.name])});
+})();
+window.KonfirmuDialectStudio=KonfirmuDialectStudio;
+const studio=KonfirmuDialectStudio, baseURL=new URL('dialetos/',document.currentScript.src);
+const keys={language:'language',same:'status_equal',different:'status_diff',compareTitle:'compare'};
+const loads=new Map();
+window.KDialect=Object.freeze({
+  async load(code){
+    if(!Object.hasOwn(DIALECT_PINS,code))return false;
+    if(!loads.has(code)){
+      const request=fetch(new URL(encodeURIComponent(code)+'.json',baseURL)).then(r=>{if(!r.ok)throw Error('pack');return r.blob();}).then(raw=>studio.registerPack(raw)).then(()=>true);
+      loads.set(code,request);request.catch(()=>loads.delete(code));
+    }
+    return loads.get(code);
+  },
+  label(code,key,base){
+    const packKey=keys[key];
+    // The one-byte measurement is more specific than the generic changed-content label.
+    if(key==='different'||(key==='same'&&code==='de-li-hueckelhoven'))return base[code]?.[key];
+    if(packKey){const value=studio.lookup(packKey,code);if(value!==undefined)return value;}
+    return base[code]?.[key] ?? base[studio.choice(code)]?.[key];
+  },
+  lookup:(code,key)=>studio.lookup(key,code),
+  choice:code=>studio.choice(code),
+  direction:code=>studio.direction(code)
+});
+})();
