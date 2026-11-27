@@ -18,4 +18,6 @@ E o que ainda não é está dito às claras: não prova que o trabalho foi feito
 
 Konfirmu propõe. Tu confirmas. Quando não sabe, diz que não sabe.
 
+#Konfirmu #EconomiaAntiCasino #LeiAntiCasino #AntiCasino #AntiCasinoEconomy #TrabalhoVerificado #ReciboAssinado #ProvaVerificavel #VerificacaoDigital #TransparenciaDigital #IntegridadeDigital #DigitalTrust #Confirma #Esperanto #KonfirmuEsperanto #KonfirmuPropoeTuConfirmas #QuandoNaoSabeDizQueNaoSabe #AIAPropoeHumanoConfirma #EticaNaIA #SemCasino #SemLootBoxes #SemAnuncios #OfflineFirst #SemInternet #CodigoAberto #OpenSource #SoftwareLivre #EUPL #TecnologiaParaPessoas #InovacaoSocial #EducacaoDigital #EducacaoFamiliar #ParaPais #ParaEscolas #ParaProfessores #NaTuaLingua #Multilingue #EdTech #CivicTech #VerifiedWork
+
 E o nome? «Konfirmu» é Esperanto, a língua criada em 1887 por L. L. Zamenhof para ser uma segunda língua universal, falada entre povos de línguas diferentes. Quer dizer «Confirma!»: é a forma imperativa de konfirmi, «confirmar», e vem do latim confirmare, tornar firme. Numa casa onde quem propõe não é quem confirma, o nome é a própria regra: Confirma!

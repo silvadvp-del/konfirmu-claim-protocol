@@ -159,6 +159,8 @@ class Contexto:
         self.prop = prop
         self.botao = False   # a regra ganhou fundo de botão pêssego
         self.escureceu = False  # o fundo era claro e passou a escuro
+        self.texto_escuro = False  # a regra escreve texto escuro (ex.: botão pêssego com letra azul abissal)
+        self.pessego_cheio = False  # … e o fundo dela é pêssego cheio: a letra escura fica azul abissal
 
 
 def mapear(rgb, alfa, papel, ctx):
@@ -187,6 +189,10 @@ def mapear(rgb, alfa, papel, ctx):
             return V, ALFA_VIDRO * alfa
         return (N, alfa) if y < 0.62 else (T, alfa)
     if papel == "fundo":
+        if ctx.texto_escuro and cromatico(rgb) and not vermelho(rgb) and 0.10 <= y <= 0.60:
+            # botão já desenhado com letra escura sobre tons de pêssego: fica pêssego cheio, a letra
+            # azul abissal mantém-se (8,8:1, AAA)
+            return P, alfa
         if cromatico(rgb) and 0.10 <= y <= 0.60 and alfa > 0.5:
             ctx.botao = True
             return P, ALFA_BOTAO * alfa
@@ -196,6 +202,8 @@ def mapear(rgb, alfa, papel, ctx):
             return V, ALFA_VIDRO * alfa
         return (A, alfa) if ctx.nivel_pagina else (V, ALFA_VIDRO * alfa)
     if papel == "texto":
+        if ctx.pessego_cheio and y < 0.05:
+            return A, alfa
         if cromatico(rgb):
             return (T, alfa) if vermelho(rgb) else (P, alfa)
         if y >= 0.62 or y < 0.05:
@@ -263,6 +271,8 @@ def trocar_cores(valor, papel, ctx):
     def por_hex(m):
         rgb, alfa = ler_hex(m.group(0))
         r, a = mapear(rgb, alfa, papel, ctx)
+        if (r, round(a, 3)) == (rgb, round(alfa, 3)):
+            return m.group(0)  # a cor já era oficial: fica escrita como estava
         return escrever(r, a)
 
     def por_func(m):
@@ -271,6 +281,8 @@ def trocar_cores(valor, papel, ctx):
             return m.group(0)
         rgb, alfa, espaco = lido
         r, a = mapear(rgb, alfa, papel, ctx)
+        if (r, round(a, 3)) == (rgb, round(alfa, 3)):
+            return m.group(0)
         return escrever(r, a, espaco)
 
     def por_nome(m):
@@ -312,6 +324,21 @@ def corpo_decls(corpo, ctx_base, papeis_var, seletor=""):
     nivel = bool(re.search(r"(^|[\s,>])(html|body|:root)(?![\w-])", seletor))
     ctx = Contexto(ctx_base.pagina_clara, nivel)
     texto_pintado = bool(re.search(r"background-clip\s*:\s*text", corpo))  # gradiente dentro das letras
+    mc = re.search(r"(?<![\w-])color\s*:\s*([^;}]+)", corpo)
+    if mc:
+        for mm in RE_COR.finditer(mc.group(1)):
+            tok = mm.group(0)
+            lido = ler_hex(tok) if tok.startswith("#") else ler_func(mm.group(1))
+            if lido and luminancia(lido[0]) < 0.05 and lido[1] > 0.5:
+                ctx.texto_escuro = True
+    if ctx.texto_escuro:
+        for mb in re.finditer(r"(?<![\w-])background(?:-color|-image)?\s*:\s*([^;}]+)", corpo):
+            for mm in RE_COR.finditer(mb.group(1)):
+                tok = mm.group(0)
+                lido = ler_hex(tok) if tok.startswith("#") else ler_func(mm.group(1))
+                if lido and lido[1] > 0.5 and (lido[0] == P or (cromatico(lido[0]) and not vermelho(lido[0])
+                                                                 and 0.10 <= luminancia(lido[0]) <= 0.60)):
+                    ctx.pessego_cheio = True
     novos = []
     pos = 0
     tem_cor = False
@@ -546,6 +573,9 @@ def converter_js(js, pagina_clara):
             # declarações soltas (ex.: 'background:#fff;color:#000' passadas a cssText)
             if re.fullmatch(r"\s*(?:[a-z-]+\s*:\s*[^;]+;?\s*)+", alvo) and ":" in alvo:
                 alvo = corpo_decls(alvo, base, {}, "inline")
+            elif alvo == s and re.search(r"gradient\(|,\s*transparent|^\s*%\s*,", s):
+                # pedaço de um gradiente montado por partes ('…%, #ffefbf24, transparent 53%)')
+                alvo = trocar_cores(s, "desenho", Contexto(pagina_clara))
         return q + alvo + q
 
     return RE_STR_JS.sub(literal, js)
@@ -582,7 +612,10 @@ def converter_html(html, relatorio):
         else:
             html = re.sub(r"</head>", "<style>" + CSS_ICONE + "</style></head>", html, count=1, flags=re.I)
     if MARCA not in html:
-        html = re.sub(r"(<head\b[^>]*>)", lambda m: m.group(1) + MARCA, html, count=1, flags=re.I)
+        if re.search(r"<head\b", html, re.I):
+            html = re.sub(r"(<head\b[^>]*>)", lambda m: m.group(1) + MARCA, html, count=1, flags=re.I)
+        else:  # página sem <head> explícito (ex.: o quiz): a marca vai logo a seguir ao charset
+            html = re.sub(r"(<meta charset=[^>]*>)", lambda m: m.group(1) + MARCA, html, count=1, flags=re.I)
     if (usados or "KI." in html or "KI[" in html) and "Ícones: Lucide (ISC)" not in html:
         html = re.sub(r"(<head\b[^>]*>)", r"\1<!-- Ícones: Lucide (ISC), ver assets/LICENCA-ICONES-LUCIDE.txt -->", html, count=1, flags=re.I)
     return html
@@ -703,6 +736,38 @@ CORRECOES_JS = {
 
 MARCA = '<meta name="konfirmu-paleta" content="unica-2026-11-27">'
 
+# depois da conversão: texto que já não se lia na página de origem (medido pela régua AAA do teste)
+CORRECOES_POS = {
+    "kcp_art_music_studio.html": [
+        (".notas button{background:#0B192C;width:44px;padding:10px 0}",
+         ".notas button{background:#0B192C;color:#F4F7FA;border:1px solid #FF9E7D;width:44px;padding:10px 0}"),
+    ],
+    "neverland_family_quest.html": [
+        ("background:rgba(255,158,125,.18);color:#FF9E7D;border:1px solid rgba(255,158,125,.4)}",
+         "background:rgba(255,158,125,.18);color:#F4F7FA;border:1px solid rgba(255,158,125,.4)}"),
+        # o rodapé dos avisos ficava ao lado do jogo, numa segunda coluna estreita, no telemóvel
+        ("min-height:100vh;padding:16px;display:flex;justify-content:center;margin:0}",
+         "min-height:100vh;padding:16px;display:flex;flex-wrap:wrap;justify-content:center;margin:0}"
+         "body>.k-rodape{width:100%;box-sizing:border-box}"),
+    ],
+    "chronolex_ata.html": [
+        ("margin:0;padding:24px 16px;display:flex;justify-content:center}",
+         "margin:0;padding:24px 16px;display:flex;flex-wrap:wrap;justify-content:center}"
+         "body>.k-rodape{width:100%;box-sizing:border-box}"),
+    ],
+}
+
+
+def aplicar_pos(rel, html):
+    for antes, depois in CORRECOES_POS.get(rel, []):
+        if html.count(depois):
+            continue
+        if html.count(antes) != 1:
+            print("AVISO %s: correção depois da conversão não encontrada: %r" % (rel, antes[:50]))
+            continue
+        html = html.replace(antes, depois)
+    return html
+
 
 def aplicar_correcoes(rel, html):
     if MARCA in html:
@@ -713,6 +778,11 @@ def aplicar_correcoes(rel, html):
         if n != 1:
             if html.count(depois) >= 1:
                 continue  # já aplicada (idempotente)
+            if n == 0:
+                # a página já mudou por outro caminho (ex.: o tema 2040 do main); o portão visual,
+                # que corre a seguir, apanha o que tiver ficado fora da paleta ou com emoji
+                print("AVISO %s: troca não encontrada, a página já mudou: %r" % (rel, antes[:50]))
+                continue
             raise SystemExit("PARADO: %s — esperava 1 ocorrência de %r, encontrei %d" % (rel, antes[:70], n))
         html = html.replace(antes, depois)
     if nomes and "var KI={" not in html:
@@ -737,7 +807,7 @@ def aplicar(raiz):
         orig = p.read_text(encoding="utf-8")
         html = aplicar_correcoes(rel, orig)
         rel_pag = []
-        html = converter_html(html, rel_pag)
+        html = aplicar_pos(rel, converter_html(html, rel_pag))
         if html != orig:
             p.write_text(html, encoding="utf-8")
             mudou += 1
@@ -837,6 +907,15 @@ def verificar(alvo):
                       "edicao-21/manifest.json"):
             if (alvo / extra).exists():
                 ficheiros[extra] = (alvo / extra).read_text(encoding="utf-8")
+        for p in sorted((alvo / "assets").glob("*.js")) + sorted((alvo / "assets").glob("*.css")):
+            ficheiros.setdefault(p.relative_to(alvo).as_posix(), p.read_text(encoding="utf-8"))
+        if not (alvo / "edicao-21").is_dir():
+            # outra pasta (ex.: o sítio dpsindustrial.nl/konfirmu/): tudo o que se mostra, menos a versão anterior
+            for p in sorted(alvo.rglob("*")):
+                rel = p.relative_to(alvo).as_posix()
+                if (p.is_file() and p.suffix in (".html", ".css", ".js", ".json", ".svg")
+                        and not rel.startswith("_anterior/") and "/locales/" not in "/" + rel):
+                    ficheiros.setdefault(rel, p.read_text(encoding="utf-8", errors="replace"))
     for nome, txt in sorted(ficheiros.items()):
         if nome.endswith(".min.js") or nome.endswith("qrcode.js"):
             continue  # bibliotecas de terceiros sem cores de interface

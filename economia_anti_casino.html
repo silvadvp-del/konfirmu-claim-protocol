@@ -13,9 +13,9 @@
 /* Pagina autocontida: sem scripts, sem pedidos a rede, sem emojis. Aberta por file:// ou por https. */
 :root{color-scheme:dark;
  --abissal:#0B192C;--pesego:#FF9E7D;--pesego-claro:#F4F7FA;
- --papel:#0B192C;--painel:rgba(15,34,61,.72);--tinta:#F4F7FA;--tinta2:#9FB3C8;--linha:#9FB3C8;--azulejo:rgba(15,34,61,.72);
+ --papel:#0B192C;--painel:#0F223D;--tinta:#F4F7FA;--tinta2:#9FB3C8;--linha:rgba(159,179,200,.24);--azulejo:#0B192C;
  --letra:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
-@media (prefers-color-scheme:dark){:root{--papel:#0B192C;--painel:#0B192C;--tinta:#F4F7FA;--tinta2:#9FB3C8;--linha:rgba(159,179,200,.24);--azulejo:#0B192C}}
+/* 27-11-2026, 14:53 (ordem do David): uma só paleta, sempre escura — Azul Abissal, Branco Titânio e Cinza Nevoeiro. */
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;background:var(--papel)}
 body{margin:0;font:17px/1.6 var(--letra);color:var(--tinta);background:var(--papel)}
@@ -31,9 +31,9 @@ a{color:inherit;text-underline-offset:.18em}
 
 .hero{position:relative;overflow:hidden;background:var(--abissal);color:var(--pesego-claro);text-align:center;padding:clamp(3rem,9vw,5.5rem) 20px}
 .hero::before,.nome::before{content:"";position:absolute;inset:0;pointer-events:none;
- background:radial-gradient(70% 60% at 50% -10%,rgba(255,158,125,.3),transparent 70%),
+ background:radial-gradient(70% 60% at 50% -10%,rgba(255,158,125,.30),transparent 70%),
  radial-gradient(45% 40% at 86% 100%,rgba(15,34,61,.101),transparent 70%),
- radial-gradient(35% 35% at 10% 80%,rgba(255,158,125,.1),transparent 70%)}
+ radial-gradient(35% 35% at 10% 80%,rgba(255,158,125,.10),transparent 70%)}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:70%;pointer-events:none;opacity:.55;
  background:radial-gradient(circle at 12% 80%,rgba(15,34,61,.158) 0 3px,transparent 4px),
  radial-gradient(circle at 28% 55%,rgba(15,34,61,.115) 0 2px,transparent 3px),

@@ -251,7 +251,7 @@ CSS_FAMILIA = """
 /* a coluna de luz que sobe da tigela e o brilho no palco */
 .portal-familia .card .ico::before{content:"";position:absolute;z-index:1;left:14%;right:14%;top:-72%;bottom:46%;pointer-events:none;background:radial-gradient(48% 62% at 50% 100%,rgb(244 247 250 / .9),rgb(255 158 125 / .34) 52%,rgb(255 158 125 / 0) 76%);mix-blend-mode:screen;opacity:0;transform:scaleY(.5);transform-origin:50% 100%;transition:opacity .2s ease-out,transform .26s cubic-bezier(.2,.8,.2,1)}
 .portal-familia .card .ico::after{content:"";position:absolute;z-index:-1;left:-8%;right:-8%;top:6%;bottom:-12%;pointer-events:none;background:radial-gradient(52% 46% at 50% 54%,rgb(255 158 125 / .5),rgb(255 158 125 / 0) 72%);opacity:0;transition:opacity .2s ease-out}
-.portal-familia .card.acesa .tg-luz{opacity:1}
+.portal-familia .card.acesa .tg-luz{opacity:1;transition-duration:0s} /* ao toque a luz acende no mesmo quadro, mesmo com a aurora a correr (PR #20) */
 .portal-familia .card.acesa .tg-aro{opacity:.9}
 .portal-familia .card.acesa .tg-calor{opacity:.3}
 .portal-familia .card.acesa .tg-faiscas{opacity:1}

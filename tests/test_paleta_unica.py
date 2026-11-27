@@ -109,7 +109,8 @@ AUDITORIA_AAA = r"""() => {
     const cs=getComputedStyle(el); if(cs.visibility==='hidden'||+cs.opacity===0)continue;
     if(el.closest('[hidden],[aria-hidden="true"]'))continue;
     let pintado=false;for(let e=el;e;e=e.parentElement){const st=getComputedStyle(e);if((st.webkitBackgroundClip||st.backgroundClip)==='text'){pintado=true;break}}
-    let cor=ler(cs.color); if(!cor)continue;
+    // no SVG a letra pinta-se com fill, não com color
+    let cor=(el instanceof SVGElement && cs.fill && cs.fill.startsWith('rgb'))?ler(cs.fill):ler(cs.color); if(!cor)continue;
     if(pintado&&cor[3]===0)continue;
     let k=99;for(const bg of fundos(el)){const c=sobre(cor,bg);const l1=L(c),l2=L(bg);k=Math.min(k,(Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05))}
     const px=parseFloat(cs.fontSize), peso=parseInt(cs.fontWeight)||400;

@@ -1,0 +1,12 @@
+S01_sem_reler_o_disco                  MORTO  exit=1  VERMELHO: 22/24 verificações  a_vermelho=2  2s
+S02_sem_desfazer_a_memoria             MORTO  exit=1  VERMELHO: 18/24 verificações  a_vermelho=6  2s
+S03_sem_cortar_o_ficheiro              MORTO  exit=1  VERMELHO: 20/24 verificações  a_vermelho=4  2s
+S04_cauda_sem_conferir_a_cadeia        MORTO  exit=1  VERMELHO: 23/24 verificações  a_vermelho=1  2s
+S05_isola_sem_cortar                   MORTO  exit=1  VERMELHO: 21/24 verificações  a_vermelho=3  2s
+S06_sem_guardar_os_bytes_rasgados      MORTO  exit=1  VERMELHO: 23/24 verificações  a_vermelho=1  2s
+S07_carrega_sem_conferir               MORTO  exit=1  VERMELHO: 23/24 verificações  a_vermelho=1  2s
+S08_selo_sem_o_alg                     MORTO  exit=1  VERMELHO: 22/24 verificações  a_vermelho=2  2s
+S09_selo_sem_minusculas                MORTO  exit=1  VERMELHO: 21/24 verificações  a_vermelho=3  2s
+C0_controlo_neutro                     VIVO  exit=0  TUDO VERDE: 24/24 verificações  a_vermelho=0  2s
+original intacto: True | mortos: 9 de 9 | controlo: VIVO
+exit=0
