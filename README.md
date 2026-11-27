@@ -78,6 +78,14 @@ com os hash selados acima e mostra as provas de data (Bitcoin + RFC 3161 + BOIP)
 \`sw.js\` + \`manifest.json\`, instala-se no ecra principal do telemovel e funciona offline.
 Prova: 3/3 vectores NIST + sha256 do motor real CONFERE (verificado 23-11).
 
+Correcao de 27-11-2026 (KON-572). Ate esta data, \`chronolex_verify.html\`, \`chronolex_photo_seal.html\`
+e \`estudio_video_criancas.html\` davam aos ficheiros binarios (fotografias, PDF, videos) um codigo que
+nao era o SHA-256 dos bytes, e as quatro paginas que calculam hashes de ficheiros nao respondiam acima
+de cerca de 120 KB. Corrigido: o codigo e agora o SHA-256 que qualquer outra ferramenta calcula.
+Os selos feitos antes («v1») nao se perdem: \`chronolex_verify.html\` reconhece-os como «codigo antigo».
+Os selos novos sao «v2». Ensaiado a 27-11-2026 num Chrome de secretaria (Linux): ate 25 MB pelo ecra e
+ate 100 MB pela funcao. Nao foi ensaiado num telemovel, nem em Safari ou Firefox.
+
 ## Nao acredites — verifica
 
 Cada ficheiro tem o seu hash em SHA256SUMS.txt. Re-computa:

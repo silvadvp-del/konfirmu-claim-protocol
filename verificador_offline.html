@@ -66,6 +66,12 @@ table{font-size:.8em;border-collapse:collapse;width:100%} td,th{border:1px solid
 
 <p class="aviso">O que NÃO garante: isto verifica INTEGRIDADE e PROVENIÊNCIA dos bytes — não certifica conteúdo clínico nem substitui profissionais de saúde. SELADO ≠ VERDADEIRO. O hash é unidireccional: esta página nunca guarda nem envia o teu ficheiro. Cache do browser pode ser limpa pelo utilizador — offline não é «eterno por decreto».</p>
 <script>
+function bytesParaTexto(u8) {
+  // KON-572: converte os bytes aos bocados de 8 192. De uma so vez, o navegador recusa ficheiros maiores (por volta dos 120 KB).
+  var s = "", P = 8192;
+  for (var k = 0; k < u8.length; k += P) s += String.fromCharCode.apply(null, u8.subarray(k, k + P));
+  return s;
+}
 function sha256(str, bin) {
   // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
   // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
@@ -135,7 +141,12 @@ function calc(){
       el.textContent=(h===rows[id])?"✓ CONFERE":"✗ não bate"; el.className=(h===rows[id])?"verde":"vermelho";}
   }
   if(fi){var rd=new FileReader();
-    rd.onload=function(){finish(sha256(String.fromCharCode.apply(null,new Uint8Array(rd.result)), true));};
+    out.textContent="a calcular… ("+Math.max(1,Math.round(fi.size/1024))+" KB)";
+    rd.onerror=function(){out.textContent="Não foi possível ler este ficheiro neste aparelho.";};
+    rd.onload=function(){
+      try{ finish(sha256(bytesParaTexto(new Uint8Array(rd.result)), true)); }
+      catch(e){ out.textContent="Não foi possível calcular o SHA-256 deste ficheiro neste aparelho ("+e+")."; }
+    };
     rd.readAsArrayBuffer(fi);}
   else if(tx){finish(sha256(tx));}
   else{out.textContent="escolhe um ficheiro ou cola texto";}

@@ -38,11 +38,17 @@ canvas{display:none}
 <script src="./assets/nacl-util.min.js"></script>
 <script src="./assets/qrcode.js"></script>
 <script>
-function sha256Photo(str) {
+function bytesParaTexto(u8) {
+  // KON-572: converte os bytes aos bocados de 8 192. De uma so vez, o navegador recusa ficheiros maiores (por volta dos 120 KB).
+  var s = "", P = 8192;
+  for (var k = 0; k < u8.length; k += P) s += String.fromCharCode.apply(null, u8.subarray(k, k + P));
+  return s;
+}
+function sha256Photo(str, bin) {
   // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
   // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
   function rightRotate(value, amount) { return (value>>>amount) | (value<<(32-amount)); }
-  var ascii = unescape(encodeURIComponent(str));   // bytes UTF-8 como chars 0-255
+  var ascii = bin ? str : unescape(encodeURIComponent(str));   // bin=true: str ja e bytes crus; senao converte texto em bytes UTF-8
   var mathPow = Math.pow, maxWord = mathPow(2,32);
   var result = '', words = [];
   var asciiBitLength = ascii.length*8;
@@ -122,10 +128,14 @@ function capturar(){
       img.src = url; img.style.display = "block";
       var rd = new FileReader();
       rd.onload = function(){
-        var bin = String.fromCharCode.apply(null, new Uint8Array(rd.result));
-        var h = sha256Photo(bin, true);
-        document.getElementById("capturaInfo").textContent =
-          "tipo: " + blob.type + " · tamanho: " + Math.round(blob.size/1024) + " KB · sha256: " + h;
+        try {
+          var bin = bytesParaTexto(new Uint8Array(rd.result));
+          var h = sha256Photo(bin, true);
+          document.getElementById("capturaInfo").textContent =
+            "tipo: " + blob.type + " · tamanho: " + Math.round(blob.size/1024) + " KB · sha256: " + h;
+        } catch(e){
+          document.getElementById("capturaInfo").textContent = "Não foi possível calcular o SHA-256 desta fotografia neste aparelho (" + e + ").";
+        }
       };
       rd.readAsArrayBuffer(blob);
     }, tipos[i], 0.8);
@@ -135,16 +145,24 @@ function selar(){
   if(!blobSelado){ alert("primeiro captura"); return; }
   var rd = new FileReader();
   rd.onload = function(){
-    var bin = String.fromCharCode.apply(null, new Uint8Array(rd.result));
-    var h = sha256Photo(bin, true);
+    // KON-572: selo v2 = SHA-256 dos bytes do ficheiro, igual ao de qualquer outra ferramenta.
+    // Os selos v1 (paginas anteriores a 27-11-2026) trazem o codigo antigo e conferem-se no chronolex_verify.html.
+    var bin, h;
+    try {
+      bin = bytesParaTexto(new Uint8Array(rd.result));
+      h = sha256Photo(bin, true);
+    } catch(e){
+      document.getElementById("selo").textContent = "Não foi possível selar esta fotografia neste aparelho (" + e + ").";
+      return;
+    }
     var ts = new Date().toISOString();
-    var alvo = "KONFIRMU-PHOTO|v1|" + h + "|" + ts;
+    var alvo = "KONFIRMU-PHOTO|v2|" + h + "|" + ts;
     var kp = nacl.sign.keyPair();
     var sig = nacl.sign.detached(nacl.util.decodeUTF8(alvo), kp.secretKey);
     selo = { hash: h, ts: ts, pk: toHex(kp.publicKey), sig: toHex(sig) };
     document.getElementById("selo").textContent =
-      "sha256: " + h + "\nhora (aparelho): " + ts + "\npk: " + selo.pk + "\nsig: " + selo.sig;
-    var payload = "KONFIRMU|PHOTO|v1|" + h + "|" + selo.pk + "|" + selo.sig + "|" + ts;
+      "sha256: " + h + "\nhora (aparelho): " + ts + "\npk: " + selo.pk + "\nsig: " + selo.sig + "\nversão do selo: v2";
+    var payload = "KONFIRMU|PHOTO|v2|" + h + "|" + selo.pk + "|" + selo.sig + "|" + ts;
     var c = document.getElementById("qr");
     var qr = qrcode(0,"M"); qr.addData(payload,"Byte"); qr.make();
     var n = qr.getModuleCount(), s = 3; c.width = n*s; c.height = n*s;
@@ -157,9 +175,15 @@ function verificar(){
   if(!selo || !blobSelado){ alert("primeiro sela"); return; }
   var rd = new FileReader();
   rd.onload = function(){
-    var bin = String.fromCharCode.apply(null, new Uint8Array(rd.result));
-    var okH = sha256Photo(bin, true) === selo.hash;
-    var alvo = "KONFIRMU-PHOTO|v1|" + selo.hash + "|" + selo.ts;
+    var okH;
+    try {
+      okH = sha256Photo(bytesParaTexto(new Uint8Array(rd.result)), true) === selo.hash;
+    } catch(e){
+      document.getElementById("verif").textContent = "Não foi possível voltar a calcular o SHA-256 neste aparelho (" + e + ").";
+      document.getElementById("verif").className = "";
+      return;
+    }
+    var alvo = "KONFIRMU-PHOTO|v2|" + selo.hash + "|" + selo.ts;
     var okS = nacl.sign.detached.verify(nacl.util.decodeUTF8(alvo), fromHex(selo.sig), fromHex(selo.pk));
     document.getElementById("verif").textContent = "hash: " + (okH ? "CONFERE" : "DIVERGE") + "\nassinatura: " + (okS ? "VÁLIDA" : "INVÁLIDA") + "\n" + (okH && okS ? "VERDE — fotografia íntegra" : "VERMELHO — adulterada");
     document.getElementById("verif").className = okH && okS ? "verde" : "vermelho";
@@ -175,7 +199,7 @@ function guardarFoto(){
 }
 function guardarCert(){
   if(!selo){ alert("primeiro sela"); return; }
-  var cert = { versao: "chronolex-photo/1", hash: selo.hash, capturadoEm: selo.ts, pk: selo.pk, sig: selo.sig };
+  var cert = { versao: "chronolex-photo/2", hash: selo.hash, capturadoEm: selo.ts, pk: selo.pk, sig: selo.sig };
   var a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([JSON.stringify(cert, null, 2)], { type: "application/json" }));
   a.download = "certificado-" + selo.hash.slice(0,12) + ".json";
