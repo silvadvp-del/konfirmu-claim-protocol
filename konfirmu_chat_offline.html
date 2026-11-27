@@ -60,7 +60,7 @@ pt:{aviso:'Ensino e investigação. Não serve para decisões sobre pessoas. Fun
  ola:'Olá. Confiro medidas por regras escritas e digo de onde vem cada regra. Sem internet e sem conta.\nExperimenta: «nitrato 48 ± 3 mg/L» ou «vacina a 9,5 °C».',
  agua:'Água: nitrato',frio:'Cadeia de frio',selo:'Selo de texto',ia:'Ligar IA local',exp:'Exportar conversa',imp:'Conferir conversa',
  exAgua:'nitrato 48 ± 3 mg/L',exFrio:'vacina a 9,5 °C',
- OK:'CONFERE',VETO:'NÃO CONFERE',NS:'AINDA NÃO SEI',IA:'IA LOCAL · não conferido',SOS:'EMERGÊNCIA · 112',
+ OK:'CONFERE',VETO:'NÃO CONFERE',NS:'AINDA NÃO SEI',IA:'IA LOCAL · não conferido',SOS:'EMERGÊNCIA · 112',CRI:'AJUDA · 116 111',
  nit:(i)=>`Nitrato na água para consumo: limite ${i.lim} mg/L.\nMedida: ${i.txt}.\nNorma: Diretiva (UE) 2020/2184, anexo I, parte B.`,
  fri:(i)=>`Cadeia de frio: entre ${i.a} e ${i.b} °C.\nMedida: ${i.txt}.\nRegra da folha «cadeia de frio 2 a 8 °C» da Konfirmu.`,
  nsPorque:'A margem da medida passa por cima do limite. Mede outra vez com um aparelho mais fino.',
@@ -70,7 +70,7 @@ pt:{aviso:'Ensino e investigação. Não serve para decisões sobre pessoas. Fun
  seloIgual:'IGUAL ao original.',seloDif:'DIFERENTE do original.',seloSo:'Sem o original ao lado, não sei se este texto é o verdadeiro. O número dele é:',
  iaFicheiro:'A IA local precisa de ser aberta por um link com cadeado (https), não por um ficheiro. As regras e o selo funcionam aqui na mesma.',
  iaABaixar:'A descarregar a IA para este aparelho (cerca de 480 MB, uma só vez). Usa Wi-Fi.',iaPronta:'IA local pronta. Corre neste aparelho. O que ela disser não é conferido.',
- iaFalhou:'A IA local não arrancou neste aparelho. As regras e o selo continuam a funcionar.',
+ iaFalhou:'A IA local não arrancou neste aparelho. As regras e o selo continuam a funcionar.',iaSemRede:'Sem rede: respondem as regras deste aparelho. A IA local só se liga com rede.',
  expOk:(n)=>`Conversa exportada: ${n} registos.`,impOk:(n)=>`Cadeia inteira: ${n} registos, nenhum alterado.`,impMau:(n)=>`Cadeia partida no registo ${n}. Alguém mexeu aqui ou a seguir.`,impErro:'Este ficheiro não é uma conversa Konfirmu.',somE:'Enviar por som',somO:'Ouvir som',apg:'Apagar conversa',apgMesmo:'Apagar mesmo?',
  somATocar:(n)=>`A tocar o som (${n} s). Põe o outro telemóvel perto, em «Ouvir som».`,somNada:'Ainda não há nada para enviar.',somGrande:'Texto grande demais para o som (máximo 120 letras).',somSemSom:'Este aparelho não deixou tocar o som. O resto funciona.',
  somAOuvir:'A ouvir durante 30 segundos…',somRecebido:(m)=>`Recebido por som, sem erros de transmissão:\n${m}\nIsto diz que o som chegou inteiro. Não diz que o conteúdo é verdadeiro.`,somFalhou:'Não apanhei nenhuma mensagem inteira. Aproxima os telemóveis e tenta outra vez.',somSemMic:'Este aparelho não me deu o microfone. O resto funciona.',
@@ -82,7 +82,7 @@ en:{aviso:'Teaching and research. Not for decisions about people. Works without 
  ola:'Hello. I check measurements against written rules and say where each rule comes from. No internet, no account.\nTry: "nitrate 48 ± 3 mg/L" or "vaccine at 9.5 °C".',
  agua:'Water: nitrate',frio:'Cold chain',selo:'Text seal',ia:'Turn on local AI',exp:'Export chat',imp:'Check a chat',
  exAgua:'nitrate 48 ± 3 mg/L',exFrio:'vaccine at 9.5 °C',
- OK:'MATCHES',VETO:'DOES NOT MATCH',NS:'I DON\'T KNOW YET',IA:'LOCAL AI · not checked',SOS:'EMERGENCY · 112',
+ OK:'MATCHES',VETO:'DOES NOT MATCH',NS:'I DON\'T KNOW YET',IA:'LOCAL AI · not checked',SOS:'EMERGENCY · 112',CRI:'HELP · 116 111',
  nit:(i)=>`Nitrate in drinking water: limit ${i.lim} mg/L.\nMeasurement: ${i.txt}.\nStandard: Directive (EU) 2020/2184, Annex I, Part B.`,
  fri:(i)=>`Cold chain: between ${i.a} and ${i.b} °C.\nMeasurement: ${i.txt}.\nRule from the Konfirmu "cold chain 2 to 8 °C" sheet.`,
  nsPorque:'The margin of the measurement crosses the limit. Measure again with a finer instrument.',
@@ -92,7 +92,7 @@ en:{aviso:'Teaching and research. Not for decisions about people. Works without 
  seloIgual:'SAME as the original.',seloDif:'DIFFERENT from the original.',seloSo:'Without the original beside it, I cannot tell whether this text is the true one. Its number is:',
  iaFicheiro:'Local AI has to be opened from a padlocked link (https), not from a file. The rules and the seal still work here.',
  iaABaixar:'Downloading the AI to this device (about 480 MB, once). Use Wi-Fi.',iaPronta:'Local AI ready. It runs on this device. What it says is not checked.',
- iaFalhou:'Local AI did not start on this device. The rules and the seal keep working.',
+ iaFalhou:'Local AI did not start on this device. The rules and the seal keep working.',iaSemRede:'No network: the rules on this device answer. The local AI only starts with a network.',
  expOk:(n)=>`Chat exported: ${n} records.`,impOk:(n)=>`Chain intact: ${n} records, none altered.`,impMau:(n)=>`Chain broken at record ${n}. Someone changed this record or a later one.`,impErro:'This file is not a Konfirmu chat.',somE:'Send by sound',somO:'Listen for sound',apg:'Delete chat',apgMesmo:'Really delete?',
  somATocar:(n)=>`Playing the sound (${n} s). Hold the other phone close, on "Listen for sound".`,somNada:'Nothing to send yet.',somGrande:'Text too long for sound (120 letters at most).',somSemSom:'This device did not let me play sound. The rest works.',
  somAOuvir:'Listening for 30 seconds…',somRecebido:(m)=>`Received by sound, with no transmission errors:\n${m}\nThis says the sound arrived whole. It does not say the content is true.`,somFalhou:'I did not catch a whole message. Bring the phones closer and try again.',somSemMic:'This device did not give me the microphone. The rest works.',
@@ -104,7 +104,7 @@ fr:{aviso:'Enseignement et recherche. Pas pour des décisions concernant des per
  ola:'Bonjour. Je vérifie des mesures avec des règles écrites et je dis d\'où vient chaque règle. Sans internet, sans compte.\nEssaie : « nitrate 48 ± 3 mg/L » ou « vaccin à 9,5 °C ».',
  agua:'Eau : nitrate',frio:'Chaîne du froid',selo:'Sceau de texte',ia:'Activer l\'IA locale',exp:'Exporter',imp:'Vérifier une conversation',
  exAgua:'nitrate 48 ± 3 mg/L',exFrio:'vaccin à 9,5 °C',
- OK:'CONFORME',VETO:'NON CONFORME',NS:'JE NE SAIS PAS ENCORE',IA:'IA LOCALE · non vérifié',SOS:'URGENCE · 112',
+ OK:'CONFORME',VETO:'NON CONFORME',NS:'JE NE SAIS PAS ENCORE',IA:'IA LOCALE · non vérifié',SOS:'URGENCE · 112',CRI:'AIDE · 116 111',
  nit:(i)=>`Nitrate dans l'eau de boisson : limite ${i.lim} mg/L.\nMesure : ${i.txt}.\nNorme : Directive (UE) 2020/2184, annexe I, partie B.`,
  fri:(i)=>`Chaîne du froid : entre ${i.a} et ${i.b} °C.\nMesure : ${i.txt}.\nRègle de la fiche Konfirmu « chaîne du froid 2 à 8 °C ».`,
  nsPorque:'La marge de la mesure dépasse la limite. Mesure à nouveau avec un appareil plus fin.',
@@ -114,7 +114,7 @@ fr:{aviso:'Enseignement et recherche. Pas pour des décisions concernant des per
  seloIgual:'IDENTIQUE à l\'original.',seloDif:'DIFFÉRENT de l\'original.',seloSo:'Sans l\'original à côté, je ne sais pas si ce texte est le vrai. Son nombre est :',
  iaFicheiro:'L\'IA locale doit être ouverte par un lien avec cadenas (https), pas par un fichier. Les règles et le sceau fonctionnent ici quand même.',
  iaABaixar:'Téléchargement de l\'IA sur cet appareil (environ 480 Mo, une seule fois). Utilise le Wi-Fi.',iaPronta:'IA locale prête. Elle tourne sur cet appareil. Ce qu\'elle dit n\'est pas vérifié.',
- iaFalhou:'L\'IA locale n\'a pas démarré sur cet appareil. Les règles et le sceau continuent de fonctionner.',
+ iaFalhou:'L\'IA locale n\'a pas démarré sur cet appareil. Les règles et le sceau continuent de fonctionner.',iaSemRede:'Pas de réseau : ce sont les règles de cet appareil qui répondent. L\'IA locale ne démarre qu\'avec le réseau.',
  expOk:(n)=>`Conversation exportée : ${n} enregistrements.`,impOk:(n)=>`Chaîne intacte : ${n} enregistrements, aucun modifié.`,impMau:(n)=>`Chaîne rompue à l'enregistrement ${n}. Quelqu'un a modifié celui-ci ou un suivant.`,impErro:'Ce fichier n\'est pas une conversation Konfirmu.',somE:'Envoyer par le son',somO:'Écouter le son',apg:'Effacer la conversation',apgMesmo:'Vraiment effacer ?',
  somATocar:(n)=>`Le son joue (${n} s). Approche l'autre téléphone, sur « Écouter le son ».`,somNada:'Rien à envoyer pour l\'instant.',somGrande:'Texte trop long pour le son (120 lettres au plus).',somSemSom:'Cet appareil n\'a pas laissé jouer le son. Le reste fonctionne.',
  somAOuvir:'J\'écoute pendant 30 secondes…',somRecebido:(m)=>`Reçu par le son, sans erreur de transmission :\n${m}\nCela dit que le son est arrivé entier. Cela ne dit pas que le contenu est vrai.`,somFalhou:'Je n\'ai capté aucun message entier. Rapproche les téléphones et réessaie.',somSemMic:'Cet appareil ne m\'a pas donné le micro. Le reste fonctionne.',
@@ -195,9 +195,9 @@ async function selo(a,b){const ha=await sha256(limpar(a));if(!b||!limpar(b))retu
 
 /* ---------- ecrã ---------- */
 function bolha(quem,texto,ver,seloTxt,n){const d=document.createElement('div');d.className='b '+quem;
- if(ver){const v=document.createElement('span');v.className='v '+({OK:'ok',VETO:'veto',NS:'ns',IA:'ia',SOS:'veto'})[ver];v.textContent=t(ver);d.appendChild(v);d.appendChild(document.createElement('br'))}
+ if(ver){const v=document.createElement('span');v.className='v '+({OK:'ok',VETO:'veto',NS:'ns',IA:'ia',SOS:'veto',CRI:'veto'})[ver];v.textContent=t(ver);d.appendChild(v);d.appendChild(document.createElement('br'))}
  d.appendChild(document.createTextNode(texto));
- if(ver==='SOS'){d.appendChild(document.createElement('br'));const l=document.createElement('a');l.href='tel:112';l.textContent='📞 112';d.appendChild(l)}
+ if(ver==='SOS'||ver==='CRI'){d.appendChild(document.createElement('br'));for(const n of [...new Set(texto.match(/\b(?:116 111|119|114|112)\b/g)||[])]){const l=document.createElement('a');l.href='tel:'+n.replace(/ /g,'');l.textContent='📞 '+n;d.appendChild(l);d.appendChild(document.createTextNode('   '))}}
  if(seloTxt){const s=document.createElement('span');s.className='selo';s.textContent='sha256 '+seloTxt.slice(0,16)+'… · n.º '+(n||cadeia.length);d.appendChild(s)}
  $('conversa').appendChild(d);$('conversa').scrollTop=$('conversa').scrollHeight}
 let ia=null;
@@ -213,8 +213,51 @@ const PERIGO=[
  ['it',/\b(sono|siamo) in pericolo\b/,/\bnon (sono|siamo) in pericolo\b/,'Hai scritto che sei in pericolo. Chiama il 112: è il numero di emergenza europeo e la chiamata è gratuita. Fuori dall\'Europa il numero può essere diverso. Questa pagina non chiama al posto tuo e non avvisa nessuno.']];
 function portaoEmergencia(txt){const s=String(txt).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
  for(const [l,sim,nao,texto] of PERIGO)if(sim.test(s)&&!(nao&&nao.test(s)))return{lingua:l,texto};return null}
-async function responder(q){const sos=portaoEmergencia(q),g=sos?null:portao(q);let a,ver;
+/* ---------- portão das crianças (KON-583): abre quando quem escreve conta que um adulto lhe pede fotografias, segredos ou um encontro,
+   e não diz ter 18 anos ou mais. Mostra linhas de ajuda oficiais e o 112. Não liga nem avisa ninguém. Fontes consultadas a 27-11-2026:
+   116 111: número europeu das linhas de ajuda para crianças, reservado pela Decisão 2007/698/CE da Comissão (29-10-2007); número gratuito
+            (Decisão 2007/116/CE, art. 2.º); a funcionar em 24 países da UE segundo a Comissão Europeia (commission.europa.eu, «Fleeing Ukraine:
+            protection of children») e em 23 dos 27 segundo a Child Helpline International (sem França, Bélgica, Áustria e Itália).
+   119 (França): gratuito, 24 h por dia (service-public.gouv.fr, ficha F781, verificada a 13-09-2024).
+   114 (Itália): «Emergenza infanzia», gratuito, 24 h por dia (Presidenza del Consiglio, Dipartimento per le politiche della famiglia; minori.gov.it). ---------- */
+const CRIANCA=[
+ ['pt',/\b(pede|pedem|pediu|pediram|pedia|pedir|quer|queria|quis|manda|mandou|obriga|obrigou|diz|disse|insiste)\b( \w+){0,6} (fotos?|fotografias?|imagem|imagens|videos?|selfies?|nudes?|segredos?|nao contar|nao dizer|encontr\w*)\b/,
+  /\b(adulto|adulta|homem|senhor|senhora|desconhecido|desconhecida|estranho|estranha)\b|\b(alguem|pessoa|rapaz|rapariga|mulher) que (eu )?nao conheco\b|\bconheci (na internet|online|num jogo|no jogo)\b/,
+  /\btenho (\d{1,2}) anos\b/,/\bsou (?:uma |um )?(?:crianca|menina|menino|miuda|miudo)\b/,
+  'Se tens menos de 18 anos: não tens de enviar fotografias, guardar segredos nem ir a encontros que um adulto te peça. Conta a um adulto em quem confias. Linha de ajuda para crianças: 116 111, grátis, na maior parte dos países da UE. Se estás em perigo agora, liga 112. Esta página não liga por ti nem avisa ninguém.'],
+ ['es',/\b(pide|piden|pidio|pidieron|pedia|quiere|quieren|queria|quiso|dice|dijo|obliga|manda|mando|insiste)\b( \w+){0,6} (fotos?|fotografias?|imagen|imagenes|videos?|selfies?|nudes?|secretos?|no contar|no decir|quedar|vernos|encontrarnos|cita)\b/,
+  /\b(adulto|adulta|hombre|senor|senora|desconocido|desconocida|extrano|extrana)\b|\b(alguien|persona|chico|chica|mujer) que no conozco\b|\bconoci (en internet|online|en un juego)\b/,
+  /\btengo (\d{1,2}) anos\b/,/\bsoy (?:un |una )?(?:nino|nina)\b/,
+  'Si tienes menos de 18 años: no tienes que enviar fotos, guardar secretos ni ir a citas que te pida un adulto. Cuéntaselo a un adulto de confianza. Línea de ayuda para niños: 116 111, gratis, en la mayoría de los países de la UE. Si estás en peligro ahora, llama al 112. Esta página no llama por ti ni avisa a nadie.'],
+ ['en',/\b(asks?|asked|asking|wants?|wanted|told|tells|says|said|makes?|made|keeps|begs?|begged)\b( \w+){0,6} (photos?|pictures?|pics?|images?|videos?|selfies?|nudes?|secrets?|not tell|not to tell|meet|meeting|meet up)\b/,
+  /\b(adult|man|stranger|grown up|older guy|older man)\b|\b(someone|somebody|person|guy|woman|girl|boy) i (don t|dont|do not) know\b|\bmet (?:him |her )?(online|on the internet|in a game)\b/,
+  /\b(?:i m|im|i am) (\d{1,2})\b|\b(\d{1,2}) (?:years old|yo|y o)\b/,/\b(?:i m|im|i am) (?:a )?(?:kid|child)\b/,
+  'If you are under 18: you do not have to send photos, keep secrets or go to meetings that an adult asks of you. Tell an adult you trust. Helpline for children: 116 111, free, in most EU countries. If you are in danger now, call 112. This page does not call for you and does not alert anyone.'],
+ ['fr',/\b(demande|demandait|demandent|veut|voulait|veulent|dit|insiste|oblige|exige)\b( \w+){0,6} (photos?|images?|videos?|selfies?|nudes?|secrets?|rien dire|pas dire|pas le dire|rencontrer|voir en vrai|rendez vous)\b/,
+  /\b(adulte|homme|monsieur|inconnu|inconnue)\b|\b(quelqu un|une personne|un garcon|une fille|une femme) que je ne connais pas\b|\brencontre (sur internet|en ligne|dans un jeu)\b/,
+  /\bj ai (\d{1,2}) ans\b/,/\bje suis (?:un |une )?enfant\b/,
+  'Si tu as moins de 18 ans : tu n\'as pas à envoyer de photos, à garder des secrets ni à aller à des rendez-vous qu\'un adulte te demande. Parles-en à un adulte de confiance. En France : 119, gratuit, 24 h sur 24. Dans la plupart des autres pays de l\'UE : 116 111, gratuit. Si tu es en danger maintenant, appelle le 112. Cette page n\'appelle pas à ta place et ne prévient personne.'],
+ ['nl',/\b(vraagt|vroeg|vragen|wil|wilde|willen|zegt|zei|dwingt|eist)\b( \w+){0,6} (fotos?|foto s|plaatjes?|videos?|video s|selfies?|naaktfotos?|naaktfoto s|geheim|geheimen|niet vertellen|niet zeggen|afspreken|ontmoeten)\b/,
+  /\b(volwassene|volwassen|man|meneer|vreemde|vreemdeling|onbekende)\b|\b(iemand|persoon|jongen|meisje|vrouw) die ik niet ken\b|\bonline (ontmoet|leren kennen)\b/,
+  /\bik ben (\d{1,2})(?: jaar)?\b/,/\bik ben (?:een )?kind\b/,
+  'Als je jonger bent dan 18: je hoeft geen foto\'s te sturen, geen geheimen te bewaren en niet af te spreken als een volwassene dat vraagt. Vertel het aan een volwassene die je vertrouwt. Hulplijn voor kinderen: 116 111, gratis, in de meeste EU-landen. Ben je nu in gevaar, bel dan 112. Deze pagina belt niet voor jou en waarschuwt niemand.'],
+ ['de',/\b(fragt|fragte|will|wollte|wollen|sagt|sagte|zwingt|verlangt|verlangte|bittet|bat)\b( \w+){0,6} (fotos?|bilder|bild|videos?|selfies?|nacktbilder|nacktfotos|geheimnis|geheim|nicht erzahlen|nicht sagen|nicht verraten|treffen)\b/,
+  /\b(erwachsener|erwachsene|mann|fremder|fremde|unbekannter|unbekannte)\b|\b(jemand|person|typ|junge|madchen|frau) (?:den|die) ich nicht kenne\b|\bonline kennengelernt\b/,
+  /\bich bin (\d{1,2})(?: jahre)?\b/,/\bich bin (?:ein )?kind\b/,
+  'Wenn du unter 18 bist: Du musst keine Fotos schicken, keine Geheimnisse bewahren und zu keinem Treffen gehen, um das dich ein Erwachsener bittet. Erzähl es einem Erwachsenen, dem du vertraust. Hilfe-Telefon für Kinder: 116 111, kostenlos, in den meisten EU-Ländern. Wenn du jetzt in Gefahr bist, ruf 112 an. Diese Seite ruft nicht für dich an und benachrichtigt niemanden.'],
+ ['it',/\b(chiede|chiedeva|chiedono|chiesto|vuole|voleva|vogliono|dice|detto|obbliga|insiste|pretende)\b( \w+){0,6} (foto|fotografie|immagini|video|selfie|nudi|segreto|segreti|non dire|non dirlo|non raccontare|incontrarci|incontrarmi|vederci|incontro)\b/,
+  /\b(adulto|adulta|uomo|signore|signora|sconosciuto|sconosciuta|estraneo|estranea)\b|\b(qualcuno|una persona|un ragazzo|una ragazza|una donna) che non conosco\b|\bconosciuto (su internet|online|in un gioco)\b/,
+  /\bho (\d{1,2}) anni\b/,/\bsono (?:un |una )?(?:bambino|bambina)\b/,
+  'Se hai meno di 18 anni: non devi mandare foto, tenere segreti né andare a incontri che un adulto ti chiede. Parlane con un adulto di cui ti fidi. In Italia: 114 (Emergenza infanzia), gratuito, 24 ore su 24. Nella maggior parte degli altri paesi dell\'UE: 116 111, gratuito. Se sei in pericolo adesso, chiama il 112. Questa pagina non chiama al posto tuo e non avvisa nessuno.']];
+function portaoCrianca(txt){const s=String(txt).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+ for(const [l,pede,adulto,idade,crianca,texto] of CRIANCA){if(!pede.test(s))continue;
+  const m=s.match(idade),anos=m?Number(m.slice(1).find(x=>x!==undefined)):null;
+  if(anos!==null&&anos>=18)continue;
+  if(adulto.test(s)||crianca.test(s)||anos!==null)return{lingua:l,texto}}
+ return null}
+async function responder(q){const sos=portaoEmergencia(q),cri=sos?null:portaoCrianca(q),g=(sos||cri)?null:portao(q);let a,ver;
  if(sos){ver='SOS';a=sos.texto}
+ else if(cri){ver='CRI';a=cri.texto}
  else if(g&&g.velha){ver='NS';a=t('regraVelha')(g.ate)}
  else if(g){ver=g.ver;a=(g.regra==='nitrato'?t('nit')(g):t('fri')(g))+(ver==='NS'?'\n'+t('nsPorque'):'')+'\n'+t('naoGarante')+'\n'+t('valeAte')(g.ate)}
  else if(ia){ver='IA';try{const o=await ia([{role:'system',content:'Answer briefly and plainly, in the language of the user. You never give numbers, limits, doses or deadlines: say that those must come from a written rule.'},{role:'user',content:q}],{max_new_tokens:160});a=o[0].generated_text.at(-1).content}catch(_){ver='NS';a=t('iaFalhou')}}
@@ -222,7 +265,8 @@ async function responder(q){const sos=portaoEmergencia(q),g=sos?null:portao(q);l
  const e=await registar(q,a,ver);return{a,ver,hash:e.hash}}
 async function enviar(){const q=$('p').value.trim();if(!q)return;$('p').value='';bolha('eu',q);const r=await responder(q);bolha('casa',r.a,r.ver,r.hash)}
 /* IA local: codigo de fora so entra se o tamanho e o SHA-256 baterem com o que esta fixado aqui (versao exata, 3 ficheiros). */
-const IA_BASE='https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/';
+/* 27-11-2026 (decisão do David, 02:53): a IA vem do nosso servidor, já não de servidores de fora. Ficheiros em ./ia/ (ver a passagem do servidor). */
+const IA_BASE=new URL('./ia/transformers-3.8.1/',location.href).href;
 const IA_FIXOS={'transformers.min.js':['aa5002b70e789798da263f5f99c62bd3e8fcd0c119258a493c40c180648365fa',888173,'text/javascript'],
  'ort-wasm-simd-threaded.jsep.mjs':['08fb86ec433c78bfb032c5d84a68b8e8e5a8d81268fa39e24314179a5767a5b9',44484,'text/javascript'],
  'ort-wasm-simd-threaded.jsep.wasm':['c46655e8a94afc45338d4cb2b840475f88e5012d524509916e505079c00bfa39',21596019,'application/wasm']};
@@ -232,11 +276,12 @@ async function buscarConferido(nome){const [h,n,tipo]=IA_FIXOS[nome];const r=awa
  return URL.createObjectURL(new Blob([b],{type:tipo}))}
 async function importarIA(){const u={};for(const nome in IA_FIXOS)u[nome]=await buscarConferido(nome);
  const m=await import(u['transformers.min.js']);
- m.env.backends.onnx.wasm.wasmPaths={mjs:u['ort-wasm-simd-threaded.jsep.mjs'],wasm:u['ort-wasm-simd-threaded.jsep.wasm']};return m}
+ m.env.backends.onnx.wasm.wasmPaths={mjs:u['ort-wasm-simd-threaded.jsep.mjs'],wasm:u['ort-wasm-simd-threaded.jsep.wasm']};m.env.allowRemoteModels=false;m.env.allowLocalModels=true;m.env.localModelPath=new URL('./ia/modelos/',location.href).href;return m}
 async function ligarIA(){if(location.protocol==='file:'||!globalThis.isSecureContext){bolha('casa',t('iaFicheiro'));return}
+ if(navigator.onLine===false){bolha('casa',t('iaSemRede'));return}
  bolha('casa',t('iaABaixar'));try{const m=await importarIA();
   const gpu=!!navigator.gpu;ia=await m.pipeline('text-generation','onnx-community/Qwen2.5-0.5B-Instruct',{dtype:gpu?'q4f16':'q8',device:gpu?'webgpu':'wasm'});bolha('casa',t('iaPronta'))}
- catch(_){ia=null;bolha('casa',t('iaFalhou'))}}
+ catch(_){ia=null;bolha('casa',t(navigator.onLine===false?'iaSemRede':'iaFalhou'))}}
 async function partilhar(txt,nome,tipo){try{const f=new File([txt],nome,{type:tipo});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'Konfirmu'});return}}catch(_){}
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:tipo}));a.download=nome;a.click()}
 async function exportar(){const p=await pacoteAssinado();await partilhar(JSON.stringify(p,null,1),'konfirmu_conversa.json','application/json');bolha('casa',t('expOk')(cadeia.length)+'\n'+(p.assinatura?t('aMinhaChave')(chave.dedo):t('semChave')))}
@@ -341,9 +386,11 @@ $('cSelo').onclick=()=>{const s=$('painelSelo').style;s.display=s.display==='blo
 $('cIA').onclick=ligarIA;$('cExp').onclick=exportar;$('cImp').onclick=()=>$('fImp').click();$('fImp').onchange=importar;$('cFolha').onclick=()=>{const e=$('painelFolha').style;e.display=e.display==='block'?'none':'block'};$('selFolha').onchange=folhaCampos;$('bFolha').onclick=folhaConferir;for(const f of FOLHAS){const o=document.createElement('option');o.textContent=f.standard_ref.slice(0,70);$('selFolha').append(o)}
 $('cFoto').onclick=()=>$('fFoto').click();$('fFoto').onchange=fotoEscolhida;$('cPac').onclick=()=>$('fPac').click();$('fPac').onchange=pacEscolhidos;$('cSomE').onclick=somEnviar;$('cSomO').onclick=somOuvir;$('cApg').onclick=apagar;
 const nav=(navigator.language||'pt').slice(0,2);if(T[nav]){L=nav;$('lingua').value=nav}
-const pronto=arrancar();folhaCampos();
+const pronto=arrancar();
+pronto.then(()=>{},()=>{}).then(()=>{const avisoRede=()=>{if(!ia&&navigator.onLine===false)bolha('casa',t('iaSemRede'))};addEventListener('offline',avisoRede);avisoRede()});
+folhaCampos();
 if(location.protocol!=='file:'&&globalThis.isSecureContext&&'serviceWorker'in navigator)navigator.serviceWorker.register('konfirmu_chat_sw.js').catch(()=>{});
-globalThis.KONFIRMU={portaoEmergencia,sha256,sha256js,portao,selo,responder,conferirCadeia,pacote,limpar,pronto,FOLHAS,avaliar,intervalo,folhaConferir,pacoteAssinado,minhaChave,crc16,sha256b,fotoComprimir,fotoPacotes,fotoJuntar,somBits,somOnda,somLer,definirLingua:l=>{L=l;pintar()}};
+globalThis.KONFIRMU={portaoEmergencia,portaoCrianca,sha256,sha256js,portao,selo,responder,conferirCadeia,pacote,limpar,pronto,FOLHAS,avaliar,intervalo,folhaConferir,pacoteAssinado,minhaChave,crc16,sha256b,fotoComprimir,fotoPacotes,fotoJuntar,somBits,somOnda,somLer,definirLingua:l=>{L=l;pintar()}};
 </script>
 </body>
 </html>
