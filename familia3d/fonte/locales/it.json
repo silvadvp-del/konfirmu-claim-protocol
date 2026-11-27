@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "it",
+  "nome": "Italiano",
+  "nome_pt": "Italiano",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Famiglia",
+ "fam.titulo": "Educazione e famiglia",
+ "fam.sub": "Imparare e giocare in famiglia, con la stessa cura per la privacy.",
+ "fam.comeca": "Inizia qui",
+ "fam.lingua": "Lingua",
+ "fam.procurar_lingua": "Cerca lingua",
+ "fam.girafinhas.t": "Primi passi",
+ "fam.girafinhas.d": "Tre tocchi, voce e colori, per chi non ha mai usato un telefono.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Insegna passo dopo passo, anche senza rete.",
+ "fam.quiz.t": "Quiz in famiglia",
+ "fam.quiz.d": "Domande per giocare in famiglia, o solo tra adulti.",
+ "fam.natal.t": "Natale in famiglia",
+ "fam.natal.d": "Giochi, sagome di carta e un attestato da conservare.",
+ "fam.video.t": "Studio video",
+ "fam.video.d": "Filma senza internet e conserva il video con un sigillo.",
+ "fam.contas.t": "Conti con sigillo",
+ "fam.contas.d": "Fai i conti e conserva il risultato con un sigillo.",
+ "fam.arte.t": "Studio d'arte",
+ "fam.arte.d": "Musica e disegno, con il tuo nome.",
+ "fam.regua.t": "Il righello del pianeta",
+ "fam.regua.d": "Siamo ancora in tempo per salvare il pianeta?",
+ "fam.aventura.t": "Avventura in famiglia",
+ "fam.aventura.d": "Un gioco d'avventura da fare insieme."
+}

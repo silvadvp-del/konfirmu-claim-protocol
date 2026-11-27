@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "nb",
+  "nome": "Norsk bokmål",
+  "nome_pt": "Norueguês",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Familie",
+ "fam.titulo": "Utdanning og familie",
+ "fam.sub": "Lær og lek sammen som familie, med samme omtanke for personvernet.",
+ "fam.comeca": "Start her",
+ "fam.lingua": "Språk",
+ "fam.procurar_lingua": "Søk etter språk",
+ "fam.girafinhas.t": "Første steg",
+ "fam.girafinhas.d": "Tre trykk, stemme og farger, for den som aldri har brukt en telefon.",
+ "fam.tutor.t": "Veileder",
+ "fam.tutor.d": "Lærer bort steg for steg, også uten nett.",
+ "fam.quiz.t": "Familiequiz",
+ "fam.quiz.d": "Spørsmål å spille som familie, eller bare blant voksne.",
+ "fam.natal.t": "Jul med familien",
+ "fam.natal.d": "Leker, papirmaler og et diplom å ta vare på.",
+ "fam.video.t": "Videostudio",
+ "fam.video.d": "Film uten internett og ta vare på filmen med et segl.",
+ "fam.contas.t": "Regning med segl",
+ "fam.contas.d": "Regn ut og ta vare på resultatet med et segl.",
+ "fam.arte.t": "Kunststudio",
+ "fam.arte.d": "Musikk og tegning, med navnet ditt.",
+ "fam.regua.t": "Planetens linjal",
+ "fam.regua.d": "Rekker vi fortsatt å redde planeten?",
+ "fam.aventura.t": "Familieeventyr",
+ "fam.aventura.d": "Et eventyrspill å spille sammen."
+}

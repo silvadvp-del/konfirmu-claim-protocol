@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "sq",
+  "nome": "Shqip",
+  "nome_pt": "Albanês",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Familja",
+ "fam.titulo": "Arsimi dhe familja",
+ "fam.sub": "Mësoni dhe luani si familje, me të njëjtin kujdes për privatësinë.",
+ "fam.comeca": "Fillo këtu",
+ "fam.lingua": "Gjuha",
+ "fam.procurar_lingua": "Kërko gjuhën",
+ "fam.girafinhas.t": "Hapat e parë",
+ "fam.girafinhas.d": "Tri prekje, zë dhe ngjyra, për ata që nuk kanë përdorur kurrë telefon.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Mëson hap pas hapi, edhe pa rrjet.",
+ "fam.quiz.t": "Kuiz familjar",
+ "fam.quiz.d": "Pyetje për të luajtur si familje, ose vetëm mes të rriturve.",
+ "fam.natal.t": "Krishtlindje në familje",
+ "fam.natal.d": "Lojëra, modele letre dhe një certifikatë për ta ruajtur.",
+ "fam.video.t": "Studio video",
+ "fam.video.d": "Filmo pa internet dhe ruaje filmin me vulë.",
+ "fam.contas.t": "Llogari me vulë",
+ "fam.contas.d": "Bëj llogari dhe ruaje rezultatin me vulë.",
+ "fam.arte.t": "Studio arti",
+ "fam.arte.d": "Muzikë dhe vizatim, me emrin tënd.",
+ "fam.regua.t": "Vizorja e planetit",
+ "fam.regua.d": "A kemi ende kohë ta shpëtojmë planetin?",
+ "fam.aventura.t": "Aventurë familjare",
+ "fam.aventura.d": "Një lojë aventure për të luajtur bashkë."
+}

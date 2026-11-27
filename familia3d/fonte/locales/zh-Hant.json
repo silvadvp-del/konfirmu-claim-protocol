@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "zh-Hant",
+  "nome": "繁體中文",
+  "nome_pt": "Chinês tradicional",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "家庭",
+ "fam.titulo": "教育與家庭",
+ "fam.sub": "全家一起學習和玩耍，同樣用心保護隱私。",
+ "fam.comeca": "從這裡開始",
+ "fam.lingua": "語言",
+ "fam.procurar_lingua": "搜尋語言",
+ "fam.girafinhas.t": "第一步",
+ "fam.girafinhas.d": "三次輕觸、語音和顏色，獻給從未用過手機的人。",
+ "fam.tutor.t": "輔導老師",
+ "fam.tutor.d": "一步一步地教，即使沒有網路。",
+ "fam.quiz.t": "家庭問答",
+ "fam.quiz.d": "適合全家一起玩，或只在大人之間玩的問題。",
+ "fam.natal.t": "家庭聖誕節",
+ "fam.natal.d": "遊戲、紙模板和一張可以保存的證書。",
+ "fam.video.t": "影片工作室",
+ "fam.video.d": "不用網路也能拍攝，並用印章保存影片。",
+ "fam.contas.t": "帶印章的算術",
+ "fam.contas.d": "做算術，並用印章保存結果。",
+ "fam.arte.t": "藝術工作室",
+ "fam.arte.d": "音樂和繪畫，署上你的名字。",
+ "fam.regua.t": "地球尺",
+ "fam.regua.d": "我們還來得及拯救地球嗎？",
+ "fam.aventura.t": "家庭冒險",
+ "fam.aventura.d": "一起玩的冒險遊戲。"
+}

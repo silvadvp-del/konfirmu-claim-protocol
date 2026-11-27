@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "zh-Hans",
+  "nome": "简体中文",
+  "nome_pt": "Chinês simplificado",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "家庭",
+ "fam.titulo": "教育与家庭",
+ "fam.sub": "全家一起学习和玩耍，同样用心保护隐私。",
+ "fam.comeca": "从这里开始",
+ "fam.lingua": "语言",
+ "fam.procurar_lingua": "搜索语言",
+ "fam.girafinhas.t": "第一步",
+ "fam.girafinhas.d": "三次轻触、语音和颜色，献给从未用过手机的人。",
+ "fam.tutor.t": "辅导老师",
+ "fam.tutor.d": "一步一步地教，即使没有网络。",
+ "fam.quiz.t": "家庭问答",
+ "fam.quiz.d": "适合全家一起玩，或只在大人之间玩的问题。",
+ "fam.natal.t": "家庭圣诞节",
+ "fam.natal.d": "游戏、纸模板和一张可以保存的证书。",
+ "fam.video.t": "视频工作室",
+ "fam.video.d": "不用网络也能拍摄，并用印章保存影片。",
+ "fam.contas.t": "带印章的算术",
+ "fam.contas.d": "做算术，并用印章保存结果。",
+ "fam.arte.t": "艺术工作室",
+ "fam.arte.d": "音乐和绘画，署上你的名字。",
+ "fam.regua.t": "地球尺",
+ "fam.regua.d": "我们还来得及拯救地球吗？",
+ "fam.aventura.t": "家庭冒险",
+ "fam.aventura.d": "一起玩的冒险游戏。"
+}

@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "af",
+  "nome": "Afrikaans",
+  "nome_pt": "Africânder",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Gesin",
+ "fam.titulo": "Onderwys en gesin",
+ "fam.sub": "Leer en speel saam as gesin, met dieselfde sorg vir privaatheid.",
+ "fam.comeca": "Begin hier",
+ "fam.lingua": "Taal",
+ "fam.procurar_lingua": "Soek taal",
+ "fam.girafinhas.t": "Eerste treë",
+ "fam.girafinhas.d": "Drie tikke, stem en kleure, vir wie nog nooit 'n foon gebruik het nie.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Leer stap vir stap, selfs sonder netwerk.",
+ "fam.quiz.t": "Gesinsvasvra",
+ "fam.quiz.d": "Vrae om as gesin te speel, of net tussen volwassenes.",
+ "fam.natal.t": "Kersfees met die gesin",
+ "fam.natal.d": "Speletjies, papierpatrone en 'n sertifikaat om te hou.",
+ "fam.video.t": "Videoateljee",
+ "fam.video.d": "Verfilm sonder internet en bewaar die film met 'n seël.",
+ "fam.contas.t": "Somme met 'n seël",
+ "fam.contas.d": "Maak somme en bewaar die uitslag met 'n seël.",
+ "fam.arte.t": "Kunsateljee",
+ "fam.arte.d": "Musiek en teken, met jou naam.",
+ "fam.regua.t": "Die planeet se liniaal",
+ "fam.regua.d": "Is daar nog tyd om die planeet te red?",
+ "fam.aventura.t": "Gesinsavontuur",
+ "fam.aventura.d": "'n Avontuurspeletjie om saam te speel."
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-PT" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: blob:; style-src '__CSS__'; script-src '__CSP__'; connect-src 'none'; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0B192C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230B192C'/%3E%3Ctext x='16' y='22.5' font-family='Inter,Arial,sans-serif' font-size='21' font-weight='700' text-anchor='middle' fill='%23FF9E7D'%3Eu%3C/text%3E%3C/svg%3E">
+<meta name="referrer" content="no-referrer">
+<title>Konfirmu · Família</title>
+<style>__ESTILO__</style>
+</head>
+<body data-modo="familia">
+<canvas id="palco" aria-hidden="true"></canvas>
+<div id="tigelas"></div>
+<header id="topo" class="topo">
+  <a class="marca" id="ir-portais" href="app_unica.html" aria-label="Konfirmu">Konfirm<span class="u">u</span></a>
+  <div class="acoes">
+    <a class="portais vidro" href="app_unica.html" aria-label="Konfirmu" data-ico="portais"></a>
+    <label class="lingua vidro" data-ico="globo"><span class="vis-esc" data-t="lingua">Língua</span><select id="sel-lingua"></select></label>
+  </div>
+</header>
+<main id="familia">
+  <section class="cabeca">
+    <p class="rotulo"><span data-m="fam.rotulo">Família</span> <span class="selo" data-t="em_ensaio">Em ensaio, ainda não validado.</span> <span id="marca-ia" class="selo selo-ia marca-ia" data-t="traducao_ia" hidden></span></p>
+    <h1 data-m="fam.titulo">Educação e família</h1>
+    <p class="sub" data-m="fam.sub"></p>
+  </section>
+  <div class="barra-botoes">
+    <button id="b-entrar" class="pilula solar" type="button" data-ico="tigela"><span data-t="entrar">Entrar no Modo Criança</span></button>
+    <button id="b-filme" class="pilula vidro" type="button" data-ico="filme"><span data-t="filme">Filme</span></button>
+    <button id="b-bio" class="pilula vidro" type="button" data-ico="impressao" hidden><span data-t="biometria">Impressão digital ou rosto</span></button>
+  </div>
+  <section id="cartao" class="cartao vidro" aria-live="polite">
+    <div class="cartao-ico" id="c-ico"></div>
+    <div class="cartao-texto"><h2 id="c-titulo"></h2><p id="c-desc"></p></div>
+    <a id="c-abrir" class="abrir solar" href="#" data-ico="seta"></a>
+  </section>
+  <div class="setas">
+    <button id="b-ant" class="seta vidro" type="button" data-ico="voltar" aria-label="‹"></button>
+    <a id="entrada" class="entrada vidro" href="#" data-ico="toque"><span><b data-m="fam.comeca">Começa aqui</b> <span data-m="fam.girafinhas.t"></span></span></a>
+    <button id="b-seg" class="seta vidro" type="button" data-ico="seta" aria-label="›"></button>
+  </div>
+  <p class="rodape"><span data-t="privado">Funciona sem internet. Nada sai deste aparelho.</span></p>
+</main>
+<main id="crianca" hidden>
+  <div class="barra-crianca">
+    <p class="instrucao vidro" data-t="toca">Toca para encher a tigela</p>
+    <button id="b-sair" class="sair vidro" type="button" data-t="sair">Sair (adulto)</button>
+  </div>
+  <div class="final vidro" id="final" hidden>
+    <h2 data-t="todas">Encheste as 8 tigelas!</h2>
+    <button class="pilula solar" id="b-denovo" type="button" data-t="de_novo">Outra vez</button>
+  </div>
+</main>
+<main id="filme" hidden>
+  <button id="b-fechar" class="fechar vidro" type="button" data-ico="fechar"></button>
+  <div id="contador" class="contador" hidden></div>
+  <div id="marca-filme" class="marca-filme" hidden><div class="marca grande">Konfirm<span class="u">u</span></div><p id="f-lema"></p><p id="f-nota" class="nota"></p></div>
+  <p id="legenda" class="legenda vidro"></p>
+  <div class="regua"><span id="f-cena"></span><span>Filme Manifesto · em ensaio</span><i id="f-prog"></i></div>
+</main>
+<div class="modal" id="pin" hidden role="dialog" aria-modal="true" aria-labelledby="pin-titulo">
+  <div class="caixa vidro">
+    <h2 id="pin-titulo"></h2>
+    <div class="pinos" id="pinos" aria-hidden="true"></div>
+    <p class="erro" id="pin-erro" role="alert"></p>
+    <div class="teclado" id="teclado"></div>
+    <p class="nota-pin"><span data-t="dica"></span> <span data-t="esqueci"></span></p>
+    <p class="nota-pin marca-ia" data-t="traducao_ia" hidden></p>
+    <div class="acoes-pin">
+      <button class="pilula vidro" id="b-cancelar" type="button" data-t="cancelar">Cancelar</button>
+      <button class="pilula vidro" id="b-pin-bio" type="button" hidden data-t="biometria">Impressão digital ou rosto</button>
+    </div>
+  </div>
+</div>
+<div class="aviso vidro" id="aviso" role="status" aria-live="polite" hidden></div>
+<script type="application/json" id="dados">__DADOS__</script>
+<script>__SCRIPT__</script>
+</body>
+</html>

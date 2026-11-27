@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "tr",
+  "nome": "Türkçe",
+  "nome_pt": "Turco",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Aile",
+ "fam.titulo": "Eğitim ve aile",
+ "fam.sub": "Ailece öğrenin ve oynayın, gizliliğe aynı özenle.",
+ "fam.comeca": "Buradan başla",
+ "fam.lingua": "Dil",
+ "fam.procurar_lingua": "Dil ara",
+ "fam.girafinhas.t": "İlk adımlar",
+ "fam.girafinhas.d": "Hiç telefon kullanmamış olanlar için üç dokunuş, ses ve renkler.",
+ "fam.tutor.t": "Öğretmen",
+ "fam.tutor.d": "Ağ olmadan da adım adım öğretir.",
+ "fam.quiz.t": "Aile bilgi yarışması",
+ "fam.quiz.d": "Ailece ya da yalnızca yetişkinler arasında oynanacak sorular.",
+ "fam.natal.t": "Ailece Noel",
+ "fam.natal.d": "Oyunlar, kâğıt kalıplar ve saklanacak bir sertifika.",
+ "fam.video.t": "Video stüdyosu",
+ "fam.video.d": "İnternetsiz çek ve filmi mühürle sakla.",
+ "fam.contas.t": "Mühürlü hesaplar",
+ "fam.contas.d": "Hesap yap ve sonucu mühürle sakla.",
+ "fam.arte.t": "Sanat stüdyosu",
+ "fam.arte.d": "Senin adınla müzik ve resim.",
+ "fam.regua.t": "Gezegenin cetveli",
+ "fam.regua.d": "Gezegeni kurtarmak için hâlâ vaktimiz var mı?",
+ "fam.aventura.t": "Aile macerası",
+ "fam.aventura.d": "Birlikte oynanacak bir macera oyunu."
+}

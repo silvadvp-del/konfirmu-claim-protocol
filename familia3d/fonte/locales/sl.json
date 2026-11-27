@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "sl",
+  "nome": "Slovenščina",
+  "nome_pt": "Esloveno",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Družina",
+ "fam.titulo": "Izobraževanje in družina",
+ "fam.sub": "Učite se in igrajte v družini, z enako skrbjo za zasebnost.",
+ "fam.comeca": "Začni tukaj",
+ "fam.lingua": "Jezik",
+ "fam.procurar_lingua": "Išči jezik",
+ "fam.girafinhas.t": "Prvi koraki",
+ "fam.girafinhas.d": "Trije dotiki, glas in barve za tiste, ki še nikoli niso uporabljali telefona.",
+ "fam.tutor.t": "Inštruktor",
+ "fam.tutor.d": "Uči korak za korakom, tudi brez omrežja.",
+ "fam.quiz.t": "Družinski kviz",
+ "fam.quiz.d": "Vprašanja za igro v družini ali samo med odraslimi.",
+ "fam.natal.t": "Božič v družini",
+ "fam.natal.d": "Igre, papirnati vzorci in priznanje za spomin.",
+ "fam.video.t": "Video studio",
+ "fam.video.d": "Snemaj brez interneta in shrani posnetek s pečatom.",
+ "fam.contas.t": "Računi s pečatom",
+ "fam.contas.d": "Računaj in shrani rezultat s pečatom.",
+ "fam.arte.t": "Umetniški studio",
+ "fam.arte.d": "Glasba in risanje, s tvojim imenom.",
+ "fam.regua.t": "Ravnilo planeta",
+ "fam.regua.d": "Ali še lahko pravočasno rešimo planet?",
+ "fam.aventura.t": "Družinska pustolovščina",
+ "fam.aventura.d": "Pustolovska igra za skupno igranje."
+}

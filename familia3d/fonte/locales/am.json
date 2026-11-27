@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "am",
+  "nome": "አማርኛ",
+  "nome_pt": "Amárico",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "ቤተሰብ",
+ "fam.titulo": "ትምህርት እና ቤተሰብ",
+ "fam.sub": "እንደ ቤተሰብ እንማር እና እንጫወት፤ ለግላዊነት በተመሳሳይ ጥንቃቄ።",
+ "fam.comeca": "እዚህ ጀምር",
+ "fam.lingua": "ቋንቋ",
+ "fam.procurar_lingua": "ቋንቋ ፈልግ",
+ "fam.girafinhas.t": "የመጀመሪያ እርምጃዎች",
+ "fam.girafinhas.d": "ሦስት ንክኪዎች፣ ድምፅ እና ቀለሞች፤ ስልክ ተጠቅመው ለማያውቁ።",
+ "fam.tutor.t": "አስጠኚ",
+ "fam.tutor.d": "ደረጃ በደረጃ ያስተምራል፤ ያለ ኔትወርክም ቢሆን።",
+ "fam.quiz.t": "የቤተሰብ ጥያቄ ጨዋታ",
+ "fam.quiz.d": "ለቤተሰብ ወይም ለአዋቂዎች ብቻ የሚሆኑ ጥያቄዎች።",
+ "fam.natal.t": "ገና ከቤተሰብ ጋር",
+ "fam.natal.d": "ጨዋታዎች፣ የወረቀት ቅርጾች እና የሚቀመጥ የምስክር ወረቀት።",
+ "fam.video.t": "የቪዲዮ ስቱዲዮ",
+ "fam.video.d": "ያለ ኢንተርኔት ቅረጽ እና ቪዲዮውን በማኅተም አስቀምጥ።",
+ "fam.contas.t": "በማኅተም የተረጋገጠ ሒሳብ",
+ "fam.contas.d": "አስላ እና ውጤቱን በማኅተም አስቀምጥ።",
+ "fam.arte.t": "የጥበብ ስቱዲዮ",
+ "fam.arte.d": "ሙዚቃ እና ስዕል፣ በስምህ።",
+ "fam.regua.t": "የፕላኔቷ ማስመሪያ",
+ "fam.regua.d": "ፕላኔቷን ለማዳን አሁንም ጊዜ አለን?",
+ "fam.aventura.t": "የቤተሰብ ጀብዱ",
+ "fam.aventura.d": "አብረን የምንጫወተው የጀብዱ ጨዋታ።"
+}

@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "pap",
+  "nome": "Papiamentu",
+  "nome_pt": "Papiamento",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Famia",
+ "fam.titulo": "Edukashon i famia",
+ "fam.sub": "Siña i hunga komo famia, ku e mesun kuido pa privasidat.",
+ "fam.comeca": "Kuminsá aki",
+ "fam.lingua": "Idioma",
+ "fam.procurar_lingua": "Buska idioma",
+ "fam.girafinhas.t": "Promé pasonan",
+ "fam.girafinhas.d": "Tres toke, stèm i koló, pa ken ku nunka a usa un telefòn.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Ta siña bo paso pa paso, asta sin rèt.",
+ "fam.quiz.t": "Kis di famia",
+ "fam.quiz.d": "Preguntanan pa hunga komo famia, òf solamente entre adulto.",
+ "fam.natal.t": "Pasku ku famia",
+ "fam.natal.d": "Wega, molde di papel i un sertifikado pa warda.",
+ "fam.video.t": "Studio di video",
+ "fam.video.d": "Filma sin internet i warda e video ku un seyo.",
+ "fam.contas.t": "Kuenta ku seyo",
+ "fam.contas.d": "Hasi kuenta i warda e resultado ku un seyo.",
+ "fam.arte.t": "Studio di arte",
+ "fam.arte.d": "Músika i dibuho, ku bo nòmber.",
+ "fam.regua.t": "Regla di planeta",
+ "fam.regua.d": "Ainda nos tin tempu pa salba e planeta?",
+ "fam.aventura.t": "Aventura di famia",
+ "fam.aventura.d": "Un wega di aventura pa hunga huntu."
+}

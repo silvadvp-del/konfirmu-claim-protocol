@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "hr",
+  "nome": "Hrvatski",
+  "nome_pt": "Croata",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Obitelj",
+ "fam.titulo": "Obrazovanje i obitelj",
+ "fam.sub": "Učite i igrajte se u obitelji, s istom brigom za privatnost.",
+ "fam.comeca": "Počni ovdje",
+ "fam.lingua": "Jezik",
+ "fam.procurar_lingua": "Traži jezik",
+ "fam.girafinhas.t": "Prvi koraci",
+ "fam.girafinhas.d": "Tri dodira, glas i boje za one koji nikad nisu koristili mobitel.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Poučava korak po korak, čak i bez mreže.",
+ "fam.quiz.t": "Obiteljski kviz",
+ "fam.quiz.d": "Pitanja za igru u obitelji ili samo među odraslima.",
+ "fam.natal.t": "Božić u obitelji",
+ "fam.natal.d": "Igre, papirnati predlošci i diploma za uspomenu.",
+ "fam.video.t": "Video studio",
+ "fam.video.d": "Snimaj bez interneta i spremi film s pečatom.",
+ "fam.contas.t": "Računi s pečatom",
+ "fam.contas.d": "Računaj i spremi rezultat s pečatom.",
+ "fam.arte.t": "Umjetnički studio",
+ "fam.arte.d": "Glazba i crtanje, s tvojim imenom.",
+ "fam.regua.t": "Ravnalo planeta",
+ "fam.regua.d": "Imamo li još vremena spasiti planet?",
+ "fam.aventura.t": "Obiteljska avantura",
+ "fam.aventura.d": "Avanturistička igra za zajedničku igru."
+}

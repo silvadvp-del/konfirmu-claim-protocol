@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "sw",
+  "nome": "Kiswahili",
+  "nome_pt": "Suaíli",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Familia",
+ "fam.titulo": "Elimu na familia",
+ "fam.sub": "Jifunzeni na mcheze kama familia, kwa uangalifu ule ule wa faragha.",
+ "fam.comeca": "Anza hapa",
+ "fam.lingua": "Lugha",
+ "fam.procurar_lingua": "Tafuta lugha",
+ "fam.girafinhas.t": "Hatua za kwanza",
+ "fam.girafinhas.d": "Miguso mitatu, sauti na rangi, kwa asiyewahi kutumia simu.",
+ "fam.tutor.t": "Mwalimu",
+ "fam.tutor.d": "Hufundisha hatua kwa hatua, hata bila mtandao.",
+ "fam.quiz.t": "Chemsha bongo ya familia",
+ "fam.quiz.d": "Maswali ya kucheza kama familia, au kati ya watu wazima tu.",
+ "fam.natal.t": "Krismasi na familia",
+ "fam.natal.d": "Michezo, vielelezo vya karatasi na cheti cha kuhifadhi.",
+ "fam.video.t": "Studio ya video",
+ "fam.video.d": "Rekodi bila intaneti na uhifadhi video kwa muhuri.",
+ "fam.contas.t": "Hesabu zenye muhuri",
+ "fam.contas.d": "Fanya hesabu na uhifadhi jibu kwa muhuri.",
+ "fam.arte.t": "Studio ya sanaa",
+ "fam.arte.d": "Muziki na uchoraji, kwa jina lako.",
+ "fam.regua.t": "Rula ya sayari",
+ "fam.regua.d": "Je, bado tuna muda wa kuokoa sayari?",
+ "fam.aventura.t": "Safari ya familia",
+ "fam.aventura.d": "Mchezo wa matukio wa kucheza pamoja."
+}

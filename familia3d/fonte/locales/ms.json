@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "ms",
+  "nome": "Bahasa Melayu",
+  "nome_pt": "Malaio",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Keluarga",
+ "fam.titulo": "Pendidikan dan keluarga",
+ "fam.sub": "Belajar dan bermain bersama keluarga, dengan penjagaan privasi yang sama.",
+ "fam.comeca": "Mula di sini",
+ "fam.lingua": "Bahasa",
+ "fam.procurar_lingua": "Cari bahasa",
+ "fam.girafinhas.t": "Langkah pertama",
+ "fam.girafinhas.d": "Tiga sentuhan, suara dan warna, untuk sesiapa yang tidak pernah menggunakan telefon.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Mengajar langkah demi langkah, walaupun tanpa rangkaian.",
+ "fam.quiz.t": "Kuiz keluarga",
+ "fam.quiz.d": "Soalan untuk dimainkan bersama keluarga, atau antara orang dewasa sahaja.",
+ "fam.natal.t": "Krismas bersama keluarga",
+ "fam.natal.d": "Permainan, corak kertas dan sijil untuk disimpan.",
+ "fam.video.t": "Studio video",
+ "fam.video.d": "Rakam tanpa internet dan simpan video dengan meterai.",
+ "fam.contas.t": "Kira-kira bermeterai",
+ "fam.contas.d": "Buat kira-kira dan simpan hasilnya dengan meterai.",
+ "fam.arte.t": "Studio seni",
+ "fam.arte.d": "Muzik dan lukisan, dengan nama anda.",
+ "fam.regua.t": "Pembaris planet",
+ "fam.regua.d": "Masih sempatkah kita menyelamatkan planet?",
+ "fam.aventura.t": "Pengembaraan keluarga",
+ "fam.aventura.d": "Permainan pengembaraan untuk dimainkan bersama."
+}

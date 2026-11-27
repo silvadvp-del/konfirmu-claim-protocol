@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "tl",
+  "nome": "Tagalog",
+  "nome_pt": "Tagalo",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Pamilya",
+ "fam.titulo": "Edukasyon at pamilya",
+ "fam.sub": "Matuto at maglaro bilang pamilya, na may parehong ingat sa privacy.",
+ "fam.comeca": "Magsimula rito",
+ "fam.lingua": "Wika",
+ "fam.procurar_lingua": "Maghanap ng wika",
+ "fam.girafinhas.t": "Mga unang hakbang",
+ "fam.girafinhas.d": "Tatlong pindot, boses at kulay, para sa hindi pa nakagamit ng telepono.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Nagtuturo nang paisa-isang hakbang, kahit walang network.",
+ "fam.quiz.t": "Quiz ng pamilya",
+ "fam.quiz.d": "Mga tanong para laruin ng pamilya, o ng matatanda lang.",
+ "fam.natal.t": "Pasko kasama ang pamilya",
+ "fam.natal.d": "Mga laro, papel na hulmahan at sertipikong maitatago.",
+ "fam.video.t": "Studio ng video",
+ "fam.video.d": "Mag-video nang walang internet at itago ito nang may selyo.",
+ "fam.contas.t": "Kuwentang may selyo",
+ "fam.contas.d": "Magkuwenta at itago ang resulta nang may selyo.",
+ "fam.arte.t": "Studio ng sining",
+ "fam.arte.d": "Musika at pagguhit, nakapangalan sa iyo.",
+ "fam.regua.t": "Ruler ng planeta",
+ "fam.regua.d": "May panahon pa ba para iligtas ang planeta?",
+ "fam.aventura.t": "Pakikipagsapalaran ng pamilya",
+ "fam.aventura.d": "Isang larong pakikipagsapalaran na sabay na lalaruin."
+}

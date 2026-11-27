@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "ko",
+  "nome": "한국어",
+  "nome_pt": "Coreano",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "가족",
+ "fam.titulo": "교육과 가족",
+ "fam.sub": "가족과 함께 배우고 놀아요. 개인정보는 똑같이 소중하게.",
+ "fam.comeca": "여기서 시작",
+ "fam.lingua": "언어",
+ "fam.procurar_lingua": "언어 검색",
+ "fam.girafinhas.t": "첫걸음",
+ "fam.girafinhas.d": "휴대전화를 한 번도 써 보지 않은 분을 위한 세 번의 터치, 목소리와 색깔.",
+ "fam.tutor.t": "튜터",
+ "fam.tutor.d": "네트워크 없이도 한 단계씩 가르쳐 줘요.",
+ "fam.quiz.t": "가족 퀴즈",
+ "fam.quiz.d": "온 가족이 함께, 또는 어른끼리만 하는 퀴즈.",
+ "fam.natal.t": "가족과 함께하는 크리스마스",
+ "fam.natal.d": "놀이, 종이 도안, 간직할 수 있는 상장.",
+ "fam.video.t": "영상 스튜디오",
+ "fam.video.d": "인터넷 없이 촬영하고 영상을 봉인해서 보관해요.",
+ "fam.contas.t": "봉인된 계산",
+ "fam.contas.d": "계산하고 결과를 봉인해서 보관해요.",
+ "fam.arte.t": "예술 스튜디오",
+ "fam.arte.d": "음악과 그림, 내 이름으로.",
+ "fam.regua.t": "지구의 자",
+ "fam.regua.d": "아직 지구를 구할 시간이 있을까요?",
+ "fam.aventura.t": "가족 모험",
+ "fam.aventura.d": "함께 즐기는 모험 게임."
+}
