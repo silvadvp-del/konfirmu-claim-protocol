@@ -21,7 +21,7 @@ canvas{display:none}
 <div class="card">
 <b>1. Capturar</b><br>
 <button onclick="abrirCamara()">📸 Abrir câmara</button> <button onclick="capturar()">Capturar e comprimir</button> <button onclick="parar()">parar</button><br>
-<video id="cam" playsinline></video>
+<video id="cam" autoplay muted playsinline></video>
 <img id="foto" style="display:none">
 <pre id="capturaInfo">—</pre>
 </div>
@@ -292,21 +292,38 @@ var KSHA = (function () {
 })();
 /* <<< KSHA: fim */
 function sha256Photo(str){ return KSHA.deTexto(str); }
-var streamAtivo = null;
+var streamAtivo = null, vezCamara = 0;
 var blobSelado = null;
 var selo = null;
 function toHex(u8){ var s=""; for (var i=0;i<u8.length;i++) s += ("0"+u8[i].toString(16)).slice(-2); return s; }
 function fromHex(h){ var u=new Uint8Array(h.length/2); for (var i=0;i<u.length;i++) u[i]=parseInt(h.substr(i*2,2),16); return u; }
 async function abrirCamara(){
+  var cam = document.getElementById("cam");
+  var pedido = ++vezCamara;
   try {
-    streamAtivo = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-    document.getElementById("cam").srcObject = streamAtivo;
-  } catch(e){ alert("câmara indisponível: " + e); }
+    var novo = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+    if (pedido !== vezCamara) { novo.getTracks().forEach(t => t.stop()); return; }
+    if (streamAtivo) streamAtivo.getTracks().forEach(t => t.stop());
+    cam.srcObject = streamAtivo = novo;
+    await cam.play();
+  } catch(e){
+    if (pedido !== vezCamara) return;
+    parar();
+    alert("câmara indisponível: " + e);
+  }
 }
-function parar(){ if(streamAtivo){ streamAtivo.getTracks().forEach(function(t){t.stop();}); streamAtivo = null; } }
+function parar(){
+  vezCamara++;
+  if (streamAtivo) streamAtivo.getTracks().forEach(t => t.stop());
+  document.getElementById("cam").srcObject = null;
+  streamAtivo = null;
+}
 function capturar(){
   var v = document.getElementById("cam");
   if(!v.srcObject){ alert("primeiro abre a câmara"); return; }
+  if (!streamAtivo.active || v.paused || v.readyState < 2 || !v.videoWidth || !v.videoHeight) {
+    alert("Aguarda a imagem em direto antes de capturar."); return;
+  }
   var c = document.createElement("canvas");
   c.width = v.videoWidth; c.height = v.videoHeight;
   c.getContext("2d").drawImage(v, 0, 0);

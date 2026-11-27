@@ -11,7 +11,7 @@
 body{font-family:system-ui,-apple-system,sans-serif;max-width:640px;margin:0 auto;padding:16px;background:#0d1117;color:#e6edf3}
 h1{font-size:1.2em} .card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;margin:12px 0}
 input[type=file]{width:100%;color:#e6edf3} pre{white-space:pre-wrap;word-break:break-all;font-size:.85em}
-.verde{color:#3fb950} .vermelho{color:#f85149} .aviso{font-size:.8em;color:#8b949e;margin-top:14px}
+.coincide{color:#f7b397} .outra-referencia{color:#aeb7c1} .aviso{font-size:.8em;color:#8b949e;margin-top:14px}
 table{font-size:.8em;border-collapse:collapse;width:100%} td,th{border:1px solid #30363d;padding:4px 6px;text-align:left}
 </style>
 </head>
@@ -30,7 +30,7 @@ table{font-size:.8em;border-collapse:collapse;width:100%} td,th{border:1px solid
 
 <div class="card">
 <b>2. Hash publicados (selados pela casa, 23-11-2026):</b>
-<table>
+<table id="referencias">
 <tr><th>Objecto</th><th>SHA-256</th><th>Resultado</th></tr>
 <tr><td>konfirmu_calc.py v3.0.0</td><td>529098c652ee8234960d69383e308f60db6a5df8ea6bdae578b538eb806e80cf</td><td id="r1">—</td></tr>
 <tr><td>GENESIS_STAMP_v4.json</td><td>3cfe80002b756a40b81ceeae1ff5bec58d55bc49b80303f94cb16164ac036277</td><td id="r2">—</td></tr>
@@ -326,12 +326,7 @@ function calc(){
   var out=document.getElementById("out");
   function finish(h){
     out.textContent=h;
-    var rows={r1:"529098c652ee8234960d69383e308f60db6a5df8ea6bdae578b538eb806e80cf",
-      r2:"3cfe80002b756a40b81ceeae1ff5bec58d55bc49b80303f94cb16164ac036277",
-      r3:"01721dfa169c8cd8c3ae45f5f6cf454b16efcee963812552b8dbf3e005f80f37",
-      r4:"df182d72860c5519be378a49c2ff7f76c37b0c36814b6802346e4b5f7d277dce"};
-    for(var id in rows){var el=document.getElementById(id);
-      el.textContent=(h===rows[id])?"✓ CONFERE":"✗ não bate"; el.className=(h===rows[id])?"verde":"vermelho";}
+    mostrarReferencias(h);
   }
   calc.vez=(calc.vez||0)+1; var vez=calc.vez;
   function pinta(t){["r1","r2","r3","r4"].forEach(function(id){var el=document.getElementById(id); el.textContent=t; el.className="";});}
@@ -340,7 +335,7 @@ function calc(){
       .then(function(r){if(vez===calc.vez)finish(r.sha256);})
       .catch(function(e){if(vez!==calc.vez)return; pinta("—"); out.textContent="não consegui calcular: "+((e&&e.message)||e);});}
   else if(tx){finish(sha256(tx));}
-  else{out.textContent="escolhe um ficheiro ou cola texto";}
+  else{pinta("—"); out.textContent="escolhe um ficheiro ou cola texto";}
 }
 if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(function(){});}
 
@@ -421,16 +416,19 @@ async function lerQR(){
   })();
 }
 
+function mostrarReferencias(h){
+  var encontrou = false;
+  for (var el of document.querySelectorAll("#referencias td[id]")) {
+    var linha = el.parentNode;
+    var igual = h === linha.cells[1].textContent.trim();
+    el.textContent = igual ? "✓ CONFERE" : "Outra referência";
+    el.className = igual ? "coincide" : "outra-referencia";
+    if (igual) encontrou = true;
+  }
+  return encontrou;
+}
 function verificarHashLido(h){
-  var rows = {
-    "529098c652ee8234960d69383e308f60db6a5df8ea6bdae578b538eb806e80cf": "r1",
-    "3cfe80002b756a40b81ceeae1ff5bec58d55bc49b80303f94cb16164ac036277": "r2",
-    "01721dfa169c8cd8c3ae45f5f6cf454b16efcee963812552b8dbf3e005f80f37": "r3",
-    "df182d72860c5519be378a49c2ff7f76c37b0c36814b6802346e4b5f7d277dce": "r4"
-  };
-  var el = rows[h] ? document.getElementById(rows[h]) : null;
-  if(el){ el.textContent = "✓ CONFERE"; el.className = "verde"; }
-  else { document.getElementById("qrout").textContent += "\n(atenção: hash lido não está na lista publicada — verifica a fonte do QR)"; }
+  if (!mostrarReferencias(h)) document.getElementById("qrout").textContent += "\nEste resumo não consta das referências publicadas.";
 }
 
 </script>
