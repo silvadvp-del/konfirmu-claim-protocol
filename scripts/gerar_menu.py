@@ -2,7 +2,8 @@
 """Gera o menu de entrada da Konfirmu em 3 portais (pedido do David, 27-11, 04:59–05:00).
 
 Escreve 3 ficheiros no repositório público:
-  app_unica.html              menu da raiz (19 atividades + botão «Preparar modo avião»)
+  app_unica.html              menu da raiz (19 atividades, a página «Economia anti-casino» e o botão
+                               «Preparar modo avião»)
   edicao-21/app_unica.html    menu da edição integrada (21 atividades) — é o menu do pacote
   edicao-21/index.html        igual ao anterior
 
@@ -73,6 +74,7 @@ PORTAIS = [
     ("fam", "Família", "Educação e família",
      "Aprender e brincar em família, com o mesmo cuidado pela privacidade.", [
          ("girafinhas_criancas_facil.html", "toque", "Primeiros passos", "Três toques, voz e cores, para quem nunca usou um telemóvel.", None),
+         ("economia_anti_casino.html", "contas", "Economia anti-casino", "Porque aqui um crédito só nasce de um trabalho conferido. Passo a passo.", None),
          ("Tutor-Girafinha-offline.html", "livro", "Tutor", "Ensina passo a passo, mesmo sem rede.", None),
          ("kcp_family_quiz.html", "quiz", "Quiz em família", "Perguntas para jogar em família, ou só entre adultos.", None),
          ("sala_natal_girafinhas.html", "estrela", "Natal em família", "Jogos, moldes de papel e um certificado para guardar.", None),
@@ -85,6 +87,8 @@ PORTAIS = [
 ]
 
 SO_NA_EDICAO_21 = {"Tutor-Girafinha-offline.html", "kcp_family_quiz.html"}
+# Página explicativa, não é atividade: só no menu da raiz (o pacote da edição 21 só aceita atividades).
+SO_NA_RAIZ = {"economia_anti_casino.html"}
 
 CSS = """
 :root{color-scheme:light dark;--pagina:#F3F1EE;--painel:#FBFAF8;--tinta:#1D1D21;--tinta2:#4B4B52;--tinta3:#4B4B50;--linha:#E2DDD6;--azulejo:#ECE8E2;--u:#D97D4A;
@@ -283,6 +287,8 @@ def pagina(variante, avisos):
         for href, icone, nome, descricao, estado in itens:
             if href in SO_NA_EDICAO_21 and not edicao:
                 continue
+            if href in SO_NA_RAIZ and edicao:
+                continue
             partes.append(cartao(href, icone, nome, descricao, estado))
             total += 1
         partes += ['</div>', '</section>']
@@ -312,7 +318,7 @@ def main():
     avisos = avisos_pt(repo)
     raiz, n_raiz = pagina("raiz", avisos)
     ed, n_ed = pagina("edicao21", avisos)
-    assert n_raiz == 19 and n_ed == 21, (n_raiz, n_ed)
+    assert n_raiz == 20 and n_ed == 21, (n_raiz, n_ed)
     for caminho, conteudo in (("app_unica.html", raiz), ("edicao-21/app_unica.html", ed), ("edicao-21/index.html", ed)):
         with open(os.path.join(repo, caminho), "w", encoding="utf-8") as f:
             f.write(conteudo)
