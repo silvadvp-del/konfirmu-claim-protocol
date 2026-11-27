@@ -12,3 +12,6 @@ As 06 e 07 vêm do link de ensaio no Vercel (`dpl_8qwTPZMPGe4xHkkquQAEt8NSgBdi`,
 | `05_menu_familia_telemovel.jpg` | Menu, separador Família, telemóvel. | `934b86116af8b6abee21c58c824b14c9009b4be628a31aed64ecc6aed4e2f7f7` |
 | `06_link_ao_vivo_entrada_navegador_real.jpg` | Link de ensaio no Vercel, aberto no navegador da app Claude no Mac (GPU real): entrada com as tigelas. Quadro desenhado com ?quadros porque o painel estava escondido. | `10b2246344e2034868b34c50121270ab77c2a64362b49d303e81389425637e77` |
 | `07_link_ao_vivo_menu_navegador_real.jpg` | Link de ensaio no Vercel, mesmo navegador: menu. 0 erros da página; 2 avisos da barra que o Vercel injeta, bloqueada pela CSP. | `dcc7e56d8a61e93dc1514d648ef16b4921bf0040cef01b90a6e30908879fcc8d` |
+| `medicoes.md` | Tabelas das medições de memória (cópia do recibo no OneDrive). | `3d6eb6051a7c433f45879cb11a76b027673d168c664825bc3ff8d904f61306e3` |
+| `dados_brutos_memoria.json` | Dados brutos de todas as medições, com o SHA-256 de cada ficheiro original. | `c286deb30a5a2ccd05d50ceeefd286dcc08e04e22625e1d551804ff37c3d933e` |
+| `metodo_programas.md` | Os programas que mediram (medir_memoria.py, curva_longa.py, uso_real.py) e as comparações de desenho. | `210259c5e5364d6eda486af699e33ce41cefbbcf1cbb4bd6d6908770263dcfbb` |

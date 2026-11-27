@@ -1,0 +1,1956 @@
+{
+ "_sobre": "Dados brutos das medições de memória da KON-623 (27-11-2026). Cada entrada é o ficheiro tal como saiu do medidor; 'sha256' é o do ficheiro original.",
+ "ficheiros": {
+  "menu_main.json": {
+   "sha256": "1c57f23f716cd1c5134717a4f1cb3ff93f17698eca6de71c4039ad1a247acf72",
+   "conteudo": {
+    "pasta": "/home/claude/work/arvore_main",
+    "pagina": "app_unica.html",
+    "limite_pss_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "pico_renderer": {
+       "Rss": 229027840,
+       "Pss": 150557696,
+       "Private_Dirty": 67047424,
+       "VmHWM": 229044224
+      },
+      "pico_gpu": {
+       "Rss": 199843840,
+       "Pss": 132376576,
+       "Private_Dirty": 32563200,
+       "VmHWM": 199888896
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     },
+     {
+      "perfil": "computador",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "pico_renderer": {
+       "Rss": 250167296,
+       "Pss": 160404480,
+       "Private_Dirty": 72413184,
+       "VmHWM": 250167296
+      },
+      "pico_gpu": {
+       "Rss": 227803136,
+       "Pss": 150882304,
+       "Private_Dirty": 42020864,
+       "VmHWM": 227975168
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     }
+    ],
+    "resultado": "FALHA"
+   }
+  },
+  "menu_fases.json": {
+   "sha256": "c40d0144be639f6e806c215af77d15c5a2cb253ec73c19c029bae821c4ba9c91",
+   "conteudo": {
+    "pasta": "/home/claude/work/arvore_main",
+    "pagina": "app_unica.html",
+    "limite_pss_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        39.4,
+        33.6
+       ],
+       [
+        "4s parado",
+        43.9,
+        46.9
+       ],
+       [
+        "depois dos toques",
+        60.5,
+        60.4
+       ],
+       [
+        "depois das setas",
+        62.1,
+        62.0
+       ],
+       [
+        "lista de línguas",
+        66.7,
+        66.5
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 238268416,
+       "Pss": 152896512,
+       "Private_Dirty": 67997696,
+       "VmHWM": 238268416
+      },
+      "pico_gpu": {
+       "Rss": 210780160,
+       "Pss": 138157056,
+       "Private_Dirty": 32518144,
+       "VmHWM": 210759680
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     },
+     {
+      "perfil": "computador",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        33.8,
+        34.4
+       ],
+       [
+        "4s parado",
+        38.8,
+        39.1
+       ],
+       [
+        "depois dos toques",
+        67.1,
+        67.0
+       ],
+       [
+        "depois das setas",
+        68.3,
+        68.3
+       ],
+       [
+        "lista de línguas",
+        66.6,
+        72.0
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 251158528,
+       "Pss": 161508352,
+       "Private_Dirty": 71999488,
+       "VmHWM": 251158528
+      },
+      "pico_gpu": {
+       "Rss": 229793792,
+       "Pss": 152275968,
+       "Private_Dirty": 42618880,
+       "VmHWM": 229728256
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     }
+    ],
+    "resultado": "FALHA"
+   }
+  },
+  "vazia.json": {
+   "sha256": "109e4b5b58ef64ae72ee9f1f8cf698cbc2f1d643419a63a1888dd2a34fdfeb1e",
+   "conteudo": {
+    "pasta": "/home/claude/work/arvore_main",
+    "pagina": "_vazia.html",
+    "limite_pss_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "webgl": true,
+      "canvases": 0,
+      "toques": 0,
+      "pico_renderer": {
+       "Rss": 121942016,
+       "Pss": 63130624,
+       "Private_Dirty": 12877824,
+       "VmHWM": 122085376
+      },
+      "pico_gpu": {
+       "Rss": 147648512,
+       "Pss": 97763328,
+       "Private_Dirty": 23744512,
+       "VmHWM": 147648512
+      },
+      "erros": [
+       "console: Failed to load resource: the server responded with a status of 404 (File not found)"
+      ],
+      "pedidos_para_fora": [],
+      "passa": false
+     },
+     {
+      "perfil": "computador",
+      "webgl": true,
+      "canvases": 0,
+      "toques": 0,
+      "pico_renderer": {
+       "Rss": 122064896,
+       "Pss": 62965760,
+       "Private_Dirty": 12836864,
+       "VmHWM": 122077184
+      },
+      "pico_gpu": {
+       "Rss": 151588864,
+       "Pss": 101652480,
+       "Private_Dirty": 27320320,
+       "VmHWM": 151588864
+      },
+      "erros": [
+       "console: Failed to load resource: the server responded with a status of 404 (File not found)"
+      ],
+      "pedidos_para_fora": [],
+      "passa": false
+     }
+    ],
+    "resultado": "FALHA"
+   }
+  },
+  "familia3d_original.json": {
+   "sha256": "716fbdc859c52ba7dd0c1abb3348af8dc16c80d44a80a055cd97c77ca0a169f1",
+   "conteudo": {
+    "pasta": "/home/claude/work/arvore_main",
+    "pagina": "portal_familia_dual_mode.html",
+    "limite_pss_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "webgl": true,
+      "canvases": 1,
+      "toques": 8,
+      "pico_renderer": {
+       "Rss": 214159360,
+       "Pss": 134765568,
+       "Private_Dirty": 51990528,
+       "VmHWM": 214564864
+      },
+      "pico_gpu": {
+       "Rss": 341250048,
+       "Pss": 273328128,
+       "Private_Dirty": 167542784,
+       "VmHWM": 341266432
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     },
+     {
+      "perfil": "computador",
+      "webgl": true,
+      "canvases": 1,
+      "toques": 8,
+      "pico_renderer": {
+       "Rss": 207040512,
+       "Pss": 129425408,
+       "Private_Dirty": 49745920,
+       "VmHWM": 209321984
+      },
+      "pico_gpu": {
+       "Rss": 335810560,
+       "Pss": 269366272,
+       "Private_Dirty": 165457920,
+       "VmHWM": 336158720
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     }
+    ],
+    "resultado": "FALHA"
+   }
+  },
+  "padrao_site_1_1.json": {
+   "sha256": "b69566ce31663c4fc448a40f461c1faab3aee30466f0a79f91bd9435d2a58a1c",
+   "conteudo": {
+    "pasta": "/tmp/site_1/konfirmu/app",
+    "pagina": "app_unica.html",
+    "limite_pss_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        26.4,
+        20.7
+       ],
+       [
+        "4s parado",
+        35.9,
+        36.0
+       ],
+       [
+        "depois dos toques",
+        47.6,
+        47.5
+       ],
+       [
+        "depois das setas",
+        49.4,
+        49.3
+       ],
+       [
+        "lista de línguas",
+        55.0,
+        54.9
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 203169792,
+       "Pss": 129446912,
+       "Private_Dirty": 56406016,
+       "VmHWM": 203239424
+      },
+      "pico_gpu": {
+       "Rss": 185978880,
+       "Pss": 125147136,
+       "Private_Dirty": 32063488,
+       "VmHWM": 185978880
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     },
+     {
+      "perfil": "computador",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        31.8,
+        35.3
+       ],
+       [
+        "4s parado",
+        38.9,
+        38.8
+       ],
+       [
+        "depois dos toques",
+        59.2,
+        59.0
+       ],
+       [
+        "depois das setas",
+        61.2,
+        60.9
+       ],
+       [
+        "lista de línguas",
+        64.4,
+        64.7
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 227840000,
+       "Pss": 146055168,
+       "Private_Dirty": 66330624,
+       "VmHWM": 227840000
+      },
+      "pico_gpu": {
+       "Rss": 210259968,
+       "Pss": 140559360,
+       "Private_Dirty": 40271872,
+       "VmHWM": 209887232
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     }
+    ],
+    "resultado": "FALHA"
+   }
+  },
+  "padrao_site_1_2.json": {
+   "sha256": "f09cf8aed8d22baaf962934ad483d5b0518e7d371a1e98c2506cacc5ec751788",
+   "conteudo": {
+    "pasta": "/tmp/site_1/konfirmu/app",
+    "pagina": "app_unica.html",
+    "limite_pss_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        28.0,
+        27.3
+       ],
+       [
+        "4s parado",
+        36.5,
+        36.6
+       ],
+       [
+        "depois dos toques",
+        47.5,
+        47.4
+       ],
+       [
+        "depois das setas",
+        49.4,
+        49.4
+       ],
+       [
+        "lista de línguas",
+        55.4,
+        55.3
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 203456512,
+       "Pss": 131038208,
+       "Private_Dirty": 56881152,
+       "VmHWM": 203456512
+      },
+      "pico_gpu": {
+       "Rss": 185053184,
+       "Pss": 124016640,
+       "Private_Dirty": 32030720,
+       "VmHWM": 185049088
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     },
+     {
+      "perfil": "computador",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        30.5,
+        31.4
+       ],
+       [
+        "4s parado",
+        36.5,
+        36.8
+       ],
+       [
+        "depois dos toques",
+        50.2,
+        50.1
+       ],
+       [
+        "depois das setas",
+        52.6,
+        52.4
+       ],
+       [
+        "lista de línguas",
+        58.2,
+        57.9
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 220475392,
+       "Pss": 139583488,
+       "Private_Dirty": 59785216,
+       "VmHWM": 220475392
+      },
+      "pico_gpu": {
+       "Rss": 208400384,
+       "Pss": 139756544,
+       "Private_Dirty": 39383040,
+       "VmHWM": 208412672
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     }
+    ],
+    "resultado": "PASSA"
+   }
+  },
+  "padrao_menu_final_1.json": {
+   "sha256": "7464c1f2ae187a15b1a5b32da8bfea85db4e7f45c4190d529ed892a14ee26a3c",
+   "conteudo": {
+    "pasta": "/tmp/nl_e/konfirmu/app",
+    "pagina": "app_unica.html",
+    "limite_pss_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        31.2,
+        18.8
+       ],
+       [
+        "4s parado",
+        33.9,
+        33.9
+       ],
+       [
+        "depois dos toques",
+        44.3,
+        44.3
+       ],
+       [
+        "depois das setas",
+        44.5,
+        44.5
+       ],
+       [
+        "lista de línguas",
+        48.0,
+        48.0
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 195338240,
+       "Pss": 124558336,
+       "Private_Dirty": 48173056,
+       "VmHWM": 195338240
+      },
+      "pico_gpu": {
+       "Rss": 182099968,
+       "Pss": 123627520,
+       "Private_Dirty": 31707136,
+       "VmHWM": 182198272
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     },
+     {
+      "perfil": "computador",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        30.8,
+        22.6
+       ],
+       [
+        "4s parado",
+        41.5,
+        42.2
+       ],
+       [
+        "depois dos toques",
+        52.0,
+        52.0
+       ],
+       [
+        "depois das setas",
+        52.5,
+        52.5
+       ],
+       [
+        "lista de línguas",
+        55.8,
+        55.8
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 218988544,
+       "Pss": 137085952,
+       "Private_Dirty": 56209408,
+       "VmHWM": 219242496
+      },
+      "pico_gpu": {
+       "Rss": 208928768,
+       "Pss": 139960320,
+       "Private_Dirty": 39260160,
+       "VmHWM": 208953344
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     }
+    ],
+    "resultado": "PASSA"
+   }
+  },
+  "padrao_menu_final_2.json": {
+   "sha256": "bb560576953756f7b1e25456f4053c67627261eaad91f4315b28549a2a61937b",
+   "conteudo": {
+    "pasta": "/tmp/nl_e/konfirmu/app",
+    "pagina": "app_unica.html",
+    "limite_pss_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        28.3,
+        25.7
+       ],
+       [
+        "4s parado",
+        33.6,
+        33.6
+       ],
+       [
+        "depois dos toques",
+        47.4,
+        47.4
+       ],
+       [
+        "depois das setas",
+        47.6,
+        47.6
+       ],
+       [
+        "lista de línguas",
+        49.4,
+        50.3
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 201310208,
+       "Pss": 126000128,
+       "Private_Dirty": 50348032,
+       "VmHWM": 201310208
+      },
+      "pico_gpu": {
+       "Rss": 188461056,
+       "Pss": 125715456,
+       "Private_Dirty": 32092160,
+       "VmHWM": 188657664
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     },
+     {
+      "perfil": "computador",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        28.2,
+        22.3
+       ],
+       [
+        "4s parado",
+        42.2,
+        42.2
+       ],
+       [
+        "depois dos toques",
+        52.9,
+        53.4
+       ],
+       [
+        "depois das setas",
+        53.4,
+        53.4
+       ],
+       [
+        "lista de línguas",
+        54.9,
+        54.9
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 216944640,
+       "Pss": 135663616,
+       "Private_Dirty": 55332864,
+       "VmHWM": 218828800
+      },
+      "pico_gpu": {
+       "Rss": 209166336,
+       "Pss": 140554240,
+       "Private_Dirty": 40214528,
+       "VmHWM": 209428480
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     }
+    ],
+    "resultado": "PASSA"
+   }
+  },
+  "padrao_entrada_final_1.json": {
+   "sha256": "395bbc73978210012c769c11ebcd73ba58c696830c5ae8a578bae0752ed58b9b",
+   "conteudo": {
+    "pasta": "/tmp/nl_e/konfirmu/app",
+    "pagina": "index.html",
+    "limite_pss_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "webgl": true,
+      "canvases": 1,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        46.0,
+        42.3
+       ],
+       [
+        "4s parado",
+        49.3,
+        54.9
+       ],
+       [
+        "depois dos toques",
+        50.8,
+        54.9
+       ],
+       [
+        "depois das setas",
+        54.4,
+        54.9
+       ],
+       [
+        "lista de línguas",
+        53.7,
+        56.1
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 224919552,
+       "Pss": 107338752,
+       "Private_Dirty": 56098816,
+       "VmHWM": 225927168
+      },
+      "pico_gpu": {
+       "Rss": 338755584,
+       "Pss": 228521984,
+       "Private_Dirty": 165777408,
+       "VmHWM": 339329024
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     },
+     {
+      "perfil": "computador",
+      "webgl": true,
+      "canvases": 1,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        49.8,
+        42.3
+       ],
+       [
+        "4s parado",
+        49.4,
+        53.3
+       ],
+       [
+        "depois dos toques",
+        51.0,
+        53.3
+       ],
+       [
+        "depois das setas",
+        52.1,
+        53.3
+       ],
+       [
+        "lista de línguas",
+        46.4,
+        53.3
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 216858624,
+       "Pss": 111057920,
+       "Private_Dirty": 53338112,
+       "VmHWM": 218759168
+      },
+      "pico_gpu": {
+       "Rss": 335491072,
+       "Pss": 226297856,
+       "Private_Dirty": 165076992,
+       "VmHWM": 336064512
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     }
+    ],
+    "resultado": "PASSA"
+   }
+  },
+  "padrao_entrada_final_2.json": {
+   "sha256": "87567aaf33a83e92037ef92736a73b52a6f35079fd907659bb21038de4d23141",
+   "conteudo": {
+    "pasta": "/tmp/nl_e/konfirmu/app",
+    "pagina": "index.html",
+    "limite_pss_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "webgl": true,
+      "canvases": 1,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        43.2,
+        44.5
+       ],
+       [
+        "4s parado",
+        49.4,
+        53.0
+       ],
+       [
+        "depois dos toques",
+        51.0,
+        53.0
+       ],
+       [
+        "depois das setas",
+        45.1,
+        53.0
+       ],
+       [
+        "lista de línguas",
+        46.8,
+        53.0
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 215867392,
+       "Pss": 97277952,
+       "Private_Dirty": 53014528,
+       "VmHWM": 216055808
+      },
+      "pico_gpu": {
+       "Rss": 339439616,
+       "Pss": 227841024,
+       "Private_Dirty": 165294080,
+       "VmHWM": 340004864
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     },
+     {
+      "perfil": "computador",
+      "webgl": true,
+      "canvases": 1,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        42.2,
+        48.7
+       ],
+       [
+        "4s parado",
+        48.4,
+        53.2
+       ],
+       [
+        "depois dos toques",
+        49.9,
+        53.2
+       ],
+       [
+        "depois das setas",
+        50.8,
+        53.2
+       ],
+       [
+        "lista de línguas",
+        51.6,
+        53.7
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 217903104,
+       "Pss": 125868032,
+       "Private_Dirty": 53747712,
+       "VmHWM": 219054080
+      },
+      "pico_gpu": {
+       "Rss": 335548416,
+       "Pss": 227208192,
+       "Private_Dirty": 165339136,
+       "VmHWM": 336338944
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     }
+    ],
+    "resultado": "PASSA"
+   }
+  },
+  "padrao_g_menu_1.json": {
+   "sha256": "8152b13f202345c970910c5e911f53a553cc51a2a554b534379ec8c93f6667d8",
+   "conteudo": {
+    "pasta": "/tmp/nl_g/konfirmu/app",
+    "pagina": "app_unica.html",
+    "limite_pss_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        30.0,
+        21.2
+       ],
+       [
+        "4s parado",
+        35.4,
+        35.6
+       ],
+       [
+        "depois dos toques",
+        49.5,
+        49.5
+       ],
+       [
+        "depois das setas",
+        49.5,
+        50.5
+       ],
+       [
+        "lista de línguas",
+        50.6,
+        51.8
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 207335424,
+       "Pss": 129783808,
+       "Private_Dirty": 51843072,
+       "VmHWM": 208261120
+      },
+      "pico_gpu": {
+       "Rss": 198053888,
+       "Pss": 132398080,
+       "Private_Dirty": 35004416,
+       "VmHWM": 198295552
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     },
+     {
+      "perfil": "computador",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        28.6,
+        23.0
+       ],
+       [
+        "4s parado",
+        41.1,
+        43.5
+       ],
+       [
+        "depois dos toques",
+        48.8,
+        50.9
+       ],
+       [
+        "depois das setas",
+        48.9,
+        50.9
+       ],
+       [
+        "lista de línguas",
+        51.1,
+        53.7
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 224878592,
+       "Pss": 138930176,
+       "Private_Dirty": 53727232,
+       "VmHWM": 227168256
+      },
+      "pico_gpu": {
+       "Rss": 226385920,
+       "Pss": 151627776,
+       "Private_Dirty": 45010944,
+       "VmHWM": 226893824
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     }
+    ],
+    "resultado": "PASSA"
+   }
+  },
+  "padrao_g_menu_2.json": {
+   "sha256": "6216ebb81044fe18a7bba104faa7c3602c4aabf2bbae8237867c96b6dca6ec47",
+   "conteudo": {
+    "pasta": "/tmp/nl_g/konfirmu/app",
+    "pagina": "app_unica.html",
+    "limite_pss_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        30.8,
+        20.4
+       ],
+       [
+        "4s parado",
+        34.7,
+        35.6
+       ],
+       [
+        "depois dos toques",
+        45.5,
+        45.7
+       ],
+       [
+        "depois das setas",
+        45.6,
+        46.1
+       ],
+       [
+        "lista de línguas",
+        46.0,
+        48.7
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 203128832,
+       "Pss": 126558208,
+       "Private_Dirty": 48676864,
+       "VmHWM": 203759616
+      },
+      "pico_gpu": {
+       "Rss": 196530176,
+       "Pss": 132052992,
+       "Private_Dirty": 35491840,
+       "VmHWM": 196620288
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     },
+     {
+      "perfil": "computador",
+      "webgl": true,
+      "canvases": 2,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        34.0,
+        30.6
+       ],
+       [
+        "4s parado",
+        41.7,
+        43.5
+       ],
+       [
+        "depois dos toques",
+        51.3,
+        53.6
+       ],
+       [
+        "depois das setas",
+        51.4,
+        53.7
+       ],
+       [
+        "lista de línguas",
+        53.3,
+        55.1
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 236081152,
+       "Pss": 145790976,
+       "Private_Dirty": 55058432,
+       "VmHWM": 237686784
+      },
+      "pico_gpu": {
+       "Rss": 234528768,
+       "Pss": 155783168,
+       "Private_Dirty": 45096960,
+       "VmHWM": 234995712
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     }
+    ],
+    "resultado": "PASSA"
+   }
+  },
+  "padrao_g_entrada_1.json": {
+   "sha256": "03adc4fe9d5b228fc94242bcbb9defad8697aff1e7dfe2d8fbced6c6e8e2daea",
+   "conteudo": {
+    "pasta": "/tmp/nl_g/konfirmu/app",
+    "pagina": "index.html",
+    "limite_pss_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "webgl": true,
+      "canvases": 1,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        44.9,
+        49.2
+       ],
+       [
+        "4s parado",
+        49.2,
+        53.3
+       ],
+       [
+        "depois dos toques",
+        50.7,
+        53.3
+       ],
+       [
+        "depois das setas",
+        52.4,
+        53.3
+       ],
+       [
+        "lista de línguas",
+        53.6,
+        54.4
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 221499392,
+       "Pss": 140012544,
+       "Private_Dirty": 54366208,
+       "VmHWM": 222568448
+      },
+      "pico_gpu": {
+       "Rss": 339537920,
+       "Pss": 271073280,
+       "Private_Dirty": 166260736,
+       "VmHWM": 339742720
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     },
+     {
+      "perfil": "computador",
+      "webgl": true,
+      "canvases": 1,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        42.8,
+        41.8
+       ],
+       [
+        "4s parado",
+        48.2,
+        52.0
+       ],
+       [
+        "depois dos toques",
+        50.2,
+        52.0
+       ],
+       [
+        "depois das setas",
+        51.1,
+        52.1
+       ],
+       [
+        "lista de línguas",
+        51.8,
+        54.3
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 216604672,
+       "Pss": 137466880,
+       "Private_Dirty": 54280192,
+       "VmHWM": 217378816
+      },
+      "pico_gpu": {
+       "Rss": 335040512,
+       "Pss": 268052480,
+       "Private_Dirty": 164777984,
+       "VmHWM": 334929920
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     }
+    ],
+    "resultado": "PASSA"
+   }
+  },
+  "padrao_g_entrada_2.json": {
+   "sha256": "8185e244f9151c7f60768dfae1abdf172fecd7a9aaa25ce10424a27753993149",
+   "conteudo": {
+    "pasta": "/tmp/nl_g/konfirmu/app",
+    "pagina": "index.html",
+    "limite_pss_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "webgl": true,
+      "canvases": 1,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        45.0,
+        41.7
+       ],
+       [
+        "4s parado",
+        49.5,
+        53.7
+       ],
+       [
+        "depois dos toques",
+        51.0,
+        53.7
+       ],
+       [
+        "depois das setas",
+        52.6,
+        53.7
+       ],
+       [
+        "lista de línguas",
+        53.0,
+        56.4
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 224018432,
+       "Pss": 142522368,
+       "Private_Dirty": 56422400,
+       "VmHWM": 224018432
+      },
+      "pico_gpu": {
+       "Rss": 339296256,
+       "Pss": 270311424,
+       "Private_Dirty": 165888000,
+       "VmHWM": 339722240
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     },
+     {
+      "perfil": "computador",
+      "webgl": true,
+      "canvases": 1,
+      "toques": 8,
+      "fases": [
+       [
+        "carregou",
+        47.7,
+        41.1
+       ],
+       [
+        "4s parado",
+        49.1,
+        53.0
+       ],
+       [
+        "depois dos toques",
+        51.6,
+        53.0
+       ],
+       [
+        "depois das setas",
+        52.0,
+        53.0
+       ],
+       [
+        "lista de línguas",
+        52.4,
+        54.0
+       ]
+      ],
+      "pico_renderer": {
+       "Rss": 217133056,
+       "Pss": 137851904,
+       "Private_Dirty": 53952512,
+       "VmHWM": 218968064
+      },
+      "pico_gpu": {
+       "Rss": 334434304,
+       "Pss": 267661312,
+       "Private_Dirty": 164679680,
+       "VmHWM": 334880768
+      },
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": true
+     }
+    ],
+    "resultado": "PASSA"
+   }
+  },
+  "normal_antigo.json": {
+   "sha256": "a8a33d65bcab484384dbd87af7f4bf4b5d40261b17554b356fe0e8d3b6b92ec0",
+   "conteudo": {
+    "pagina": "app_unica.html",
+    "metodo": "Chrome for Testing: memória privada (Private_Dirty) do processo da página, amostra a cada 100 ms",
+    "limite_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "pico_bytes": 146599936,
+      "pico_MB": 146.6,
+      "fases": [
+       [
+        "carregou e 4 s parado",
+        33.8,
+        33.7
+       ],
+       [
+        "percorreu o ecrã",
+        37.4,
+        37.4
+       ],
+       [
+        "abriu 3 separadores",
+        56.7,
+        56.5
+       ],
+       [
+        "Imersão 3D ligada",
+        66.5,
+        66.5
+       ],
+       [
+        "mexeu 8 s em imersão",
+        139.9,
+        140.1
+       ],
+       [
+        "rolou a página",
+        137.9,
+        140.6
+       ],
+       [
+        "lista de línguas",
+        144.7,
+        144.7
+       ],
+       [
+        "10 s parado no fim",
+        139.3,
+        146.6
+       ]
+      ],
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     },
+     {
+      "perfil": "computador",
+      "pico_bytes": 139251712,
+      "pico_MB": 139.3,
+      "fases": [
+       [
+        "carregou e 4 s parado",
+        37.0,
+        37.0
+       ],
+       [
+        "percorreu o ecrã",
+        51.4,
+        51.5
+       ],
+       [
+        "abriu 3 separadores",
+        71.1,
+        71.0
+       ],
+       [
+        "Imersão 3D ligada",
+        86.4,
+        86.2
+       ],
+       [
+        "mexeu 8 s em imersão",
+        137.2,
+        137.9
+       ],
+       [
+        "rolou a página",
+        131.8,
+        137.9
+       ],
+       [
+        "lista de línguas",
+        136.1,
+        137.9
+       ],
+       [
+        "10 s parado no fim",
+        124.5,
+        139.3
+       ]
+      ],
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     }
+    ],
+    "resultado": "FALHA"
+   }
+  },
+  "normal_site10_1.json": {
+   "sha256": "1c791cb21d4ab44023c5d05189464b2a362083ae9c4c9934198d8dc2ec1368ea",
+   "conteudo": {
+    "pagina": "app_unica.html",
+    "metodo": "Chrome for Testing: memória privada (Private_Dirty) do processo da página, amostra a cada 100 ms",
+    "limite_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "pico_bytes": 78987264,
+      "pico_MB": 79.0,
+      "fases": [
+       [
+        "carregou e 4 s parado",
+        33.8,
+        33.8
+       ],
+       [
+        "percorreu o ecrã",
+        35.6,
+        35.6
+       ],
+       [
+        "abriu 3 separadores",
+        49.6,
+        49.6
+       ],
+       [
+        "Imersão 3D ligada",
+        55.0,
+        55.0
+       ],
+       [
+        "mexeu 8 s em imersão",
+        59.8,
+        59.8
+       ],
+       [
+        "rolou a página",
+        61.2,
+        61.6
+       ],
+       [
+        "lista de línguas",
+        73.4,
+        73.3
+       ],
+       [
+        "10 s parado no fim",
+        54.1,
+        79.0
+       ]
+      ],
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     },
+     {
+      "perfil": "computador",
+      "pico_bytes": 94433280,
+      "pico_MB": 94.4,
+      "fases": [
+       [
+        "carregou e 4 s parado",
+        42.7,
+        42.8
+       ],
+       [
+        "percorreu o ecrã",
+        48.6,
+        48.6
+       ],
+       [
+        "abriu 3 separadores",
+        62.0,
+        62.5
+       ],
+       [
+        "Imersão 3D ligada",
+        69.9,
+        69.9
+       ],
+       [
+        "mexeu 8 s em imersão",
+        83.0,
+        83.7
+       ],
+       [
+        "rolou a página",
+        87.3,
+        88.4
+       ],
+       [
+        "lista de línguas",
+        74.8,
+        94.4
+       ],
+       [
+        "10 s parado no fim",
+        69.3,
+        94.4
+       ]
+      ],
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     }
+    ],
+    "resultado": "FALHA"
+   }
+  },
+  "normal_site10_2.json": {
+   "sha256": "21b8e85fe3ea2e96b2dbb29bb514d94a071736bbc9f117287bfa53237d41acdf",
+   "conteudo": {
+    "pagina": "app_unica.html",
+    "metodo": "Chrome for Testing: memória privada (Private_Dirty) do processo da página, amostra a cada 100 ms",
+    "limite_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "pico_bytes": 82669568,
+      "pico_MB": 82.7,
+      "fases": [
+       [
+        "carregou e 4 s parado",
+        35.5,
+        35.5
+       ],
+       [
+        "percorreu o ecrã",
+        37.0,
+        37.1
+       ],
+       [
+        "abriu 3 separadores",
+        51.5,
+        51.5
+       ],
+       [
+        "Imersão 3D ligada",
+        58.5,
+        58.7
+       ],
+       [
+        "mexeu 8 s em imersão",
+        62.9,
+        62.8
+       ],
+       [
+        "rolou a página",
+        64.0,
+        64.2
+       ],
+       [
+        "lista de línguas",
+        76.0,
+        76.1
+       ],
+       [
+        "10 s parado no fim",
+        48.1,
+        82.7
+       ]
+      ],
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     },
+     {
+      "perfil": "computador",
+      "pico_bytes": 94982144,
+      "pico_MB": 95.0,
+      "fases": [
+       [
+        "carregou e 4 s parado",
+        42.4,
+        42.4
+       ],
+       [
+        "percorreu o ecrã",
+        48.3,
+        48.3
+       ],
+       [
+        "abriu 3 separadores",
+        60.2,
+        60.2
+       ],
+       [
+        "Imersão 3D ligada",
+        68.5,
+        68.8
+       ],
+       [
+        "mexeu 8 s em imersão",
+        81.1,
+        81.5
+       ],
+       [
+        "rolou a página",
+        85.3,
+        86.5
+       ],
+       [
+        "lista de línguas",
+        93.6,
+        93.7
+       ],
+       [
+        "10 s parado no fim",
+        65.8,
+        95.0
+       ]
+      ],
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     }
+    ],
+    "resultado": "FALHA"
+   }
+  },
+  "normal_g_1.json": {
+   "sha256": "c679cf4782789e4076a8a395f8fec2c21372063d74b649017866d2a01f7f47b4",
+   "conteudo": {
+    "pagina": "app_unica.html",
+    "metodo": "Chrome for Testing: memória privada (Private_Dirty) do processo da página, amostra a cada 100 ms",
+    "limite_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "pico_bytes": 76369920,
+      "pico_MB": 76.4,
+      "fases": [
+       [
+        "carregou e 4 s parado",
+        35.5,
+        36.2
+       ],
+       [
+        "percorreu o ecrã",
+        37.1,
+        37.2
+       ],
+       [
+        "abriu 3 separadores",
+        49.4,
+        49.6
+       ],
+       [
+        "Imersão 3D ligada",
+        55.7,
+        56.5
+       ],
+       [
+        "mexeu 8 s em imersão",
+        59.8,
+        59.7
+       ],
+       [
+        "rolou a página",
+        61.3,
+        61.9
+       ],
+       [
+        "lista de línguas",
+        71.2,
+        72.4
+       ],
+       [
+        "10 s parado no fim",
+        49.8,
+        76.4
+       ]
+      ],
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     },
+     {
+      "perfil": "computador",
+      "pico_bytes": 93753344,
+      "pico_MB": 93.8,
+      "fases": [
+       [
+        "carregou e 4 s parado",
+        39.2,
+        38.7
+       ],
+       [
+        "percorreu o ecrã",
+        43.8,
+        43.7
+       ],
+       [
+        "abriu 3 separadores",
+        56.1,
+        56.1
+       ],
+       [
+        "Imersão 3D ligada",
+        65.4,
+        65.4
+       ],
+       [
+        "mexeu 8 s em imersão",
+        76.1,
+        76.6
+       ],
+       [
+        "rolou a página",
+        81.2,
+        83.5
+       ],
+       [
+        "lista de línguas",
+        85.5,
+        87.1
+       ],
+       [
+        "10 s parado no fim",
+        49.7,
+        93.8
+       ]
+      ],
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     }
+    ],
+    "resultado": "FALHA"
+   }
+  },
+  "normal_g_2.json": {
+   "sha256": "ea3729dd4b50b9f7e0f40d8e5468657b4de9558557d68a43769da34bd69c3ed4",
+   "conteudo": {
+    "pagina": "app_unica.html",
+    "metodo": "Chrome for Testing: memória privada (Private_Dirty) do processo da página, amostra a cada 100 ms",
+    "limite_bytes": 64000000,
+    "perfis": [
+     {
+      "perfil": "telemovel",
+      "pico_bytes": 76189696,
+      "pico_MB": 76.2,
+      "fases": [
+       [
+        "carregou e 4 s parado",
+        35.3,
+        35.4
+       ],
+       [
+        "percorreu o ecrã",
+        37.0,
+        37.8
+       ],
+       [
+        "abriu 3 separadores",
+        49.6,
+        50.0
+       ],
+       [
+        "Imersão 3D ligada",
+        55.2,
+        55.2
+       ],
+       [
+        "mexeu 8 s em imersão",
+        59.8,
+        59.7
+       ],
+       [
+        "rolou a página",
+        60.9,
+        61.7
+       ],
+       [
+        "lista de línguas",
+        71.0,
+        72.1
+       ],
+       [
+        "10 s parado no fim",
+        48.4,
+        76.2
+       ]
+      ],
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     },
+     {
+      "perfil": "computador",
+      "pico_bytes": 87891968,
+      "pico_MB": 87.9,
+      "fases": [
+       [
+        "carregou e 4 s parado",
+        43.3,
+        43.3
+       ],
+       [
+        "percorreu o ecrã",
+        44.3,
+        46.6
+       ],
+       [
+        "abriu 3 separadores",
+        56.4,
+        56.8
+       ],
+       [
+        "Imersão 3D ligada",
+        64.2,
+        67.4
+       ],
+       [
+        "mexeu 8 s em imersão",
+        75.3,
+        77.6
+       ],
+       [
+        "rolou a página",
+        79.7,
+        82.0
+       ],
+       [
+        "lista de línguas",
+        64.3,
+        87.9
+       ],
+       [
+        "10 s parado no fim",
+        55.3,
+        87.9
+       ]
+      ],
+      "erros": [],
+      "pedidos_para_fora": [],
+      "passa": false
+     }
+    ],
+    "resultado": "FALHA"
+   }
+  },
+  "menu_d8dc1e1_computador_75s.txt": {
+   "sha256": "9907e594fb97fcdef25593fd57a86f72af59f95c8657d6ec1abe557e307eb595",
+   "conteudo": "app_unica.html · computador · parado · 75s · css=None · init=None · erros=0\n     0s  36.7 |   5s  41.0 |  10s  42.0 |  15s  44.1 |  20s  46.0 |  25s  48.0 |  30s  45.6 |  35s  46.4 |  40s  48.6 |  45s  50.6 |  50s  52.6 |  55s  54.6 |  60s  56.0 |  65s  57.1 |  70s  59.2 |  75s  61.1\n   PICO 61.1 MB\n"
+  },
+  "menu_d8dc1e1_telemovel_75s.txt": {
+   "sha256": "4b547866886dc66997da165765a19e32ab17d0620cb24f5913b8fc445425fc48",
+   "conteudo": "app_unica.html · telemovel · parado · 75s · css=None · init=None · erros=0\n     0s  32.6 |   5s  36.5 |  10s  36.8 |  15s  37.7 |  20s  37.9 |  25s  38.2 |  30s  34.5 |  35s  33.5 |  40s  34.6 |  45s  35.1 |  50s  36.1 |  55s  36.8 |  60s  36.9 |  65s  37.7 |  70s  38.3 |  75s  39.0\n   PICO 39.0 MB\n"
+  },
+  "menu_bitmap_computador_150s.txt": {
+   "sha256": "c2fa960f3c17ad361b05ff1bcda9d044b7893e028736c8a02745d447c2b75f23",
+   "conteudo": "app_unica.html · computador · parado · 150s · css=None · init=None · erros=0\n     0s  37.0 |   5s  38.3 |  10s  38.6 |  15s  39.3 |  20s  40.5 |  25s  41.4 |  30s  40.4 |  35s  40.2 |  40s  41.4 |  45s  42.6 |  50s  43.8 |  55s  45.0 |  60s  44.7 |  65s  45.9 |  70s  46.9 |  75s  48.1 |  80s  49.1 |  85s  50.4 |  90s  51.5 |  95s  52.5 | 100s  53.9 | 105s  55.1 | 110s  55.7 | 115s  56.7 | 120s  57.9 | 125s  59.0 | 130s  60.2 | 135s  61.5 | 140s  62.5 | 145s  63.7 | 150s  64.9\n   PICO 64.9 MB\n"
+  },
+  "menu_bitmap_telemovel_150s.txt": {
+   "sha256": "b02d0b24c8d924ebd7be0335000da3c596f145d653ebfc1cd65dfe1c5dd4e374",
+   "conteudo": "app_unica.html · telemovel · parado · 150s · css=None · init=None · erros=0\n     0s  30.6 |   5s  34.5 |  10s  34.7 |  15s  34.8 |  20s  35.5 |  25s  36.1 |  30s  33.1 |  35s  32.7 |  40s  33.5 |  45s  34.3 |  50s  34.5 |  55s  35.5 |  60s  35.5 |  65s  36.0 |  70s  36.7 |  75s  37.0 |  80s  37.8 |  85s  38.6 |  90s  39.4 |  95s  39.3 | 100s  39.9 | 105s  40.7 | 110s  41.5 | 115s  41.8 | 120s  42.6 | 125s  43.4 | 130s  44.2 | 135s  44.6 | 140s  45.3 | 145s  46.1 | 150s  46.9\n   PICO 46.9 MB\n"
+  },
+  "menu_sem_trabalhador_computador_150s.txt": {
+   "sha256": "b06a430fdc7ccbbf8299390c1c5fd8539588de10a6039da92cf9546d91e41c2d",
+   "conteudo": "app_unica.html · computador · parado · 150s · css=None · init=None · erros=0\n     0s  30.9 |   5s  33.6 |  10s  34.4 |  15s  36.0 |  20s  36.7 |  25s  38.1 |  30s  39.7 |  35s  41.2 |  40s  42.9 |  45s  44.5 |  50s  46.0 |  55s  47.8 |  60s  47.8 |  65s  49.1 |  70s  50.5 |  75s  52.2 |  80s  53.2 |  85s  54.6 |  90s  56.2 |  95s  57.7 | 100s  59.2 | 105s  60.9 | 110s  62.3 | 115s  63.9 | 120s  65.7 | 125s  67.1 | 130s  68.7 | 135s  70.2 | 140s  71.8 | 145s  73.3 | 150s  74.7\n   PICO 74.7 MB\n"
+  },
+  "menu_sem_trabalhador_telemovel_150s.txt": {
+   "sha256": "c96542f0a0996969ad233c6fba55efb6fd3ecfb8d3303e03c9ff9ada00953bce",
+   "conteudo": "app_unica.html · telemovel · parado · 150s · css=None · init=None · erros=0\n     0s  24.7 |   5s  27.7 |  10s  28.3 |  15s  29.7 |  20s  30.4 |  25s  31.9 |  30s  23.4 |  35s  25.5 |  40s  24.0 |  45s  26.0 |  50s  27.7 |  55s  29.0 |  60s  29.4 |  65s  30.5 |  70s  31.4 |  75s  30.3 |  80s  30.7 |  85s  30.9 |  90s  31.0 |  95s  31.2 | 100s  31.1 | 105s  30.7 | 110s  31.2 | 115s  31.3 | 120s  31.8 | 125s  31.7 | 130s  31.4 | 135s  30.9 | 140s  31.1 | 145s  31.6 | 150s  31.7\n   PICO 33.2 MB\n"
+  },
+  "variante_so_aurora_no_trabalhador_computador_75s.txt": {
+   "sha256": "3ff5d5669089618cbbdcb4bf0440d3ae96bf272d06956dc5e07fdeb9baaa88c1",
+   "conteudo": "app_unica.html · computador · parado · 75s · css=None · init=None · erros=0\n     0s  35.1 |   5s  36.3 |  10s  35.8 |  15s  35.9 |  20s  35.9 |  25s  36.0 |  30s  32.0 |  35s  30.8 |  40s  30.8 |  45s  31.4 |  50s  31.7 |  55s  31.8 |  60s  31.1 |  65s  31.0 |  70s  31.1 |  75s  31.1\n   PICO 36.6 MB\n"
+  },
+  "variante_so_faiscas_2d_no_trabalhador_computador_75s.txt": {
+   "sha256": "18ba5c27d58cb28046af197cca067946967ac111e54818d3019c411664a82fd7",
+   "conteudo": "app_unica.html · computador · parado · 75s · css=None · init=None · erros=0\n     0s  36.8 |   5s  39.4 |  10s  40.5 |  15s  42.0 |  20s  43.9 |  25s  45.8 |  30s  44.8 |  35s  45.7 |  40s  47.6 |  45s  49.5 |  50s  51.5 |  55s  53.4 |  60s  54.6 |  65s  56.2 |  70s  58.0 |  75s  59.9\n   PICO 59.9 MB\n"
+  },
+  "variante_sem_trabalhador_computador_75s.txt": {
+   "sha256": "c3e9f465420df77a221c3fd2a521e68792cecbdf1aa264df841376f9e9567fff",
+   "conteudo": "app_unica.html · computador · parado · 75s · css=None · init=None · erros=0\n     0s  32.0 |   5s  33.4 |  10s  33.5 |  15s  34.6 |  20s  34.4 |  25s  35.4 |  30s  30.0 |  35s  30.0 |  40s  31.5 |  45s  32.6 |  50s  34.0 |  55s  35.0 |  60s  35.6 |  65s  35.8 |  70s  36.0 |  75s  36.0\n   PICO 36.7 MB\n"
+  },
+  "variante_faisca_bitmap_computador_75s.txt": {
+   "sha256": "4defa568fc809762d5b317471d00409df938a266c418a383b0c6f43658fad7aa",
+   "conteudo": "app_unica.html · computador · parado · 75s · css=None · init=None · erros=0\n     0s  37.5 |   5s  38.4 |  10s  38.2 |  15s  38.8 |  20s  39.4 |  25s  39.2 |  30s  36.7 |  35s  36.4 |  40s  37.2 |  45s  38.0 |  50s  39.3 |  55s  40.1 |  60s  40.0 |  65s  39.9 |  70s  40.7 |  75s  41.6\n   PICO 41.6 MB\n"
+  },
+  "menu_final_computador_150s.txt": {
+   "sha256": "22354312a85089505f4cfc0e9e24193c61c2aa3132166d786d917c4f5530b0d6",
+   "conteudo": "app_unica.html · computador · parado · 150s · css=None · init=None · erros=0\n     0s  34.6 |   5s  37.7 |  10s  34.5 |  15s  34.5 |  20s  35.5 |  25s  34.7 |  30s  32.0 |  35s  31.6 |  40s  31.6 |  45s  31.6 |  50s  31.6 |  55s  34.0 |  60s  31.2 |  65s  31.1 |  70s  31.2 |  75s  31.2 |  80s  31.2 |  85s  31.2 |  90s  31.2 |  95s  30.6 | 100s  30.6 | 105s  30.6 | 110s  30.6 | 115s  30.7 | 120s  30.7 | 125s  30.7 | 130s  30.7 | 135s  30.8 | 140s  30.8 | 145s  30.8 | 150s  30.8\n   PICO 38.4 MB\n"
+  },
+  "menu_final_telemovel_150s.txt": {
+   "sha256": "da2a1ff8590162caa45303f48989acaee4250a693933d0109ecf39188a4fa48b",
+   "conteudo": "app_unica.html · telemovel · parado · 150s · css=None · init=None · erros=0\n     0s  28.5 |   5s  32.0 |  10s  32.3 |  15s  32.5 |  20s  31.7 |  25s  32.2 |  30s  29.0 |  35s  26.7 |  40s  26.8 |  45s  26.9 |  50s  27.0 |  55s  27.1 |  60s  26.5 |  65s  26.5 |  70s  26.5 |  75s  26.7 |  80s  26.3 |  85s  26.4 |  90s  26.4 |  95s  26.5 | 100s  26.6 | 105s  26.3 | 110s  26.4 | 115s  26.4 | 120s  26.5 | 125s  26.6 | 130s  26.7 | 135s  26.7 | 140s  26.8 | 145s  26.9 | 150s  26.9\n   PICO 32.7 MB\n"
+  },
+  "entrada_final_computador_150s.txt": {
+   "sha256": "54ed7576b6bd0bdbf8659fc266cf0c3f7df26b80c073763a4d4800ed71ac30e9",
+   "conteudo": "index.html · computador · parado · 150s · css=None · init=None · erros=0\n     0s  46.6 |   5s  49.3 |  10s  48.6 |  15s  48.1 |  20s  48.4 |  25s  42.6 |  30s  38.4 |  35s  35.7 |  40s  37.0 |  45s  37.5 |  50s  37.8 |  55s  37.9 |  60s  36.7 |  65s  36.8 |  70s  37.0 |  75s  37.2 |  80s  37.0 |  85s  37.4 |  90s  37.5 |  95s  37.9 | 100s  38.3 | 105s  38.7 | 110s  39.1 | 115s  39.4 | 120s  39.9 | 125s  40.2 | 130s  40.6 | 135s  40.8 | 140s  40.8 | 145s  40.9 | 150s  40.8\n   PICO 52.6 MB\n"
+  },
+  "entrada_final_telemovel_150s.txt": {
+   "sha256": "14bb15359c513b66a4f1c2a983d9654ddc15dbbc1cd93c9b2c9817536f59f64a",
+   "conteudo": "index.html · telemovel · parado · 150s · css=None · init=None · erros=0\n     0s  48.6 |   5s  50.7 |  10s  50.6 |  15s  50.3 |  20s  50.9 |  25s  51.4 |  30s  38.2 |  35s  38.8 |  40s  36.9 |  45s  37.7 |  50s  38.6 |  55s  38.7 |  60s  37.0 |  65s  37.1 |  70s  37.5 |  75s  37.7 |  80s  38.0 |  85s  38.5 |  90s  38.7 |  95s  39.2 | 100s  39.7 | 105s  40.7 | 110s  40.7 | 115s  41.1 | 120s  41.7 | 125s  42.0 | 130s  41.9 | 135s  42.2 | 140s  42.3 | 145s  42.3 | 150s  42.4\n   PICO 53.9 MB\n"
+  }
+ }
+}
