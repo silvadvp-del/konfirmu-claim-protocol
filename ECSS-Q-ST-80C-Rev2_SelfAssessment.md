@@ -26,6 +26,6 @@
 | ECSS Area | Requirement Focus | Implementation & Evidence in the Core |
 | :--- | :--- | :--- |
 | **6.2 / 6.3** | Configuration Management & Traceability | Every release produces a deterministic canonical `SHA-256` master digest (`--demo`) anchored to dated deposits. |
-| **7.1 / 7.2** | Dependability, Safety & Fail-Safe Behaviour | Out-of-bounds inputs, missing quorum (`k < 5`), clock rollback, or unverified batches trigger immediate deterministic `VETO` / `SEM_COBERTURA`. |
+| **7.1 / 7.2** | Dependability, Safety & Fail-Safe Behaviour | Out-of-bounds inputs, missing quorum (`k < 5`), or unverified batches trigger immediate deterministic `VETO` / `SEM_COBERTURA`. |
 | **7.3** | Numerical Accuracy & Error Handling | All physical/clinical measurements carry first-order `GUM` uncertainty bounds (`value ± uncertainty`) prior to threshold evaluation. |
 | **7.4** | Verification & Validation (V&V) | Self-contained deterministic test suite covering cryptographic vectors (`RFC 8032`) and boundary veto conditions. |

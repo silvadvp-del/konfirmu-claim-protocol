@@ -6,6 +6,9 @@
 **Name disambiguation:** the acronym «KCP» is used publicly by the earlier *Knowledge Context
 Protocol* (Cantara, spec public since 03-2026), cited as prior work; this protocol uses the full
 name «Konfirmu Claim Protocol» in public and does not register the bare acronym.
+**Not for treatment decisions:** this protocol and its cartridges were not made to diagnose or to
+treat. The paediatric dose cartridge is a worked example of a calculation checked against declared
+limits; it is not clinical advice. *(PT: não serve para decidir tratamentos.)*
 
 > The key words **"MUST"**, **"MUST NOT"**, **"REQUIRED"**, **"SHALL"**, **"SHALL NOT"**,
 > **"SHOULD"**, and **"OPTIONAL"** are to be interpreted as described in **RFC 2119** and **RFC 8174**.
