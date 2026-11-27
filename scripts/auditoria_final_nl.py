@@ -20,7 +20,6 @@ Sai com 0 só se tudo passar.
 """
 import functools
 import hashlib
-import io
 import os
 import re
 import subprocess
@@ -155,23 +154,15 @@ def main(argv):
         alvos = [("repositório", REPO), ("sítio konfirmu/", raiz),
                  ("executável offline", os.path.join(raiz, "app", "konfirmu-offline-2030.zip"))]
         resumo = []
+        total_falhas = 0
         for nome, alvo in alvos:
-            buf = io.StringIO()
-            velho, sys.stdout = sys.stdout, buf
-            try:
-                paleta_unica.verificar(alvo)
-            except SystemExit:
-                pass
-            finally:
-                sys.stdout = velho
-            texto = buf.getvalue()
-            n = len(re.findall(r"^FALHA", texto, re.M))
-            m = re.search(r"portão visual: (\d+) ficheiros", texto)
-            resumo.append("%s %s ficheiros, %d falhas" % (nome, m.group(1) if m else "?", n))
-            if n:
-                resumo[-1] += " (" + "; ".join(re.findall(r"^FALHA (.*)$", texto, re.M)[:3]) + ")"
+            ficheiros, falhas = paleta_unica.verificar(alvo)
+            total_falhas += len(falhas) + (0 if ficheiros else 1)  # pasta vazia também é falha
+            resumo.append("%s %d ficheiros, %d falhas" % (nome, len(ficheiros), len(falhas)))
+            if falhas:
+                resumo[-1] += " (" + "; ".join(falhas[:3]) + ")"
         prova("2. paleta única: 0 fora da paleta, 0 verde, 0 violeta, 0 emojis, sem tema claro",
-              all(" 0 falhas" in r for r in resumo), " · ".join(resumo))
+              total_falhas == 0, " · ".join(resumo))
 
         partidas, portas = varrer(raiz)
         medidas, erros, partidas_vistas = navegador(a, raiz)
