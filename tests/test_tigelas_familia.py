@@ -372,6 +372,7 @@ def parte_c(pw, chrome, pasta, linguas, fotos):
         prova("pacote: a língua escolhida (árabe) fica guardada e volta da direita para a esquerda",
               rtl == {"lang": "ar", "dir": "rtl", "painel": True, "guardada": "ar", "tab": "rtl"}, rtl)
         if fotos:
+            page.mouse.move(1, 1)  # o ponteiro de ensaio fora dos cartões (num telemóvel não há ponteiro)
             time.sleep(0.4)
             page.locator("#p-fam").screenshot(path=str(fotos / "telemovel_arabe.png"))
         page.evaluate("KFAM.aplicar('pt')")
@@ -433,12 +434,14 @@ def parte_c(pw, chrome, pasta, linguas, fotos):
         colunas = page.evaluate("getComputedStyle(document.querySelector('#p-fam .grid')).gridTemplateColumns.split(' ').length")
         prova("pacote no computador: 4 tigelas por linha", colunas == 4, colunas)
         if fotos:
+            page.mouse.move(1, 1)
             time.sleep(0.4)  # o portal aparece em 0,16 s
             page.screenshot(path=str(fotos / "computador.png"))
             page.locator("#p-fam").screenshot(path=str(fotos / "computador_familia.png"))
             ctx2 = browser.new_context(**TELEMOVEL)
             p2 = ctx2.new_page()
             abrir_familia(p2, url)
+            p2.mouse.move(1, 1)
             time.sleep(0.4)
             p2.locator("#p-fam").screenshot(path=str(fotos / "telemovel_familia.png"))
             p2.dispatch_event("#p-fam a.card.tigela >> nth=2", "pointerdown")
