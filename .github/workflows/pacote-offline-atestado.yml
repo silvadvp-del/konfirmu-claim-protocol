@@ -1,0 +1,55 @@
+name: Pacote offline com atestacao do GitHub (KON-596)
+# Ordem do David de 27-11-2026, 03:04: «empacotar tudo com o build_pacote_offline.py + atestação automática do GitHub».
+# Corre os testes, constroi o ZIP offline duas vezes (tem de sair igual, byte a byte), confere-o
+# e pede ao GitHub uma atestacao de origem (Sigstore) para esse ZIP.
+# Quem tiver o ZIP confere sem confiar em nos:
+#   gh attestation verify KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip --repo silvadvp-del/konfirmu-claim-protocol
+# Nao cria release nem etiqueta. Nao publica nada fora do GitHub.
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  pacote:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write       # assinatura sem chaves guardadas (Sigstore)
+      attestations: write   # guarda a atestacao no repositorio
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Testes do empacotador e do motor v2
+        run: python3 -I tests/test_build_pacote_offline.py
+      - name: Construir duas vezes e conferir
+        run: |
+          python3 -I scripts/build_pacote_offline.py --saida dist
+          python3 -I scripts/build_pacote_offline.py --saida /tmp/segunda
+          a=$(sha256sum dist/KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip | cut -d' ' -f1)
+          b=$(sha256sum /tmp/segunda/KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip | cut -d' ' -f1)
+          echo "primeira construcao: $a"
+          echo "segunda construcao:  $b"
+          test "$a" = "$b"
+          python3 -I scripts/build_pacote_offline.py --verificar dist/KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip
+          {
+            echo "## Pacote offline"
+            echo ""
+            echo "sha256 \`$a\` · duas construcoes iguais · commit \`$GITHUB_SHA\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Atestacao de origem do GitHub (Sigstore)
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: dist/KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KONFIRMU_EXECUTAVEL_OFFLINE_2030
+          path: |
+            dist/KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip
+            dist/KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip.sha256
+            dist/PACOTE.json
+            dist/SHA256SUMS.txt
+          retention-days: 90
