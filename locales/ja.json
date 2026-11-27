@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "ja",
+  "nome": "日本語",
+  "nome_pt": "Japonês",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "家族",
+ "fam.titulo": "教育と家族",
+ "fam.sub": "家族で学んで遊ぼう。プライバシーへの配慮はそのままに。",
+ "fam.comeca": "ここから始める",
+ "fam.lingua": "言語",
+ "fam.procurar_lingua": "言語を検索",
+ "fam.girafinhas.t": "はじめの一歩",
+ "fam.girafinhas.d": "3回のタップ、声と色。スマホを使ったことがない人のために。",
+ "fam.tutor.t": "チューター",
+ "fam.tutor.d": "ネットがなくても、一歩ずつ教えます。",
+ "fam.quiz.t": "家族クイズ",
+ "fam.quiz.d": "家族みんなで、または大人どうしで遊べる問題。",
+ "fam.natal.t": "家族のクリスマス",
+ "fam.natal.d": "ゲーム、紙の型紙、とっておける認定証。",
+ "fam.video.t": "ビデオスタジオ",
+ "fam.video.d": "ネットなしで撮影し、印をつけて保存。",
+ "fam.contas.t": "印つきの計算",
+ "fam.contas.d": "計算して、結果に印をつけて保存。",
+ "fam.arte.t": "アートスタジオ",
+ "fam.arte.d": "音楽と絵、あなたの名前入り。",
+ "fam.regua.t": "地球のものさし",
+ "fam.regua.d": "地球を救うのに、まだ間に合う？",
+ "fam.aventura.t": "家族の冒険",
+ "fam.aventura.d": "みんなで遊ぶ冒険ゲーム。"
+}

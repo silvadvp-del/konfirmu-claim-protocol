@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<defs>
+<radialGradient id="bg" cx="50%" cy="38%" r="75%"><stop offset="0" stop-color="#3A2F6B"/><stop offset="0.55" stop-color="#1F1840"/><stop offset="1" stop-color="#120E2A"/></radialGradient>
+<linearGradient id="lav" gradientUnits="userSpaceOnUse" x1="120" y1="100" x2="360" y2="420"><stop offset="0" stop-color="#E4DCFF"/><stop offset="0.45" stop-color="#A593F2"/><stop offset="1" stop-color="#5E4BC4"/></linearGradient>
+<linearGradient id="pea" gradientUnits="userSpaceOnUse" x1="230" y1="200" x2="400" y2="370"><stop offset="0" stop-color="#FFE3D3"/><stop offset="0.5" stop-color="#F7B397"/><stop offset="1" stop-color="#DE7F6C"/></linearGradient>
+<linearGradient id="lavd" gradientUnits="userSpaceOnUse" x1="120" y1="100" x2="360" y2="420"><stop offset="0" stop-color="#7B68DB"/><stop offset="1" stop-color="#2E2368"/></linearGradient>
+<linearGradient id="pead" gradientUnits="userSpaceOnUse" x1="230" y1="200" x2="400" y2="370"><stop offset="0" stop-color="#E58C76"/><stop offset="1" stop-color="#A9503F"/></linearGradient>
+<filter id="b6" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="b14" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+<filter id="b3"><feGaussianBlur stdDeviation="2.5"/></filter>
+<radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#8E7BFF" stop-opacity=".35"/><stop offset="1" stop-color="#8E7BFF" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="512" height="512" rx="112" fill="url(#bg)"/>
+<ellipse cx="256" cy="250" rx="230" ry="200" fill="url(#glow)"/>
+<ellipse cx="262" cy="448" rx="150" ry="16" fill="#000" opacity=".45" filter="url(#b14)"/>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<!-- sombra projetada -->
+<g stroke="#000" stroke-opacity=".38" stroke-width="58" filter="url(#b14)" transform="translate(10,16)">
+<path d="M158 112V400"/><path d="M158 270L342 112"/><path d="M232 300L282 352L388 214"/></g>
+<!-- K: corpo escuro (lado de baixo) -->
+<g stroke="url(#lavd)" stroke-width="60"><path d="M158 112V400"/><path d="M158 270L342 112"/></g>
+<!-- K: corpo claro -->
+<g stroke="url(#lav)" stroke-width="54" transform="translate(-2,-3)"><path d="M158 112V400"/><path d="M158 270L342 112"/></g>
+<!-- K: brilho suave -->
+<g stroke="#fff" stroke-opacity=".5" stroke-width="12" filter="url(#b3)" transform="translate(-13,-9)"><path d="M158 126V380"/><path d="M168 262L334 120"/></g>
+<g stroke="#fff" stroke-opacity=".85" stroke-width="3.5" transform="translate(-15,-11)"><path d="M158 140V250"/><path d="M180 250L300 146"/></g>
+<!-- visto: corpo escuro -->
+<path d="M232 300L282 352L388 214" stroke="url(#pead)" stroke-width="60"/>
+<path d="M232 300L282 352L388 214" stroke="url(#pea)" stroke-width="54" transform="translate(-2,-3)"/>
+<path d="M232 300L282 352L388 214" stroke="#fff" stroke-opacity=".5" stroke-width="12" filter="url(#b3)" transform="translate(-13,-9)"/>
+<path d="M240 300L282 342" stroke="#fff" stroke-opacity=".9" stroke-width="3.5" transform="translate(-14,-12)"/>
+<path d="M300 332L384 224" stroke="#fff" stroke-opacity=".8" stroke-width="3.5" transform="translate(-14,-12)"/>
+</g></svg>

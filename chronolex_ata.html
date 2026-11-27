@@ -5,21 +5,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHRONOLEX — Ata & Prova Documental (offline)</title>
 <style>
-body{font-family:Georgia,"Times New Roman",serif;background:#f8fafc;color:#0f172a;margin:0;padding:24px 16px;display:flex;justify-content:center}
-.doc{width:100%;max-width:780px;background:#fff;border:1px solid #cbd5e1;border-radius:8px;padding:32px;box-shadow:0 10px 25px rgba(0,0,0,.05)}
-.header{border-bottom:2px solid #0f172a;padding-bottom:14px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap}
+body{font-family:Georgia,"Times New Roman",serif;background:#0B192C;color:#F4F7FA;margin:0;padding:24px 16px;display:flex;justify-content:center}
+.doc{width:100%;max-width:780px;background:rgba(15,34,61,.72);border:1px solid #23395B;border-radius:8px;padding:32px;box-shadow:0 10px 25px rgba(0,0,0,.05)}
+.header{border-bottom:2px solid #FF9E7D;padding-bottom:14px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap}
 h1{font-size:1.4rem;margin:0;letter-spacing:.04em;text-transform:uppercase}
-.meta{font-family:system-ui,sans-serif;font-size:.8rem;color:#475569}
-input,textarea{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;font-family:system-ui,sans-serif;font-size:.95rem;margin-bottom:10px;box-sizing:border-box}
+.meta{font-family:system-ui,sans-serif;font-size:.8rem;color:#9FB3C8}
+input,textarea{width:100%;padding:10px;border:1px solid #23395B;border-radius:6px;font-family:system-ui,sans-serif;font-size:.95rem;margin-bottom:10px;box-sizing:border-box}
 button{font-family:system-ui,sans-serif;padding:10px 16px;border:none;border-radius:6px;font-weight:600;cursor:pointer}
-.btn-add{background:#0f172a;color:#fff}
-.btn-seal{background:#047857;color:#fff;width:100%;margin-top:16px;padding:14px;font-size:1rem}
-.entry{border-left:3px solid #0f172a;padding:8px 12px;margin:10px 0;background:#f1f5f9;font-family:system-ui,sans-serif;font-size:.9rem}
-.hash{font-family:monospace;font-size:.74rem;color:#64748b;word-break:break-all;margin-top:4px}
-.seal-box{margin-top:20px;padding:16px;border:2px solid #047857;background:#ecfdf5;border-radius:6px;display:none;font-family:system-ui,sans-serif}
-.sig-row{font-family:monospace;font-size:.74rem;color:#064e3b;word-break:break-all;margin-top:4px}
-@media print{.no-print{display:none}.doc{box-shadow:none;border:none}}
+.btn-add{background:#FF9E7D;color:#0B192C}
+.btn-seal{background:#FF9E7D;color:#0B192C;width:100%;margin-top:16px;padding:14px;font-size:1rem}
+.entry{border-left:3px solid #F4F7FA;padding:8px 12px;margin:10px 0;background:#13294A;font-family:system-ui,sans-serif;font-size:.9rem}
+.hash{font-family:monospace;font-size:.74rem;color:#9FB3C8;word-break:break-all;margin-top:4px}
+.seal-box{margin-top:20px;padding:16px;border:2px solid #FF9E7D;background:#13294A;border-radius:6px;display:none;font-family:system-ui,sans-serif}
+.sig-row{font-family:monospace;font-size:.74rem;color:#FFB088;word-break:break-all;margin-top:4px}
+@media print{.no-print{display:none}.doc{box-shadow:none;border:none}html,body,.doc,.entry,.seal-box{background:#F4F7FA!important;color:#000000!important}}
 </style>
+<!-- tema-2040:inicio -->
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0B192C">
+<meta name="konfirmu-portal" content="pro">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob: mediastream:; connect-src 'self' blob: data:; worker-src 'self' blob:; font-src 'self' data:; frame-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<style id="tema-2040">
+:root{color-scheme:dark;--k-abissal:#0B192C;--k-vidro:rgba(15,34,61,.72);--k-vidro-s:#0F223D;--k-pessego:#FF9E7D;--k-pessego-c:#FFB088;--k-titanio:#F4F7FA;--k-nevoa:#9FB3C8;--k-aresta:rgba(244,247,250,.14)}
+html{background:#0B192C;-webkit-text-size-adjust:100%}
+body{background-color:#0B192C;color:#F4F7FA}
+a{color:#FF9E7D}a:visited{color:#FFB088}
+:focus-visible{outline:2px solid #FF9E7D;outline-offset:2px}
+::selection{background:rgba(255,158,125,.35);color:#F4F7FA}
+input:not([type]),input[type=text],input[type=search],input[type=number],input[type=password],input[type=email],input[type=tel],input[type=url],textarea,select{background-color:#0B192C;color:#F4F7FA;border:1px solid rgba(244,247,250,.22);border-radius:8px}
+input::placeholder,textarea::placeholder{color:#9FB3C8;opacity:1}
+.ki{display:inline-block;width:1.1em;height:1.1em;vertical-align:-.17em;margin-inline-end:.35em;flex:none}
+h1 .ki,h2 .ki,h3 .ki,b>.ki,strong>.ki,.card-label .ki{color:#FF9E7D}
+.ki-g{width:1.35em;height:1.35em;margin:0}.ki-peca{width:62%;height:62%;margin:0;vertical-align:middle}
+.k-rodape{max-width:760px;margin:28px auto 8px;padding:14px 16px 10px;border-top:1px solid rgba(244,247,250,.14);color:#9FB3C8;font:400 .8125rem/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-align:start}
+.k-rodape .k-acoes{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.k-rodape .k-acoes button,.k-rodape .k-acoes a{min-height:40px;padding:0 14px;border:1px solid rgba(244,247,250,.2);border-radius:10px;background:rgba(15,34,61,.72);color:#F4F7FA;font:600 .8125rem/40px system-ui,sans-serif;text-decoration:none;cursor:pointer;margin:0}
+.k-rodape .k-acoes button[aria-pressed="true"]{border-color:#FF9E7D;color:#FF9E7D}
+.k-rodape dl{margin:0;display:grid;gap:2px 10px}.k-rodape dt{color:#F4F7FA;font-weight:650}.k-rodape dd{margin:0 0 6px}
+.k-rodape .k-marca{margin:8px 0 0}.k-rodape .k-marca b{color:#F4F7FA}.k-rodape .k-marca b span{color:#FF9E7D}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+html.k-sem-movimento *,html.k-sem-movimento *::before,html.k-sem-movimento *::after{animation-play-state:paused!important;transition:none!important}
+html.k-contraste{--k-nevoa:#E6ECF3}html.k-contraste body{background-color:#050C16;color:#FFFFFF}html.k-contraste .k-rodape{color:#E6ECF3}
+html.k-contraste a{color:#FFC2A8}html.k-contraste .aviso,html.k-contraste .hash,html.k-contraste .meta{color:#E6ECF3!important}
+</style>
+<!-- tema-2040:fim -->
 </head>
 <body>
 <div class="doc">
@@ -38,19 +67,19 @@ button{font-family:system-ui,sans-serif;padding:10px 16px;border:none;border-rad
     <button class="btn-add" onclick="addEntry()">+ Registar &amp; Encadear Ponto</button>
     <hr>
     <input id="sign-name" placeholder="Nome do participante que assina">
-    <button class="btn-add" onclick="assinar()">✍️ Assinar (gera chave Ed25519 no aparelho)</button>
+    <button class="btn-add" onclick="assinar()"><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/></svg>Assinar (gera chave Ed25519 no aparelho)</button>
   </div>
 
   <div id="timeline" style="margin-top:20px"></div>
 
-  <button class="btn-seal no-print" onclick="selar()">🔒 Encerrar &amp; Selar Ata Definitiva</button>
+  <button class="btn-seal no-print" onclick="selar()"><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14v2.5"/></svg>Encerrar &amp; Selar Ata Definitiva</button>
   <div id="final-seal" class="seal-box">
-    <strong style="color:#065f46">✔ DOCUMENTO SELADO E ENCADEADO</strong>
-    <div class="hash" id="final-hash" style="color:#064e3b"></div>
+    <strong style="color:#FFB088"><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>DOCUMENTO SELADO E ENCADEADO</strong>
+    <div class="hash" id="final-hash" style="color:#FFB088"></div>
     <div id="final-sigs"></div>
-    <button class="no-print" style="margin-top:12px;background:#065f46;color:#fff" onclick="guardarJSON()">💾 Guardar JSON assinado</button>
-    <button class="no-print" style="margin-top:12px;background:#065f46;color:#fff" onclick="window.print()">🖨️ Imprimir / PDF</button>
-    <canvas id="qr" class="no-print" style="background:#fff;padding:6px;margin-top:12px"></canvas>
+    <button class="no-print" style="margin-top:12px;background:#FFB088;color:#0B192C" onclick="guardarJSON()"><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></svg>Guardar JSON assinado</button>
+    <button class="no-print" style="margin-top:12px;background:#FFB088;color:#0B192C" onclick="window.print()"><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M7 9V4h10v5"/><rect x="4" y="9" width="16" height="7" rx="1.5"/><path d="M7 14h10v6H7z"/></svg>Imprimir / PDF</button>
+    <canvas id="qr" class="no-print" style="background:#F4F7FA;padding:6px;margin-top:12px"></canvas>
   </div>
 </div>
 <p class="meta" style="max-width:780px;margin:12px auto;font-size:.72rem">O que NÃO garante: a hora é a do relógio do aparelho; valor probatório eIDAS exige carimbo QUALIFICADO (ancoragem posterior via RFC 3161/OTS); SELADO ≠ VERDADEIRO — as assinaturas provam que os participantes selaram ESTES pontos, não que os factos são verdadeiros. Chaves nascem e ficam no aparelho. Verificação pública: chronolex_verify.html (este repo).</p>
@@ -167,7 +196,7 @@ function gerarQR(){
   var c = document.getElementById("qr");
   var qr = qrcode(0, "M"); qr.addData(payload, "Byte"); qr.make();
   var n = qr.getModuleCount(), s = 3; c.width = n*s; c.height = n*s;
-  var ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#000";
+  var ctx = c.getContext("2d"); ctx.fillStyle = "#F4F7FA"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#000";
   for (var r=0;r<n;r++) for (var cc=0;cc<n;cc++) if (qr.isDark(r,cc)) ctx.fillRect(cc*s,r*s,s,s);
 }
 function guardarJSON(){
@@ -180,5 +209,19 @@ function guardarJSON(){
   a.click();
 }
 </script>
+<!-- rodape-2040:inicio -->
+<footer class="k-rodape" id="k-rodape">
+<div class="k-acoes" id="k-acoes"><a href="./app_unica.html">Início</a></div>
+<dl aria-label="Avisos legais">
+<dt>Fase de ensaio</dt><dd>A Konfirmu está em fase de ensaio técnico. As funções sem rede, de verificação e de assistência podem mudar ou falhar. Não há garantia de funcionamento contínuo.</dd>
+<dt>Emergências</dt><dd>A Konfirmu não é um serviço de emergência e não liga nem avisa ninguém por ti. Em perigo imediato, liga 112, o número europeu de emergência.</dd>
+<dt>Respostas automáticas e IA</dt><dd>O assistente da Konfirmu é um sistema automático, não uma pessoa. Algumas respostas são escritas por uma IA (inteligência artificial) e podem ter erros ou falhas. Não são aconselhamento jurídico, médico nem financeiro. Confirma sempre na fonte oficial.</dd>
+<dt>Selos e prova</dt><dd>Um selo mostra se um ficheiro mudou desde que foi selado. Usa um resumo criptográfico baseado em SHA-256 e uma assinatura feita no teu aparelho. Selado não quer dizer verdadeiro: o selo não confirma o que o ficheiro diz. A hora do selo vem do relógio do aparelho e não é um selo temporal qualificado. O valor como prova depende da lei e dos tribunais de cada país.</dd>
+<dt>Privacidade</dt><dd>Os selos, a verificação e o que guardas nestas páginas ficam no teu aparelho; nenhuma delas envia os teus ficheiros para servidores. A IA do chat de bolso corre no teu aparelho. Na app Konfirmu, com rede, as perguntas ao assistente podem ser enviadas a um serviço de IA na União Europeia (Mistral AI) para gerar a resposta.</dd>
+</dl>
+<p class="k-marca"><b>Konfirmu</b> · DPS Industrial &amp; Maritime Services · código aberto EUPL-1.2</p>
+</footer>
+<script defer src="./assets/konfirmu-2040.js"></script>
+<!-- rodape-2040:fim -->
 </body>
 </html>

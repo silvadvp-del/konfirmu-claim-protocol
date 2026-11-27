@@ -124,10 +124,10 @@ def main():
     for nome, primeiro, segundo, onde in [
         ("letras 4D: pesego sobre azul abissal", "#FF9E7D", "#0B192C", "--pesego:#FF9E7D;"),
         ("texto claro da faixa imersiva", "#F3F1EE", "#0B192C", "--abissal:#0B192C;"),
-        ("corpo em modo claro", "#1D1D21", "#F3F1EE", "--papel:#F3F1EE;"),
-        ("texto secundario em modo claro", "#4B4B52", "#FBFAF8", "--painel:#FBFAF8;"),
-        ("corpo em modo escuro", "#ECEAE6", "#121317", "--papel:#121317"),
-        ("texto secundario em modo escuro", "#B4B2AD", "#17181D", "--painel:#17181D"),
+        # 27-11-2026, 14:53: paleta única, sempre escura (o modo claro saiu por ordem do David)
+        ("corpo: branco titanio sobre azul abissal", "#F4F7FA", "#0B192C", "--papel:#0B192C;"),
+        ("texto secundario: nevoeiro sobre vidro", "#9FB3C8", "#0F223D", "--painel:#0F223D;"),
+        ("texto secundario: nevoeiro sobre azul abissal", "#9FB3C8", "#0B192C", "--tinta2:#9FB3C8;"),
     ]:
         ratio = contraste(primeiro, segundo)
         prova(f"{nome}: {ratio:.1f}", ratio >= 7 and onde in html)

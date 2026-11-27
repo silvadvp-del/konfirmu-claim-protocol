@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "pl",
+  "nome": "Polski",
+  "nome_pt": "Polaco",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Rodzina",
+ "fam.titulo": "Edukacja i rodzina",
+ "fam.sub": "Ucz się i baw z rodziną, z taką samą troską o prywatność.",
+ "fam.comeca": "Zacznij tutaj",
+ "fam.lingua": "Język",
+ "fam.procurar_lingua": "Szukaj języka",
+ "fam.girafinhas.t": "Pierwsze kroki",
+ "fam.girafinhas.d": "Trzy dotknięcia, głos i kolory dla tych, którzy nigdy nie używali telefonu.",
+ "fam.tutor.t": "Korepetytor",
+ "fam.tutor.d": "Uczy krok po kroku, nawet bez sieci.",
+ "fam.quiz.t": "Quiz rodzinny",
+ "fam.quiz.d": "Pytania do wspólnej gry w rodzinie lub tylko dla dorosłych.",
+ "fam.natal.t": "Święta w rodzinie",
+ "fam.natal.d": "Gry, papierowe wzory i dyplom na pamiątkę.",
+ "fam.video.t": "Studio wideo",
+ "fam.video.d": "Nagrywaj bez internetu i zachowaj film z pieczęcią.",
+ "fam.contas.t": "Rachunki z pieczęcią",
+ "fam.contas.d": "Licz i zachowaj wynik z pieczęcią.",
+ "fam.arte.t": "Studio sztuki",
+ "fam.arte.d": "Muzyka i rysunek, z twoim imieniem.",
+ "fam.regua.t": "Linijka planety",
+ "fam.regua.d": "Czy wciąż zdążymy uratować planetę?",
+ "fam.aventura.t": "Rodzinna przygoda",
+ "fam.aventura.d": "Gra przygodowa do wspólnej zabawy."
+}

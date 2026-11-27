@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "da",
+  "nome": "Dansk",
+  "nome_pt": "Dinamarquês",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Familie",
+ "fam.titulo": "Uddannelse og familie",
+ "fam.sub": "Lær og leg sammen som familie, med samme omhu for privatlivet.",
+ "fam.comeca": "Start her",
+ "fam.lingua": "Sprog",
+ "fam.procurar_lingua": "Søg sprog",
+ "fam.girafinhas.t": "Første skridt",
+ "fam.girafinhas.d": "Tre tryk, stemme og farver til dem, der aldrig har brugt en telefon.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Underviser trin for trin, også uden net.",
+ "fam.quiz.t": "Familiequiz",
+ "fam.quiz.d": "Spørgsmål til hele familien eller kun til voksne.",
+ "fam.natal.t": "Jul med familien",
+ "fam.natal.d": "Lege, papirskabeloner og et diplom at gemme.",
+ "fam.video.t": "Videostudie",
+ "fam.video.d": "Film uden internet, og gem filmen med et segl.",
+ "fam.contas.t": "Regning med segl",
+ "fam.contas.d": "Regn ud, og gem resultatet med et segl.",
+ "fam.arte.t": "Kunststudie",
+ "fam.arte.d": "Musik og tegning, med dit navn.",
+ "fam.regua.t": "Planetens lineal",
+ "fam.regua.d": "Kan vi stadig nå at redde planeten?",
+ "fam.aventura.t": "Familieeventyr",
+ "fam.aventura.d": "Et eventyrspil at spille sammen."
+}

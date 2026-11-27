@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "pov",
+  "nome": "Kriol (Guiné-Bissau)",
+  "nome_pt": "Crioulo da Guiné-Bissau",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Familia",
+ "fam.titulo": "Idukason ku familia",
+ "fam.sub": "Sinta ku brinka na familia, ku mesmu kuidadu ku privasidadi.",
+ "fam.comeca": "Kumsa li",
+ "fam.lingua": "Lingua",
+ "fam.procurar_lingua": "Buska lingua",
+ "fam.girafinhas.t": "Purmeru pasus",
+ "fam.girafinhas.d": "Tris tokada, vos ku koris, pa kil ku nunka usa telefoni.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "I ta nsina pasu pa pasu, mesmu sin redi.",
+ "fam.quiz.t": "Kiz di familia",
+ "fam.quiz.d": "Purguntas pa djuga na familia, o so na metadi di garandis.",
+ "fam.natal.t": "Natal na familia",
+ "fam.natal.d": "Djugus, modelus di papel ku un sertifikadu pa guarda.",
+ "fam.video.t": "Studiu di video",
+ "fam.video.d": "Filma sin internet i guarda filmi ku selu.",
+ "fam.contas.t": "Kontas ku selu",
+ "fam.contas.d": "Fasi kontas i guarda risultadu ku selu.",
+ "fam.arte.t": "Studiu di arti",
+ "fam.arte.d": "Musika ku disenhu, ku bu nomi.",
+ "fam.regua.t": "Regua di planeta",
+ "fam.regua.d": "Inda no sta na tempu di salba planeta?",
+ "fam.aventura.t": "Aventura na familia",
+ "fam.aventura.d": "Un djugu di aventura pa djuga djuntu."
+}

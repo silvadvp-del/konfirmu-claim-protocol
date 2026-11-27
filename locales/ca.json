@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "ca",
+  "nome": "Català",
+  "nome_pt": "Catalão",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Família",
+ "fam.titulo": "Educació i família",
+ "fam.sub": "Aprendre i jugar en família, amb la mateixa cura per la privacitat.",
+ "fam.comeca": "Comença aquí",
+ "fam.lingua": "Llengua",
+ "fam.procurar_lingua": "Cerca una llengua",
+ "fam.girafinhas.t": "Primers passos",
+ "fam.girafinhas.d": "Tres tocs, veu i colors, per a qui no ha fet servir mai un mòbil.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Ensenya pas a pas, fins i tot sense xarxa.",
+ "fam.quiz.t": "Qüestionari en família",
+ "fam.quiz.d": "Preguntes per jugar en família, o només entre adults.",
+ "fam.natal.t": "Nadal en família",
+ "fam.natal.d": "Jocs, plantilles de paper i un certificat per guardar.",
+ "fam.video.t": "Estudi de vídeo",
+ "fam.video.d": "Grava sense internet i desa el vídeo amb segell.",
+ "fam.contas.t": "Comptes amb segell",
+ "fam.contas.d": "Fes comptes i desa el resultat amb segell.",
+ "fam.arte.t": "Estudi d'art",
+ "fam.arte.d": "Música i dibuix, amb el teu nom.",
+ "fam.regua.t": "El regle del planeta",
+ "fam.regua.d": "Encara som a temps de salvar el planeta?",
+ "fam.aventura.t": "Aventura en família",
+ "fam.aventura.d": "Un joc d'aventures per jugar junts."
+}

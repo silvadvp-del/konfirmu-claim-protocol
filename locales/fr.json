@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "fr",
+  "nome": "Français",
+  "nome_pt": "Francês",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Famille",
+ "fam.titulo": "Éducation et famille",
+ "fam.sub": "Apprendre et jouer en famille, avec le même soin de la vie privée.",
+ "fam.comeca": "Commencer ici",
+ "fam.lingua": "Langue",
+ "fam.procurar_lingua": "Chercher une langue",
+ "fam.girafinhas.t": "Premiers pas",
+ "fam.girafinhas.d": "Trois touches, la voix et des couleurs, pour qui n'a jamais utilisé de téléphone.",
+ "fam.tutor.t": "Tuteur",
+ "fam.tutor.d": "Enseigne pas à pas, même sans réseau.",
+ "fam.quiz.t": "Quiz en famille",
+ "fam.quiz.d": "Des questions à jouer en famille, ou seulement entre adultes.",
+ "fam.natal.t": "Noël en famille",
+ "fam.natal.d": "Des jeux, des modèles en papier et un certificat à garder.",
+ "fam.video.t": "Studio vidéo",
+ "fam.video.d": "Filme sans internet et garde le film avec un sceau.",
+ "fam.contas.t": "Calculs scellés",
+ "fam.contas.d": "Fais des calculs et garde le résultat avec un sceau.",
+ "fam.arte.t": "Studio d'art",
+ "fam.arte.d": "Musique et dessin, à ton nom.",
+ "fam.regua.t": "La règle de la planète",
+ "fam.regua.d": "Est-il encore temps de sauver la planète ?",
+ "fam.aventura.t": "Aventure en famille",
+ "fam.aventura.d": "Un jeu d'aventure à jouer ensemble."
+}

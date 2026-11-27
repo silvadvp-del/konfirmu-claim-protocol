@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "bs",
+  "nome": "Bosanski",
+  "nome_pt": "Bósnio",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Porodica",
+ "fam.titulo": "Obrazovanje i porodica",
+ "fam.sub": "Učite i igrajte se kao porodica, uz istu brigu o privatnosti.",
+ "fam.comeca": "Počni ovdje",
+ "fam.lingua": "Jezik",
+ "fam.procurar_lingua": "Traži jezik",
+ "fam.girafinhas.t": "Prvi koraci",
+ "fam.girafinhas.d": "Tri dodira, glas i boje, za one koji nikad nisu koristili telefon.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Uči korak po korak, čak i bez mreže.",
+ "fam.quiz.t": "Porodični kviz",
+ "fam.quiz.d": "Pitanja za igru u porodici ili samo među odraslima.",
+ "fam.natal.t": "Božić u porodici",
+ "fam.natal.d": "Igre, papirni šabloni i diploma za uspomenu.",
+ "fam.video.t": "Video studio",
+ "fam.video.d": "Snimaj bez interneta i sačuvaj film s pečatom.",
+ "fam.contas.t": "Računi s pečatom",
+ "fam.contas.d": "Računaj i sačuvaj rezultat s pečatom.",
+ "fam.arte.t": "Umjetnički studio",
+ "fam.arte.d": "Muzika i crtanje, s tvojim imenom.",
+ "fam.regua.t": "Ravnalo planete",
+ "fam.regua.d": "Imamo li još vremena da spasimo planetu?",
+ "fam.aventura.t": "Porodična avantura",
+ "fam.aventura.d": "Avanturistička igra za zajedničku igru."
+}
