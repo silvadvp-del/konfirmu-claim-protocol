@@ -3,7 +3,7 @@ on:
   push:
     branches: [ "ferramenta/copia-ao-vivo-20261127" ]
 permissions:
-  contents: read
+  contents: write
 jobs:
   copia:
     runs-on: ubuntu-latest
@@ -23,8 +23,13 @@ jobs:
           done < ferramentas/copia_ao_vivo/caminhos.txt
           (cd copia && find . -type f ! -name SHA256SUMS.txt -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS.txt)
           cat copia/ESTADOS.txt
-      - uses: actions/upload-artifact@v4
-        with:
-          name: copia-ao-vivo
-          path: copia
-          retention-days: 7
+      - name: Guardar a copia neste ramo (so este ramo; o site nao muda)
+        run: |
+          mkdir -p ferramentas/copia_ao_vivo/resultado
+          rm -rf ferramentas/copia_ao_vivo/resultado/*
+          cp -R copia/. ferramentas/copia_ao_vivo/resultado/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ferramentas/copia_ao_vivo/resultado
+          git commit -m "Copia do que esta no ar ($(date -u +%Y-%m-%dT%H:%M:%SZ))" || echo "nada mudou"
+          git push origin HEAD:ferramenta/copia-ao-vivo-20261127
