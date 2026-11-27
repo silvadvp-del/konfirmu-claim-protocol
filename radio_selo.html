@@ -15,7 +15,7 @@ pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
 </head>
 <body>
 <h1>📻 Rádio com Prova</h1>
-<p>Uma mensagem curta vira TONS (FSK 1200/2200 Hz) que viajam por qualquer rádio, altifalante ou telefone — e do outro lado o microfone reconstrói a mensagem E o seu hash. Ninguém falsifica um tom sem mudar o hash.</p>
+<p>Uma mensagem curta vira TONS (FSK 1200/2200 Hz) que viajam por qualquer rádio, altifalante ou telefone — e do outro lado o microfone reconstrói a mensagem E o seu hash.</p>
 <div class="card">
 <b>1. Emitir</b><br>
 <input id="msg" placeholder="mensagem curta (ex.: PONTO DE ÁGUA ABERTO ÀS 9H)">
@@ -120,7 +120,7 @@ function ouvir(){
         var sync = bits.indexOf("10101010");
         var hex = hexDeBits(bits.slice(sync+8, sync+8+128));
         out.textContent = "hash recebido: " + hex + String.fromCharCode(10) + "— compara com o hash do emitente; se conferir, a mensagem não foi alterada.";
-        out.className = "verde"; proc.disconnect(); stream.getTracks().forEach(function(t){t.stop();});
+        out.className = ""; proc.disconnect(); stream.getTracks().forEach(function(t){t.stop();});
       }
     };
     src.connect(proc); proc.connect(audioCtx.destination);
