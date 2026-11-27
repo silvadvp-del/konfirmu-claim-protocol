@@ -19,12 +19,16 @@ h1{font-size:1.6rem;background:linear-gradient(90deg,#ffd54f,#81c784);-webkit-ba
 .facil .ico{font-size:2.4rem}
 .id{font-size:.7rem;color:#6ee7b7;word-break:break-all;margin-top:14px;text-align:center}
 .aviso{font-size:.72rem;color:#8b949e;margin-top:12px;text-align:center}
+.aviao{margin-left:8px;background:#0d1117;color:#eafbe9;border:1px solid #8b949e;border-radius:10px;padding:10px 16px;font-weight:700}
+.aviao-estado{display:block;margin-top:8px;font-size:.8rem;color:#c9d1d9;min-height:1em}
 </style>
 </head>
 <body>
 <h1>🦒 KONFIRMU — a app única</h1>
 <p style="color:#9e9e9e">Todas as salas da casa, num só lugar. Offline, com selo. Escolhe a porta.</p>
 <button onclick="facil()" style="background:#ffb300;color:#1a1200;border:0;border-radius:10px;padding:10px 16px;font-weight:800">🔍 MODO FÁCIL (letras grandes)</button>
+<button id="aviao" class="aviao" type="button">✈️ Preparar modo avião</button>
+<span id="aviaoEstado" class="aviao-estado" role="status" aria-live="polite"></span>
 <div class="grid">
 <a class="card" href="girafinhas_criancas_facil.html"><span class="ico">🧒</span><b>Girafinhas Fácil</b><span class="d">3 toques, voz e cores — para quem nunca viu um telemóvel</span></a>
 <a class="card" href="sala_natal_girafinhas.html"><span class="ico">🎄</span><b>Sala de Natal</b><span class="d">jogos, moldes de papel e o certificado mágico selado</span></a>
@@ -58,6 +62,15 @@ function facil(){document.body.classList.toggle('facil')}
 document.getElementById("id").textContent="a tua identidade neste aparelho: " + pk.slice(0,24) + "…";
 // 27-11-2026: o início passa a ligar a cache sem rede (antes só o verificador a ligava).
 if(location.protocol!=="file:"&&"serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(function(){});}
+// 27-11-2026 (aprovado pelo David às 02:53): botão «Preparar modo avião». Guarda as peças da app neste aparelho e diz quantas estão guardadas.
+function esperarGuarda(reg){return new Promise(function(ok,falha){var t0=Date.now();(function ver(){var w=reg.active;if(w&&/\/sw\.js$/.test(w.scriptURL)&&w.state==="activated")return ok(w);if(Date.now()-t0>60000)return falha(new Error("sem resposta"));setTimeout(ver,250)})()})}
+function prepararAviao(){var el=document.getElementById("aviaoEstado");
+ if(location.protocol==="file:"||!("serviceWorker" in navigator)){el.textContent="Este navegador não guarda a app para usar sem rede.";return}
+ el.textContent="A guardar as peças neste aparelho…";
+ navigator.serviceWorker.register("./sw.js").then(esperarGuarda).then(function(w){return new Promise(function(ok,falha){var c=new MessageChannel();c.port1.onmessage=function(e){ok(e.data)};w.postMessage({tipo:"konfirmu-preparar"},[c.port2]);setTimeout(function(){falha(new Error("sem resposta"))},120000)})})
+ .then(function(r){el.textContent=r.guardadas===r.total?r.guardadas+" de "+r.total+" peças guardadas. Já podes ligar o modo avião.":r.guardadas+" de "+r.total+" peças guardadas. Faltam "+(r.total-r.guardadas)+". Liga a rede e carrega outra vez."})
+ .catch(function(e){el.textContent="Não consegui confirmar ("+e.message+"). Liga a rede e carrega outra vez."})}
+document.getElementById("aviao").onclick=prepararAviao;
 </script>
 </body>
 </html>
