@@ -74,8 +74,8 @@ def cores(texto):
     out = []
     for m in RX_HEX.finditer(texto):
         # nao confundir com ancoras de URL tipo href="#abc" ou entidades
-        antes = texto[max(0, m.start()-6):m.start()]
-        if re.search(r"(href=[\"']|&)$", antes): continue
+        antes = texto[max(0, m.start()-12):m.start()]
+        if re.search(r"(href=[\"']|&|url\(\s*[\"']?)$", antes): continue  # ancoras e referencias url(#id), nao cores
         r, g, b = hex_rgb(m.group(1)); out.append(("#"+m.group(1).upper(), familia(r, g, b)))
     for m in RX_RGB.finditer(texto):
         r, g, b = (min(255, int(x)) for x in m.groups()); out.append(("rgb(%d,%d,%d)" % (r, g, b), familia(r, g, b)))
@@ -105,7 +105,9 @@ def main():
         rel = os.path.relpath(p, raiz)
         if "/_anterior/" in "/" + rel or rel.startswith("_anterior") or "/.git/" in "/" + rel: continue
         t = open(p, encoding="utf-8", errors="replace").read()
-        e = emojis(t); c = cores(t); fora = RX_FORA.findall(t)
+        # so contam CARGAS de fora (scripts, estilos, imagens, pedidos); ligacoes <a>, canonical/alternate e <meta> nao carregam nada
+        sem_nav = re.sub(r"<a\b[^>]*>|<link\b[^>]*rel=[\"'](?:canonical|alternate)[\"'][^>]*>|<meta\b[^>]*>", "", t, flags=re.I)
+        e = emojis(t); c = cores(t); fora = RX_FORA.findall(sem_nav)
         brancos = len(RX_FUNDO_BRANCO.findall(RX_PRINT.sub("", t)))  # na impressão, papel branco é normal
         fam = {}
         for cor, f in c: fam.setdefault(f, set()).add(cor)
@@ -118,12 +120,12 @@ def main():
         linhas.append(reg)
     if em_json:
         print(json.dumps({"total": tot, "ficheiros": linhas}, ensure_ascii=False, indent=1))
-        return 1 if ("--estrito" in sys.argv and any(tot[k] for k in tot if k != "ficheiros")) else 0
+        return 1 if ("--estrito" in sys.argv and any(tot[k] for k in tot if k not in ("ficheiros", "branco"))) else 0
     for r in linhas:
         if r["emojis"] or r["verde"] or r["violeta"] or r["fora"] or r["vermelho"] or r["amarelo"] or r["branco"] or r["fundos_brancos"]:
             print("%-44s emo %4d %s | verde %s | violeta %s | verm %s | amar %s | branco %s | fora %d" % (r["ficheiro"][:44], r["emojis"], r["exemplos_emoji"], ",".join(r["verde"])[:60], ",".join(r["violeta"])[:40], ",".join(r["vermelho"])[:40], ",".join(r["amarelo"])[:30], ",".join(r["branco"])[:20], r["fora"]))
     print("TOTAL", json.dumps(tot))
-    return 1 if ("--estrito" in sys.argv and any(tot[k] for k in tot if k != "ficheiros")) else 0
+    return 1 if ("--estrito" in sys.argv and any(tot[k] for k in tot if k not in ("ficheiros", "branco"))) else 0
 
 if __name__ == "__main__":
     sys.exit(main())

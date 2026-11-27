@@ -1,6 +1,6 @@
 .im3d-tools { display: flex; flex-wrap: wrap; align-items: baseline; gap: .45rem 1rem; margin: .5rem 0; }
-.im3d-tools button { min-height: 44px; padding: .55rem 1rem; border: 1px solid #23395B; border-radius: .7rem; background: #F4F7FA; color: #0F223D; font: 700 1rem system-ui; cursor: pointer; }
-.im3d-tools button[aria-pressed="true"] { background: #FFB088; color: #2A1D17; }
+.im3d-tools button { min-height: 44px; padding: .55rem 1rem; border: 1px solid rgba(244,247,250,.22); border-radius: .7rem; background: rgba(15,34,61,.72); color: #F4F7FA; font: 700 1rem system-ui; cursor: pointer; }
+.im3d-tools button[aria-pressed="true"] { background: #FF9E7D; border-color: #FF9E7D; color: #0B192C; }
 .im3d-tools small { font: .875rem system-ui; }
 .im3d-viewer { margin: 1rem 0; }
 .im3d-viewer summary { cursor: pointer; }

@@ -1,0 +1,33 @@
+D. CORRECCOES DE REFERENCIA (correcoes_ledger.py) sobre o motor 529098c652ee8234…
+D1. O SELO ESTRIITO
+[OK] D1a selo bom -> aceite
+[OK] D1b recusado: o valor de «alg»
+[OK] D1b recusado: o nome da chave «alg»
+[OK] D1b recusado: maiúsculas em «pub»
+[OK] D1b recusado: maiúsculas em «sig»
+[OK] D1b recusado: um campo a mais
+[OK] D1b recusado: um campo a menos
+[OK] D1c recusado: o objecto não é o selado
+[OK] D1d os 2528 bits trocados do texto do selo: 0 aceites (o motor aceita 183)
+[OK] D1e a lista de chaves aceites continua a contar: com a chave certa aceite; sem ela recusado
+D2. ENCAIXA NO LUGAR DO MOTOR
+[OK] D2 cinco registos: blocos, hashes e bytes do ficheiro iguais aos do motor
+D3/D4/D10. A CAUDA RASGADA AO ARRANCAR
+[OK] D3 cauda rasgada (176 bytes) -> arranca com os 3 registos completos; a cauda é isolada com o hash
+[OK] D3b o ficheiro volta a acabar em mudança de linha; os bytes rasgados estão inteiros no ficheiro ao lado, com o hash
+[OK] D10 depois de recuperar, a cadeia segue com o número certo e o disco confere
+[OK] D4 registo completo a que só falta a mudança de linha -> 4 registos; ficheiro acaba em mudança de linha ({'reparado': 'mudanca_de_linha', 'n': 3})
+[OK] D4b cauda que é JSON válido mas não segue a cadeia -> 3 registos; ficheiro acaba em mudança de linha ({'isolado': True, 'bytes': 353, 'sha256': '88fa72b1bb5588309320857fbc5da36bac2970c80e4606ffc2d18c0438394850'})
+[OK] D5 um registo completo estragado (não é JSON) -> LEDGER_ILEGIVEL (falha fechada, como o motor)
+[OK] D6 um registo completo alterado -> LEDGER_CORROMPIDA (falha fechada, como o motor)
+D7/D8/D9. QUANDO O DISCO FALHA
+[OK] D7 escrita curta -> RuntimeError; memória e disco ficam iguais (1 registo em cada)
+[OK] D7 escrita curta — b) o registo seguinte corre e, ao reler, está tudo certo
+[OK] D8 disco cheio -> OSError; memória e disco ficam iguais (1 registo em cada)
+[OK] D8 disco cheio — b) o registo seguinte corre e, ao reler, está tudo certo
+[OK] D9 o fsync dá erro -> OSError; memória e disco ficam iguais (1 registo em cada)
+[OK] D9 o fsync dá erro — b) o registo seguinte corre e, ao reler, está tudo certo
+
+TUDO VERDE: 24/24 verificações
+sha256 desta saída (todas as linhas acima): 7a8da36b2be0a840e291582b2a4a6e1ecc1626b1a7109f846f14d4997427c432
+EXIT=0

@@ -1,0 +1,21 @@
+B. OS 4 DEFEITOS NO MOTOR PUBLICO v3.0.0
+[REPRODUZ] B0 selo intacto e aceite (controlo)
+[REPRODUZ] B1 muda-se o campo «alg» para «NENHUM»: o selo continua aceite
+[REPRODUZ] B1b muda-se «hash»: o selo e recusado (e so o «alg» que fica de fora)
+[REPRODUZ] B1b muda-se «pub»: o selo e recusado (e so o «alg» que fica de fora)
+[REPRODUZ] B1b muda-se «sig»: o selo e recusado (e so o «alg» que fica de fora)
+      bits trocados no texto do selo (316 bytes = 2528 flips): 183 aceites | por entrada: {'alg': 110, 'hash': 0, 'pub': 27, 'sig': 46, 'fora dos valores': 0} | ilegiveis: 749
+[REPRODUZ] B2' somando o nome e o valor de «alg»: 110 aceites; «hash»: 0; fora das entradas: 0
+[REPRODUZ] B2'' os aceites fora de «alg» sao so maiusculas/minusculas (bit 5) de a-f em «pub» (27) e «sig» (46): True
+[REPRODUZ] B2x a conta desta janela (183) nao e a da auditoria (550): methods diferentes; diz-se
+[REPRODUZ] B3a com o disco cheio, «registar» levanta erro (nao e silencioso neste passo)
+[REPRODUZ] B3b … mas o bloco que nao coube no disco FICA em memoria (2 blocos em memoria, 1 no ficheiro)
+[REPRODUZ] B3c a escrita seguinte corre e o ficheiro fica com um buraco (2 linhas no ficheiro, 3 blocos em memoria)
+[REPRODUZ] B3d ao reler: LEDGER_CORROMPIDA. Um disco cheio um instante deixa o livro encravado para sempre
+[REPRODUZ] B4a escrita curta: «registar» DEVOLVE o hash como se tivesse gravado
+[REPRODUZ] B4b … e o ficheiro fica com a ultima linha rasgada (1 linhas inteiras e um pedaço)
+[REPRODUZ] B4c ao reler: LEDGER_ILEGIVEL
+[REPRODUZ] B5 o motor publico nao importa relogio nenhum: nenhum. O defeito do recuo do relogio esta noutro codigo
+
+TUDO COMFORME O ESPERADO: 16/16
+EXIT=0
