@@ -44,7 +44,7 @@ html.k-contraste a{color:#FF9E7D}html.k-contraste .aviso,html.k-contraste .hash,
 </head>
 <body>
 <h1><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8 17 4"/><circle cx="8" cy="14" r="2.5"/><path d="M14 12.5h4M14 15.5h4"/></svg>Rádio com Prova</h1>
-<p>Uma mensagem curta vira TONS (FSK 1200/2200 Hz) que viajam por qualquer rádio, altifalante ou telefone — e do outro lado o microfone reconstrói a mensagem E o seu hash.</p>
+<p>Uma mensagem curta vira TONS (FSK 1200/2200 Hz) que viajam por qualquer rádio, altifalante ou telefone. Os tons levam o hash da mensagem (os primeiros 32 caracteres do SHA-256); do outro lado, o microfone reconstrói esse hash para o comparares com o do emitente.</p>
 <div class="card">
 <b>1. Emitir</b><br>
 <input id="msg" placeholder="mensagem curta (ex.: PONTO DE ÁGUA ABERTO ÀS 9H)">
@@ -56,7 +56,7 @@ html.k-contraste a{color:#FF9E7D}html.k-contraste .aviso,html.k-contraste .hash,
 <button onclick="ouvir()"><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/></svg>Ouvir e reconstruir</button>
 <pre id="recebido">—</pre>
 </div>
-<p class="aviso">O que NÃO garante: transmissão em FM/ondas curtas exige emissor licenciado — declarado, não prometido; a receção ao vivo depende do ruído do ambiente (o descodificador foi provado em buffer sintético, não em campo); SELADO ≠ VERDADEIRO — o hash prova que a MENSAGEM é esta, não que o facto é verdadeiro; a hora é a do aparelho.</p>
+<p class="aviso">O que NÃO garante: transmissão em FM/ondas curtas exige emissor licenciado — declarado, não prometido; a receção ao vivo depende do ruído do ambiente (o descodificador foi provado em buffer sintético e com um microfone simulado no Chrome, não em campo); SELADO ≠ VERDADEIRO — o hash prova que a MENSAGEM é esta, não que o facto é verdadeiro; a hora é a do aparelho.</p>
 <script>
 function shaRadio(str) {
   // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
@@ -114,46 +114,132 @@ function shaRadio(str) {
   return result;
 }
 var audioCtx = null;
-var SR = 8000, BAUDS = 50;  // 50 bits/seg a 8 kHz — robusto para rádio e altifalantes
+var SR = 8000, BAUDS = 50;  // 50 bits/seg; SR (8 kHz) só serve os ensaios sintéticos — no aparelho vale a taxa real do AudioContext
+var F0 = 1200, F1 = 2200;   // os tons não mudam: um emissor antigo continua a ser lido
+var PREAMBULO = "10101010", BITS_DADOS = 128;  // trama: 8 bits de sincronia + 128 bits (32 caracteres) do hash
+var ESCUTA_MAX_S = 20;      // janela de escuta: até 20 s (nunca menos de 4,0 s); a trama dura 136/50 = 2,72 s
+var TOM_MIN = 0.2, DOM_SINC = 4, DOM_DADOS = 2;
+var NL = String.fromCharCode(10);
+function contexto(){
+  if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state === "suspended" && audioCtx.resume) audioCtx.resume();
+  return audioCtx;
+}
 function bitsDeHex(hex){ var b=""; for(var i=0;i<hex.length;i++){ var v=parseInt(hex[i],16); b+=("000"+v.toString(2)).slice(-4); } return b; }
-function hexDeBits(bits){ var h=""; for(var i=0;i<bits.length;i+=4) h+=parseInt(bits.slice(i,i+4),2).toString(16); return h; }
-function fskEncode(hex){ var bits="10101010"+bitsDeHex(hex); var amostrasPorBit=Math.floor(SR/BAUDS); var out=[];
-  for(var i=0;i<bits.length;i++){ var f=bits[i]==="1"?2200:1200; for(var j=0;j<amostrasPorBit;j++) out.push(Math.sin(2*Math.PI*f*j/SR)*0.5); }
-  return {bits:bits, amostras:out}; }
-function goertzel(amostras,f){ var w=2*Math.PI*f/SR, coef=2*Math.cos(w), s0=0,s1=0,s2=0; for(var i=0;i<amostras.length;i++){ s0=amostras[i]+coef*s1-s2; s2=s1; s1=s0; } return Math.sqrt(s1*s1+s2*s2-coef*s1*s2); }
-function fskDecode(amostras){ var n=Math.floor(SR/BAUDS), bits=""; for(var i=0;i+n<=amostras.length;i+=n){ var seg=amostras.slice(i,i+n); var m=goertzel(seg,2200), s=goertzel(seg,1200); bits+= m>s?"1":"0"; } return bits; }
+function hexDeBits(bits){ var h=""; for(var i=0;i+4<=bits.length;i+=4) h+=parseInt(bits.slice(i,i+4),2).toString(16); return h; }
+// Emite em fase contínua, à taxa do aparelho (sr). Sem sr, usa 8000 Hz (ensaios).
+function fskEncode(hex, sr){ sr = sr || SR; var bits = PREAMBULO + bitsDeHex(hex), nb = sr/BAUDS, total = Math.round(bits.length*nb), out = new Float32Array(total), ph = 0;
+  for(var i=0;i<total;i++){ var f = bits.charAt(Math.min(bits.length-1, Math.floor(i/nb)))==="1" ? F1 : F0; ph += 2*Math.PI*f/sr; if(ph > 2*Math.PI) ph -= 2*Math.PI; out[i] = Math.sin(ph)*0.5; }
+  return {bits:bits, amostras:out, sr:sr}; }
+function goertzel(amostras, f, sr, ini, n){ sr = sr || SR; ini = ini || 0; if(n == null) n = amostras.length - ini;
+  var w = 2*Math.PI*f/sr, coef = 2*Math.cos(w), s0 = 0, s1 = 0, s2 = 0;
+  for(var i=ini;i<ini+n;i++){ s0 = amostras[i]+coef*s1-s2; s2 = s1; s1 = s0; }
+  return Math.sqrt(Math.max(0, s1*s1+s2*s2-coef*s1*s2)); }
+// Leitura simples, bit a bit desde a amostra 0 (só para ensaios já alinhados).
+function fskDecode(amostras, sr){ sr = sr || SR; var n = Math.floor(sr/BAUDS), bits = "";
+  for(var i=0;i+n<=amostras.length;i+=n) bits += goertzel(amostras,F1,sr,i,n) > goertzel(amostras,F0,sr,i,n) ? "1" : "0";
+  return bits; }
+// Procura uma trama inteira numa gravação feita à taxa sr.
+// A sincronia só conta onde o tom começa (antes dela não há tom); o hash só sai com os 128 bits todos.
+// Estados: ok · em_curso (a gravação acaba a meio da trama) · incompleta (o tom parou antes dos 128 bits) · duvidosa · nada.
+function procurarTrama(s, sr, memo){
+  var nb = sr/BAUDS, n = Math.floor(nb), passo = Math.max(1, Math.floor(nb/8));
+  var G = s.length >= n ? Math.floor((s.length-n)/passo)+1 : 0;
+  if(G < 1) return {estado:"nada"};
+  var t0 = new Float64Array(G), t1 = new Float64Array(G), g0 = 0;
+  if(memo && memo.sr === sr && memo.G <= G){ t0.set(memo.t0); t1.set(memo.t1); g0 = memo.G; }   // só calcula o áudio novo
+  for(var g=g0; g<G; g++){
+    var a = g*passo, e = 0, m = 0;
+    for(var i=a;i<a+n;i++){ e += s[i]*s[i]; m += s[i]; }
+    e -= m*m/n;                        // tira a componente contínua
+    if(e < 1e-12) continue;            // silêncio digital: sem tom
+    var p0 = goertzel(s,F0,sr,a,n), p1 = goertzel(s,F1,sr,a,n), norma = e*n/2;   // um tom puro dá p² ≈ e·n/2
+    t0[g] = p0*p0/norma; t1[g] = p1*p1/norma;
+  }
+  if(memo){ memo.sr = sr; memo.G = G; memo.t0 = t0; memo.t1 = t1; }
+  function janela(ini, k){ var pos = ini + k*nb; if(pos < 0) return null; if(pos + n > s.length) return -2; var g = Math.round(pos/passo); return g < G ? g : -2; }
+  function bitSinc(ini, k){ var g = janela(ini, k); if(g === null || g === -2) return g; var a = t0[g], b = t1[g], m = Math.max(a,b);
+    if(m < TOM_MIN || m < DOM_SINC*Math.min(a,b)) return -1; return b > a ? 1 : 0; }
+  var ultimo = {estado:"nada"};
+  for(var ini = nb; ini + 8*nb <= s.length; ini += passo){
+    var antes = bitSinc(ini, -1);
+    if(antes === 0 || antes === 1) continue;          // antes da trama não pode haver tom
+    var ok = true;
+    for(var k=0;k<8;k++){ if(bitSinc(ini,k) !== (PREAMBULO.charCodeAt(k)-48)){ ok = false; break; } }
+    if(!ok) continue;
+    var melhor = ini, nota = -1;                       // afina o tempo: até meio bit à frente, fica o preâmbulo mais limpo
+    for(var c = ini; c <= ini + nb/2; c += passo){
+      var soma = 0, valido = true;
+      for(var k2=0;k2<8;k2++){ var g2 = janela(c,k2); if(g2 === null || g2 === -2){ valido = false; break; } soma += Math.abs(t1[g2]-t0[g2]); }
+      if(valido && soma > nota){ nota = soma; melhor = c; }
+    }
+    var bits = "", duvidas = 0, estado = null;
+    for(var k3=8; k3<8+BITS_DADOS; k3++){
+      var g3 = janela(melhor, k3);
+      if(g3 === -2){ estado = {estado:"em_curso", bits:k3-8}; break; }
+      var a3 = t0[g3], b3 = t1[g3], m3 = Math.max(a3,b3);
+      if(m3 < TOM_MIN){ estado = {estado:"incompleta", bits:k3-8}; break; }
+      if(m3 < DOM_DADOS*Math.min(a3,b3)) duvidas++;
+      bits += b3 > a3 ? "1" : "0";
+    }
+    if(!estado){
+      if(!duvidas) return {estado:"ok", hex:hexDeBits(bits), bits:bits.length, inicio_s:melhor/sr};
+      estado = {estado:"duvidosa", duvidas:duvidas, bits:BITS_DADOS};
+    }
+    if(estado.estado === "em_curso") return estado;   // a trama ainda está a chegar
+    ultimo = estado;
+    ini = melhor + (8 + estado.bits)*nb;               // continua a procurar depois desta
+  }
+  return ultimo;
+}
 function emitir(){
   var txt = document.getElementById("msg").value.trim();
   if(!txt){ alert("escreve a mensagem"); return; }
   var hash = shaRadio(txt).slice(0,32);
-  var enc = fskEncode(hash);
-  if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-  var buf = audioCtx.createBuffer(1, enc.amostras.length, SR);
+  var ctx = contexto(), sr = ctx.sampleRate;
+  var enc = fskEncode(hash, sr);
+  var buf = ctx.createBuffer(1, enc.amostras.length, sr);
   buf.getChannelData(0).set(enc.amostras);
-  var src = audioCtx.createBufferSource(); src.buffer = buf; src.connect(audioCtx.destination); src.start();
-  document.getElementById("emitido").textContent = "mensagem: " + txt + String.fromCharCode(10) + "hash emitido: " + hash + String.fromCharCode(10) + "tons: " + enc.amostras.length + " amostras a " + BAUDS + " bits/s";
+  var src = ctx.createBufferSource(); src.buffer = buf; src.connect(ctx.destination); src.start();
+  document.getElementById("emitido").textContent = "mensagem: " + txt + NL + "hash emitido: " + hash + NL + "tons: " + enc.bits.length + " bits a " + BAUDS + " bits/s (" + (enc.bits.length/BAUDS).toFixed(2).replace(".", ",") + " s) · taxa real deste aparelho: " + sr + " Hz";
 }
+var escuta = null;
 function ouvir(){
-  if(!navigator.mediaDevices){ alert("sem microfone"); return; }
   var out = document.getElementById("recebido");
-  out.textContent = "a ouvir… (2 segundos de tons)";
-  navigator.mediaDevices.getUserMedia({audio:true}).then(function(stream){
-    if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-    var src = audioCtx.createMediaStreamSource(stream);
-    var proc = audioCtx.createScriptProcessor(4096,1,1), janela=[];
-    proc.onaudioprocess = function(e){
-      var ch = e.inputBuffer.getChannelData(0);
-      for(var i=0;i<ch.length;i++) janela.push(ch[i]);
-      if(janela.length >= SR*2.2){
-        var bits = fskDecode(janela.slice(SR*0.2, SR*2.2));
-        var sync = bits.indexOf("10101010");
-        var hex = hexDeBits(bits.slice(sync+8, sync+8+128));
-        out.textContent = "hash recebido: " + hex + String.fromCharCode(10) + "— compara com o hash do emitente; se conferir, a mensagem não foi alterada.";
-        out.className = ""; proc.disconnect(); stream.getTracks().forEach(function(t){t.stop();});
+  if(escuta) return;
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ out.textContent = "sem microfone"; out.className = "vermelho"; return; }
+  var ctx = contexto();
+  escuta = {};
+  out.className = ""; out.textContent = "a ouvir… até " + ESCUTA_MAX_S + " s. Toca agora no outro aparelho.";
+  navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false, noiseSuppression:false, autoGainControl:false}}).then(function(stream){
+    var sr = ctx.sampleRate, src = ctx.createMediaStreamSource(stream), proc = ctx.createScriptProcessor(4096,1,1);
+    var partes = [], total = 0, t0 = Date.now(), fim = false, aviso = "", memo = {};
+    function parar(texto, classe){
+      if(fim) return; fim = true; escuta = null;
+      try{ proc.disconnect(); src.disconnect(); }catch(_){}
+      stream.getTracks().forEach(function(t){ t.stop(); });
+      out.textContent = texto; out.className = classe || "";
+    }
+    proc.onaudioprocess = function(e){ if(fim) return; var d = e.inputBuffer.getChannelData(0); partes.push(new Float32Array(d)); total += d.length; };
+    src.connect(proc); proc.connect(ctx.destination);
+    function ver(){
+      if(fim) return;
+      var s = new Float32Array(total), o = 0;
+      for(var i=0;i<partes.length;i++){ s.set(partes[i], o); o += partes[i].length; }
+      var r = procurarTrama(s, sr, memo), passou = (Date.now()-t0)/1000;
+      if(r.estado === "ok"){ parar("hash recebido: " + r.hex + NL + "trama completa: 128 de 128 bits · taxa real deste aparelho: " + sr + " Hz" + NL + "— compara os 32 caracteres com o hash do emitente; se forem todos iguais, a mensagem não foi alterada."); return; }
+      if(r.estado === "incompleta") aviso = "trama incompleta: chegaram " + r.bits + " de 128 bits. Não mostro hash parcial. Toca outra vez.";
+      else if(r.estado === "duvidosa") aviso = "trama com " + r.duvidas + " bits duvidosos. Não mostro hash. Aproxima os aparelhos e toca outra vez.";
+      if(passou >= ESCUTA_MAX_S){
+        if(r.estado === "em_curso") aviso = "trama incompleta: a escuta acabou com " + r.bits + " de 128 bits. Não mostro hash parcial.";
+        parar(aviso || ("não ouvi nenhuma trama em " + ESCUTA_MAX_S + " s. Aproxima os aparelhos e repete."), "vermelho");
+        return;
       }
-    };
-    src.connect(proc); proc.connect(audioCtx.destination);
-  }).catch(function(){ out.textContent = "microfone negado"; out.className = "vermelho"; });
+      if(aviso) out.textContent = aviso + NL + "continuo a ouvir…";
+      setTimeout(ver, 1000);
+    }
+    setTimeout(ver, 1500);
+  }).catch(function(){ escuta = null; out.textContent = "microfone negado"; out.className = "vermelho"; });
 }
 </script>
 <!-- rodape-2040:inicio -->

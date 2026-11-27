@@ -7,7 +7,9 @@
 //     Leva também a página dos avisos legais (24 línguas), ligada a partir do início.
 // v8 (27-11-2026): o início mudou (as 8 tigelas da Educação e família e as 62 línguas, diretiva das 12:29).
 //     Nome novo, para o início novo chegar a quem já tinha a v7 (a cache serve primeiro o que tem guardado).
-const CACHE_NAME = "konfirmu-app-unica-v9:" + self.registration.scope;
+// v10 (27-11-2026): a Rádio com Prova lê a taxa real do aparelho e recusa tramas cortadas.
+//     Nome novo, para a página nova chegar a quem já tinha a v9 (a cache serve primeiro o que tem guardado).
+const CACHE_NAME = "konfirmu-app-unica-v10:" + self.registration.scope;
 const OPCIONAIS = ["./"];
 const ASSETS = ["./app_unica.html", "./girafinhas_criancas_facil.html", "./sala_natal_girafinhas.html", "./estudio_video_criancas.html", "./executor_criancas.html", "./radio_selo.html", "./carta_selada.html", "./manifest.json", "./assets/qrcode.js", "./assets/nacl-fast.min.js", "./assets/nacl-util.min.js", "./assets/imersao.css", "./assets/imersao.js", "./konfirmu_chat_offline_v0.1.html", "./konfirmu_chat_offline.html", "./verificador_offline.html", "./patient_vault_offline.html", "./ficha_campo.html", "./urna_voto_offline.html", "./testemunha_offline.html", "./chronolex_ata.html", "./chronolex_photo_seal.html", "./chronolex_verify.html", "./regua_do_planeta.html", "./neverland_family_quest.html", "./kcp_art_music_studio.html", "./webrtc_local.html", "./avisos_legais.html", "./terminal.html", "./assets/terminal_worker.js", "./assets/konfirmu-2040.js", "./assets/kcp_ed_estrito.js", "./economia_anti_casino.html"];
 self.addEventListener("install", (event) => {
