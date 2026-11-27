@@ -194,8 +194,10 @@ def chat_um_so_sw(t):
 
 def pacote_offline(saida_tmp):
     """O executável offline de duplo clique (o mesmo do fluxo do GitHub), para descarregar da página."""
+    # «--base edicao-21» relativo, como no passo do GitHub: o caminho da cópia do repositório não entra no ZIP
+    # (o PACOTE.json guarda o nome da base); assim o ZIP daqui é o mesmo, byte a byte, que o GitHub atesta.
     subprocess.run([sys.executable, "-I", os.path.join(AQUI, "build_pacote_offline.py"), "--edicao-21", "--base",
-                    os.path.join(REPO, "edicao-21"), "--saida", saida_tmp], check=True, stdout=subprocess.DEVNULL, cwd=REPO)
+                    "edicao-21", "--saida", saida_tmp], check=True, stdout=subprocess.DEVNULL, cwd=REPO)
     return ler(os.path.join(saida_tmp, "KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip"), True)
 
 
@@ -385,6 +387,11 @@ def construir(saida):
     total = sum(len(c) for c in ficheiros.values())
     raiz = hashlib.sha256(ficheiros["SHA256SUMS.txt"]).hexdigest()
     print("konfirmu/: %d ficheiros · %d bytes · SHA-256 do SHA256SUMS.txt: %s" % (len(ficheiros), total, raiz))
+    import zlib
+    if "ng" in zlib.ZLIB_RUNTIME_VERSION:
+        # os ZIP comprimem de outra maneira com a zlib-ng: tudo funciona, mas os bytes deixam de bater com os do GitHub
+        print("AVISO: esta máquina usa %s; o GitHub usa a zlib padrão. Para bytes iguais aos do GitHub, "
+              "construir com a zlib padrão (por exemplo LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libz.so.1)." % zlib.ZLIB_RUNTIME_VERSION)
     return raiz
 
 
