@@ -3,67 +3,197 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🦒 KONFIRMU — a app única das girafinhas</title>
-<style>
-body{font-family:system-ui,sans-serif;max-width:720px;margin:0 auto;padding:16px;color:#eafbe9;background:radial-gradient(120% 80% at 50% -10%,#0b3d2e 0%,#071a12 45%,#050d09 100%)}
-h1{font-size:1.6rem;background:linear-gradient(90deg,#ffd54f,#81c784);-webkit-background-clip:text;background-clip:text;color:transparent}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:14px}
-.card{background:rgba(10,40,28,.75);border:1px solid rgba(129,199,132,.35);border-radius:14px;padding:14px;text-decoration:none;color:#eafbe9;transition:transform .15s,border-color .2s}
-.card:hover{transform:translateY(-3px);border-color:#ffd54f}
-.ico{font-size:1.6rem}
-.card b{display:block;margin:6px 0 2px}
-.d{font-size:.75rem;color:#9e9e9e}
-.facil{font-size:1.3rem}
-.facil .card b{font-size:1.2rem}
-.facil .card{padding:20px}
-.facil .ico{font-size:2.4rem}
-.id{font-size:.7rem;color:#6ee7b7;word-break:break-all;margin-top:14px;text-align:center}
-.aviso{font-size:.72rem;color:#8b949e;margin-top:12px;text-align:center}
-.aviao{margin-left:8px;background:#0d1117;color:#eafbe9;border:1px solid #8b949e;border-radius:10px;padding:10px 16px;font-weight:700}
-.aviao-estado{display:block;margin-top:8px;font-size:.8rem;color:#c9d1d9;min-height:1em}
-.legal{font-size:.85rem;margin:10px 0 0}.legal a{color:#ffd54f}
-</style>
+<meta name="theme-color" content="#F3F1EE" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121317" media="(prefers-color-scheme: dark)">
+<title>Konfirmu</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231D1D21'/%3E%3Ctext x='16' y='22.5' font-family='Inter,Arial,sans-serif' font-size='21' font-weight='700' text-anchor='middle' fill='%23D97D4A'%3Eu%3C/text%3E%3C/svg%3E">
+<style>:root{color-scheme:light dark;--pagina:#F3F1EE;--painel:#FBFAF8;--tinta:#1D1D21;--tinta2:#4B4B52;--tinta3:#4B4B50;--linha:#E2DDD6;--azulejo:#ECE8E2;--u:#D97D4A;
+--letra:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root{--pagina:#121317;--painel:#17181D;--tinta:#ECEAE6;--tinta2:#B4B2AD;--tinta3:#AEACA9;--linha:#2A2B31;--azulejo:#202127;--u:#F7B397}}
+*{box-sizing:border-box}
+html{background:var(--pagina);-webkit-text-size-adjust:100%}
+body{margin:0 auto;max-width:760px;padding:28px 20px 40px;font:16px/1.5 var(--letra);color:var(--tinta);background:var(--pagina)}
+h1{margin:0;font-size:2rem;line-height:1.1;font-weight:650;letter-spacing:-.02em}
+.acoes{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:16px 0 0}
+h1 .u{color:var(--u)}
+.letra{flex:none;min-height:44px;padding:0 14px;border:1px solid var(--linha);border-radius:10px;background:var(--painel);color:var(--tinta);font:600 .9375rem/1 var(--letra);cursor:pointer}
+.letra[aria-pressed="true"]{background:var(--tinta);color:var(--pagina);border-color:var(--tinta)}
+.intro{margin:12px 0 0;max-width:34em;color:var(--tinta2)}
+.aviao{min-height:44px;padding:0 16px;border:1px solid var(--tinta);border-radius:10px;background:transparent;color:var(--tinta);font:600 .9375rem/1 var(--letra);cursor:pointer}
+.aviao-estado{display:block;margin-top:8px;min-height:1.4em;font-size:.875rem;color:var(--tinta2)}
+.portais{display:flex;gap:4px;margin:28px 0 0;padding:4px;border-radius:12px;background:var(--azulejo)}
+.portais [role=tab]{flex:1 1 0;min-height:44px;padding:0 8px;border:0;border-radius:9px;background:transparent;color:var(--tinta2);font:600 .9375rem/1.2 var(--letra);cursor:pointer}
+.portais [role=tab][aria-selected="true"]{background:var(--painel);color:var(--tinta);box-shadow:0 1px 2px rgb(0 0 0 / .08),0 0 0 1px var(--linha)}
+.portal{margin-top:24px}
+.portal h2{margin:0;font-size:1.25rem;line-height:1.25;font-weight:650;letter-spacing:-.01em}
+.portal .sub{margin:4px 0 14px;color:var(--tinta2);font-size:.9375rem}
+.grid{display:block;border:1px solid var(--linha);border-radius:14px;background:var(--painel);overflow:hidden}
+.card{display:grid;grid-template-columns:44px 1fr;grid-template-areas:"ico t" "ico d";column-gap:14px;align-items:center;min-height:68px;padding:12px 16px;color:var(--tinta);text-decoration:none;border-top:1px solid var(--linha)}
+.card:first-child{border-top:0}
+.card:hover{background:var(--azulejo)}
+.card:active{background:var(--linha)}
+.ico{grid-area:ico;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;background:var(--azulejo);color:var(--tinta)}
+.ico svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.card b{grid-area:t;align-self:end;font-size:1rem;line-height:1.3;font-weight:600}
+.card .d{grid-area:d;align-self:start;font-size:.875rem;line-height:1.4;color:var(--tinta2)}
+.card .estado{display:table;margin:6px 0 2px;padding:1px 7px;border:1px solid var(--linha);border-radius:6px;font-size:.75rem;line-height:1.4;color:var(--tinta3)}
+.rodape{margin-top:32px;padding-top:16px;border-top:1px solid var(--linha);color:var(--tinta3);font-size:.8125rem}
+.rodape p{margin:0 0 8px;max-width:46em}
+.id{overflow-wrap:anywhere}
+.rodape a{color:var(--tinta);text-decoration:underline;text-underline-offset:3px}
+.id:empty{display:none}
+:focus-visible{outline:2px solid var(--tinta);outline-offset:2px}
+.card:focus-visible{outline-offset:-3px;border-radius:12px}
+.portal[hidden],.card[hidden]{display:none}
+.procura{margin:24px 0 0}
+.procura label{display:block;margin:0 0 6px;font-size:.875rem;font-weight:600;color:var(--tinta2)}
+.procura input{width:100%;min-height:44px;padding:0 14px;border:1px solid var(--linha);border-radius:10px;background:var(--painel);color:var(--tinta);font:400 1rem/1.2 var(--letra)}
+.procura input::placeholder{color:var(--tinta3)}
+.sem-resultados{margin:10px 0 0;min-height:1.4em;font-size:.875rem;color:var(--tinta2)}
+.sem-resultados:empty{display:none}
+.a-procurar .portais{display:none}
+.avisos h2{margin:0 0 4px;font-size:.9375rem;line-height:1.3;font-weight:650;color:var(--tinta2)}
+.avisos dl{margin:0 0 12px}
+.avisos dt{margin:10px 0 0;font-weight:600;color:var(--tinta2)}
+.avisos dd{margin:2px 0 0;max-width:46em}
+@media (prefers-reduced-motion:no-preference){.js .portal{animation:surge .16s ease-out}@keyframes surge{from{opacity:0}to{opacity:1}}}
+body.facil{font-size:19px}
+body.facil .card b{font-size:1.1rem}
+body.facil .card .d{font-size:1rem}
+body.facil .portais [role=tab],body.facil .letra,body.facil .aviao{font-size:1.05rem}
+/* imersão 3D: a mesma função, com a marca da casa (sem verde) */
+body .acoes .im3d-tools{display:contents}
+body .im3d-tools{margin:16px 0 0}
+body .acoes .im3d-tools small{flex-basis:100%}
+body .im3d-tools button{min-height:44px;padding:0 14px;border:1px solid var(--linha);border-radius:10px;background:var(--painel);color:var(--tinta);font:600 .9375rem/1 var(--letra)}
+body .im3d-tools button[aria-pressed="true"]{background:var(--tinta);color:var(--pagina);border-color:var(--tinta)}
+body .im3d-tools small{color:var(--tinta2)}
+body .im3d-viewer{margin:12px 0 0;color:var(--tinta2);font-size:.9375rem}
+:root.im3d-active{background:var(--pagina)}</style>
 <link rel="stylesheet" href="./assets/imersao.css">
 <script defer src="./assets/imersao.js" data-viewer></script>
 </head>
 <body>
-<h1>🦒 KONFIRMU — a app única</h1>
-<p style="color:#9e9e9e">Olá! Escolhe por onde queres começar. Depois de abrires uma vez com internet, as atividades funcionam também sem rede.</p>
-<button onclick="facil()" style="background:#ffb300;color:#1a1200;border:0;border-radius:10px;padding:10px 16px;font-weight:800">🔍 MODO FÁCIL (letras grandes)</button>
-<button id="aviao" class="aviao" type="button">✈️ Preparar modo avião</button>
+<header>
+<h1>Konfirm<span class="u">u</span></h1>
+<p class="intro">Confirma e guarda com prova, no teu aparelho. Depois da primeira visita com internet, funciona também sem rede.</p>
+<div class="acoes"><button type="button" class="letra" onclick="facil()" aria-pressed="false">Letra maior</button><button id="aviao" class="aviao" type="button">Preparar modo avião</button></div>
 <span id="aviaoEstado" class="aviao-estado" role="status" aria-live="polite"></span>
-<p class="legal"><a href="./avisos_legais.html">Avisos legais</a></p>
+</header>
+<div class="procura" hidden><label for="procura">Procurar atividade</label><input id="procura" type="search" autocomplete="off" enterkeyhint="search" placeholder="Por exemplo: verificar, carta, família"></div>
+<p id="sem" class="sem-resultados" role="status" aria-live="polite"></p>
+<nav class="portais" role="tablist" aria-label="Portais">
+<button type="button" role="tab" id="t-pro" aria-controls="p-pro" aria-selected="false">Profissional</button>
+<button type="button" role="tab" id="t-cid" aria-controls="p-cid" aria-selected="false">Cidadão</button>
+<button type="button" role="tab" id="t-fam" aria-controls="p-fam" aria-selected="false">Família</button>
+</nav>
+<section class="portal" id="p-pro" role="tabpanel" aria-labelledby="t-pro">
+<h2>Profissional e indústria</h2><p class="sub">Confirmar ficheiros, registar o trabalho de campo e provar o que aconteceu.</p>
 <div class="grid">
-<a class="card" href="girafinhas_criancas_facil.html"><span class="ico">🧒</span><b>Girafinhas Fácil</b><span class="d">3 toques, voz e cores — para quem nunca viu um telemóvel</span></a>
-<a class="card" href="sala_natal_girafinhas.html"><span class="ico">🎄</span><b>Sala de Natal</b><span class="d">jogos, moldes de papel e um certificado mágico para guardar</span></a>
-<a class="card" href="estudio_video_criancas.html"><span class="ico">🎬</span><b>Estúdio das Crianças</b><span class="d">filma sem internet e guarda o filme com selo</span></a>
-<a class="card" href="executor_criancas.html"><span class="ico">🤖</span><b>O Executor das Crianças</b><span class="d">faz contas a sério e guarda o resultado com selo</span></a>
-<a class="card" href="radio_selo.html"><span class="ico">📻</span><b>Rádio com Prova</b><span class="d">manda mensagens por som que ninguém consegue falsificar</span></a>
-<a class="card" href="carta_selada.html"><span class="ico">✉️</span><b>Carta Selada</b><span class="d">escreve, põe o selo e imprime</span></a>
-<a class="card" href="verificador_offline.html"><span class="ico">✅</span><b>Verificador</b><span class="d">confere se um ficheiro ou um código é mesmo o original</span></a>
-<a class="card" href="patient_vault_offline.html"><span class="ico">🏥</span><b>Cofre do Paciente</b><span class="d">a tua história de saúde, guardada só contigo · em ensaio, ainda não validado</span></a>
-<a class="card" href="ficha_campo.html"><span class="ico">📋</span><b>Ficha de Campo</b><span class="d">aponta água, energia e avarias, tudo por ordem</span></a>
-<a class="card" href="urna_voto_offline.html"><span class="ico">🗳️</span><b>Urna de Voto</b><span class="d">votar sem internet e sem batota · em ensaio, ainda não validado</span></a>
-<a class="card" href="testemunha_offline.html"><span class="ico">🤝</span><b>Testemunha</b><span class="d">duas pessoas confirmam o mesmo momento</span></a>
-<a class="card" href="chronolex_ata.html"><span class="ico">📜</span><b>Chronolex Ata</b><span class="d">aponta o que aconteceu, por ordem, com selo</span></a>
-<a class="card" href="chronolex_photo_seal.html"><span class="ico">📷</span><b>Selador de Fotos</b><span class="d">tira uma foto e guarda-a com selo</span></a>
-<a class="card" href="chronolex_verify.html"><span class="ico">🔍</span><b>Verificar Ata</b><span class="d">confere se uma ata ficou igual ao que foi selado</span></a>
-<a class="card" href="konfirmu_chat_offline_v0.1.html"><span class="ico">💬</span><b>Chat de bolso</b><span class="d">conversa honesta: quando não sabe, diz · em ensaio</span></a>
-<a class="card" href="regua_do_planeta.html"><span class="ico">🌍</span><b>Régua do Planeta</b><span class="d">ainda vamos a tempo de salvar o planeta?</span></a>
-<a class="card" href="neverland_family_quest.html"><span class="ico">🧭</span><b>Terra do Nunca</b><span class="d">aventura em família</span></a>
-<a class="card" href="kcp_art_music_studio.html"><span class="ico">🎨</span><b>Estúdio de Arte</b><span class="d">faz música e arte com o teu nome</span></a>
-<a class="card" href="webrtc_local.html"><span class="ico">📡</span><b>Ligação Local</b><span class="d">liga dois aparelhos diretamente, sem passar pela nuvem</span></a>
+<a class="card" href="verificador_offline.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="m9 14 2 2 4-4"/></svg></span><b>Verificar ficheiro</b><span class="d">Confirma se um ficheiro ou um código é mesmo o original.</span></a>
+<a class="card" href="chronolex_photo_seal.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg></span><b>Foto com selo</b><span class="d">Tira uma fotografia e guarda-a com selo.</span></a>
+<a class="card" href="ficha_campo.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4"/></svg></span><b>Ficha de campo</b><span class="d">Regista água, energia e avarias, por ordem.</span></a>
+<a class="card" href="chronolex_ata.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4v16"/><circle cx="7" cy="7" r="1.6"/><circle cx="7" cy="12" r="1.6"/><circle cx="7" cy="17" r="1.6"/><path d="M11 7h8M11 12h8M11 17h6"/></svg></span><b>Ata Chronolex</b><span class="d">Regista o que aconteceu, por ordem, com selo.</span></a>
+<a class="card" href="chronolex_verify.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/><path d="m8 10.5 1.8 1.8L13 9"/></svg></span><b>Verificar ata</b><span class="d">Confirma se uma ata ficou igual ao que foi selado.</span></a>
+<a class="card" href="testemunha_offline.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8.5" cy="8" r="3"/><circle cx="16" cy="9" r="2.5"/><path d="M3 19c.6-3.3 2.9-5 5.5-5s4.9 1.7 5.5 5"/><path d="M14.5 14.2c.5-.1 1-.2 1.5-.2 2.2 0 4 1.4 4.5 4.5"/></svg></span><b>Testemunha</b><span class="d">Duas pessoas confirmam o mesmo momento.</span></a>
+<a class="card" href="radio_selo.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12h2l2-5 3 10 3-12 3 10 2-3h3"/></svg></span><b>Mensagem por som</b><span class="d">Envia mensagens por som que não se podem falsificar.</span></a>
+<a class="card" href="webrtc_local.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="7" height="12" rx="1.5"/><rect x="14" y="6" width="7" height="12" rx="1.5"/><path d="M10 12h4"/></svg></span><b>Ligação direta</b><span class="d">Liga dois aparelhos sem passar pela nuvem.</span></a>
 </div>
-<div class="id" id="id">a tua identidade aparece aqui</div>
-<p class="aviso">Bom saber: cada atividade tem as suas regras; este menu só as junta. O selo mostra que nada mudou depois de feito, mas não prova que é verdade. A tua chave fica só neste aparelho.</p>
+</section>
+<section class="portal" id="p-cid" role="tabpanel" aria-labelledby="t-cid">
+<h2>Cidadão e saúde</h2><p class="sub">Conversar, guardar a tua informação e tratar de cartas, no teu aparelho.</p>
+<div class="grid">
+<a class="card" href="konfirmu_chat_offline_v0.1.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-7l-4 4v-4H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></span><b>Chat de bolso</b><span class="d">Responde com regras escritas. Quando não sabe, diz.</span></a>
+<a class="card" href="patient_vault_offline.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/><path d="M12 9v6M9 12h6"/></svg></span><b>Cofre de saúde</b><span class="d">A tua história de saúde, guardada só neste aparelho.<span class="estado">Em ensaio, ainda não validado</span></span></a>
+<a class="card" href="carta_selada.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><path d="m3.5 7 8.5 6.5L20.5 7"/></svg></span><b>Carta com selo</b><span class="d">Escreve, põe o selo e imprime.</span></a>
+<a class="card" href="urna_voto_offline.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 11h14v9H5z"/><path d="M9 11V5h6v6"/><path d="M8 15h8"/></svg></span><b>Votação sem rede</b><span class="d">Uma votação feita só nos aparelhos de quem vota.<span class="estado">Em ensaio, ainda não validado</span></span></a>
+</div>
+</section>
+<section class="portal" id="p-fam" role="tabpanel" aria-labelledby="t-fam">
+<h2>Educação e família</h2><p class="sub">Aprender e brincar em família, com o mesmo cuidado pela privacidade.</p>
+<div class="grid">
+<a class="card" href="girafinhas_criancas_facil.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span><b>Primeiros passos</b><span class="d">Três toques, voz e cores, para quem nunca usou um telemóvel.</span></a>
+<a class="card" href="sala_natal_girafinhas.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4l-5.3 3 1.2-6-4.5-4.1 6-.7z"/></svg></span><b>Natal em família</b><span class="d">Jogos, moldes de papel e um certificado para guardar.</span></a>
+<a class="card" href="estudio_video_criancas.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="10" rx="1.5"/><path d="m16 11 5-3v8l-5-3z"/></svg></span><b>Estúdio de vídeo</b><span class="d">Filma sem internet e guarda o filme com selo.</span></a>
+<a class="card" href="executor_criancas.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 14.75h.01M12 14.75h.01M15.5 14.75h.01M8.5 18h.01M12 18h.01M15.5 18h.01"/></svg></span><b>Contas com selo</b><span class="d">Faz contas e guarda o resultado com selo.</span></a>
+<a class="card" href="kcp_art_music_studio.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.5-.8 1.5-1.6 0-.5-.2-.9-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4c0-4.4-4-8-9-8z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7.5" r="1"/><circle cx="14.5" cy="7.5" r="1"/></svg></span><b>Estúdio de arte</b><span class="d">Música e desenho, com o teu nome.</span></a>
+<a class="card" href="regua_do_planeta.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><b>Régua do planeta</b><span class="d">Ainda vamos a tempo de salvar o planeta?</span></a>
+<a class="card" href="neverland_family_quest.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg></span><b>Aventura em família</b><span class="d">Um jogo de aventura para jogar juntos.</span></a>
+</div>
+</section>
+<footer class="rodape">
+<section class="avisos" aria-labelledby="avisos-t">
+<h2 id="avisos-t">Avisos legais</h2>
+<dl>
+<dt>Fase de ensaio</dt><dd>A Konfirmu está em fase de ensaio técnico. As funções sem rede, de verificação e de assistência podem mudar ou falhar. Não há garantia de funcionamento contínuo.</dd>
+<dt>Emergências</dt><dd>A Konfirmu não é um serviço de emergência e não liga nem avisa ninguém por ti. Em perigo imediato, liga 112, o número europeu de emergência.</dd>
+<dt>Respostas automáticas e IA</dt><dd>O assistente da Konfirmu é um sistema automático, não uma pessoa. Algumas respostas são escritas por uma IA (inteligência artificial) e podem ter erros ou falhas. Não são aconselhamento jurídico, médico nem financeiro. Confirma sempre na fonte oficial.</dd>
+<dt>Selos e prova</dt><dd>Um selo mostra se um ficheiro mudou desde que foi selado. Usa um resumo criptográfico baseado em SHA-256 e uma assinatura feita no teu aparelho. Selado não quer dizer verdadeiro: o selo não confirma o que o ficheiro diz. A hora do selo vem do relógio do aparelho e não é um selo temporal qualificado. O valor como prova depende da lei e dos tribunais de cada país.</dd>
+<dt>Privacidade</dt><dd>Os selos, a verificação e o que guardas nestas páginas ficam no teu aparelho; nenhuma delas envia os teus ficheiros para servidores. A IA do chat de bolso corre no teu aparelho. Na app Konfirmu, com rede, as perguntas ao assistente podem ser enviadas a um serviço de IA na União Europeia (Mistral AI) para gerar a resposta.</dd>
+</dl>
+<p class="legal"><a href="./avisos_legais.html">Os mesmos avisos em 24 línguas</a></p>
+</section>
+<p class="id" id="id"></p>
+</footer>
 <script src="./assets/nacl-fast.min.js"></script>
 <script>
 function toHex(u8){var s='';for(var i=0;i<u8.length;i++)s+=('0'+u8[i].toString(16)).slice(-2);return s}
 var pk;
 try{pk=localStorage.getItem("konfirmu_id")}catch(_){}
 if(!pk){var kp=nacl.sign.keyPair();pk=toHex(kp.publicKey);try{localStorage.setItem('konfirmu_id',pk)}catch(_){}}
-function facil(){document.body.classList.toggle('facil')}
-document.getElementById("id").textContent="a tua identidade neste aparelho: " + pk.slice(0,24) + "…";
+function facil(){var on=document.body.classList.toggle('facil');var b=document.querySelector('.letra');if(b)b.setAttribute('aria-pressed',on?'true':'false')}
+document.getElementById("id").textContent="A tua chave neste aparelho: " + pk.slice(0,16) + "…";
+(function(){
+ var tabs=[].slice.call(document.querySelectorAll('.portais [role=tab]'));
+ if(!tabs.length)return;
+ document.documentElement.classList.add('js');
+ function abrir(t,foco){
+  tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on?'true':'false');x.tabIndex=on?0:-1;
+   var p=document.getElementById(x.getAttribute('aria-controls'));if(p)p.hidden=!on});
+  if(foco)t.focus();
+  try{localStorage.setItem('konfirmu_portal',t.id)}catch(_){}
+ }
+ tabs.forEach(function(t,i){
+  t.addEventListener('click',function(){abrir(t)});
+  t.addEventListener('keydown',function(e){var n=null;
+   if(e.key==='ArrowRight')n=tabs[(i+1)%tabs.length];else if(e.key==='ArrowLeft')n=tabs[(i-1+tabs.length)%tabs.length];
+   else if(e.key==='Home')n=tabs[0];else if(e.key==='End')n=tabs[tabs.length-1];
+   if(n){e.preventDefault();abrir(n,true)}});
+ });
+ var guardado=null;try{guardado=document.getElementById(localStorage.getItem('konfirmu_portal'))}catch(_){}
+ abrir(guardado&&tabs.indexOf(guardado)>=0?guardado:tabs[0]);
+})();
+// Procura instantânea: mostra os cartões que batem, de todos os portais, agrupados pelo portal.
+(function(){
+ var campo=document.getElementById('procura');if(!campo)return;
+ campo.parentNode.hidden=false;
+ var secs=[].slice.call(document.querySelectorAll('.portal'));
+ var tabs=[].slice.call(document.querySelectorAll('.portais [role=tab]'));
+ var estado=document.getElementById('sem');
+ function norm(t){return t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase()}
+ function aplicar(){
+  var q=norm(campo.value.trim());
+  document.body.classList.toggle('a-procurar',!!q);
+  if(!q){
+   [].forEach.call(document.querySelectorAll('a.card'),function(a){a.hidden=false});
+   var sel=tabs.filter(function(t){return t.getAttribute('aria-selected')==='true'})[0]||tabs[0];
+   secs.forEach(function(s){s.hidden=!sel||s.id!==sel.getAttribute('aria-controls')});
+   estado.textContent='';return}
+  var total=0;
+  secs.forEach(function(s){var n=0;
+   [].forEach.call(s.querySelectorAll('a.card'),function(a){var ok=norm(a.textContent).indexOf(q)>=0;a.hidden=!ok;if(ok)n++});
+   s.hidden=!n;total+=n});
+  estado.textContent=total?(total===1?'1 atividade encontrada.':total+' atividades encontradas.'):'Nenhuma atividade tem «'+campo.value.trim()+'». Tenta outra palavra.';
+ }
+ campo.addEventListener('input',aplicar);
+ campo.addEventListener('keydown',function(e){if(e.key==='Escape'&&campo.value){campo.value='';aplicar()}});
+})();
+// A imersão 3D põe os seus controlos a seguir ao título; aqui passam para a fila de ações.
+document.addEventListener('DOMContentLoaded',function(){
+ var acoes=document.querySelector('.acoes'),t=document.querySelector('.im3d-tools'),v=document.querySelector('.im3d-viewer');
+ if(acoes&&t)acoes.appendChild(t);
+ if(acoes&&v)acoes.after(v);
+});
 // 27-11-2026: o início passa a ligar a cache sem rede (antes só o verificador a ligava).
 if(location.protocol!=="file:"&&"serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(function(){});}
 // 27-11-2026 (aprovado pelo David às 02:53): botão «Preparar modo avião». Guarda as peças da app neste aparelho e diz quantas estão guardadas.
