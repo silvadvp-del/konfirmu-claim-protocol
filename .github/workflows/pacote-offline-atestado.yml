@@ -1,6 +1,7 @@
 name: Pacote offline com atestacao do GitHub (KON-596)
 # Ordem do David de 27-11-2026, 03:04: «empacotar tudo com o build_pacote_offline.py + atestação automática do GitHub».
-# Corre os testes, constroi o ZIP offline duas vezes (tem de sair igual, byte a byte), confere-o
+# Corre os testes, constroi o ZIP offline com a edicao de 21 (edicao-21/) duas vezes (tem de sair igual,
+# byte a byte), confere-o, ensaia-o num navegador (arranque, modo aviao, 3D)
 # e pede ao GitHub uma atestacao de origem (Sigstore) para esse ZIP.
 # Quem tiver o ZIP confere sem confiar em nos:
 #   gh attestation verify KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip --repo silvadvp-del/konfirmu-claim-protocol
@@ -27,8 +28,8 @@ jobs:
         run: python3 -I tests/test_build_pacote_offline.py
       - name: Construir duas vezes e conferir
         run: |
-          python3 -I scripts/build_pacote_offline.py --saida dist
-          python3 -I scripts/build_pacote_offline.py --saida /tmp/segunda
+          python3 -I scripts/build_pacote_offline.py --edicao-21 --base edicao-21 --saida dist
+          python3 -I scripts/build_pacote_offline.py --edicao-21 --base edicao-21 --saida /tmp/segunda
           a=$(sha256sum dist/KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip | cut -d' ' -f1)
           b=$(sha256sum /tmp/segunda/KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip | cut -d' ' -f1)
           echo "primeira construcao: $a"
@@ -40,6 +41,10 @@ jobs:
             echo ""
             echo "sha256 \`$a\` · duas construcoes iguais · commit \`$GITHUB_SHA\`"
           } >> "$GITHUB_STEP_SUMMARY"
+      - name: Ensaio no navegador (edicao de 21 do GPT) — arranque, modo aviao e controlos 3D
+        run: |
+          python3 -m pip install --quiet playwright==1.55.0
+          python3 tests/test_imersao_offline.py dist/KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip --atividades 21
       - name: Atestacao de origem do GitHub (Sigstore)
         uses: actions/attest-build-provenance@v2
         with:
