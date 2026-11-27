@@ -60,7 +60,7 @@ pt:{aviso:'Ensino e investigação. Não serve para decisões sobre pessoas. Fun
  ola:'Olá. Confiro medidas por regras escritas e digo de onde vem cada regra. Sem internet e sem conta.\nExperimenta: «nitrato 48 ± 3 mg/L» ou «vacina a 9,5 °C».',
  agua:'Água: nitrato',frio:'Cadeia de frio',selo:'Selo de texto',ia:'Ligar IA local',exp:'Exportar conversa',imp:'Conferir conversa',
  exAgua:'nitrato 48 ± 3 mg/L',exFrio:'vacina a 9,5 °C',
- OK:'CONFERE',VETO:'NÃO CONFERE',NS:'AINDA NÃO SEI',IA:'IA LOCAL · não conferido',
+ OK:'CONFERE',VETO:'NÃO CONFERE',NS:'AINDA NÃO SEI',IA:'IA LOCAL · não conferido',SOS:'EMERGÊNCIA · 112',
  nit:(i)=>`Nitrato na água para consumo: limite ${i.lim} mg/L.\nMedida: ${i.txt}.\nNorma: Diretiva (UE) 2020/2184, anexo I, parte B.`,
  fri:(i)=>`Cadeia de frio: entre ${i.a} e ${i.b} °C.\nMedida: ${i.txt}.\nRegra da folha «cadeia de frio 2 a 8 °C» da Konfirmu.`,
  nsPorque:'A margem da medida passa por cima do limite. Mede outra vez com um aparelho mais fino.',
@@ -82,7 +82,7 @@ en:{aviso:'Teaching and research. Not for decisions about people. Works without 
  ola:'Hello. I check measurements against written rules and say where each rule comes from. No internet, no account.\nTry: "nitrate 48 ± 3 mg/L" or "vaccine at 9.5 °C".',
  agua:'Water: nitrate',frio:'Cold chain',selo:'Text seal',ia:'Turn on local AI',exp:'Export chat',imp:'Check a chat',
  exAgua:'nitrate 48 ± 3 mg/L',exFrio:'vaccine at 9.5 °C',
- OK:'MATCHES',VETO:'DOES NOT MATCH',NS:'I DON\'T KNOW YET',IA:'LOCAL AI · not checked',
+ OK:'MATCHES',VETO:'DOES NOT MATCH',NS:'I DON\'T KNOW YET',IA:'LOCAL AI · not checked',SOS:'EMERGENCY · 112',
  nit:(i)=>`Nitrate in drinking water: limit ${i.lim} mg/L.\nMeasurement: ${i.txt}.\nStandard: Directive (EU) 2020/2184, Annex I, Part B.`,
  fri:(i)=>`Cold chain: between ${i.a} and ${i.b} °C.\nMeasurement: ${i.txt}.\nRule from the Konfirmu "cold chain 2 to 8 °C" sheet.`,
  nsPorque:'The margin of the measurement crosses the limit. Measure again with a finer instrument.',
@@ -104,7 +104,7 @@ fr:{aviso:'Enseignement et recherche. Pas pour des décisions concernant des per
  ola:'Bonjour. Je vérifie des mesures avec des règles écrites et je dis d\'où vient chaque règle. Sans internet, sans compte.\nEssaie : « nitrate 48 ± 3 mg/L » ou « vaccin à 9,5 °C ».',
  agua:'Eau : nitrate',frio:'Chaîne du froid',selo:'Sceau de texte',ia:'Activer l\'IA locale',exp:'Exporter',imp:'Vérifier une conversation',
  exAgua:'nitrate 48 ± 3 mg/L',exFrio:'vaccin à 9,5 °C',
- OK:'CONFORME',VETO:'NON CONFORME',NS:'JE NE SAIS PAS ENCORE',IA:'IA LOCALE · non vérifié',
+ OK:'CONFORME',VETO:'NON CONFORME',NS:'JE NE SAIS PAS ENCORE',IA:'IA LOCALE · non vérifié',SOS:'URGENCE · 112',
  nit:(i)=>`Nitrate dans l'eau de boisson : limite ${i.lim} mg/L.\nMesure : ${i.txt}.\nNorme : Directive (UE) 2020/2184, annexe I, partie B.`,
  fri:(i)=>`Chaîne du froid : entre ${i.a} et ${i.b} °C.\nMesure : ${i.txt}.\nRègle de la fiche Konfirmu « chaîne du froid 2 à 8 °C ».`,
  nsPorque:'La marge de la mesure dépasse la limite. Mesure à nouveau avec un appareil plus fin.',
@@ -195,13 +195,27 @@ async function selo(a,b){const ha=await sha256(limpar(a));if(!b||!limpar(b))retu
 
 /* ---------- ecrã ---------- */
 function bolha(quem,texto,ver,seloTxt,n){const d=document.createElement('div');d.className='b '+quem;
- if(ver){const v=document.createElement('span');v.className='v '+({OK:'ok',VETO:'veto',NS:'ns',IA:'ia'})[ver];v.textContent=t(ver);d.appendChild(v);d.appendChild(document.createElement('br'))}
+ if(ver){const v=document.createElement('span');v.className='v '+({OK:'ok',VETO:'veto',NS:'ns',IA:'ia',SOS:'veto'})[ver];v.textContent=t(ver);d.appendChild(v);d.appendChild(document.createElement('br'))}
  d.appendChild(document.createTextNode(texto));
+ if(ver==='SOS'){d.appendChild(document.createElement('br'));const l=document.createElement('a');l.href='tel:112';l.textContent='📞 112';d.appendChild(l)}
  if(seloTxt){const s=document.createElement('span');s.className='selo';s.textContent='sha256 '+seloTxt.slice(0,16)+'… · n.º '+(n||cadeia.length);d.appendChild(s)}
  $('conversa').appendChild(d);$('conversa').scrollTop=$('conversa').scrollHeight}
 let ia=null;
-async function responder(q){const g=portao(q);let a,ver;
- if(g&&g.velha){ver='NS';a=t('regraVelha')(g.ate)}
+/* ---------- portão de emergência: só abre quando a pessoa ESCREVE que está em perigo. Mostra o 112. Não liga nem avisa ninguém. ---------- */
+/* 112: número único europeu de emergência, chamada gratuita (Diretiva (UE) 2018/1972, art. 109.º). */
+const PERIGO=[
+ ['pt',/\b(estou|estamos|corro|corremos) (em )?perigo\b|\bsocorro\b/,/\bnao (estou|estamos|corro|corremos) (em )?perigo\b/,'Escreveste que estás em perigo. Liga 112: é o número de emergência europeu e a chamada é grátis. Fora da Europa o número pode ser outro. Esta página não liga por ti nem avisa ninguém.'],
+ ['es',/\b(estoy|estamos) en peligro\b|\bauxilio\b/,/\bno (estoy|estamos) en peligro\b/,'Has escrito que estás en peligro. Llama al 112: es el número de emergencia europeo y la llamada es gratuita. Fuera de Europa el número puede ser otro. Esta página no llama por ti ni avisa a nadie.'],
+ ['en',/\b(i am|i m|im|we are|we re) in danger\b/,null,'You wrote that you are in danger. Call 112: it is the European emergency number and the call is free. Outside Europe the number may be different. This page does not call for you and does not alert anyone.'],
+ ['fr',/\b(je suis|nous sommes|on est) en danger\b|\bau secours\b/,null,'Tu as écrit que tu es en danger. Appelle le 112 : c\'est le numéro d\'urgence européen et l\'appel est gratuit. Hors d\'Europe, le numéro peut être différent. Cette page n\'appelle pas à ta place et ne prévient personne.'],
+ ['nl',/\b(ik ben|wij zijn|we zijn|ik verkeer) in (levens)?gevaar\b/,null,'Je schreef dat je in gevaar bent. Bel 112: dat is het Europese alarmnummer en bellen is gratis. Buiten Europa kan het nummer anders zijn. Deze pagina belt niet voor jou en waarschuwt niemand.'],
+ ['de',/\b(ich bin|wir sind) in (lebens)?gefahr\b/,null,'Du hast geschrieben, dass du in Gefahr bist. Ruf 112 an: Das ist die europäische Notrufnummer und der Anruf ist kostenlos. Außerhalb Europas kann die Nummer anders sein. Diese Seite ruft nicht für dich an und benachrichtigt niemanden.'],
+ ['it',/\b(sono|siamo) in pericolo\b/,/\bnon (sono|siamo) in pericolo\b/,'Hai scritto che sei in pericolo. Chiama il 112: è il numero di emergenza europeo e la chiamata è gratuita. Fuori dall\'Europa il numero può essere diverso. Questa pagina non chiama al posto tuo e non avvisa nessuno.']];
+function portaoEmergencia(txt){const s=String(txt).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+ for(const [l,sim,nao,texto] of PERIGO)if(sim.test(s)&&!(nao&&nao.test(s)))return{lingua:l,texto};return null}
+async function responder(q){const sos=portaoEmergencia(q),g=sos?null:portao(q);let a,ver;
+ if(sos){ver='SOS';a=sos.texto}
+ else if(g&&g.velha){ver='NS';a=t('regraVelha')(g.ate)}
  else if(g){ver=g.ver;a=(g.regra==='nitrato'?t('nit')(g):t('fri')(g))+(ver==='NS'?'\n'+t('nsPorque'):'')+'\n'+t('naoGarante')+'\n'+t('valeAte')(g.ate)}
  else if(ia){ver='IA';try{const o=await ia([{role:'system',content:'Answer briefly and plainly, in the language of the user. You never give numbers, limits, doses or deadlines: say that those must come from a written rule.'},{role:'user',content:q}],{max_new_tokens:160});a=o[0].generated_text.at(-1).content}catch(_){ver='NS';a=t('iaFalhou')}}
  else{ver='NS';a=t('semRegra')}
@@ -329,7 +343,7 @@ $('cFoto').onclick=()=>$('fFoto').click();$('fFoto').onchange=fotoEscolhida;$('c
 const nav=(navigator.language||'pt').slice(0,2);if(T[nav]){L=nav;$('lingua').value=nav}
 const pronto=arrancar();folhaCampos();
 if(location.protocol!=='file:'&&globalThis.isSecureContext&&'serviceWorker'in navigator)navigator.serviceWorker.register('konfirmu_chat_sw.js').catch(()=>{});
-globalThis.KONFIRMU={sha256,sha256js,portao,selo,responder,conferirCadeia,pacote,limpar,pronto,FOLHAS,avaliar,intervalo,folhaConferir,pacoteAssinado,minhaChave,crc16,sha256b,fotoComprimir,fotoPacotes,fotoJuntar,somBits,somOnda,somLer,definirLingua:l=>{L=l;pintar()}};
+globalThis.KONFIRMU={portaoEmergencia,sha256,sha256js,portao,selo,responder,conferirCadeia,pacote,limpar,pronto,FOLHAS,avaliar,intervalo,folhaConferir,pacoteAssinado,minhaChave,crc16,sha256b,fotoComprimir,fotoPacotes,fotoJuntar,somBits,somOnda,somLer,definirLingua:l=>{L=l;pintar()}};
 </script>
 </body>
 </html>
