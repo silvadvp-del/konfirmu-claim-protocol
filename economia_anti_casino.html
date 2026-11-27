@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head><meta name="konfirmu-paleta" content="unica-2026-11-27">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#0B192C">
+<title>Economia anti-casino, passo a passo · Konfirmu</title>
+<meta name="description" content="Na Konfirmu um crédito só nasce de um trabalho feito e conferido. A Lei Anti-Casino explicada passo a passo: o que é, como funciona, o que está provado e o que ainda não é.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230B192C'/%3E%3Ctext x='16' y='23' font-family='Inter,Arial,sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23FF9E7D'%3Eu%3C/text%3E%3C/svg%3E">
+<style>:root{color-scheme:dark}input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]),select,textarea,button{color:#F4F7FA;background-color:rgba(15,34,61,.72)}input,select,textarea,button{border-color:rgba(159,179,200,.24)}::placeholder{color:#9FB3C8;opacity:1}::file-selector-button{color:#F4F7FA;background:rgba(15,34,61,.72);border:1px solid #FF9E7D;border-radius:8px}input[type=range],input[type=checkbox],input[type=radio],progress{accent-color:#FF9E7D}option{background:#0B192C;color:#F4F7FA}
+/* Pagina autocontida: sem scripts, sem pedidos a rede, sem emojis. Aberta por file:// ou por https. */
+:root{color-scheme:dark;
+ --abissal:#0B192C;--pesego:#FF9E7D;--pesego-claro:#F4F7FA;
+ --papel:#0B192C;--painel:rgba(15,34,61,.72);--tinta:#F4F7FA;--tinta2:#9FB3C8;--linha:#9FB3C8;--azulejo:rgba(15,34,61,.72);
+ --letra:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root{--papel:#0B192C;--painel:#0B192C;--tinta:#F4F7FA;--tinta2:#9FB3C8;--linha:rgba(159,179,200,.24);--azulejo:#0B192C}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--papel)}
+body{margin:0;font:17px/1.6 var(--letra);color:var(--tinta);background:var(--papel)}
+a{color:inherit;text-underline-offset:.18em}
+:focus-visible{outline:3px solid var(--tinta);outline-offset:3px}
+
+/* Letras bold 4D: peso 900, profundidade por camadas e um movimento lento, como debaixo de agua. */
+.t4d{display:inline-block;font-weight:900;line-height:.95;letter-spacing:-.025em;color:var(--pesego);
+ text-shadow:0 .012em 0 #0B192C,0 .024em 0 #0B192C,0 .036em 0 #0B192C,0 .048em 0 #0B192C,0 .06em 0 #0B192C,0 .076em 0 #0B192C,0 .105em .13em rgba(11,25,44,.65);
+ animation:flutuar 7s ease-in-out infinite}
+@keyframes flutuar{0%,100%{transform:translateY(0)}50%{transform:translateY(-.14em)}}
+@keyframes subir{from{transform:translateY(45%)}to{transform:translateY(-135%)}}
+
+.hero{position:relative;overflow:hidden;background:var(--abissal);color:var(--pesego-claro);text-align:center;padding:clamp(3rem,9vw,5.5rem) 20px}
+.hero::before,.nome::before{content:"";position:absolute;inset:0;pointer-events:none;
+ background:radial-gradient(70% 60% at 50% -10%,rgba(255,158,125,.3),transparent 70%),
+ radial-gradient(45% 40% at 86% 100%,rgba(15,34,61,.101),transparent 70%),
+ radial-gradient(35% 35% at 10% 80%,rgba(255,158,125,.1),transparent 70%)}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:70%;pointer-events:none;opacity:.55;
+ background:radial-gradient(circle at 12% 80%,rgba(15,34,61,.158) 0 3px,transparent 4px),
+ radial-gradient(circle at 28% 55%,rgba(15,34,61,.115) 0 2px,transparent 3px),
+ radial-gradient(circle at 46% 70%,rgba(15,34,61,.144) 0 4px,transparent 5px),
+ radial-gradient(circle at 63% 50%,rgba(15,34,61,.101) 0 2px,transparent 3px),
+ radial-gradient(circle at 81% 75%,rgba(15,34,61,.158) 0 3px,transparent 4px),
+ radial-gradient(circle at 93% 60%,rgba(15,34,61,.108) 0 2px,transparent 3px);
+ animation:subir 16s linear infinite}
+.hero>*,.nome>*{position:relative;z-index:1}
+.kicker{margin:0;font-weight:800;letter-spacing:.16em;text-transform:uppercase;font-size:.85rem}
+.hero .t4d{font-size:clamp(2.6rem,11vw,6rem);margin:.25em 0 0}
+.lead{max-width:36ch;margin:1.3rem auto 0;font-size:1.15rem;line-height:1.55;color:#F4F7FA}
+
+.bloco{max-width:760px;margin:0 auto;padding:clamp(1.8rem,5vw,3rem) 20px}
+h2{margin:0 0 .6rem;font-size:1.55rem;line-height:1.2;letter-spacing:-.01em}
+p{margin:.7rem 0}
+table{width:100%;border-collapse:collapse;margin:1rem 0 0;font-size:1rem}
+th,td{text-align:left;vertical-align:top;padding:.75rem .6rem;border-bottom:1px solid var(--linha)}
+th{font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;color:var(--tinta2)}
+td:first-child{color:var(--tinta2);width:50%}
+
+.passos{list-style:none;margin:0;padding:0}
+.passo{display:grid;grid-template-columns:88px 1fr;column-gap:20px;row-gap:2px;padding:26px 0;border-top:1px solid var(--linha)}
+.passo .n{grid-row:1/span 3;width:88px;height:88px;border-radius:24px;background:var(--abissal);display:grid;place-items:center;overflow:hidden;position:relative}
+.passo .n::before{content:"";position:absolute;inset:0;background:radial-gradient(80% 70% at 50% 0%,rgba(255,158,125,.28),transparent 72%)}
+.passo .n .t4d{font-size:2.7rem;position:relative}
+.passo h3{margin:0;font-size:1.3rem;line-height:1.25}
+.passo .rotulo{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta2)}
+.passo p{margin:.3rem 0 0}
+.passo ul{margin:.5rem 0 0;padding-left:1.1rem}
+.passo li{margin:.25rem 0}
+.passo:nth-child(even) .t4d{animation-delay:-3.5s}
+
+.aviso-prova{border:1px solid var(--linha);border-radius:18px;padding:20px;background:var(--painel)}
+.prototipo{display:inline-block;padding:.3rem .75rem;border-radius:999px;border:2px solid var(--tinta);font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+dl.numeros{display:grid;grid-template-columns:auto 1fr;gap:.7rem 1.2rem;margin:1.1rem 0 0}
+dl.numeros dt{font-weight:800;white-space:nowrap}
+dl.numeros dd{margin:0}
+code{font:.92em ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--azulejo);padding:.1em .4em;border-radius:6px}
+.limites{padding-left:1.2rem;margin:.4rem 0 0}
+.limites li{margin:.55rem 0}
+
+.nome{background:var(--abissal);color:var(--pesego-claro);text-align:center;overflow:hidden;position:relative;padding:clamp(3rem,9vw,5.5rem) 20px}
+.nome .t4d{font-size:clamp(2.4rem,9vw,4.8rem)}
+.significado{font-size:1.4rem;font-weight:700;color:var(--pesego);margin:.9rem 0 0}
+.nome p{max-width:46ch;margin:.9rem auto 0;color:#F4F7FA}
+.garantia-texto{font-weight:800;color:var(--tinta);margin-top:1.2rem}
+.rodape{max-width:760px;margin:0 auto;padding:1.6rem 20px 3rem;color:var(--tinta2);font-size:.95rem;display:flex;flex-wrap:wrap;gap:.4rem 1.4rem}
+@media (max-width:480px){.passo{grid-template-columns:64px 1fr;column-gap:14px}.passo .n{width:64px;height:64px;border-radius:18px}.passo .n .t4d{font-size:1.9rem}}
+@media (prefers-reduced-motion:reduce){.t4d,.hero::after{animation:none}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="kicker">Konfirmu · passo a passo</p>
+  <h1><span class="t4d">Economia anti-casino</span></h1>
+  <p class="lead">Aqui, um crédito só nasce de um trabalho feito e conferido. Clique, sorte e tempo de ecrã não valem nada. Vem ver como funciona.</p>
+</header>
+
+<main>
+
+<section class="bloco" aria-labelledby="problema-t">
+  <h2 id="problema-t">O problema, em poucas linhas</h2>
+  <p>Muitas aplicações dão pontos por clicar, por sorte, ou por passar o tempo no ecrã. Quem diz quanto vale um ponto é a plataforma. A pessoa nunca chega a saber.</p>
+  <p>A Konfirmu fez o contrário. Um crédito tem sempre um trabalho por trás e a assinatura de quem o conferiu. E podes ver de onde veio.</p>
+  <table>
+    <caption class="kicker" style="letter-spacing:.06em;text-transform:none;font-weight:700">Num casino de pontos e na Konfirmu</caption>
+    <thead><tr><th scope="col">Num casino de pontos</th><th scope="col">Na Konfirmu</th></tr></thead>
+    <tbody>
+      <tr><td>Clicar dá pontos</td><td>Clicar não dá nada</td></tr>
+      <tr><td>Sorte e roleta dão prémios</td><td>Sorte é recusada</td></tr>
+      <tr><td>Tempo de ecrã dá recompensa</td><td>Tempo de ecrã não vale nada</td></tr>
+      <tr><td>Juros, bónus e apostas engordam a conta</td><td>Juros, bónus e apostas são recusados</td></tr>
+      <tr><td>Quem diz quanto vale um ponto é a plataforma</td><td>Um crédito só nasce de um trabalho conferido</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="bloco" aria-labelledby="passos-t">
+  <h2 id="passos-t">Os sete passos</h2>
+  <ol class="passos">
+    <li class="passo">
+      <span class="n" aria-hidden="true"><span class="t4d">1</span></span>
+      <span class="rotulo">Passo 1</span>
+      <h3>Alguém faz um trabalho real</h3>
+      <p>Uma ficha, um exercício, uma aula, um voto. Algo que se possa conferir.</p>
+    </li>
+    <li class="passo">
+      <span class="n" aria-hidden="true"><span class="t4d">2</span></span>
+      <span class="rotulo">Passo 2</span>
+      <h3>Quem confere assina um recibo</h3>
+      <p>Só quem tem chave de verificador pode assinar. O recibo diz o tipo de trabalho, quem o fez, a impressão digital da prova, o valor, o dia, e leva a assinatura de quem verificou.</p>
+    </li>
+    <li class="passo">
+      <span class="n" aria-hidden="true"><span class="t4d">3</span></span>
+      <span class="rotulo">Passo 3</span>
+      <h3>A regra decide</h3>
+      <p>A regra recebe o acontecimento e as contas. Ou aceita e devolve as contas novas, ou recusa com um motivo. Não lê ficheiros, não sabe que horas são e não fala com ninguém.</p>
+    </li>
+    <li class="passo">
+      <span class="n" aria-hidden="true"><span class="t4d">4</span></span>
+      <span class="rotulo">Passo 4</span>
+      <h3>Tudo o que é casino é recusado</h3>
+      <ul>
+        <li>Recibo em falta, ou assinado por quem não é verificador</li>
+        <li>Só a etiqueta «verificado», sem assinatura</li>
+        <li>Recibo alterado, ou assinatura trocada de um recibo para outro</li>
+        <li>Valor fora da regra</li>
+        <li>Acontecimentos de casino, como juros, aposta e bónus</li>
+        <li>Alguém a assinar o próprio trabalho</li>
+        <li>Trabalho marcado no futuro</li>
+        <li>O mesmo trabalho apresentado duas vezes</li>
+      </ul>
+      <p>Quando recusa, as contas ficam como estavam. Nada se aproxima às escondidas.</p>
+    </li>
+    <li class="passo">
+      <span class="n" aria-hidden="true"><span class="t4d">5</span></span>
+      <span class="rotulo">Passo 5</span>
+      <h3>Fica escrito no livro-razão</h3>
+      <p>Cada bloco assina o anterior e é assinado por quem escreve a cadeia. Cada aparelho tem a sua cadeia, assinada à prova de adulteração.</p>
+    </li>
+    <li class="passo">
+      <span class="n" aria-hidden="true"><span class="t4d">6</span></span>
+      <span class="rotulo">Passo 6</span>
+      <h3>Quando os aparelhos se encontram</h3>
+      <p>Dois aparelhos que estiveram sem rede juntam as contas por uma ordem fixa, que não depende de quem chegou primeiro. O mesmo trabalho creditado nos dois conta uma vez. Foi provado com vinte aparelhos e trinta ordens diferentes: dá sempre o mesmo resultado.</p>
+    </li>
+    <li class="passo">
+      <span class="n" aria-hidden="true"><span class="t4d">7</span></span>
+      <span class="rotulo">Passo 7</span>
+      <h3>As contas estão à vista</h3>
+      <p>O relatório diz o que saiu, para quem e o que foi recusado. A raiz do lote fecha o conjunto, para qualquer um poder conferir.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="bloco" aria-labelledby="prova-t">
+  <h2 id="prova-t">Provado em bancada</h2>
+  <div class="aviso-prova">
+    <span class="prototipo">Protótipo · só em bancada</span>
+    <dl class="numeros">
+      <dt>62 de 62</dt><dd>verificações passaram, duas vezes, com a mesma saída. Repetido a 27 de novembro de 2026.</dd>
+      <dt>13 de 13</dt><dd>defesas desligadas, uma de cada vez, em cópias: todas apanhadas. Medido a 26 de novembro de 2026.</dd>
+      <dt>Sem rede</dt><dd>a regra não usa rede, relógio nem acaso.</dd>
+    </dl>
+    <p>Impressões digitais: módulo <code>6e17169d11e984db1…</code> · saída da prova <code>920a23d03096dd12…</code>. A referência e os registos estão guardados na casa.</p>
+  </div>
+</section>
+
+<section class="bloco" aria-labelledby="limites-t">
+  <h2 id="limites-t">O que isto ainda não é</h2>
+  <ul class="limites">
+    <li><strong>É bancada.</strong> Ninguém usa isto ainda. Não tem ecrã e não está ligado à app.</li>
+    <li><strong>Não prova que o trabalho foi feito.</strong> Prova que alguém com chave de verificador assinou que foi. Se um verificador assinar trabalho inventado, o código não vê. Por isso o livro-razão diz sempre quem assinou.</li>
+    <li><strong>Os tetos de valor ainda não estão decididos.</strong> Os números dos testes servem só para medir.</li>
+    <li><strong>Quem tem a chave de uma cadeia pode reescrever o seu passado.</strong> A alteração só se vê para quem tiver uma cópia ou a raiz publicada. Por isso a raiz tem de ser publicada fora de quem escreve a cadeia.</li>
+    <li><strong>Ainda não cobre</strong> a âncora em Bitcoin, o quórum de guardiões, o envelope de transporte, o consenso entre vários modelos, o relatório diário, nem o que acontece quando se perde a chave.</li>
+    <li><strong>As chaves dos testes são de demonstração.</strong> Não é resistente a um computador quântico.</li>
+    <li><strong>Este crédito é de teste.</strong> Não é dinheiro.</li>
+  </ul>
+  <p class="garantia-texto">Konfirmu propõe. Tu confirmas. Quando não sabe, diz que não sabe.</p>
+</section>
+
+</main>
+
+<section class="nome" aria-labelledby="nome-t">
+  <h2 id="nome-t" style="margin:0"><span class="t4d">Konfirmu</span></h2>
+  <p class="significado">Em Esperanto quer dizer «Confirma!»</p>
+  <p>É a forma imperativa de <em>konfirmi</em>, «confirmar». A palavra vem do latim <em>confirmare</em>: tornar firme.</p>
+  <p>O Esperanto foi criado em 1887 por L. L. Zamenhof para ser uma segunda língua universal, falada entre povos de línguas diferentes. O fundador escolheu uma palavra dessa língua para uma casa onde quem propõe não é quem confirma. O nome é a própria regra: Confirma!</p>
+</section>
+
+<footer class="rodape">
+  <span>Edição de 27 de novembro de 2026</span>
+  <a href="app_unica.html">Voltar ao início</a>
+  <a href="avisos_legais.html">Avisos legais</a>
+</footer>
+
+</body>
+</html>

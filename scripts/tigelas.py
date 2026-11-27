@@ -241,6 +241,7 @@ CSS_FAMILIA = """
 .portal-familia .card:hover{background:transparent}
 .portal-familia .card:active{background:rgb(244 247 250 / .035)}
 .portal-familia .card:focus-visible{outline:2px solid #FF9E7D;outline-offset:-2px;border-radius:18px}
+.portal-familia .fam-ler{margin:16px 0 0;display:grid;gap:10px}.portal-familia .fam-ler .card{flex-direction:row;align-items:center;gap:12px;text-align:left;padding:12px 14px;border:1px solid rgb(159 179 200 / .24);border-radius:16px;background:rgb(15 34 61 / .72)}.portal-familia .fam-ler .card b{margin:0}.portal-familia .fam-ler .card .d{color:#F4F7FA}
 .portal-familia .card b{margin-top:2px;font-size:1rem;line-height:1.25;font-weight:650;color:#F4F7FA}
 .portal-familia .card .d{font-size:.8125rem;line-height:1.35;color:#F4F7FA}
 .portal-familia .card.tigela b,.portal-familia .card.tigela .d{align-self:stretch}

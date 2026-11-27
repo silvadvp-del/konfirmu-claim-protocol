@@ -2,7 +2,8 @@
 """Gera o menu de entrada da Konfirmu em 3 portais (pedido do David, 27-11, 04:59–05:00).
 
 Escreve 3 ficheiros no repositório público:
-  app_unica.html              menu da raiz (19 atividades + botão «Preparar modo avião»)
+  app_unica.html              menu da raiz (19 atividades, a página «Economia anti-casino» e o botão
+                               «Preparar modo avião»)
   edicao-21/app_unica.html    menu da edição integrada (21 atividades) — é o menu do pacote
   edicao-21/index.html        igual ao anterior
 
@@ -80,6 +81,7 @@ PORTAIS = [
     ("fam", "Família", "Educação e família",
      "Aprender e brincar em família, com o mesmo cuidado pela privacidade.", [
          ("girafinhas_criancas_facil.html", "toque", "Primeiros passos", "Três toques, voz e cores, para quem nunca usou um telemóvel.", None),
+         ("economia_anti_casino.html", "contas", "Economia anti-casino", "Porque aqui um crédito só nasce de um trabalho conferido. Passo a passo.", None),
          ("Tutor-Girafinha-offline.html", "livro", "Tutor", "Ensina passo a passo, mesmo sem rede.", None),
          ("kcp_family_quiz.html", "quiz", "Quiz em família", "Perguntas para jogar em família, ou só entre adultos.", None),
          ("sala_natal_girafinhas.html", "estrela", "Natal em família", "Jogos, moldes de papel e um certificado para guardar.", None),
@@ -92,6 +94,8 @@ PORTAIS = [
 ]
 
 SO_NA_EDICAO_21 = {"Tutor-Girafinha-offline.html", "kcp_family_quiz.html"}
+# Página explicativa, não é atividade: só no menu da raiz (o pacote da edição 21 só aceita atividades).
+SO_NA_RAIZ = {"economia_anti_casino.html"}
 
 CSS = """
 :root{color-scheme:dark;--pagina:#0B192C;--painel:rgb(15 34 61 / .72);--tinta:#F4F7FA;--tinta2:#9FB3C8;--tinta3:#9FB3C8;--linha:rgb(159 179 200 / .24);--azulejo:rgb(159 179 200 / .06);--u:#FF9E7D;
@@ -258,7 +262,7 @@ def pagina(variante, avisos, pt, dados_json):
               '<meta name="theme-color" content="#0B192C">',
               '<title>Konfirmu</title>',
               # ícone dentro da página: o «u» pêssego; sem pedido ao servidor (sem favicon.ico 404)
-              '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Crect width=\'32\' height=\'32\' rx=\'7\' fill=\'%231D1D21\'/%3E%3Ctext x=\'16\' y=\'22.5\' font-family=\'Inter,Arial,sans-serif\' font-size=\'21\' font-weight=\'700\' text-anchor=\'middle\' fill=\'%23D97D4A\'%3Eu%3C/text%3E%3C/svg%3E">',
+              '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Crect width=\'32\' height=\'32\' rx=\'7\' fill=\'%230B192C\'/%3E%3Ctext x=\'16\' y=\'22.5\' font-family=\'Inter,Arial,sans-serif\' font-size=\'21\' font-weight=\'700\' text-anchor=\'middle\' fill=\'%23FF9E7D\'%3Eu%3C/text%3E%3C/svg%3E">',
               '<style>' + CSS.strip() + tigelas.CSS_FAMILIA.rstrip() + '</style>',
               '<link rel="stylesheet" href="./assets/imersao.css">',
               '<script defer src="./assets/imersao.js" data-viewer></script>']
@@ -286,16 +290,23 @@ def pagina(variante, avisos, pt, dados_json):
     for chave, _, titulo, sub, itens in PORTAIS:
         if chave == "fam":
             # o portal das tigelas: textos de locales/pt.json, desenho de scripts/tigelas.py
-            hrefs = [i[0] for i in itens if edicao or i[0] not in SO_NA_EDICAO_21]
+            hrefs = [i[0] for i in itens if (edicao or i[0] not in SO_NA_EDICAO_21) and i[0] in tigelas.CHAVES]
+            # páginas para ler (não são tigelas), só na raiz: cartão normal por baixo das tigelas
+            ler = [i for i in itens if i[0] not in tigelas.CHAVES and not (edicao and i[0] in SO_NA_RAIZ)]
             secao, _ = tigelas.secao_familia(hrefs, pt, html.escape)
+            if ler:
+                fim = secao.rindex('</section>')
+                secao = secao[:fim] + '<div class="fam-ler">' + "".join(cartao(*i) for i in ler) + '</div>' + secao[fim:]
             partes.append(secao)
-            total += len(hrefs)
+            total += len(hrefs) + len(ler)
             continue
         partes.append('<section class="portal" id="p-%s" role="tabpanel" aria-labelledby="t-%s">' % (chave, chave))
         partes.append('<h2>%s</h2><p class="sub">%s</p>' % (titulo, sub))
         partes.append('<div class="grid">')
         for href, icone, nome, descricao, estado in itens:
             if href in SO_NA_EDICAO_21 and not edicao:
+                continue
+            if href in SO_NA_RAIZ and edicao:
                 continue
             partes.append(cartao(href, icone, nome, descricao, estado))
             total += 1
@@ -334,12 +345,14 @@ def main():
         if chave == "fam":
             assert (rotulo, titulo, sub) == (pt["fam.rotulo"], pt["fam.titulo"], pt["fam.sub"]), "PORTAIS e locales/pt.json divergem"
             for href, _, nome, descricao, _ in itens:
+                if href not in tigelas.CHAVES:
+                    continue  # páginas para ler (não são tigelas): o texto vem de PORTAIS
                 k = tigelas.CHAVES[href]
                 assert (nome, descricao) == (pt["fam.%s.t" % k], pt["fam.%s.d" % k]), href
     dados_json = tigelas.dados_linguas(linguas)
     raiz, n_raiz = pagina("raiz", avisos, pt, dados_json)
     ed, n_ed = pagina("edicao21", avisos, pt, dados_json)
-    assert n_raiz == 19 and n_ed == 21, (n_raiz, n_ed)
+    assert n_raiz == 20 and n_ed == 21, (n_raiz, n_ed)
     for caminho, conteudo in (("app_unica.html", raiz), ("edicao-21/app_unica.html", ed), ("edicao-21/index.html", ed)):
         with open(os.path.join(repo, caminho), "w", encoding="utf-8") as f:
             f.write(conteudo)

@@ -169,6 +169,14 @@ def mapear(rgb, alfa, papel, ctx):
     y = luminancia(rgb)
     if papel == "acento":
         return P, alfa
+    if papel == "fundo_var":
+        # --papel, --painel, --azulejo…: fundo pelo nome; claro ou escuro, fica sempre escuro (um só tema)
+        pagina = bool(re.search(r"papel|pagina|fundo|bg|back|ceu|sky|paper", ctx.prop or ""))
+        if y < 0.03:
+            return A, alfa
+        if cromatico(rgb) or y < 0.35:
+            return V, ALFA_VIDRO * alfa
+        return (A, alfa) if pagina else (V, ALFA_VIDRO * alfa)
     if papel == "variavel":
         # --variável: cor-base que pode servir de fundo e de texto; o fundo de botão faz-se no uso (var() em background)
         if cromatico(rgb):
@@ -218,6 +226,8 @@ def papel_de(prop, nome_var_papeis=None):
     p = prop.strip().lower()
     if p.startswith("--"):
         pelo_nome = papel_var_pelo_nome(p)
+        if pelo_nome == "fundo":
+            return "fundo_var"
         return pelo_nome if pelo_nome in ("linha", "texto") else "variavel"
     if p in ("background", "background-color", "background-image"):
         return "fundo"
