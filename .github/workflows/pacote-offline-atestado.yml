@@ -50,8 +50,13 @@ jobs:
       - name: Pacote do sitio dpsindustrial.nl/konfirmu/ — duas construcoes iguais, varredura e ensaio (KON-613)
         run: |
           python3 -I scripts/build_site_nl.py /tmp/nl_a
-          python3 -I scripts/build_site_nl.py /tmp/nl_b
+          # a segunda construcao parte de uma copia do repositorio noutro caminho: o caminho nao pode mudar os bytes
+          cp -a "$GITHUB_WORKSPACE" /tmp/outra-copia-do-repositorio
+          python3 -I /tmp/outra-copia-do-repositorio/scripts/build_site_nl.py /tmp/nl_b
           cmp /tmp/nl_a/konfirmu/SHA256SUMS.txt /tmp/nl_b/konfirmu/SHA256SUMS.txt
+          diff -r /tmp/nl_a /tmp/nl_b
+          # o ZIP offline do sitio tem de ser o mesmo, byte a byte, que o ZIP atestado neste fluxo
+          cmp dist/KONFIRMU_EXECUTAVEL_OFFLINE_2030.zip /tmp/nl_a/konfirmu/app/konfirmu-offline-2030.zip
           (cd /tmp/nl_a/konfirmu && sha256sum --quiet -c SHA256SUMS.txt)
           python3 -I ferramentas/verificar_pacote.py /tmp/nl_a/konfirmu --estrito
           python3 tests/test_site_nl.py /tmp/nl_a
