@@ -33,11 +33,11 @@ SIMBOLOS = {
 TIGELAS = {
     "Tutor-Girafinha-offline.html": ("livro", ("#FBF3E8", "#EAD6BF", "#B98F6B"), ("#2F6FB2", "#1D4A7E"), "#245C9A"),
     "kcp_family_quiz.html": ("pergunta", ("#E6F1FC", "#B7D5F3", "#6E98C9"), ("#F08A5D", "#B95B33"), "#D0592C"),
-    "sala_natal_girafinhas.html": ("estrela", ("#FFB4A6", "#E3604E", "#9C2F26"), ("#F6C85F", "#C39028"), "#FFD66E"),
-    "estudio_video_criancas.html": ("filme", ("#E6D6F4", "#B898DA", "#6F4E9C"), ("#FFB088", "#D9784F"), "#FFE3D2"),
-    "executor_criancas.html": ("contas", ("#FFF0BF", "#F2CC5E", "#C1922B"), ("#26436F", "#152A4B"), "#26436F"),
-    "kcp_art_music_studio.html": ("musica", ("#FBDCE9", "#E9A6C3", "#B26A8E"), ("#3A63B5", "#243F7A"), "#2F55A3"),
-    "regua_do_planeta.html": ("globo", ("#CFE7F8", "#7FB7E2", "#356FA8"), ("#F1DDB4", "#C5A46B"), "#FFF6E4"),
+    "sala_natal_girafinhas.html": ("estrela", ("#FFC7B0", "#F08A5D", "#A2552F"), ("#F4F7FA", "#D5DDE8"), "#FFE2CF"),
+    "estudio_video_criancas.html": ("filme", ("#E9EFF7", "#9FB3C8", "#4A6688"), ("#FFB088", "#D9784F"), "#FFE3D2"),
+    "executor_criancas.html": ("contas", ("#FFF1E6", "#F7C9A9", "#C98A63"), ("#26436F", "#152A4B"), "#26436F"),
+    "kcp_art_music_studio.html": ("musica", ("#F5F8FC", "#C9D6E6", "#6F86A6"), ("#3A63B5", "#243F7A"), "#2F55A3"),
+    "regua_do_planeta.html": ("globo", ("#CFE7F8", "#7FB7E2", "#356FA8"), ("#FFE2CF", "#DC8C5F"), "#FFF1E6"),
     "neverland_family_quest.html": ("bussola", ("#F7C9A9", "#DC8C5F", "#A2552F"), ("#FFF4E6", "#D8C2A6"), "#FFF4E6"),
 }
 ENTRADA = "girafinhas_criancas_facil.html"
@@ -248,7 +248,7 @@ CSS_FAMILIA = """
 /* a coluna de luz que sobe da tigela e o brilho no palco */
 .portal-familia .card .ico::before{content:"";position:absolute;z-index:1;left:14%;right:14%;top:-72%;bottom:46%;pointer-events:none;background:radial-gradient(48% 62% at 50% 100%,rgb(255 204 170 / .95),rgb(255 158 125 / .34) 52%,rgb(255 158 125 / 0) 76%);mix-blend-mode:screen;opacity:0;transform:scaleY(.5);transform-origin:50% 100%;transition:opacity .2s ease-out,transform .26s cubic-bezier(.2,.8,.2,1)}
 .portal-familia .card .ico::after{content:"";position:absolute;z-index:-1;left:-8%;right:-8%;top:6%;bottom:-12%;pointer-events:none;background:radial-gradient(52% 46% at 50% 54%,rgb(255 158 125 / .5),rgb(255 158 125 / 0) 72%);opacity:0;transition:opacity .2s ease-out}
-.portal-familia .card.acesa .tg-luz{opacity:1}
+.portal-familia .card.acesa .tg-luz{opacity:1;transition-duration:0s} /* ao toque a luz acende no mesmo quadro, mesmo com a aurora a correr (PR #20) */
 .portal-familia .card.acesa .tg-aro{opacity:.9}
 .portal-familia .card.acesa .tg-calor{opacity:.3}
 .portal-familia .card.acesa .tg-faiscas{opacity:1}

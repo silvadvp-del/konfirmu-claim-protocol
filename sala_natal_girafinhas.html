@@ -3,63 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎄 A Sala de Natal das Girafinhas — jogos, moldes e certificado</title>
+<title>A Sala de Natal das Girafinhas — jogos, moldes e certificado</title>
 <style>
-body{font-family:system-ui,sans-serif;max-width:640px;margin:0 auto;padding:16px;background:#071a12;color:#eafbe9}
-.card{background:#0b3d2e;border:1px solid rgba(251,191,36,.3);border-radius:12px;padding:14px;margin:12px 0}
-button{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#1a1200;border:0;border-radius:8px;padding:10px 14px;margin:3px;cursor:pointer;font-weight:800}
-input{width:100%;background:#0d1117;color:#eafbe9;border:1px solid #334155;padding:8px;box-sizing:border-box}
+body{font-family:system-ui,sans-serif;max-width:640px;margin:0 auto;padding:16px;background:#0B192C;color:#F4F7FA}
+.card{background:#13294A;border:1px solid rgba(255,158,125,.3);border-radius:12px;padding:14px;margin:12px 0}
+button{background:linear-gradient(135deg,#E8875F,#FF9E7D);color:#0B192C;border:0;border-radius:8px;padding:10px 14px;margin:3px;cursor:pointer;font-weight:800}
+input{width:100%;background:#0B192C;color:#F4F7FA;border:1px solid #334155;padding:8px;box-sizing:border-box}
 .grid-memo{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.mcard{aspect-ratio:1;font-size:1.8rem;background:#123527;border:1px solid #2e4a2e;border-radius:8px;cursor:pointer}
+.mcard{aspect-ratio:1;font-size:1.8rem;background:#0F223D;border:1px solid #16304F;border-radius:8px;cursor:pointer}
 .tab{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.tcell{aspect-ratio:1;font-size:1.6rem;background:#123527;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.cert{display:none;background:#fef3c7;color:#451a03;border:3px solid #d97706;border-radius:12px;padding:16px;text-align:center;margin-top:10px}
+.tcell{aspect-ratio:1;font-size:1.6rem;background:#0F223D;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cert{display:none;background:#FFD3C2;color:#451a03;border:3px solid #E8875F;border-radius:12px;padding:16px;text-align:center;margin-top:10px}
 pre{white-space:pre-wrap;word-break:break-all;font-size:.75em;text-align:left}
-.aviso{font-size:.72rem;color:#8b949e;margin-top:10px}
+.aviso{font-size:.72rem;color:#9FB3C8;margin-top:10px}
 @media print{.card,.aviso{display:none}.cert{display:block}}
 </style>
 <link rel="stylesheet" href="./assets/imersao.css">
 <script defer src="./assets/imersao.js"></script>
+<!-- tema-2040:inicio -->
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0B192C">
+<meta name="konfirmu-portal" content="fam">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob: mediastream:; connect-src 'self' blob: data:; worker-src 'self' blob:; font-src 'self' data:; frame-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<style id="tema-2040">
+:root{color-scheme:dark;--k-abissal:#0B192C;--k-vidro:rgba(15,34,61,.72);--k-vidro-s:#0F223D;--k-pessego:#FF9E7D;--k-pessego-c:#FFB088;--k-titanio:#F4F7FA;--k-nevoa:#9FB3C8;--k-aresta:rgba(244,247,250,.14)}
+html{background:#0B192C;-webkit-text-size-adjust:100%}
+body{background-color:#0B192C;color:#F4F7FA}
+a{color:#FF9E7D}a:visited{color:#FFB088}
+:focus-visible{outline:2px solid #FF9E7D;outline-offset:2px}
+::selection{background:rgba(255,158,125,.35);color:#F4F7FA}
+.ki{display:inline-block;width:1.1em;height:1.1em;vertical-align:-.17em;margin-inline-end:.35em;flex:none}
+h1 .ki,h2 .ki,h3 .ki,b>.ki,strong>.ki,.card-label .ki{color:#FF9E7D}
+.ki-g{width:1.35em;height:1.35em;margin:0}.ki-peca{width:62%;height:62%;margin:0;vertical-align:middle}
+.k-rodape{max-width:760px;margin:28px auto 8px;padding:14px 16px 10px;border-top:1px solid rgba(244,247,250,.14);color:#9FB3C8;font:400 .8125rem/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-align:start}
+.k-rodape .k-acoes{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.k-rodape .k-acoes button,.k-rodape .k-acoes a{min-height:40px;padding:0 14px;border:1px solid rgba(244,247,250,.2);border-radius:10px;background:rgba(15,34,61,.72);color:#F4F7FA;font:600 .8125rem/40px system-ui,sans-serif;text-decoration:none;cursor:pointer;margin:0}
+.k-rodape .k-acoes button[aria-pressed="true"]{border-color:#FF9E7D;color:#FF9E7D}
+.k-rodape dl{margin:0;display:grid;gap:2px 10px}.k-rodape dt{color:#F4F7FA;font-weight:650}.k-rodape dd{margin:0 0 6px}
+.k-rodape .k-marca{margin:8px 0 0}.k-rodape .k-marca b{color:#F4F7FA}.k-rodape .k-marca b span{color:#FF9E7D}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+html.k-sem-movimento *,html.k-sem-movimento *::before,html.k-sem-movimento *::after{animation-play-state:paused!important;transition:none!important}
+html.k-contraste{--k-nevoa:#E6ECF3}html.k-contraste body{background-color:#050C16;color:#FFFFFF}html.k-contraste .k-rodape{color:#E6ECF3}
+html.k-contraste a{color:#FFC2A8}html.k-contraste .aviso,html.k-contraste .hash,html.k-contraste .meta{color:#E6ECF3!important}
+</style>
+<!-- tema-2040:fim -->
 </head>
 <body>
-<h1>🎄 A Sala de Natal das Girafinhas</h1>
+<h1><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M12 3 6.5 10.5h3l-4 6.5h13l-4-6.5h3z"/><path d="M12 17v4"/></svg>A Sala de Natal das Girafinhas</h1>
 <p>Jogos, moldes de papel e o Certificado Mágico — tudo offline, tudo teu.</p>
 
 <div class="card">
-<b>🧠 Memória das Girafinhas</b><br>
+<b><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M9 4.5a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 4.5 3 3 0 0 0 6 1.5V5.5a3 3 0 0 0-3-1z"/><path d="M15 4.5a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 4.5 3 3 0 0 1-6 1.5"/></svg>Memória das Girafinhas</b><br>
 <div class="grid-memo" id="memo"></div>
 </div>
 
 <div class="card">
-<b>⭕ Jogo do Galo das Girafinhas (2 jogadores)</b><br>
+<b><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="7"/></svg>Jogo do Galo das Girafinhas (2 jogadores)</b><br>
 <div class="tab" id="galo"></div>
 <div id="galoMsg">—</div>
 </div>
 
 <div class="card">
-<b>🏆 O Certificado Mágico de Natal</b><br>
+<b><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5.5a3 3 0 0 0 2.8 4M16 6h2.5a3 3 0 0 1-2.8 4M12 13v4M8 20h8M9.5 17h5"/></svg>O Certificado Mágico de Natal</b><br>
 <input id="nome" placeholder="Nome do Explorador (ex.: Estrela)">
-<button onclick="certificar()">✨ Gerar certificado selado</button>
+<button onclick="certificar()"><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M12 4c.8 4 2 5.2 6 6-4 .8-5.2 2-6 6-.8-4-2-5.2-6-6 4-.8 5.2-2 6-6z"/><path d="M19 3v3M17.5 4.5h3"/></svg>Gerar certificado selado</button>
 <div class="cert" id="cert">
-<h2 style="margin:0">🏆 Certificado de Explorador das Girafinhas</h2>
+<h2 style="margin:0"><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5.5a3 3 0 0 0 2.8 4M16 6h2.5a3 3 0 0 1-2.8 4M12 13v4M8 20h8M9.5 17h5"/></svg>Certificado de Explorador das Girafinhas</h2>
 <p id="certTxt" style="font-size:.95rem"></p>
 <div id="seloTxt" class="selo"></div>
-<canvas id="qr" style="background:#fff;padding:4px;margin:6px auto;display:block"></canvas>
-<button onclick="window.print()">🖨️ Imprimir certificado</button>
+<canvas id="qr" style="background:#F4F7FA;padding:4px;margin:6px auto;display:block"></canvas>
+<button onclick="window.print()"><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M7 9V4h10v5"/><rect x="4" y="9" width="16" height="7" rx="1.5"/><path d="M7 14h10v6H7z"/></svg>Imprimir certificado</button>
 </div>
 </div>
 
 <div class="card">
-<b>🦒 Moldes de papel para imprimir (papercraft)</b><br>
+<b><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M9.2 21v-8.6L6.6 10.3l.6-2.1 2.3.4 1.2-3.4h1.9l.7 2.6 2.4-.3.5 2.3-2.6 1.7V21"/><path d="M11 4.9V3.2M12.9 4.9V3.2"/><circle cx="11.3" cy="13.4" r=".55"/><circle cx="12.4" cy="16.6" r=".55"/><circle cx="11" cy="19" r=".55"/></svg>Moldes de papel para imprimir (papercraft)</b><br>
 <p style="font-size:.85rem">Imprime esta secção em A4, recorta e monta a tua girafa 3D.</p>
-<button onclick="window.print()">🖨️ Imprimir moldes</button>
-<svg viewBox="0 0 200 240" style="width:180px;background:#fff;border-radius:8px">
-<path d="M60 210 L60 90 L100 70 L100 210 Z" fill="#fbbf24" stroke="#7c2d12" stroke-width="3"/>
-<path d="M100 70 L140 20 L160 20 L160 60 L120 80 Z" fill="#fbbf24" stroke="#7c2d12" stroke-width="3"/>
-<circle cx="80" cy="58" r="22" fill="#fbbf24" stroke="#7c2d12" stroke-width="3"/>
+<button onclick="window.print()"><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M7 9V4h10v5"/><rect x="4" y="9" width="16" height="7" rx="1.5"/><path d="M7 14h10v6H7z"/></svg>Imprimir moldes</button>
+<svg viewBox="0 0 200 240" style="width:180px;background:#F4F7FA;border-radius:8px">
+<path d="M60 210 L60 90 L100 70 L100 210 Z" fill="#FF9E7D" stroke="#7c2d12" stroke-width="3"/>
+<path d="M100 70 L140 20 L160 20 L160 60 L120 80 Z" fill="#FF9E7D" stroke="#7c2d12" stroke-width="3"/>
+<circle cx="80" cy="58" r="22" fill="#FF9E7D" stroke="#7c2d12" stroke-width="3"/>
 <circle cx="72" cy="54" r="3" fill="#7c2d12"/><circle cx="90" cy="54" r="3" fill="#7c2d12"/>
 <path d="M75 66 Q82 72 89 66" stroke="#7c2d12" stroke-width="2.5" fill="none"/>
-<path d="M60 210 L100 210 L120 230 L40 230 Z" fill="#fbbf24" stroke="#7c2d12" stroke-width="3"/>
+<path d="M60 210 L100 210 L120 230 L40 230 Z" fill="#FF9E7D" stroke="#7c2d12" stroke-width="3"/>
 <text x="14" y="18" font-size="11" fill="#7c2d12">recorta · dobra · cola</text>
 </svg>
 </div>
@@ -125,14 +152,14 @@ function sha256Natal(str) {
 }
 function toHex(u8){var s="";for(var i=0;i<u8.length;i++)s+=("0"+u8[i].toString(16)).slice(-2);return s}
 // MEMÓRIA
-var emojis=["🦒","🌍","💧","☀️","📻","🛡️"];
+var emojis=['<svg class="ki ki-peca" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M9.2 21v-8.6L6.6 10.3l.6-2.1 2.3.4 1.2-3.4h1.9l.7 2.6 2.4-.3.5 2.3-2.6 1.7V21"/><path d="M11 4.9V3.2M12.9 4.9V3.2"/><circle cx="11.3" cy="13.4" r=".55"/><circle cx="12.4" cy="16.6" r=".55"/><circle cx="11" cy="19" r=".55"/></svg>','<svg class="ki ki-peca" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>','<svg class="ki ki-peca" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg>','<svg class="ki ki-peca" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>','<svg class="ki ki-peca" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8 17 4"/><circle cx="8" cy="14" r="2.5"/><path d="M14 12.5h4M14 15.5h4"/></svg>','<svg class="ki ki-peca" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/></svg>'];
 var cartas=[], escolhidas=[], acertos=0;
 function montarMemo(){
   cartas=emojis.concat(emojis).sort(function(){return Math.random()-0.5});
   escolhidas=[]; acertos=0;
   var el=document.getElementById("memo"); el.innerHTML="";
   cartas.forEach(function(c,i){
-    var b=document.createElement("button"); b.className="mcard"; b.textContent="❓";
+    var b=document.createElement("button"); b.className="mcard"; b.innerHTML='<svg class="ki ki-peca" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7v.5"/><path d="M12 17h.01"/></svg>';
     b.onclick=function(){ virar(i); }; el.appendChild(b);
   });
 }
@@ -143,16 +170,16 @@ function virar(i){
   if(escolhidas.length===2){
     var a=escolhidas[0], c=escolhidas[1];
     if(cartas[a]===cartas[c]){ acertos++; escolhidas=[]; if(acertos===emojis.length) montarMemo(); }
-    else setTimeout(function(){ botoes[a].textContent="❓"; botoes[c].textContent="❓"; escolhidas=[]; },700);
+    else setTimeout(function(){ botoes[a].innerHTML='<svg class="ki ki-peca" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7v.5"/><path d="M12 17h.01"/></svg>'; botoes[c].innerHTML='<svg class="ki ki-peca" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7v.5"/><path d="M12 17h.01"/></svg>'; escolhidas=[]; },700);
   }
 }
 // GALO
-var tab=["","","","","","","","",""], vez="🦒";
+var tab=["","","","","","","","",""], vez="girafa";
 function montarGalo(){
-  tab=["","","","","","","","",""]; vez="🦒";
+  tab=["","","","","","","","",""]; vez="girafa";
   var el=document.getElementById("galo"); el.innerHTML="";
   for(var i=0;i<9;i++){ (function(k){ var b=document.createElement("div"); b.className="tcell"; b.onclick=function(){ jogarGalo(k); }; el.appendChild(b); })(i); }
-  document.getElementById("galoMsg").textContent="joga a 🦒";
+  document.getElementById("galoMsg").textContent="joga a girafa";
 }
 function jogarGalo(k){
   if(tab[k]||vencedor()) return;
@@ -160,9 +187,9 @@ function jogarGalo(k){
   var el=document.getElementById("galo").children[k]; el.textContent=vez;
   var linhas=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
   var w=linhas.find(function(l){return tab[l[0]]&&tab[l[0]]===tab[l[1]]&&tab[l[1]]===tab[l[2]]});
-  if(w){ document.getElementById("galoMsg").textContent="GANHOU "+tab[w[0]]+"! 🎉"; return; }
+  if(w){ document.getElementById("galoMsg").textContent="GANHOU A "+tab[w[0]].toUpperCase()+"!"; return; }
   if(tab.every(function(x){return x})){ document.getElementById("galoMsg").textContent="empate!"; return; }
-  vez = vez==="🦒"?"🌙":"🦒";
+  vez = vez==="girafa"?"lua":"girafa";
   document.getElementById("galoMsg").textContent="joga o "+vez;
 }
 function vencedor(){ return document.getElementById("galoMsg").textContent.indexOf("GANHOU")===0; }
@@ -179,11 +206,25 @@ function certificar(){
   var c=document.getElementById("qr");
   var qr=qrcode(0,"M");qr.addData("KONFIRMU|NATAL|v1|"+hash+"|"+toHex(kp.publicKey)+"|"+toHex(sig),"Byte");qr.make();
   var n=qr.getModuleCount(),s=3;c.width=n*s;c.height=n*s;
-  var ctx=c.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle="#000";
+  var ctx=c.getContext("2d");ctx.fillStyle="#F4F7FA";ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle="#000";
   for(var r=0;r<n;r++)for(var cc=0;cc<n;cc++)if(qr.isDark(r,cc))ctx.fillRect(cc*s,r*s,s,s);
   document.getElementById("cert").style.display="block";
 }
 montarMemo(); montarGalo();
 </script>
+<!-- rodape-2040:inicio -->
+<footer class="k-rodape" id="k-rodape">
+<div class="k-acoes" id="k-acoes"><a href="./app_unica.html">Início</a></div>
+<dl aria-label="Avisos legais">
+<dt>Fase de ensaio</dt><dd>A Konfirmu está em fase de ensaio técnico. As funções sem rede, de verificação e de assistência podem mudar ou falhar. Não há garantia de funcionamento contínuo.</dd>
+<dt>Emergências</dt><dd>A Konfirmu não é um serviço de emergência e não liga nem avisa ninguém por ti. Em perigo imediato, liga 112, o número europeu de emergência.</dd>
+<dt>Respostas automáticas e IA</dt><dd>O assistente da Konfirmu é um sistema automático, não uma pessoa. Algumas respostas são escritas por uma IA (inteligência artificial) e podem ter erros ou falhas. Não são aconselhamento jurídico, médico nem financeiro. Confirma sempre na fonte oficial.</dd>
+<dt>Selos e prova</dt><dd>Um selo mostra se um ficheiro mudou desde que foi selado. Usa um resumo criptográfico baseado em SHA-256 e uma assinatura feita no teu aparelho. Selado não quer dizer verdadeiro: o selo não confirma o que o ficheiro diz. A hora do selo vem do relógio do aparelho e não é um selo temporal qualificado. O valor como prova depende da lei e dos tribunais de cada país.</dd>
+<dt>Privacidade</dt><dd>Os selos, a verificação e o que guardas nestas páginas ficam no teu aparelho; nenhuma delas envia os teus ficheiros para servidores. A IA do chat de bolso corre no teu aparelho. Na app Konfirmu, com rede, as perguntas ao assistente podem ser enviadas a um serviço de IA na União Europeia (Mistral AI) para gerar a resposta.</dd>
+</dl>
+<p class="k-marca"><b>Konfirmu</b> · DPS Industrial &amp; Maritime Services · código aberto EUPL-1.2</p>
+</footer>
+<script defer src="./assets/konfirmu-2040.js"></script>
+<!-- rodape-2040:fim -->
 </body>
 </html>

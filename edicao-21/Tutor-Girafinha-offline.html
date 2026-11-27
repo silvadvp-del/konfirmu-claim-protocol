@@ -5,18 +5,45 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tutor Girafinha v0 — Offline</title>
 <style>
-[hidden]{display:none!important} #temas{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0} #ajuda{background:#8b321e;margin:.5rem 0} #chat{margin:1rem 0}
-body{font-family:system-ui,sans-serif;background:#fef9e7;color:#333;max-width:640px;margin:0 auto;padding:16px}
+[hidden]{display:none!important} #temas{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0} #ajuda{background:#8b321e;color:#F4F7FA;margin:.5rem 0} #chat{margin:1rem 0}
+body{font-family:system-ui,sans-serif;background:#0B192C;color:#F4F7FA;max-width:640px;margin:0 auto;padding:16px}
 h1{font-size:1.3rem} .msg{padding:10px 14px;border-radius:12px;margin:8px 0;line-height:1.5}
-.eu{background:#e8f4ea}.ela{background:#fdf0d5}
-input,button{font-size:1rem;padding:10px;border-radius:8px;border:1px solid #ccc}
-button{background:#2e7d32;color:#fff;border:none;cursor:pointer}
-#selo{font-family:monospace;font-size:.75rem;word-break:break-all;background:#eee;padding:8px;border-radius:6px}
-.aviso{background:#fdecea;border-left:4px solid #c0392b;padding:10px;font-size:.85rem}
+.eu{background:#13294A}.ela{background:#0F223D}
+input,button{font-size:1rem;padding:10px;border-radius:8px;border:1px solid #23395B}
+button{background:#FF9E7D;color:#0B192C;border:none;cursor:pointer}
+#selo{font-family:monospace;font-size:.75rem;word-break:break-all;background:#13294A;padding:8px;border-radius:6px}
+.aviso{background:#13294A;border-left:4px solid #FF9E7D;padding:10px;font-size:.85rem}
 </style>
+<!-- tema-2040:inicio -->
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0B192C">
+<meta name="konfirmu-portal" content="fam">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob: mediastream:; connect-src 'self' blob: data:; worker-src 'self' blob:; font-src 'self' data:; frame-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<style id="tema-2040">
+:root{color-scheme:dark;--k-abissal:#0B192C;--k-vidro:rgba(15,34,61,.72);--k-vidro-s:#0F223D;--k-pessego:#FF9E7D;--k-pessego-c:#FFB088;--k-titanio:#F4F7FA;--k-nevoa:#9FB3C8;--k-aresta:rgba(244,247,250,.14)}
+html{background:#0B192C;-webkit-text-size-adjust:100%}
+body{background-color:#0B192C;color:#F4F7FA}
+a{color:#FF9E7D}a:visited{color:#FFB088}
+:focus-visible{outline:2px solid #FF9E7D;outline-offset:2px}
+::selection{background:rgba(255,158,125,.35);color:#F4F7FA}
+.ki{display:inline-block;width:1.1em;height:1.1em;vertical-align:-.17em;margin-inline-end:.35em;flex:none}
+h1 .ki,h2 .ki,h3 .ki,b>.ki,strong>.ki,.card-label .ki{color:#FF9E7D}
+.ki-g{width:1.35em;height:1.35em;margin:0}.ki-peca{width:62%;height:62%;margin:0;vertical-align:middle}
+.k-rodape{max-width:760px;margin:28px auto 8px;padding:14px 16px 10px;border-top:1px solid rgba(244,247,250,.14);color:#9FB3C8;font:400 .8125rem/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-align:start}
+.k-rodape .k-acoes{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.k-rodape .k-acoes button,.k-rodape .k-acoes a{min-height:40px;padding:0 14px;border:1px solid rgba(244,247,250,.2);border-radius:10px;background:rgba(15,34,61,.72);color:#F4F7FA;font:600 .8125rem/40px system-ui,sans-serif;text-decoration:none;cursor:pointer;margin:0}
+.k-rodape .k-acoes button[aria-pressed="true"]{border-color:#FF9E7D;color:#FF9E7D}
+.k-rodape dl{margin:0;display:grid;gap:2px 10px}.k-rodape dt{color:#F4F7FA;font-weight:650}.k-rodape dd{margin:0 0 6px}
+.k-rodape .k-marca{margin:8px 0 0}.k-rodape .k-marca b{color:#F4F7FA}.k-rodape .k-marca b span{color:#FF9E7D}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+html.k-sem-movimento *,html.k-sem-movimento *::before,html.k-sem-movimento *::after{animation-play-state:paused!important;transition:none!important}
+html.k-contraste{--k-nevoa:#E6ECF3}html.k-contraste body{background-color:#050C16;color:#FFFFFF}html.k-contraste .k-rodape{color:#E6ECF3}
+html.k-contraste a{color:#FFC2A8}html.k-contraste .aviso,html.k-contraste .hash,html.k-contraste .meta{color:#E6ECF3!important}
+</style>
+<!-- tema-2040:fim -->
 </head>
 <body>
-<h1>🦒 Tutor Girafinha <small>· atividades guiadas offline</small></h1>
+<h1><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M9.2 21v-8.6L6.6 10.3l.6-2.1 2.3.4 1.2-3.4h1.9l.7 2.6 2.4-.3.5 2.3-2.6 1.7V21"/><path d="M11 4.9V3.2M12.9 4.9V3.2"/><circle cx="11.3" cy="13.4" r=".55"/><circle cx="12.4" cy="16.6" r=".55"/><circle cx="11" cy="19" r=".55"/></svg>Tutor Girafinha <small>· atividades guiadas offline</small></h1>
 <p>Escolhe um tema. Podes pensar na tua resposta ou conversar sobre ela com alguém que esteja contigo.</p>
 <noscript><p>Se estás em perigo agora, procura uma pessoa de confiança e chama o serviço de emergência local. Na União Europeia, liga 112. Este ficheiro não envia alertas.</p></noscript>
 <button id="ajuda" type="button" aria-controls="socorro" aria-expanded="false">Preciso de ajuda agora</button>
@@ -142,5 +169,19 @@ for(var i=0;i<8;i++){var v=h[i];for(var j=3;j>=0;j--){var byte=(v>>>(j*8))&255;r
 return res;}
 document.getElementById("selo").textContent = sha256(JSON.stringify(PACK));
 </script>
+<!-- rodape-2040:inicio -->
+<footer class="k-rodape" id="k-rodape">
+<div class="k-acoes" id="k-acoes"><a href="./app_unica.html">Início</a></div>
+<dl aria-label="Avisos legais">
+<dt>Fase de ensaio</dt><dd>A Konfirmu está em fase de ensaio técnico. As funções sem rede, de verificação e de assistência podem mudar ou falhar. Não há garantia de funcionamento contínuo.</dd>
+<dt>Emergências</dt><dd>A Konfirmu não é um serviço de emergência e não liga nem avisa ninguém por ti. Em perigo imediato, liga 112, o número europeu de emergência.</dd>
+<dt>Respostas automáticas e IA</dt><dd>O assistente da Konfirmu é um sistema automático, não uma pessoa. Algumas respostas são escritas por uma IA (inteligência artificial) e podem ter erros ou falhas. Não são aconselhamento jurídico, médico nem financeiro. Confirma sempre na fonte oficial.</dd>
+<dt>Selos e prova</dt><dd>Um selo mostra se um ficheiro mudou desde que foi selado. Usa um resumo criptográfico baseado em SHA-256 e uma assinatura feita no teu aparelho. Selado não quer dizer verdadeiro: o selo não confirma o que o ficheiro diz. A hora do selo vem do relógio do aparelho e não é um selo temporal qualificado. O valor como prova depende da lei e dos tribunais de cada país.</dd>
+<dt>Privacidade</dt><dd>Os selos, a verificação e o que guardas nestas páginas ficam no teu aparelho; nenhuma delas envia os teus ficheiros para servidores. A IA do chat de bolso corre no teu aparelho. Na app Konfirmu, com rede, as perguntas ao assistente podem ser enviadas a um serviço de IA na União Europeia (Mistral AI) para gerar a resposta.</dd>
+</dl>
+<p class="k-marca"><b>Konfirmu</b> · DPS Industrial &amp; Maritime Services · código aberto EUPL-1.2</p>
+</footer>
+<script defer src="./assets/konfirmu-2040.js"></script>
+<!-- rodape-2040:fim -->
 </body>
 </html>

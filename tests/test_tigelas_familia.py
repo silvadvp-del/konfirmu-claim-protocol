@@ -104,10 +104,10 @@ def parte_a():
     prova("8 tigelas, cada uma com o seu símbolo", len(simbolos) == 8 and len(set(simbolos)) == 8, ", ".join(simbolos))
 
     sw = (RAIZ / "sw.js").read_text(encoding="utf-8")
-    prova("sw.js da raiz é a v8 (o início novo chega a quem tinha a v7)", '"konfirmu-app-unica-v8:"' in sw)
+    prova("sw.js da raiz é a v9 (27-11, 14:53: terminal, tranca e paleta chegam a quem tinha a v8)", '"konfirmu-app-unica-v9:"' in sw)
     guardados = set(re.findall(r'"\./([^"]+)"', sw.split("const ASSETS", 1)[1].split("];", 1)[0]))
     raiz_fam = [h for _, h in hrefs_familia((RAIZ / "app_unica.html").read_text(encoding="utf-8"))]
-    prova("o sw.js v8 guarda as %d atividades da família da raiz" % len(raiz_fam),
+    prova("o sw.js v9 guarda as %d atividades da família da raiz" % len(raiz_fam),
           bool(raiz_fam) and set(raiz_fam) <= guardados, ", ".join(sorted(set(raiz_fam) - guardados)))
     return linguas
 
@@ -230,7 +230,7 @@ def parte_b(pw, chrome):
         page.reload()
         page.wait_for_function("navigator.serviceWorker.controller!==null")
         chaves = page.evaluate("caches.keys()")
-        prova("raiz: o service worker v8 está ativo e manda na página", pronto and any(k.startswith("konfirmu-app-unica-v8:") for k in chaves),
+        prova("raiz: o service worker v9 está ativo e manda na página", pronto and any(k.startswith("konfirmu-app-unica-v9:") for k in chaves),
               ", ".join(chaves))
         ctx.set_offline(True)
         abrir_familia(page, base + "app_unica.html")

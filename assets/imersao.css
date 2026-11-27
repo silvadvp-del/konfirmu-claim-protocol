@@ -1,17 +1,17 @@
 .im3d-tools { display: flex; flex-wrap: wrap; align-items: baseline; gap: .45rem 1rem; margin: .5rem 0; }
-.im3d-tools button { min-height: 44px; padding: .55rem 1rem; border: 1px solid #356340; border-radius: .7rem; background: #e8f5e9; color: #12391b; font: 700 1rem system-ui; cursor: pointer; }
-.im3d-tools button[aria-pressed="true"] { background: #ffdf91; color: #332409; }
+.im3d-tools button { min-height: 44px; padding: .55rem 1rem; border: 1px solid #23395B; border-radius: .7rem; background: #F4F7FA; color: #0F223D; font: 700 1rem system-ui; cursor: pointer; }
+.im3d-tools button[aria-pressed="true"] { background: #FFB088; color: #2A1D17; }
 .im3d-tools small { font: .875rem system-ui; }
 .im3d-viewer { margin: 1rem 0; }
 .im3d-viewer summary { cursor: pointer; }
 .im3d-viewer input { display: block; max-width: 100%; margin: .8rem 0; }
 .im3d-viewer img, .im3d-viewer video { display: block; width: 100%; max-height: 68vh; object-fit: contain; }
-.im3d-scene { margin: 0 auto; width: min(100%, 26rem); position: relative; aspect-ratio: 4 / 3; background: linear-gradient(#171634, #40375d); border-radius: 1rem; }
+.im3d-scene { margin: 0 auto; width: min(100%, 26rem); position: relative; aspect-ratio: 4 / 3; background: linear-gradient(#13294A, #23395B); border-radius: 1rem; }
 .im3d-scene > svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .im3d-frame { position: relative; margin: .8rem 0; border-radius: .7rem; background: #161c24; }
 .im3d-frame:empty { display: none; }
 
-html.im3d-active { min-height: 100%; background: #10191d; }
+html.im3d-active { min-height: 100%; background: #0B192C; }
 .im3d-active body { min-height: 100vh; min-height: 100dvh; width: 100%; max-width: none; box-sizing: border-box; }
 .im3d-active .im3d-viewer[open] .im3d-frame :is(img,video) { height: 72vh; height: 72dvh; max-height: none; }
 .im3d-active :is(.card,.game-card,.im3d-frame,.im3d-scene,.cert,.parchment,.hero) {

@@ -36,6 +36,7 @@ tigelas = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(tigelas)
 
 ICONES = {
+    "terminal": '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3M12.5 15H17"/>',
     "ficheiro": '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="m9 14 2 2 4-4"/>',
     "foto": '<path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/>',
     "ficha": '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4"/>',
@@ -79,6 +80,7 @@ PORTAIS = [
          ("testemunha_offline.html", "testemunha", "Testemunha", "Duas pessoas confirmam o mesmo momento.", None),
          ("radio_selo.html", "som", "Mensagem por som", "Envia mensagens por som que não se podem falsificar.", None),
          ("webrtc_local.html", "ligacao", "Ligação direta", "Liga dois aparelhos sem passar pela nuvem.", None),
+         ("terminal.html", "terminal", "Terminal sem rede", "Comandos para conferir: sha256, verify e bigint-test. Fica escondido no Modo Criança.", None),
      ]),
     ("cid", "Cidadão", "Cidadão e saúde",
      "Para o dia a dia: conversar, tratar de cartas e guardar a tua informação no teu aparelho.", [
@@ -104,16 +106,16 @@ PORTAIS = [
 
 SO_NA_EDICAO_21 = {"Tutor-Girafinha-offline.html", "kcp_family_quiz.html"}
 # Página explicativa, não é atividade: só no menu da raiz (o pacote da edição 21 só aceita atividades).
-SO_NA_RAIZ = {"economia_anti_casino.html"}
+SO_NA_RAIZ = {"economia_anti_casino.html", "terminal.html"}
 
 CSS = """
-:root{color-scheme:dark;--abissal:#0B192C;--vidro:rgba(15,34,61,.72);--vidro-solido:#0F223D;--pessego:#FF9E7D;--pessego-2:#F7B397;--titanio:#F4F7FA;--nevoeiro:#9FB3C8;--aresta:rgba(244,247,250,.12);--aresta-quente:rgba(255,158,125,.5);
+:root{color-scheme:dark;--abissal:#0B192C;--vidro:rgba(15,34,61,.72);--vidro-solido:#0F223D;--pessego:#FF9E7D;--pessego-2:#FFB088;--titanio:#F4F7FA;--nevoeiro:#9FB3C8;--aresta:rgba(244,247,250,.12);--aresta-quente:rgba(255,158,125,.5);
 --pagina:#0B192C;--painel:#0F223D;--tinta:#F4F7FA;--tinta2:#9FB3C8;--tinta3:#9FB3C8;--linha:rgba(244,247,250,.12);--azulejo:#0F223D;--u:#FF9E7D;
 --letra:"SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI Variable Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --titulo:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI Variable Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--mola:cubic-bezier(.2,.8,.2,1)}
 *{box-sizing:border-box}
 html{background:var(--abissal);-webkit-text-size-adjust:100%}
-html.sem-webgl{background:radial-gradient(130% 75% at 50% 0%,#3B2B2B 0%,#0B192C 62%) fixed var(--abissal)}
+html.sem-webgl{background:radial-gradient(130% 75% at 50% 0%,#3A2A26 0%,#0B192C 62%) fixed var(--abissal)}
 body{margin:0 auto;max-width:780px;padding:34px 18px 48px;font:16px/1.55 var(--letra);color:var(--titanio);background:transparent;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
 .ceu{position:fixed;inset:0;width:100%;height:100%;z-index:-1;display:block;pointer-events:none}
 h1{margin:0;font:700 clamp(2.75rem,11vw,4.25rem)/1 var(--titulo);letter-spacing:-.035em;color:var(--titanio)}
@@ -186,6 +188,7 @@ body.facil .portais [role=tab],body.facil .letra,body.facil .aviao{font-size:1.0
 .portais [role=tab][aria-selected="true"] .emblema svg *{stroke-dasharray:64;animation:traca 1.1s var(--mola) both}
 @keyframes traca{from{stroke-dashoffset:64}to{stroke-dashoffset:0}}
 h1 .u{animation:respira 5.5s ease-in-out infinite}
+.k-acoes{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}.k-acoes button{min-height:44px;padding:0 14px;border:1px solid var(--aresta);border-radius:12px;background:var(--vidro);color:var(--titanio);font:600 .875rem/1 var(--letra);cursor:pointer}.k-acoes button[aria-pressed="true"]{border-color:var(--pessego);color:var(--pessego)}
 @keyframes respira{0%,100%{text-shadow:0 0 14px rgba(255,158,125,.42),0 0 34px rgba(255,158,125,.18)}50%{text-shadow:0 0 22px rgba(255,158,125,.7),0 0 58px rgba(255,158,125,.32)}}
 .js .portal{animation:surge .45s var(--mola)}
 @keyframes surge{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}}
@@ -400,9 +403,10 @@ JS_VIVO = """// Atmosfera viva (ordem do David, 27-11-2026, 13:21): aurora em We
  var calmo=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
  document.addEventListener('pointerdown',function(e){
   var el=e.target&&e.target.closest&&e.target.closest('.portais [role=tab], a.card');if(!el)return;
+  if(el.classList.contains('tigela'))return; // as tigelas têm a sua própria luz e vibração (PR #19): uma só resposta ao toque
   if(!calmo){var r=el.getBoundingClientRect(),o=document.createElement('span');o.className='onda';
-   o.style.left=(e.clientX-r.left)+'px';o.style.top=(e.clientY-r.top)+'px';el.appendChild(o);setTimeout(function(){o.remove()},750)}
-  try{if(navigator.vibrate)navigator.vibrate(8)}catch(_){}
+   o.style.left=(e.clientX-r.left)+'px';o.style.top=(e.clientY-r.top)+'px';el.appendChild(o);setTimeout(function(){o.remove()},750);
+   try{if(navigator.vibrate)navigator.vibrate(8)}catch(_){}}
  },{passive:true});
  document.addEventListener('pointermove',function(e){
   var el=e.target&&e.target.closest&&e.target.closest('.portais [role=tab]');if(!el)return;
@@ -433,18 +437,26 @@ def cartao(href, icone, titulo, descricao, estado):
             '<b>%s</b><span class="d">%s%s</span></a>' % (href, ICONES[icone], titulo, descricao, extra))
 
 
+CSP_MENU = ("default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob: mediastream:; "
+            "connect-src 'self'; worker-src 'self'; manifest-src 'self'; font-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'")
+
+
 def pagina(variante, avisos, pt, dados_json):
     edicao = variante == "edicao21"
+    web = variante == "web"
     partes = ['<!DOCTYPE html>', '<html lang="pt">', '<head>', '<meta charset="UTF-8">',
               '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
               '<meta name="theme-color" content="#0B192C">',
+              '<meta name="color-scheme" content="dark">',
+              '<meta name="konfirmu-portal" content="menu">',
+              '<meta http-equiv="Content-Security-Policy" content="%s">' % CSP_MENU,
               '<title>Konfirmu</title>',
               # ícone dentro da página: o «u» pêssego; sem pedido ao servidor (sem favicon.ico 404)
               '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Crect width=\'32\' height=\'32\' rx=\'7\' fill=\'%230B192C\'/%3E%3Ctext x=\'16\' y=\'22.5\' font-family=\'Inter,Arial,sans-serif\' font-size=\'21\' font-weight=\'700\' text-anchor=\'middle\' fill=\'%23FF9E7D\'%3Eu%3C/text%3E%3C/svg%3E">',
               '<style>' + CSS.strip() + tigelas.CSS_FAMILIA.rstrip() + '</style>',
               '<link rel="stylesheet" href="./assets/imersao.css">',
               '<script defer src="./assets/imersao.js" data-viewer></script>']
-    if edicao:
+    if edicao or web:
         partes.append('<link rel="manifest" href="./manifest.json">')
     partes += ['</head>', '<body>', tigelas.DEFS_PARTILHADAS,
                '<canvas id="aurora" class="ceu" aria-hidden="true"></canvas><canvas id="faiscas" class="ceu" aria-hidden="true"></canvas>',
@@ -461,7 +473,7 @@ def pagina(variante, avisos, pt, dados_json):
     partes.append('<p id="sem" class="sem-resultados" role="status" aria-live="polite"></p>')
     partes.append('<nav class="portais" role="tablist" aria-label="Portais">')
     for chave, rotulo, _, _, itens in PORTAIS:
-        n = sum(1 for it in itens if (edicao and it[0] not in SO_NA_RAIZ) or (not edicao and it[0] not in SO_NA_EDICAO_21))
+        n = sum(1 for it in itens if web or (edicao and it[0] not in SO_NA_RAIZ) or (not edicao and it[0] not in SO_NA_EDICAO_21))
         if chave == "fam":
             rotulo = '<bdi data-k="fam.rotulo">%s</bdi>' % html.escape(pt["fam.rotulo"])
         partes.append('<button type="button" role="tab" id="t-%s" aria-controls="p-%s" aria-selected="false">'
@@ -473,7 +485,7 @@ def pagina(variante, avisos, pt, dados_json):
     for chave, _, titulo, sub, itens in PORTAIS:
         if chave == "fam":
             # o portal das tigelas: textos de locales/pt.json, desenho de scripts/tigelas.py
-            hrefs = [i[0] for i in itens if edicao or i[0] not in SO_NA_EDICAO_21]
+            hrefs = [i[0] for i in itens if edicao or web or i[0] not in SO_NA_EDICAO_21]
             secao, _ = tigelas.secao_familia(hrefs, pt, html.escape)
             partes.append(secao)
             total += len(hrefs)
@@ -482,7 +494,7 @@ def pagina(variante, avisos, pt, dados_json):
         partes.append('<h2>%s</h2><p class="sub">%s</p>' % (titulo, sub))
         partes.append('<div class="grid">')
         for href, icone, nome, descricao, estado in itens:
-            if href in SO_NA_EDICAO_21 and not edicao:
+            if href in SO_NA_EDICAO_21 and not (edicao or web):
                 continue
             if href in SO_NA_RAIZ and edicao:
                 continue
@@ -496,11 +508,12 @@ def pagina(variante, avisos, pt, dados_json):
     if not edicao:
         bloco.append('<p class="legal"><a href="./avisos_legais.html">Os mesmos avisos em 24 línguas</a></p>')
     bloco.append('</section>')
-    partes += ['<footer class="rodape">'] + bloco + [
+    partes += ['<footer class="rodape">', '<div class="k-acoes" id="k-acoes" aria-label="Preferências deste aparelho"></div>'] + bloco + [
                '<p class="id" id="id"></p>',
                '</footer>',
                '<script type="application/json" id="famDados">' + dados_json + '</script>',
                '<script src="./assets/nacl-fast.min.js"></script>',
+               '<script defer src="./assets/konfirmu-2040.js"></script>',
                '<script>', JS_BASE, JS_PORTAIS.strip(), JS_VIVO.strip()]
     if not edicao:
         partes.append(JS_AVIAO)
@@ -528,7 +541,7 @@ def main():
     dados_json = tigelas.dados_linguas(linguas)
     raiz, n_raiz = pagina("raiz", avisos, pt, dados_json)
     ed, n_ed = pagina("edicao21", avisos, pt, dados_json)
-    assert n_raiz == 20 and n_ed == 21, (n_raiz, n_ed)
+    assert n_raiz == 21 and n_ed == 21, (n_raiz, n_ed)
     for caminho, conteudo in (("app_unica.html", raiz), ("edicao-21/app_unica.html", ed), ("edicao-21/index.html", ed)):
         with open(os.path.join(repo, caminho), "w", encoding="utf-8") as f:
             f.write(conteudo)
