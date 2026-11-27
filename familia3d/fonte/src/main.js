@@ -715,3 +715,10 @@ if (estado.crianca && estado.pin && RETRATO < 0) entrar();
 camP.copy(alvoCamP).add(new THREE.Vector3(0, 0.4, 2.2));
 window.__k3d = { webgl: COM3D, estado: () => ({ modo, foco, cheias: cheias.slice(), cena: cenaAtual, lingua }), sha256js, versao: "2.0.0" };
 if (QUADROS) window.__quadro(0); else requestAnimationFrame(ciclo);
+
+// Modo avião: na app (dpsindustrial.nl/konfirmu/app/), a entrada regista o mesmo service worker do menu, para que tudo
+// abra sem rede depois da primeira visita. Fora da app (ficheiro solto, sem sw.js ao lado) não faz nada.
+if ("serviceWorker" in navigator && window.isSecureContext && !QUADROS && RETRATO < 0) {
+  const registar = () => { navigator.serviceWorker.register("./sw.js").catch(() => {}); };
+  if (document.readyState === "complete") registar(); else window.addEventListener("load", registar);
+}
