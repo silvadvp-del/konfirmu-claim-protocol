@@ -13,9 +13,11 @@ O que prova (cada linha diz PASSA ou FALHA; sai com 1 se alguma falhar):
   C. o pacote: 8 tigelas com símbolos diferentes; a tigela acende em menos de 100 ms e vibra;
      abre a atividade; ao voltar, fica marcada; teclado e «menos movimento» abrem logo;
      as 62 línguas com <bdi> e direção certa (RTL); procura de línguas e de atividades;
-     memória abaixo de 64 MB; ritmo dos quadros; modo avião (service worker e file://).
+     memória abaixo de 64 MB; ritmo dos quadros; contraste AAA medido em píxeis;
+     modo avião (service worker e file://).
 """
 import argparse
+import base64
 import functools
 import importlib.util
 import json
@@ -142,6 +144,70 @@ def esperar(page, expressao, segundos=10):
 
 SW_PRONTO = "Promise.race([navigator.serviceWorker.ready.then(r=>!!r.active),new Promise(r=>setTimeout(()=>r(false),20000))])"
 VIBRA = "Navigator.prototype.vibrate=function(p){try{window.__vibrou(p)}catch(e){}return true};"
+
+
+# ---------------------------------------------------------------- contraste AAA medido em píxeis
+# Ordem do David de 27-11, 12:16 (artigo 2.º, n.º 3): nenhum ecrã passa sem contraste WCAG AAA.
+# Mede cada linha de texto do portal: esconde o texto, fotografa o fundo e compara a cor do texto
+# com o píxel de fundo mais desfavorável dessa linha (7:1; 4,5:1 para letra grande).
+RECOLHER_TEXTOS = r"""()=>{const sec=document.getElementById('p-fam');const out=[];
+ const w=document.createTreeWalker(sec,NodeFilter.SHOW_TEXT);let n;
+ while((n=w.nextNode())){if(!n.textContent.trim())continue;const el=n.parentElement;
+  if(el.closest('[hidden]')||el.closest('svg'))continue;const cs=getComputedStyle(el);
+  if(cs.visibility==='hidden'||+cs.opacity===0)continue;const r=document.createRange();r.selectNodeContents(n);
+  let cl={l:-1e9,t:-1e9,r:1e9,b:1e9};for(let a=el;a&&a!==document.body;a=a.parentElement){const o=getComputedStyle(a);
+   if(o.overflowX!=='visible'||o.overflowY!=='visible'){const z=a.getBoundingClientRect(),zl=z.left+a.clientLeft,zt=z.top+a.clientTop;
+    cl={l:Math.max(cl.l,zl),t:Math.max(cl.t,zt),r:Math.min(cl.r,zl+a.clientWidth),b:Math.min(cl.b,zt+a.clientHeight)}}}
+  for(const q0 of r.getClientRects()){const q={l:Math.max(q0.left,cl.l),t:Math.max(q0.top,cl.t),r:Math.min(q0.right,cl.r),b:Math.min(q0.bottom,cl.b)};
+   if(q.r-q.l<2||q.b-q.t<2)continue;
+   out.push({t:n.textContent.trim().slice(0,40),cor:cs.color,px:parseFloat(cs.fontSize),peso:+cs.fontWeight,x:q.l+scrollX,y:q.t+scrollY,w:q.r-q.l,h:q.b-q.t})}}
+ for(const i of sec.querySelectorAll('input')){if(i.closest('[hidden]')||i.value)continue;const q=i.getBoundingClientRect(),p=parseFloat(getComputedStyle(i).paddingLeft);
+  out.push({t:'(placeholder) '+i.placeholder,cor:getComputedStyle(i,'::placeholder').color,px:parseFloat(getComputedStyle(i).fontSize),peso:400,
+   x:q.left+scrollX+p,y:q.top+scrollY+8,w:Math.min(q.width-2*p,200),h:q.height-16})}
+ return out}"""
+ESCONDER_TEXTO = ("#p-fam *,#p-fam *::placeholder{color:transparent!important;-webkit-text-fill-color:transparent!important;"
+                  "text-shadow:none!important;caret-color:transparent!important}")
+MEDIR_PIXEIS = r"""async([png,caixas,esc])=>{const img=new Image();img.src='data:image/png;base64,'+png;await img.decode();
+ const c=document.createElement('canvas');c.width=img.width;c.height=img.height;const g=c.getContext('2d');g.drawImage(img,0,0);
+ const lin=v=>{v/=255;return v<=.04045?v/12.92:Math.pow((v+.055)/1.055,2.4)};const L=(r,gg,b)=>.2126*lin(r)+.7152*lin(gg)+.0722*lin(b);
+ return caixas.map(k=>{const x=Math.max(0,Math.floor(k.x*esc)),y=Math.max(0,Math.floor(k.y*esc));
+  const w=Math.max(1,Math.min(Math.floor(k.w*esc),img.width-x)),h=Math.max(1,Math.min(Math.floor(k.h*esc),img.height-y));
+  const d=g.getImageData(x,y,w,h).data;let mn=1,mx=0,s=0,n=0;
+  for(let i=0;i<d.length;i+=4){const l=L(d[i],d[i+1],d[i+2]);if(l<mn)mn=l;if(l>mx)mx=l;s+=l;n++}
+  const m=k.cor.match(/[\d.]+/g).map(Number);const lt=L(m[0],m[1],m[2]);const claro=lt>s/n;const pior=claro?mx:mn;
+  const ratio=claro?(lt+.05)/(pior+.05):(pior+.05)/(lt+.05);const grande=k.px>=24||(k.px>=18.66&&k.peso>=700);
+  return {t:k.t,cor:k.cor,ratio:Math.round(ratio*100)/100,min:grande?4.5:7}})}"""
+
+
+def contraste_aaa(browser, url):
+    """Mede todo o texto do portal (telemóvel e computador; lista de línguas fechada e aberta; uma tigela escolhida)."""
+    res = []
+    for nome, opc in (("telemóvel", TELEMOVEL), ("computador", COMPUTADOR)):
+        ctx = browser.new_context(**opc)
+        page = ctx.new_page()
+        page.goto(url)
+        page.evaluate("sessionStorage.setItem('konfirmu_tigela','sala_natal_girafinhas.html')")
+        page.reload()
+        abrir_familia(page, url)
+        time.sleep(0.4)
+        for estado in ("fechada", "aberta"):
+            if estado == "aberta":
+                page.click("#famLingua")
+                page.click('#famLinguaLista button[data-l="kea"]')
+                page.click("#famLingua")
+                time.sleep(0.2)
+            caixas = page.evaluate(RECOLHER_TEXTOS)
+            estilo = page.add_style_tag(content=ESCONDER_TEXTO)
+            time.sleep(0.1)
+            png = base64.b64encode(page.screenshot(full_page=True)).decode()
+            page.evaluate("s=>s.remove()", estilo)
+            folha = ctx.new_page()
+            for x in folha.evaluate(MEDIR_PIXEIS, [png, caixas, opc["device_scale_factor"]]):
+                x["onde"] = "%s, lista de línguas %s" % (nome, estado)
+                res.append(x)
+            folha.close()
+        ctx.close()
+    return res
 
 
 # ---------------------------------------------------------------- B. a raiz do repositório
@@ -381,6 +447,12 @@ def parte_c(pw, chrome, pasta, linguas, fotos):
             ctx2.close()
         prova("pacote: 0 erros na consola do início (computador)", not erros2.do_menu(), " | ".join(erros2.do_menu()[:3]))
         ctx.close()
+
+        medidas = contraste_aaa(browser, url)
+        maus = sorted((x for x in medidas if x["ratio"] < x["min"]), key=lambda x: x["ratio"])
+        prova("pacote: contraste AAA em todo o texto do portal (%d linhas medidas em píxeis, telemóvel e computador)" % len(medidas),
+              len(medidas) > 100 and not maus,
+              "pior %.2f:1" % min(x["ratio"] for x in medidas) if not maus else "; ".join("%.2f %s «%s»" % (x["ratio"], x["onde"], x["t"]) for x in maus[:4]))
 
         # file:// — abrir o ficheiro diretamente, sem servidor nem service worker
         ctx = browser.new_context(**TELEMOVEL)

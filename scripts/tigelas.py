@@ -213,23 +213,25 @@ def secao_familia(itens, pt, esc):
 
 
 CSS_FAMILIA = """
-/* Portal Educação e família: palco azul abissal e as tigelas (diretiva de 27-11, 12:29) */
+/* Portal Educação e família: palco azul abissal e as tigelas (diretiva de 27-11, 12:29).
+   Contraste AAA (ordem de 27-11, 12:16): todo o texto a 7:1 ou mais, medido em píxeis no ensaio. */
 .portal-familia{position:relative;margin-top:24px;padding:20px 14px 18px;border-radius:22px;color:#E9EFF7;background:radial-gradient(130% 75% at 50% -8%,#1B3A66 0%,#0F2240 38%,#0B192C 72%) #0B192C;box-shadow:inset 0 1px 0 rgb(255 255 255 / .07),0 18px 40px -24px rgb(11 25 44 / .9)}
 .portal-familia h2{color:#F5F8FC}
-.portal-familia .sub{margin:4px 0 0;color:#AFBDD0}
+.portal-familia .sub{margin:4px 0 0;color:#D5DDE8}
 .fam-topo{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:0 2px 16px}
 .fam-tit{min-width:0}
-.fam-lingua{flex:none;max-width:48%;min-height:44px;padding:0 14px;border:1px solid rgb(255 255 255 / .2);border-radius:999px;background:rgb(255 255 255 / .06);color:#F5F8FC;font:600 .875rem/1.2 var(--letra);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.fam-lingua-r{color:#AFBDD0;font-weight:500}
+.fam-lingua{flex:none;max-width:48%;min-height:44px;padding:5px 14px;border:1px solid rgb(255 255 255 / .2);border-radius:18px;background:rgb(255 255 255 / .04);color:#F5F8FC;font:600 .875rem/1.2 var(--letra);cursor:pointer;text-align:center;overflow-wrap:anywhere}
+.fam-lingua-r{display:block;color:#D5DDE8;font-weight:500;font-size:.75rem}
+.fam-lingua-n{display:block}
 .fam-lingua:focus-visible,.fam-linguas button:focus-visible,.fam-linguas input:focus-visible{outline:2px solid #FFB088;outline-offset:2px}
 .fam-linguas{margin:-4px 0 14px;padding:10px;border-radius:16px;background:#10223D;border:1px solid rgb(255 255 255 / .12)}
 .fam-linguas input{width:100%;min-height:44px;padding:0 12px;border-radius:10px;border:1px solid rgb(255 255 255 / .2);background:#0B192C;color:#F5F8FC;font:400 1rem/1.2 var(--letra)}
-.fam-linguas input::placeholder{color:#8FA2BC}
+.fam-linguas input::placeholder{color:#B9C6D7}
 .fam-linguas ul{list-style:none;margin:8px 0 0;padding:0;max-height:264px;overflow:auto;overscroll-behavior:contain;display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:4px}
 .fam-linguas button{width:100%;min-height:44px;padding:6px 10px;border:0;border-radius:10px;background:transparent;color:#F5F8FC;text-align:start;font:600 .9375rem/1.2 var(--letra);cursor:pointer}
-.fam-linguas button small{display:block;margin-top:2px;color:#8FA2BC;font-size:.75rem;font-weight:400}
+.fam-linguas button small{display:block;margin-top:2px;color:#D5DDE8;font-size:.75rem;font-weight:400}
 .fam-linguas button:hover{background:rgb(255 255 255 / .06)}
-.fam-linguas button[aria-current=true]{background:rgb(255 176 136 / .16);box-shadow:inset 0 0 0 1px rgb(255 176 136 / .55)}
+.fam-linguas button[aria-current=true]{background:rgb(255 176 136 / .1);box-shadow:inset 0 0 0 1px rgb(255 176 136 / .55)}
 .portal-familia .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 10px;border:0;border-radius:0;background:transparent;overflow:visible}
 @media (min-width:640px){.portal-familia .grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .portal-familia .card{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:0;padding:4px 6px 14px;border:0;border-radius:18px;text-align:center;color:#E9EFF7;background:transparent;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
@@ -238,7 +240,7 @@ CSS_FAMILIA = """
 .portal-familia .card:active{background:rgb(255 255 255 / .035)}
 .portal-familia .card:focus-visible{outline:2px solid #FFB088;outline-offset:-2px;border-radius:18px}
 .portal-familia .card b{margin-top:2px;font-size:1rem;line-height:1.25;font-weight:650;color:#F5F8FC}
-.portal-familia .card .d{font-size:.8125rem;line-height:1.35;color:#AFBDD0}
+.portal-familia .card .d{font-size:.8125rem;line-height:1.35;color:#D5DDE8}
 .portal-familia .card.tigela b,.portal-familia .card.tigela .d{align-self:stretch}
 .portal-familia .card .ico{position:relative;display:block;width:100%;max-width:150px;height:auto;aspect-ratio:120/104;border-radius:0;background:transparent;color:inherit;isolation:isolate}
 .portal-familia .card .ico svg.tg{display:block;width:100%;height:100%;overflow:visible;fill:none;stroke:none;transform-origin:50% 82%;transition:transform .24s cubic-bezier(.2,.8,.2,1)}
@@ -263,7 +265,7 @@ CSS_FAMILIA = """
 .portal-familia .card.acesa .tg-faiscas circle:nth-child(3){animation-delay:.5s}
 @keyframes tg-sobe{from{transform:translateY(0);opacity:1}to{transform:translateY(-18px);opacity:0}}
 /* a entrada grande: «Primeiros passos» */
-.portal-familia .card.entrada{grid-column:1/-1;display:grid;grid-template-columns:64px minmax(0,1fr);grid-template-areas:"ico t" "ico d";column-gap:14px;align-items:center;margin:0 0 8px;padding:14px 16px;text-align:start;background:linear-gradient(135deg,rgb(255 176 136 / .16),rgb(255 158 125 / .05));box-shadow:inset 0 0 0 1px rgb(255 176 136 / .3)}
+.portal-familia .card.entrada{grid-column:1/-1;display:grid;grid-template-columns:64px minmax(0,1fr);grid-template-areas:"ico t" "ico d";column-gap:14px;align-items:center;margin:0 0 8px;padding:14px 16px;text-align:start;background:linear-gradient(135deg,rgb(255 176 136 / .11),rgb(255 158 125 / .04));box-shadow:inset 0 0 0 1px rgb(255 176 136 / .3)}
 .portal-familia .card.entrada b{grid-area:t;align-self:end;margin:0}
 .portal-familia .card.entrada .d{grid-area:d;align-self:start}
 .portal-familia .card.entrada .ico{grid-area:ico;width:64px;max-width:64px;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:radial-gradient(closest-side,rgb(255 176 136 / .34),rgb(255 158 125 / .08) 70%,rgb(255 158 125 / 0)),#13294A;box-shadow:inset 0 0 0 1px rgb(255 176 136 / .38)}
