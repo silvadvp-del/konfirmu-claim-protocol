@@ -56,6 +56,8 @@ try{pk=localStorage.getItem("konfirmu_id")}catch(_){}
 if(!pk){var kp=nacl.sign.keyPair();pk=toHex(kp.publicKey);try{localStorage.setItem('konfirmu_id',pk)}catch(_){}}
 function facil(){document.body.classList.toggle('facil')}
 document.getElementById("id").textContent="a tua identidade neste aparelho: " + pk.slice(0,24) + "…";
+// 27-11-2026: o início passa a ligar a cache sem rede (antes só o verificador a ligava).
+if(location.protocol!=="file:"&&"serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(function(){});}
 </script>
 </body>
 </html>

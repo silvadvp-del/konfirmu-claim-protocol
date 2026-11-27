@@ -32,6 +32,7 @@ input[type=file]{width:100%}
 
 <p class="aviso">O que NÃO garante: o navegador não verifica carimbo RFC 3161 (a cadeia da TSA verifica-se com: openssl ts -verify -in ficheiro.tsr -data ficheiro -CAfile cacert.pem -untrusted tsa.crt). SELADO ≠ VERDADEIRO. A verificação prova integridade e assinaturas, não a verdade dos factos.</p>
 <script src="./assets/nacl-fast.min.js"></script>
+<script src="./assets/nacl-util.min.js"></script>
 <script>
 function bytesParaTexto(u8) {
   // KON-572: converte os bytes aos bocados de 8 192. De uma so vez, o navegador recusa ficheiros maiores (por volta dos 120 KB).

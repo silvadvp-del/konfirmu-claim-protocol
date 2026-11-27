@@ -105,10 +105,13 @@ function parar(){
   if(!mediaRec){alert("primeiro grava");return}
   mediaRec.stop(); stream.getTracks().forEach(function(t){t.stop();});
   document.getElementById("out").textContent = "filme gravado: " + (blobFilme ? Math.round(blobFilme.size/1024)+" KB — agora sela" : "a selar…");
-  setTimeout(function(){ document.getElementById("out").textContent = "filme gravado: " + Math.round(blobFilme.size/1024) + " KB — agora sela"; }, 400);
+  var vez=++vezParar;
+  setTimeout(function(){ if(vez===vezParar&&blobFilme) document.getElementById("out").textContent = "filme gravado: " + Math.round(blobFilme.size/1024) + " KB — agora sela"; }, 400);
 }
+var vezParar=0; // 27-11-2026: o aviso atrasado do «Parar» já não escreve por cima do selo
 async function selar(){
   if(!blobFilme){alert("grava e para primeiro");return}
+  vezParar++;
   var titulo=document.getElementById("titulo").value.trim()||"Sem título";
   var autor=document.getElementById("autor").value.trim()||"Criança da aldeia";
   var outEl=document.getElementById("out");
