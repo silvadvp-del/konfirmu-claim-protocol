@@ -22,6 +22,8 @@ chamada para fora do aparelho, ou o ZIP não conferir com o SHA256SUMS.txt depoi
 """
 from __future__ import annotations
 
+from html.parser import HTMLParser
+
 import argparse
 import hashlib
 import io
@@ -64,6 +66,52 @@ def sha256(b: bytes) -> str:
 
 
 # ---------------------------------------------------------------- fontes
+# Destinos da edição integrada de 21 atividades.
+ATIVIDADES_21 = {
+    "Tutor-Girafinha-offline.html",
+    "carta_selada.html",
+    "chronolex_ata.html",
+    "chronolex_photo_seal.html",
+    "chronolex_verify.html",
+    "estudio_video_criancas.html",
+    "executor_criancas.html",
+    "ficha_campo.html",
+    "girafinhas_criancas_facil.html",
+    "kcp_art_music_studio.html",
+    "kcp_family_quiz.html",
+    "konfirmu_chat_offline_v0.1.html",
+    "neverland_family_quest.html",
+    "patient_vault_offline.html",
+    "radio_selo.html",
+    "regua_do_planeta.html",
+    "sala_natal_girafinhas.html",
+    "testemunha_offline.html",
+    "urna_voto_offline.html",
+    "verificador_offline.html",
+    "webrtc_local.html",
+}
+
+
+class MenuIntegrado(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.destinos = set()
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "a":
+            href = dict(attrs).get("href") or ""
+            self.destinos.add(href[2:] if href.startswith("./") else href)
+
+
+def conferir_menu_integrado(inicio):
+    menu = MenuIntegrado()
+    menu.feed(inicio.decode("utf-8"))
+    menu.close()
+    ausentes = sorted(ATIVIDADES_21 - menu.destinos)
+    if ausentes:
+        raise Falha("atividades ausentes do menu integrado: " + ", ".join(ausentes))
+
+
 def ler_base(caminho: Path) -> dict:
     """Lê a edição integrada: um ZIP com site/ (como App-Unica-21.zip) ou uma pasta site."""
     ficheiros = {}
@@ -365,7 +413,7 @@ def commit_info(repo: Path):
         return "sem-git", 1795737600, None  # 2026-11-27T00:00:00Z
 
 
-def construir(repo: Path, base: Path | None, com_ia: Path | None):
+def construir(repo: Path, base: Path | None, com_ia: Path | None, edicao_21: bool = False):
     registo, origens = [], []
     repo_f = ler_repo(repo)
     base_f = ler_base(base) if base else {}
@@ -388,6 +436,8 @@ def construir(repo: Path, base: Path | None, com_ia: Path | None):
     inicio, _ = escolher(PAGINA_INICIAL)
     if inicio is None:
         raise Falha(f"falta a página inicial {PAGINA_INICIAL}")
+    if edicao_21:
+        conferir_menu_integrado(inicio)
     # Percorre o menu e as dependências a partir da página inicial.
     a_visitar = [PAGINA_INICIAL, "index.html", "manifest.json"] + PAGINAS_OBRIGATORIAS
     pacote, falta = {}, []
@@ -405,6 +455,15 @@ def construir(repo: Path, base: Path | None, com_ia: Path | None):
         origens.append({"ficheiro": p, "origem": origem, "sha256": sha256(conteudo),
                         "sha256_repositorio": sha256(repo_f[p]) if p in repo_f else None,
                         "sha256_base": sha256(base_f[p]) if p in base_f else None})
+        # O menu de uma base antiga conserva as suas atividades e recebe o visualizador atual.
+        if p in ("app_unica.html", "index.html") and p in base_f:
+            html = pacote[p].decode("utf-8")
+            if 'class="grid"' in html and 'src="./assets/imersao.js"' not in html:
+                menu_atual = repo_f.get(PAGINA_INICIAL, b"").decode("utf-8")
+                recursos = re.findall(r'<(?:link|script)\b[^>]*(?:href|src)="\./assets/imersao\.(?:js|css)"[^>]*>(?:</script>)?', menu_atual)
+                html = html.replace("</head>", "\n".join(recursos) + "\n</head>", 1)
+                conteudo = pacote[p] = html.encode("utf-8")
+                registo.append(f"{p}: imersão 3D no menu da edição integrada")
         if p.endswith(TEXTO):
             locais, _ = referencias(p, conteudo.decode("utf-8"))
             a_visitar += sorted(x for x in locais if x != "sw.js" and not x.startswith("assets/ia/") and not x.startswith("modelos/"))
@@ -535,6 +594,7 @@ def main(argv=None):
     ap.add_argument("--saida", type=Path, default=None, help="pasta de saída (por omissão: dist/ no repositório)")
     ap.add_argument("--ia", type=Path, default=None, help="pasta com o runtime e o modelo da IA local (experimental, por ensaiar)")
     ap.add_argument("--verificar", type=Path, help="só conferir um ZIP já feito")
+    ap.add_argument("--edicao-21", action="store_true", help="exige as 21 atividades no menu")
     a = ap.parse_args(argv)
     repo = Path(__file__).resolve().parent.parent
     if a.verificar:
@@ -542,7 +602,7 @@ def main(argv=None):
         print("\n".join(erros) if erros else f"CONFERE: {a.verificar.name} · sha256 {sha256(a.verificar.read_bytes())}")
         return 1 if erros else 0
     try:
-        pacote, meta, ts = construir(repo, a.base, a.ia)
+        pacote, meta, ts = construir(repo, a.base, a.ia, a.edicao_21)
         dados = escrever_zip(pacote, ts)
         erros = verificar_zip(dados)
         if erros:

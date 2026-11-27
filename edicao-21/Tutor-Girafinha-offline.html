@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tutor Girafinha v0 — Offline</title>
+<style>
+[hidden]{display:none!important} #temas{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0} #ajuda{background:#8b321e;margin:.5rem 0} #chat{margin:1rem 0}
+body{font-family:system-ui,sans-serif;background:#fef9e7;color:#333;max-width:640px;margin:0 auto;padding:16px}
+h1{font-size:1.3rem} .msg{padding:10px 14px;border-radius:12px;margin:8px 0;line-height:1.5}
+.eu{background:#e8f4ea}.ela{background:#fdf0d5}
+input,button{font-size:1rem;padding:10px;border-radius:8px;border:1px solid #ccc}
+button{background:#2e7d32;color:#fff;border:none;cursor:pointer}
+#selo{font-family:monospace;font-size:.75rem;word-break:break-all;background:#eee;padding:8px;border-radius:6px}
+.aviso{background:#fdecea;border-left:4px solid #c0392b;padding:10px;font-size:.85rem}
+</style>
+</head>
+<body>
+<h1>🦒 Tutor Girafinha <small>· atividades guiadas offline</small></h1>
+<p>Escolhe um tema. Podes pensar na tua resposta ou conversar sobre ela com alguém que esteja contigo.</p>
+<noscript><p>Se estás em perigo agora, procura uma pessoa de confiança e chama o serviço de emergência local. Na União Europeia, liga 112. Este ficheiro não envia alertas.</p></noscript>
+<button id="ajuda" type="button" aria-controls="socorro" aria-expanded="false">Preciso de ajuda agora</button>
+<section id="socorro" class="aviso" aria-labelledby="titulo-ajuda" hidden>
+<h2 id="titulo-ajuda" tabindex="-1">Pede ajuda a uma pessoa</h2>
+<p>Se estás em perigo agora, chama o serviço de emergência local. Na União Europeia, liga 112. Se puderes, pede a uma pessoa de confiança que fique contigo. Se a primeira pessoa não ajudar, procura outra.</p>
+<p>Este tutor está offline. Ninguém recebeu um alerta através deste botão.</p>
+<button type="button" id="voltar">Voltar à escolha de temas</button></section>
+<main id="aula"><div id="temas" aria-label="Escolher tema"></div>
+<div id="chat" aria-live="polite"></div>
+<button id="seguinte" type="button" hidden>Continuar a atividade</button></main>
+<p><b>Selo do pacote de conhecimento (SHA-256, calculado neste aparelho):</b></p>
+<div id="selo">…</div>
+<script>
+/* ===== Pacote de conhecimento (curado) ===== */
+const PACK = {
+"tema_sementes":{kw:["semente","planta","crescer","regar","flor"],
+ fact:"Uma semente precisa de água, ar e calor para acordar. Com luz, faz o seu próprio alimento.",
+ passos:[
+  "Antes de responder: o que achas que acontece a uma semente seca no copo sem água?",
+  "E se lhe deres só água, mas a deixares no escuro fechado num armário?",
+  "Por isso: água + ar + calor para acordar, e luz para crescer forte. Verifica com um adulto numa semente real!"],
+ win:"Queres plantar uma e selar o momento com uma foto? (é assim que a Girafinha prova o que plantou)"},
+"tema_ceu":{kw:["azul","ceu","céu","sol","cor do céu"],
+ fact:"A luz do sol parece branca mas tem muitas cores. No ar, o azul espalha-se para todo o lado — por isso vemos o céu azul.",
+ passos:[
+  "O que vês quando o Sol está muito alto: sombras compridas ou curtas?",
+  "Se a luz do sol fosse só uma cor, que cor verias à tua volta?",
+  "O azul espalha-se mais que as outras cores no ar. No fim do dia o Sol baixo atravessa mais ar — vermelho e laranja. Olha ao pôr do sol!"],
+ win:"Amanhã, ao fim da tarde, olha para o céu e confere."},
+"tema_padroes":{kw:["números","numeros","sequência","sequencia","padrão","padrao","2, 4","contas","soma"],
+ fact:"Um padrão é uma regra que se repete. Se a regra é +2: 2, 4, 6, 8…",
+ passos:[
+  "Tenta tu: 3, 6, 9, … qual é o próximo?",
+  "E se a regra fosse +5? 5, 10, 15, …?",
+  "Agora inventa tu um padrão e desafia-me!"],
+ win:"Inventar padrões é o que os engenheiros fazem todos os dias."},
+"tema_agua":{kw:["água","agua","vapor","chuva","evaporar"],
+ fact:"A água anda num ciclo: o Sol aquece a água, ela sobe como vapor, arrefece, faz nuvens e cai de novo como chuva.",
+ passos:[
+  "O que acontece à roupa húmida estendida ao Sol?",
+  "Para onde foi essa água? Sumiu mesmo?",
+  "Ela subiu como vapor e volta como chuva. Vê se encontras um lugar na tua rua onde a água evapora ao Sol."],
+ win:"Desenha o ciclo da água e mostra a um adulto."},
+"tema_verdade":{kw:["girafinha","zebra","história","historia","porque devo","verdade"],
+ fact:"A Girafinha nunca acredita só porque sim: confere. A Zebra diz «mostra lá a prova!».",
+ passos:[
+  "Se alguém te dissesse que as zebras são azuis, o que fazias?",
+  "E se mostrasse uma fotografia? Bastava acreditar?",
+  "Confere: contas as listas, lê duas fontes, experimenta. Verificar é um superpoder."],
+ win:"A regra da casa: OK ou VETO — só aceitas o que conseguires provar."}
+};
+const nomes = {tema_sementes:"Plantas", tema_ceu:"Céu", tema_padroes:"Números", tema_agua:"Água", tema_verdade:"Histórias"};
+const el = id => document.getElementById(id);
+let tema = null;
+let passo = 0;
+function escolherTema(chave) {
+  if (!el("socorro").hidden) return;
+  tema = PACK[chave];
+  passo = 0;
+  el("chat").textContent = tema.passos[0];
+  el("seguinte").hidden = false;
+}
+for (const [chave,nome] of Object.entries(nomes)) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.textContent = nome;
+  b.addEventListener("click", () => escolherTema(chave));
+  el("temas").appendChild(b);
+}
+el("seguinte").addEventListener("click", () => {
+  if (!tema || !el("socorro").hidden) return;
+  passo++;
+  if (passo < tema.passos.length) {
+    el("chat").textContent = tema.passos[passo];
+  } else {
+    el("chat").textContent = tema.fact + " " + tema.win;
+    tema = null;
+    el("seguinte").hidden = true;
+  }
+});
+el("ajuda").addEventListener("click", () => {
+  tema = null;
+  el("chat").textContent = "";
+  el("seguinte").hidden = true;
+  el("aula").hidden = true;
+  el("socorro").hidden = false;
+  el("ajuda").setAttribute("aria-expanded","true");
+  el("titulo-ajuda").focus();
+});
+el("voltar").addEventListener("click", () => {
+  el("socorro").hidden = true;
+  el("aula").hidden = false;
+  el("ajuda").setAttribute("aria-expanded","false");
+  el("temas").querySelector("button").focus();
+});
+function sha256(str){
+var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+function rr(x,n){return (x>>>n)|(x<<(32-n));}
+var b=[];
+for(var i=0;i<str.length;i++){var c=str.charCodeAt(i);
+if(c<128)b.push(c);
+else if(c<2048)b.push(0xc0|c>>6,0x80|c&63);
+else if(c<0xd800||c>0xdfff)b.push(0xe0|c>>12,0x80|c>>6&63,0x80|c&63);
+else{i++;c=0x10000+((c&0x3ff)<<10|(str.charCodeAt(i)&0x3ff));b.push(0xf0|c>>18,0x80|c>>12&63,0x80|c>>6&63,0x80|c&63);}}
+var bitLen=b.length*8;b.push(0x80);
+while(b.length%64!==56)b.push(0);
+var hi=Math.floor(bitLen/0x100000000),lo=bitLen>>>0;
+for(var i=7;i>=0;i--)b.push(i>=4?(hi>>>(i-4)*8)&255:(lo>>>i*8)&255);
+var h=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+for(var off=0;off<b.length;off+=64){
+var w=new Array(64);
+for(var t=0;t<16;t++)w[t]=(b[off+t*4]<<24)|(b[off+t*4+1]<<16)|(b[off+t*4+2]<<8)|b[off+t*4+3];
+for(var t=16;t<64;t++){var x=w[t-15],y=w[t-2];var s0=(rr(x,7)^rr(x,18)^(x>>>3))|0,s1=(rr(y,17)^rr(y,19)^(y>>>10))|0;w[t]=(w[t-16]+s0+w[t-7]+s1)|0;}
+var a=h[0],bb=h[1],cc=h[2],d=h[3],e=h[4],f=h[5],g=h[6],hh=h[7];
+for(var t=0;t<64;t++){
+var S1=(rr(e,6)^rr(e,11)^rr(e,25))|0,ch=((e&f)^(~e&g))|0,t1=(hh+S1+ch+K[t]+w[t])|0;
+var S0=(rr(a,2)^rr(a,13)^rr(a,22))|0,mj=((a&bb)^(a&cc)^(bb&cc))|0,t2=(S0+mj)|0;
+hh=g;g=f;f=e;e=(d+t1)|0;d=cc;cc=bb;bb=a;a=(t1+t2)|0;}
+h[0]=(h[0]+a)|0;h[1]=(h[1]+bb)|0;h[2]=(h[2]+cc)|0;h[3]=(h[3]+d)|0;h[4]=(h[4]+e)|0;h[5]=(h[5]+f)|0;h[6]=(h[6]+g)|0;h[7]=(h[7]+hh)|0;}
+var res="";
+for(var i=0;i<8;i++){var v=h[i];for(var j=3;j>=0;j--){var byte=(v>>>(j*8))&255;res+=byte<16?"0"+byte.toString(16):byte.toString(16);}}
+return res;}
+document.getElementById("selo").textContent = sha256(JSON.stringify(PACK));
+</script>
+</body>
+</html>

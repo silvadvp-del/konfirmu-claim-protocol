@@ -162,7 +162,73 @@ function bolha(quem,texto,ver,seloTxt,n){const d=document.createElement('div');d
  if(seloTxt){const s=document.createElement('span');s.className='selo';s.textContent='sha256 '+seloTxt.slice(0,16)+'… · n.º '+(n||cadeia.length);d.appendChild(s)}
  $('conversa').appendChild(d);$('conversa').scrollTop=$('conversa').scrollHeight}
 let ia=null;
-async function responder(q){const g=portao(q);let a,ver;
+// The browser's language and time zone are preferences, not proof of physical location.
+function contextoLocal(preferencias) {
+  for (const tag of preferencias) {
+    try {
+      const local = new Intl.Locale(tag);
+      if (saudacoes[local.language]) {
+        return { lingua: local.language, regiaoPreferida: local.region || null,
+          fuso: Intl.DateTimeFormat().resolvedOptions().timeZone || null };
+      }
+    } catch (_) { /* Try the next configured language. */ }
+  }
+  return { lingua: 'en', regiaoPreferida: null, fuso: null };
+}
+const saudacoes = {
+  pt:'Olá! Em que te posso ajudar hoje?', en:'Hello! How can I help you today?',
+  fr:'Bonjour ! Comment puis-je vous aider aujourd’hui ?', de:'Hallo! Wie kann ich dir heute helfen?',
+  es:'¡Hola! ¿En qué puedo ayudarte hoy?', nl:'Hallo! Waarmee kan ik je vandaag helpen?',
+  it:'Ciao! Come posso aiutarti oggi?', ar:'مرحبًا! كيف يمكنني مساعدتك اليوم؟',
+  hi:'नमस्ते! आज मैं आपकी क्या मदद कर सकता हूँ?', uk:'Вітаю! Як я можу вам сьогодні допомогти?',
+  pl:'Cześć! Jak mogę dziś pomóc?', sv:'Hej! Hur kan jag hjälpa dig i dag?',
+  da:'Hej! Hvad kan jeg hjælpe dig med i dag?', no:'Hei! Hva kan jeg hjelpe deg med i dag?',
+  nb:'Hei! Hva kan jeg hjelpe deg med i dag?', fi:'Hei! Miten voin auttaa tänään?',
+  el:'Γεια σου! Πώς μπορώ να σε βοηθήσω σήμερα;', ro:'Bună! Cu ce te pot ajuta astăzi?',
+  cs:'Ahoj! Jak ti dnes můžu pomoct?', sk:'Ahoj! Ako ti dnes môžem pomôcť?',
+  hu:'Szia! Miben segíthetek ma?', hr:'Bok! Kako ti danas mogu pomoći?',
+  sr:'Здраво! Како могу да помогнем данас?', sl:'Živjo! Kako ti lahko danes pomagam?',
+  bg:'Здравей! Как мога да ти помогна днес?', ru:'Здравствуйте! Чем я могу вам сегодня помочь?',
+  et:'Tere! Kuidas saan täna aidata?', lv:'Sveiki! Kā varu šodien palīdzēt?',
+  lt:'Sveiki! Kuo šiandien galiu padėti?', tr:'Merhaba! Bugün nasıl yardımcı olabilirim?',
+  mt:'Bonġu! Kif nista’ ngħinek illum?', ga:'Dia duit! Conas is féidir liom cabhrú leat inniu?',
+  cy:'Helo! Sut alla i dy helpu di heddiw?', is:'Halló! Hvernig get ég aðstoðað í dag?',
+  ca:'Hola! En què et puc ajudar avui?', gl:'Ola! En que che podo axudar hoxe?',
+  eu:'Kaixo! Zertan lagun diezazuket gaur?', eo:'Saluton! Kiel mi povas helpi vin hodiaŭ?',
+  ka:'გამარჯობა! რით შემიძლია დაგეხმაროთ დღეს?', hy:'Բարև։ Ինչո՞վ կարող եմ այսօր օգնել ձեզ։',
+  he:'שלום! איך אפשר לעזור היום?', fa:'سلام! امروز چطور می‌توانم کمک کنم؟',
+  ur:'سلام! آج میں آپ کی کیا مدد کر سکتا ہوں؟', bn:'নমস্কার! আজ আপনাকে কীভাবে সাহায্য করতে পারি?',
+  ta:'வணக்கம்! இன்று உங்களுக்கு எப்படி உதவலாம்?', te:'నమస్కారం! ఈ రోజు మీకు ఎలా సహాయం చేయగలను?',
+  ml:'നമസ്കാരം! ഇന്ന് എങ്ങനെ സഹായിക്കാം?', kn:'ನಮಸ್ಕಾರ! ಇಂದು ನಿಮಗೆ ಹೇಗೆ ಸಹಾಯ ಮಾಡಲಿ?',
+  mr:'नमस्कार! आज मी तुम्हाला कशी मदत करू?', gu:'નમસ્તે! આજે હું તમને કેવી રીતે મદદ કરી શકું?',
+  ne:'नमस्ते! आज म तपाईंलाई कसरी मद्दत गर्न सक्छु?', zh:'你好！今天有什么可以帮你的吗？',
+  ja:'こんにちは！今日はどんなお手伝いができますか？', ko:'안녕하세요! 오늘 무엇을 도와드릴까요?',
+  vi:'Xin chào! Hôm nay tôi có thể giúp gì cho bạn?', th:'สวัสดี! วันนี้ให้ช่วยอะไรดี',
+  id:'Halo! Ada yang bisa saya bantu hari ini?', ms:'Hai! Apa yang boleh saya bantu hari ini?',
+  sw:'Habari! Ninaweza kukusaidiaje leo?', af:'Hallo! Hoe kan ek jou vandag help?',
+  zu:'Sawubona! Ngingakusiza ngani namuhla?', fil:'Kumusta! Paano kita matutulungan ngayon?',
+  sq:'Përshëndetje! Si mund të të ndihmoj sot?', mk:'Здраво! Како можам да ти помогнам денес?',
+  az:'Salam! Bu gün sizə necə kömək edə bilərəm?'
+};
+const sinaisDePerigo = [
+ ['pt', /estou em perigo|ameaca.me|(?:adulto|desconhecido).{0,85}(?:ped|quer).{0,35}(?:fot|segredo)/u, 'Se estás em perigo imediato na União Europeia, liga 112. Fora da UE, liga para o número de emergência local. Se alguém te pede fotografias ou segredo, podes falar com um adulto em quem confies.'],
+ ['en', /i am in danger|i.m in danger|(?:adult|stranger).{0,85}(?:ask|want).{0,35}(?:photo|picture|secret)/u, 'If you are in immediate danger in the EU, call 112. Elsewhere, call your local emergency number. If someone asks you for photos or secrecy, you can tell an adult you trust.'],
+ ['fr', /je suis en danger|(?:adulte|inconnu).{0,85}(?:demand|veut).{0,35}(?:photo|secret)/u, 'En cas de danger immédiat dans l’UE, appelle le 112. Ailleurs, appelle les secours locaux. Si quelqu’un te demande des photos ou de garder un secret, tu peux en parler à un adulte de confiance.'],
+ ['es', /estoy en peligro|(?:adulto|desconocido).{0,85}(?:pid|quier).{0,35}(?:fot|secreto)/u, 'Si estás en peligro inmediato en la UE, llama al 112. En otros lugares, llama al número local de emergencias. Si alguien te pide fotos o que guardes un secreto, puedes contárselo a un adulto de confianza.'],
+ ['de', /ich bin in gefahr|(?:erwachsener|fremder).{0,85}(?:foto|bild|geheim)/u, 'Bei unmittelbarer Gefahr in der EU ruf 112 an. Anderswo gilt der örtliche Notruf. Wenn jemand Fotos oder Geheimhaltung verlangt, kannst du mit einem Erwachsenen sprechen, dem du vertraust.'],
+ ['nl', /ik ben in gevaar|(?:volwassene|vreemde).{0,85}(?:foto|geheim)/u, 'Bel bij direct gevaar in de EU 112. Bel elders het lokale alarmnummer. Als iemand om foto’s of geheimhouding vraagt, kun je dit aan een volwassene vertellen die je vertrouwt.'],
+ ['it', /sono in pericolo|(?:adulto|sconosciuto).{0,85}(?:chied|vuole).{0,35}(?:foto|segreto)/u, 'Se sei in pericolo immediato nell’UE, chiama il 112. Altrove chiama il numero di emergenza locale. Se qualcuno ti chiede foto o di mantenere un segreto, puoi parlarne con un adulto di fiducia.']
+];
+function ajudaImediata(texto) {
+  const normal = texto.toLowerCase().normalize('NFD').replace(/\p{M}/gu,'').replace(/\s+/gu,' ');
+  return sinaisDePerigo.find(([,expressao]) => expressao.test(normal))?.[2];
+}
+
+const contexto = contextoLocal(navigator.languages || [navigator.language]);
+async function responder(q){
+ const ajuda = ajudaImediata(q);
+ if (ajuda) return {a:ajuda, ver:null, hash:null};
+ const g=portao(q);let a,ver;
  if(g){ver=g.ver;a=(g.regra==='nitrato'?t('nit')(g):t('fri')(g))+(ver==='NS'?'\n'+t('nsPorque'):'')+'\n'+t('naoGarante')}
  else if(ia){ver='IA';try{const o=await ia([{role:'system',content:'Answer briefly and plainly, in the language of the user. You never give numbers, limits, doses or deadlines: say that those must come from a written rule.'},{role:'user',content:q}],{max_new_tokens:160});a=o[0].generated_text.at(-1).content}catch(_){ver='NS';a=t('iaFalhou')}}
  else{ver='NS';a=t('semRegra')}
@@ -227,8 +293,8 @@ async function somOuvir(){let st;try{st=await navigator.mediaDevices.getUserMedi
   const m=somLer(s,ctx.sampleRate);if(m!=null)parar(m);else if(Date.now()-t0>30000)parar(null);else setTimeout(ver,2500)};setTimeout(ver,2500)}
 let apgArmado=0;
 async function apagar(){if(Date.now()>apgArmado){apgArmado=Date.now()+4000;$('cApg').textContent=t('apgMesmo');setTimeout(()=>{$('cApg').textContent=t('apg')},4000);return}
- apgArmado=0;await bdOp('readwrite',s=>s.clear());cadeia=[];ponta=ZERO;$('conversa').textContent='';$('cApg').textContent=t('apg');bolha('casa',t('ola'));bolha('casa',t('apagado'))}
-async function arrancar(){pintar();bolha('casa',t('ola'));bd=await abrirBD();if(!bd){bolha('casa',t('semGuardar'));return}
+ apgArmado=0;await bdOp('readwrite',s=>s.clear());cadeia=[];ponta=ZERO;$('conversa').textContent='';$('cApg').textContent=t('apg');bolha('casa',saudacoes[contexto.lingua]);bolha('casa',t('apagado'))}
+async function arrancar(){pintar();bolha('casa',saudacoes[contexto.lingua]);bd=await abrirBD();if(!bd){bolha('casa',t('semGuardar'));return}
  const rs=await bdOp('readonly',s=>s.getAll())||[];if(!rs.length)return;
  const r=await conferirCadeia({schema:'KONFIRMU-CHAT/1',n:rs.length,ponta:rs[rs.length-1].hash,registos:rs});
  if(!r.ok){bd=null;bolha('casa',t('guardadoMau'),'VETO');return}
