@@ -66,3 +66,13 @@
 2 200 /pt/konfirmu
 1 200 /nl/konfirmu
 2 200 /nl/konfirmu
+1 200 /assets/marcas/konfirmu.svg
+2 200 /assets/marcas/konfirmu.svg
+1 200 /assets/holo/scene-bg.svg
+2 200 /assets/holo/scene-bg.svg
+1 200 /assets/holo/scene-card.svg
+2 200 /assets/holo/scene-card.svg
+1 200 /assets/holo/scene-front.svg
+2 200 /assets/holo/scene-front.svg
+1 200 /assets/holo/scene-grid.svg
+2 200 /assets/holo/scene-grid.svg

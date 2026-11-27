@@ -1,0 +1,11 @@
+HTTP/2 200 
+date: Fri, 27 Nov 2026 14:23:13 GMT
+content-type: image/svg+xml
+content-length: 9745
+cf-cache-status: HIT
+cache-control: public, max-age=0, must-revalidate
+etag: "cdc28cc9b60fe1a0f72b0bb061267e5a"
+set-cookie: __cf_bm=0e1Pj_t4xsSZR4mhdPrGA.8Uc3cpQCnNHcw1E36cHsQ-1795789393.0937276-1.0.1.1-hEPqgdDLvFuC.xxTcoE8Hs.DW6f0yoFEaqweIv2ftlmiYwnmBcYAsWWfbm6rBJy0M3rFdphVfmF0_L1qprLy6Hb5BAeQibGRbOW34wKwZiHgJ7baGuF6Iwel5T7.ALlr; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=dpsindustrial.nl; Expires=Fri, 27 Nov 2026 14:53:13 GMT
+server: cloudflare
+cf-ray: a611ca1adf7afb73-SEA
+

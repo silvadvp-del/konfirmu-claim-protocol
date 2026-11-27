@@ -1,11 +1,11 @@
 HTTP/2 200 
-date: Fri, 27 Nov 2026 14:21:48 GMT
+date: Fri, 27 Nov 2026 14:23:09 GMT
 content-type: text/css
 content-length: 8609
 cf-cache-status: HIT
 cache-control: public, max-age=0, must-revalidate
 etag: "cae990bec0cda9b1a8cba9497b90e30a"
-set-cookie: __cf_bm=vwovbcJAeZakZemiHaZBbrqyg8IYvtHRxrY9uDAvVKc-1795789308.0809715-1.0.1.1-mK5sGFeZDsjgC5ZnE9WiMuArDOMqd36Q9OBrntMyWcIjv9taBelHqszfnk6CSEB5_reQ6defzEQ4lP5pukmsyvC0mLo0_B6w685tl2GLVMGEOmUSo4rcPJu00Vp4tUE8; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=dpsindustrial.nl; Expires=Fri, 27 Nov 2026 14:51:48 GMT
+set-cookie: __cf_bm=POSn0A4XDTYPHobjxuurHe28pP32FrsTR0or0GQrvZo-1795789389.8368742-1.0.1.1-47YAuoto3uORlY0dQ4iaT1321x0WgOdKaikKivOGjEj_6zpu46Eu8MFhHTAyMS_M6PR_H__z.HTmXAYPppuugjb4_5mMK0YnnWWrADqwEXOuDpM0shUJwbN9SBAPu5Fu; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=dpsindustrial.nl; Expires=Fri, 27 Nov 2026 14:53:09 GMT
 server: cloudflare
-cf-ray: a611c8077ecdf42e-DFW
+cf-ray: a611ca067c483a10-SEA
 

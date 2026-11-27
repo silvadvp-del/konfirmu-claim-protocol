@@ -1,11 +1,11 @@
 HTTP/2 200 
-date: Fri, 27 Nov 2026 14:21:47 GMT
+date: Fri, 27 Nov 2026 14:23:09 GMT
 content-type: text/xml
 content-length: 5535
 cf-cache-status: HIT
 cache-control: public, max-age=0, must-revalidate
 etag: "a909cf8f17addf587e7ec49f18ca2754"
-set-cookie: __cf_bm=FeViS.E7jByyHcSf04aI7zrCEKyP0EthN8SV43O2i9U-1795789307.847087-1.0.1.1-We5bAV71EHW556GM__tu1zQNrro_Q6Wkb4EmLIAYXlvMXTih7yVM9Wz3PKR1Z6WOBCsLuCX3LjgfURF7iY2WPruVwF6AnbySeGo9iOWlXR9ECvJS1LujqufoZXcfys9Q; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=dpsindustrial.nl; Expires=Fri, 27 Nov 2026 14:51:47 GMT
+set-cookie: __cf_bm=WZLj2plfh2qzytpqr7QXcy.VU4En1P5Y1FB4F9nlUCc-1795789389.6463346-1.0.1.1-_GRjJ7pyAn_qaDzhYnnObt4jurc1Z_S4WHXBqsmNod1agwWFgKhSv5WGHY74rzpcd5KPvVih8EEOnMCBiO_jOQMT4hOtuP2v_9yG0N2loQSHz549C0TOYqM77yEc2Mqh; HttpOnly; SameSite=None; Partitioned; Secure; Path=/; Domain=dpsindustrial.nl; Expires=Fri, 27 Nov 2026 14:53:09 GMT
 server: cloudflare
-cf-ray: a611c8060bc1fa6c-DFW
+cf-ray: a611ca054e83def7-SEA
 
