@@ -32,3 +32,8 @@
 /assets/dps-h3-license.txt
 /pt/konfirmu
 /nl/konfirmu
+/assets/marcas/konfirmu.svg
+/assets/holo/scene-bg.svg
+/assets/holo/scene-card.svg
+/assets/holo/scene-front.svg
+/assets/holo/scene-grid.svg
