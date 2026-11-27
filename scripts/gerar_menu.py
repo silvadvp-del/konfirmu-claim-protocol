@@ -17,7 +17,7 @@ Paleta única (ordem de 27-11, 12:49): Azul Abissal #0B192C, vidro rgba(15,34,61
 #FF9E7D/#F7B397, Branco Titânio #F4F7FA, Cinza Nevoeiro #9FB3C8; dourado suave só na luz (pedido de 13:24).
 Sem verde, violeta, amarelo berrante nem fundo claro; o 112 não aparece no menu (regra de 31-10).
 Contraste AAA: o céu tem um teto de luz (no cabeçalho, para texto titânio; no resto, para o nevoeiro em vidro)
-e apaga-se quando se desce na página.
+e apaga-se quando se desce na página. As faíscas apagam-se atrás das letras (escudo de texto, decisão de 27-11, 15:41).
 Ganchos que não se podem partir: a.card > .ico + b + .d, um h1, nenhum <summary> próprio,
 ids «aviao»/«aviaoEstado» e «id», role tablist/tab/tabpanel, e nenhum pedido para fora do aparelho.
 Marca: os contornos da Nunito Black 900 (SIL OFL 1.1) feitos na KON-615 (ramo
@@ -409,7 +409,7 @@ JS_VIVO = r"""
   ' vec3 li=pow(max(c,vec3(0.)),vec3(2.2));',
   ' float L=max(dot(li,vec3(.2126,.7152,.0722)),1e-5);',
   ' float cap=mix(uL.y,uL.x,smoothstep(uZ.y-.02,uZ.y+.01,v.y));',
-  ' cap=mix(cap,uL.z,smoothstep(uZ.x-.01,uZ.x+.03,v.y));',
+  ' cap=mix(cap,uL.z,smoothstep(uZ.x+.005,uZ.x+.04,v.y));',
   ' li*=cap*(1.-exp(-L/cap))/L;',
   ' c=pow(li,vec3(1./2.2));',
   ' vec2 q=v-.5;',
@@ -473,7 +473,24 @@ JS_VIVO = r"""
  }
 
  /* ---- o pó de luz: partículas quentes em 2D ---- */
- var ctx=null,P=[],spr=[],bloom=null;
+ var ctx=null,P=[],spr=[];
+ /* ---- escudo de texto (decisão do David, 27-11, 15:41): as faíscas apagam-se atrás das letras ---- */
+ var ESCUDO='h1.marca,.saudacao,.intro,.acoes,.topo>small,.im3d-viewer,.aviao-estado,.procura,.sem-resultados,.porta-nome,.portal h2,.portal .sub,.conta,.card b,.card .d,.avisos h2,.avisos dt,.avisos dd,.rodape p';
+ var escudos=[],tEscudo=-1;
+ function medirEscudos(){
+  var y0=W.scrollY||W.pageYOffset||0,l=[];
+  [].forEach.call(D.querySelectorAll(ESCUDO),function(el){var r=el.getBoundingClientRect();if(r.width&&r.height)l.push(r.left-8,r.top+y0-8,r.right+8,r.bottom+y0+8)});
+  escudos=l;
+ }
+ function livre(x,y,s){
+  var yy=y+sy,m=s+14,f=1;
+  for(var i=0;i<escudos.length;i+=4){
+   var dx=Math.max(escudos[i]-x,0,x-escudos[i+2]);if(dx>m)continue;
+   var dy=Math.max(escudos[i+1]-yy,0,yy-escudos[i+3]);if(dy>m)continue;
+   var d=Math.sqrt(dx*dx+dy*dy)-s;if(d<=0)return 0;if(d<14&&d/14<f)f=d/14;
+  }
+  return f;
+ }
  function sprite(cor,n){var c=D.createElement('canvas');c.width=c.height=n;var g=c.getContext('2d'),m=n/2,gr=g.createRadialGradient(m,m,0,m,m,m);
   gr.addColorStop(0,'rgba('+cor+',1)');gr.addColorStop(.16,'rgba('+cor+',.8)');gr.addColorStop(.42,'rgba('+cor+',.16)');gr.addColorStop(1,'rgba('+cor+',0)');
   g.fillStyle=gr;g.fillRect(0,0,n,n);return c}
@@ -493,10 +510,10 @@ JS_VIVO = r"""
     if(d2<perto&&d2>1){var dd=Math.sqrt(d2),k=(1-dd/150)*900*dt;q.ix+=dx/dd*k;q.iy+=dy/dd*k}}
    if(q.y<-40){q.y=alt+40;q.x=Math.random()*larg}else if(q.y>alt+60)q.y=-30;
    if(q.x<-40)q.x+=larg+80;else if(q.x>larg+40)q.x-=larg+80;
-   g.globalAlpha=q.a*(.5+.5*(.7*r+.3*(.5+.5*Math.sin(t*.8+q.f))));
-   var s=q.s;g.drawImage(spr[q.c],q.x+px*q.z-s,q.y+py*q.z-s,s*2,s*2);
+   var s=q.s,xd=q.x+px*q.z,yd=q.y+py*q.z,fa=livre(xd,yd,s);if(!fa)continue;
+   g.globalAlpha=q.a*(.5+.5*(.7*r+.3*(.5+.5*Math.sin(t*.8+q.f))))*fa;
+   g.drawImage(spr[q.c],xd-s,yd-s,s*2,s*2);
   }
-  if(luz.f>.02){g.globalAlpha=luz.f*.36;g.drawImage(bloom,luz.px-150,luz.py-150,300,300)}
   g.globalAlpha=1;g.globalCompositeOperation='source-over';
  }
  function explodir(cx,cy){
@@ -537,6 +554,7 @@ JS_VIVO = r"""
    if(brilhos[i])brilhos[i].style.transform='translate3d('+(tilt.x*26).toFixed(1)+'%,'+(tilt.y*18).toFixed(1)+'%,0)';
   }
   if(t-ultCeu>=passoCeu-.004){ultCeu=t;desenharCeu(t-T0,resp)}
+  if(t-tEscudo>.4){tEscudo=t;medirEscudos()}
   moverDesenhar(dt,t,resp);
   medir(dt);
  }
@@ -551,7 +569,7 @@ JS_VIVO = r"""
  function arrancar(){if(!raf&&!calmo){ultimo=0;raf=W.requestAnimationFrame(quadro)}}
  function parar(){if(raf)W.cancelAnimationFrame(raf);raf=0}
  var pedido=0;
- function parado(){if(pedido)return;pedido=W.requestAnimationFrame(function(){pedido=0;escuro=alvoEscuro;desenharCeu(8,.5);moverDesenhar(0,8,.5)})}
+ function parado(){if(pedido)return;pedido=W.requestAnimationFrame(function(){pedido=0;escuro=alvoEscuro;desenharCeu(8,.5);medirEscudos();moverDesenhar(0,8,.5)})}
 
  /* ---- dedo, rato, inclinação, deslizar ---- */
  function posDedo(e){dedo.px=e.clientX;dedo.py=e.clientY;dedo.x=limite(e.clientX/larg*2-1,-1,1);dedo.y=limite(e.clientY/alt*2-1,-1,1)}
@@ -624,9 +642,9 @@ JS_VIVO = r"""
  /* ---- arranque ---- */
  try{
   ctx=po.getContext('2d');
-  spr=[sprite(PESSEGO,64),sprite(OURO,64),sprite(TITANIO,64)];bloom=sprite(PESSEGO,256);
+  spr=[sprite(PESSEGO,64),sprite(OURO,64),sprite(TITANIO,64)];
   if(!ligarGL())ligar2D();
-  medidas(true);medirZonas();
+  medidas(true);medirZonas();medirEscudos();
   if(W.ResizeObserver){try{new ResizeObserver(function(){medirZonas();if(calmo)parado()}).observe(D.querySelector('.topo'))}catch(e){}}
   W.addEventListener('load',medirZonas);
   var s0=limite((W.scrollY||0)/240,0,1);alvoEscuro=escuro=s0*s0*(3-2*s0);
