@@ -18,3 +18,17 @@
 /konfirmu/.htaccess
 /konfirmu/robots.txt
 /sitemap.xml
+/assets/konfirmu-coming-soon/page.css?v=20261027
+/assets/konfirmu-coming-soon/konfirmu-k3d.svg
+/assets/holo/landing.css
+/assets/holo/landing.js
+/assets/holo/holo-window.js
+/assets/dps-institucional/institucional.css
+/assets/dps-institucional/engine.js
+/assets/dps-institucional/konfirmu.js
+/assets/dialect-router.js
+/assets/dps-prism.js
+/assets/dps-home.css
+/assets/dps-h3-license.txt
+/pt/konfirmu
+/nl/konfirmu

@@ -15,7 +15,7 @@ jobs:
           mkdir -p copia/1 copia/2
           while read -r p; do
             [ -z "$p" ] && continue
-            n=$(printf '%s' "$p" | sed 's#[/.]#_#g')
+            n=$(printf "%s" "$p" | sed "s#[/.?=]#_#g")
             for v in 1 2; do
               code=$(curl -sS -m 40 -A "Konfirmu-copia-KON-613" -o "copia/$v/$n" -D "copia/$v/$n.cabecalhos" -w '%{http_code}' "https://dpsindustrial.nl$p" || echo 000)
               echo "$v $code $p" >> copia/ESTADOS.txt
