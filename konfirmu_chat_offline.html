@@ -3,13 +3,13 @@
      Um só ficheiro. Sem servidor. Sem bibliotecas. Abre a partir do WhatsApp num Android.
      Finalidade: ensino e investigação. Não serve para decisões sobre pessoas. -->
 <html lang="pt-PT">
-<head>
+<head><!-- Ícones: Lucide (ISC), ver assets/LICENCA-ICONES-LUCIDE.txt --><meta name="konfirmu-paleta" content="unica-2026-11-27">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#14181f">
+<meta name="theme-color" content="#0B192C">
 <title>Konfirmu · Chat de bolso</title>
-<style>
-:root{--fundo:#14181f;--painel:#1c222c;--linha:#2f3947;--texto:#f1efe9;--fraco:#a9b0bb;--pessego:#f7b397;--ambar:#e9b949;--cinza:#9aa3ad;--eu:#2b3a55}
+<style>:root{color-scheme:dark}input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]),select,textarea,button{color:#F4F7FA;background-color:rgba(15,34,61,.72)}input,select,textarea,button{border-color:rgba(159,179,200,.24)}::placeholder{color:#9FB3C8;opacity:1}::file-selector-button{color:#F4F7FA;background:rgba(15,34,61,.72);border:1px solid #FF9E7D;border-radius:8px}input[type=range],input[type=checkbox],input[type=radio],progress{accent-color:#FF9E7D}option{background:#0B192C;color:#F4F7FA}
+:root{--fundo:#0B192C;--painel:#0B192C;--linha:rgba(159,179,200,.24);--texto:#F4F7FA;--fraco:#9FB3C8;--pessego:#FF9E7D;--ambar:#FF9E7D;--cinza:#9FB3C8;--eu:rgba(15,34,61,.72)}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--fundo);color:var(--texto);height:100dvh;display:flex;flex-direction:column}
 header{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--painel);border-bottom:1px solid var(--linha)}
@@ -21,14 +21,14 @@ select{background:var(--fundo);border:1px solid var(--linha);border-radius:8px;p
 .b{max-width:88%;padding:10px 13px;border-radius:14px;overflow-wrap:anywhere;white-space:pre-wrap}
 .b.eu{align-self:flex-end;background:var(--eu);border-bottom-right-radius:4px}
 .b.casa{align-self:flex-start;background:var(--painel);border:1px solid var(--linha);border-bottom-left-radius:4px}
-.v{display:inline-block;font-weight:700;border-radius:6px;padding:1px 8px;margin-bottom:4px;color:#14181f}
-.v.ok{background:var(--pessego)}.v.ns{background:var(--ambar)}.v.veto{background:var(--cinza)}.v.ia{background:#c9d2e3}
+.v{display:inline-block;font-weight:700;border-radius:6px;padding:1px 8px;margin-bottom:4px;color:#F4F7FA;border:1px solid #9FB3C8}
+.v.ok{color:#FF9E7D;border-color:#FF9E7D}.v.ns{color:#9FB3C8;border-style:dashed}.v.veto{color:#F4F7FA}.v.ia{color:#9FB3C8}
 .selo{display:block;font:.7rem ui-monospace,monospace;color:var(--fraco);margin-top:6px}
 #atalhos{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;background:var(--painel);border-top:1px solid var(--linha)}
 .c{white-space:nowrap;background:var(--fundo);border:1px solid var(--linha);border-radius:8px;padding:7px 11px;font-size:.85rem;cursor:pointer}
 #barra{display:flex;gap:8px;padding:10px 12px;background:var(--painel)}
 #p{flex:1;background:var(--fundo);border:1px solid var(--linha);border-radius:12px;padding:11px 13px}
-#enviar{background:var(--pessego);color:#14181f;border:0;border-radius:12px;padding:0 16px;font-weight:700;cursor:pointer}
+#enviar{background:rgba(255,158,125,.16);color:#F4F7FA;border:1px solid #FF9E7D;border-radius:12px;padding:0 16px;font-weight:700;cursor:pointer}
 #painelSelo{display:none;padding:10px 12px;background:var(--painel);border-top:1px solid var(--linha)}
 #painelSelo textarea{width:100%;min-height:64px;background:var(--fundo);border:1px solid var(--linha);border-radius:10px;padding:8px;margin:4px 0 8px}
 #painelSelo label{font-size:.82rem;color:var(--fraco)}
@@ -52,7 +52,7 @@ select{background:var(--fundo);border:1px solid var(--linha);border-radius:8px;p
  <input type="file" id="fImp" accept=".json,application/json" hidden><input type="file" id="fFoto" accept="image/*" hidden><input type="file" id="fPac" accept=".txt,text/plain" hidden>
 </div>
 <div id="barra"><input id="p" autocomplete="off"><button id="enviar"></button></div>
-<script>
+<script>var KI={"phone":"<svg class=\"ki\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" focusable=\"false\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384\"/></svg>"};
 'use strict';
 /* ---------- textos ---------- */
 const T={
@@ -197,7 +197,7 @@ async function selo(a,b){const ha=await sha256(limpar(a));if(!b||!limpar(b))retu
 function bolha(quem,texto,ver,seloTxt,n){const d=document.createElement('div');d.className='b '+quem;
  if(ver){const v=document.createElement('span');v.className='v '+({OK:'ok',VETO:'veto',NS:'ns',IA:'ia',SOS:'veto',CRI:'veto'})[ver];v.textContent=t(ver);d.appendChild(v);d.appendChild(document.createElement('br'))}
  d.appendChild(document.createTextNode(texto));
- if(ver==='SOS'||ver==='CRI'){d.appendChild(document.createElement('br'));for(const n of [...new Set(texto.match(/\b(?:116 111|119|114|112)\b/g)||[])]){const l=document.createElement('a');l.href='tel:'+n.replace(/ /g,'');l.textContent='📞 '+n;d.appendChild(l);d.appendChild(document.createTextNode('   '))}}
+ if(ver==='SOS'||ver==='CRI'){d.appendChild(document.createElement('br'));for(const n of [...new Set(texto.match(/\b(?:116 111|119|114|112)\b/g)||[])]){const l=document.createElement('a');l.href='tel:'+n.replace(/ /g,'');l.innerHTML=KI.phone+' ';l.appendChild(document.createTextNode(n));d.appendChild(l);d.appendChild(document.createTextNode('   '))}}
  if(seloTxt){const s=document.createElement('span');s.className='selo';s.textContent='sha256 '+seloTxt.slice(0,16)+'… · n.º '+(n||cadeia.length);d.appendChild(s)}
  $('conversa').appendChild(d);$('conversa').scrollTop=$('conversa').scrollHeight}
 let ia=null;

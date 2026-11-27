@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
+<head><!-- Ícones: Lucide (ISC), ver assets/LICENCA-ICONES-LUCIDE.txt --><meta name="konfirmu-paleta" content="unica-2026-11-27">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHRONOLEX — Ata & Prova Documental (offline)</title>
-<style>
-body{font-family:Georgia,"Times New Roman",serif;background:#f8fafc;color:#0f172a;margin:0;padding:24px 16px;display:flex;justify-content:center}
-.doc{width:100%;max-width:780px;background:#fff;border:1px solid #cbd5e1;border-radius:8px;padding:32px;box-shadow:0 10px 25px rgba(0,0,0,.05)}
-.header{border-bottom:2px solid #0f172a;padding-bottom:14px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap}
+<style>:root{color-scheme:dark}input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]),select,textarea,button{color:#F4F7FA;background-color:rgba(15,34,61,.72)}input,select,textarea,button{border-color:rgba(159,179,200,.24)}::placeholder{color:#9FB3C8;opacity:1}::file-selector-button{color:#F4F7FA;background:rgba(15,34,61,.72);border:1px solid #FF9E7D;border-radius:8px}input[type=range],input[type=checkbox],input[type=radio],progress{accent-color:#FF9E7D}option{background:#0B192C;color:#F4F7FA}
+body{font-family:Georgia,"Times New Roman",serif;background:#0B192C;color:#F4F7FA;margin:0;padding:24px 16px;display:flex;justify-content:center}
+.doc{width:100%;max-width:780px;background:rgba(15,34,61,.72);border:1px solid rgba(159,179,200,.24);border-radius:8px;padding:32px;box-shadow:0 10px 25px rgba(11,25,44,.05);color:#F4F7FA}
+.header{border-bottom:2px solid #9FB3C8;padding-bottom:14px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap}
 h1{font-size:1.4rem;margin:0;letter-spacing:.04em;text-transform:uppercase}
-.meta{font-family:system-ui,sans-serif;font-size:.8rem;color:#475569}
-input,textarea{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;font-family:system-ui,sans-serif;font-size:.95rem;margin-bottom:10px;box-sizing:border-box}
+.meta{font-family:system-ui,sans-serif;font-size:.8rem;color:#9FB3C8}
+input,textarea{width:100%;padding:10px;border:1px solid rgba(159,179,200,.24);border-radius:6px;font-family:system-ui,sans-serif;font-size:.95rem;margin-bottom:10px;box-sizing:border-box}
 button{font-family:system-ui,sans-serif;padding:10px 16px;border:none;border-radius:6px;font-weight:600;cursor:pointer}
-.btn-add{background:#0f172a;color:#fff}
-.btn-seal{background:#047857;color:#fff;width:100%;margin-top:16px;padding:14px;font-size:1rem}
-.entry{border-left:3px solid #0f172a;padding:8px 12px;margin:10px 0;background:#f1f5f9;font-family:system-ui,sans-serif;font-size:.9rem}
-.hash{font-family:monospace;font-size:.74rem;color:#64748b;word-break:break-all;margin-top:4px}
-.seal-box{margin-top:20px;padding:16px;border:2px solid #047857;background:#ecfdf5;border-radius:6px;display:none;font-family:system-ui,sans-serif}
-.sig-row{font-family:monospace;font-size:.74rem;color:#064e3b;word-break:break-all;margin-top:4px}
+.btn-add{background:#0B192C;color:#F4F7FA}
+.btn-seal{background:rgba(255,158,125,.16);color:#F4F7FA;width:100%;margin-top:16px;padding:14px;font-size:1rem;border:1px solid #FF9E7D}
+.entry{border-left:3px solid #9FB3C8;padding:8px 12px;margin:10px 0;background:rgba(15,34,61,.72);font-family:system-ui,sans-serif;font-size:.9rem;color:#F4F7FA}
+.hash{font-family:monospace;font-size:.74rem;color:#9FB3C8;word-break:break-all;margin-top:4px}
+.seal-box{margin-top:20px;padding:16px;border:2px solid #FF9E7D;background:rgba(15,34,61,.72);border-radius:6px;display:none;font-family:system-ui,sans-serif;color:#F4F7FA}
+.sig-row{font-family:monospace;font-size:.74rem;color:#FF9E7D;word-break:break-all;margin-top:4px}
 @media print{.no-print{display:none}.doc{box-shadow:none;border:none}}
-</style>
+.ki{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.18em;color:#FF9E7D;flex:none}</style>
 </head>
 <body>
 <div class="doc">
@@ -38,19 +38,19 @@ button{font-family:system-ui,sans-serif;padding:10px 16px;border:none;border-rad
     <button class="btn-add" onclick="addEntry()">+ Registar &amp; Encadear Ponto</button>
     <hr>
     <input id="sign-name" placeholder="Nome do participante que assina">
-    <button class="btn-add" onclick="assinar()">✍️ Assinar (gera chave Ed25519 no aparelho)</button>
+    <button class="btn-add" onclick="assinar()"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 21h8"/><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></svg> Assinar (gera chave Ed25519 no aparelho)</button>
   </div>
 
   <div id="timeline" style="margin-top:20px"></div>
 
-  <button class="btn-seal no-print" onclick="selar()">🔒 Encerrar &amp; Selar Ata Definitiva</button>
+  <button class="btn-seal no-print" onclick="selar()"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Encerrar &amp; Selar Ata Definitiva</button>
   <div id="final-seal" class="seal-box">
-    <strong style="color:#065f46">✔ DOCUMENTO SELADO E ENCADEADO</strong>
-    <div class="hash" id="final-hash" style="color:#064e3b"></div>
+    <strong style="color:#FF9E7D"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> DOCUMENTO SELADO E ENCADEADO</strong>
+    <div class="hash" id="final-hash" style="color:#FF9E7D"></div>
     <div id="final-sigs"></div>
-    <button class="no-print" style="margin-top:12px;background:#065f46;color:#fff" onclick="guardarJSON()">💾 Guardar JSON assinado</button>
-    <button class="no-print" style="margin-top:12px;background:#065f46;color:#fff" onclick="window.print()">🖨️ Imprimir / PDF</button>
-    <canvas id="qr" class="no-print" style="background:#fff;padding:6px;margin-top:12px"></canvas>
+    <button class="no-print" style="margin-top:12px;background:rgba(15,34,61,.72);color:#F4F7FA" onclick="guardarJSON()"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg> Guardar JSON assinado</button>
+    <button class="no-print" style="margin-top:12px;background:rgba(15,34,61,.72);color:#F4F7FA" onclick="window.print()"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg> Imprimir / PDF</button>
+    <canvas id="qr" class="no-print" style="background:rgba(15,34,61,.72);padding:6px;margin-top:12px"></canvas>
   </div>
 </div>
 <p class="meta" style="max-width:780px;margin:12px auto;font-size:.72rem">O que NÃO garante: a hora é a do relógio do aparelho; valor probatório eIDAS exige carimbo QUALIFICADO (ancoragem posterior via RFC 3161/OTS); SELADO ≠ VERDADEIRO — as assinaturas provam que os participantes selaram ESTES pontos, não que os factos são verdadeiros. Chaves nascem e ficam no aparelho. Verificação pública: chronolex_verify.html (este repo).</p>
@@ -167,7 +167,7 @@ function gerarQR(){
   var c = document.getElementById("qr");
   var qr = qrcode(0, "M"); qr.addData(payload, "Byte"); qr.make();
   var n = qr.getModuleCount(), s = 3; c.width = n*s; c.height = n*s;
-  var ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#000";
+  var ctx = c.getContext("2d"); ctx.fillStyle = "#F4F7FA"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#0B192C";
   for (var r=0;r<n;r++) for (var cc=0;cc<n;cc++) if (qr.isDark(r,cc)) ctx.fillRect(cc*s,r*s,s,s);
 }
 function guardarJSON(){

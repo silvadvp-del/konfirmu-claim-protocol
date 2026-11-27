@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
+<head><!-- Ícones: Lucide (ISC), ver assets/LICENCA-ICONES-LUCIDE.txt --><meta name="konfirmu-paleta" content="unica-2026-11-27">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Konfirmu — Carteira Soberana do Paciente (offline)</title>
-<style>
-body{font-family:system-ui,sans-serif;max-width:640px;margin:0 auto;padding:16px;background:#0d1117;color:#e6edf3}
-.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;margin:12px 0}
-input,select,textarea{width:100%;background:#0d1117;color:#e6edf3;border:1px solid #30363d;padding:6px;margin:4px 0}
-button{background:#238636;color:#fff;border:0;border-radius:6px;padding:8px 14px;margin:4px 2px;cursor:pointer}
+<style>:root{color-scheme:dark}input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]),select,textarea,button{color:#F4F7FA;background-color:rgba(15,34,61,.72)}input,select,textarea,button{border-color:rgba(159,179,200,.24)}::placeholder{color:#9FB3C8;opacity:1}::file-selector-button{color:#F4F7FA;background:rgba(15,34,61,.72);border:1px solid #FF9E7D;border-radius:8px}input[type=range],input[type=checkbox],input[type=radio],progress{accent-color:#FF9E7D}option{background:#0B192C;color:#F4F7FA}
+body{font-family:system-ui,sans-serif;max-width:640px;margin:0 auto;padding:16px;background:#0B192C;color:#F4F7FA}
+.card{background:#0B192C;border:1px solid rgba(159,179,200,.24);border-radius:8px;padding:14px;margin:12px 0}
+input,select,textarea{width:100%;background:#0B192C;color:#F4F7FA;border:1px solid rgba(159,179,200,.24);padding:6px;margin:4px 0}
+button{background:rgba(255,158,125,.16);color:#F4F7FA;border:1px solid #FF9E7D;border-radius:6px;padding:8px 14px;margin:4px 2px;cursor:pointer}
 pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
-.verde{color:#3fb950}.vermelho{color:#f85149}.aviso{font-size:.75em;color:#8b949e;margin-top:10px}
-.entry{border-left:3px solid #30363d;padding:6px 10px;margin:8px 0;font-size:.85em}
-</style>
+.verde{color:#FF9E7D}.vermelho{color:#F4F7FA}.aviso{font-size:.75em;color:#9FB3C8;margin-top:10px}
+.entry{border-left:3px solid rgba(159,179,200,.24);padding:6px 10px;margin:8px 0;font-size:.85em}
+.ki{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.18em;color:#FF9E7D;flex:none}</style>
 </head>
 <body>
-<h1>🩺 Carteira Soberana do Paciente</h1>
+<h1><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2v2"/><path d="M5 2v2"/><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/></svg> Carteira Soberana do Paciente</h1>
 <p>A tua história médica vive NO TEU APARELHO: cirurgias, alergias, antibióticos, vacinas. Cada evento é encadeado por hash e assinado pela tua chave (Ed25519, gerada aqui). Nada sai do telemóvel — só tu decides o que mostras.</p>
 
 <div class="card">
@@ -30,10 +30,10 @@ pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
 <div class="card">
 <b>2. Selar e assinar (a tua chave)</b><br>
 <input id="nome" placeholder="Nome do titular (identifica a carteira)">
-<button onclick="selar()">🔒 Selar carteira</button>
+<button onclick="selar()"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Selar carteira</button>
 <pre id="selo">—</pre>
-<canvas id="qr" style="background:#fff;padding:6px;display:none"></canvas><br>
-<button onclick="guardar()">💾 Guardar JSON</button> <button onclick="verificar()">Re-verificar</button>
+<canvas id="qr" style="background:rgba(15,34,61,.72);padding:6px;display:none"></canvas><br>
+<button onclick="guardar()"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg> Guardar JSON</button> <button onclick="verificar()">Re-verificar</button>
 <pre id="verif">—</pre>
 </div>
 
@@ -132,7 +132,7 @@ function selar(){
   var c = document.getElementById("qr"); c.style.display = "block";
   var qr = qrcode(0,"M"); qr.addData(payload,"Byte"); qr.make();
   var n = qr.getModuleCount(), s = 3; c.width = n*s; c.height = n*s;
-  var ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#000";
+  var ctx = c.getContext("2d"); ctx.fillStyle = "#F4F7FA"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#0B192C";
   for (var r=0;r<n;r++) for (var cc=0;cc<n;cc++) if (qr.isDark(r,cc)) ctx.fillRect(cc*s,r*s,s,s);
 }
 function guardar(){
@@ -148,7 +148,7 @@ function verificar(){
   var m = sha256Vault(JSON.stringify(eventos) + "|" + selado.nome + "|" + selado.seladoEm, false);
   var okM = m === selado.master;
   var okS = nacl.sign.detached.verify(nacl.util.decodeUTF8("KONFIRMU-VAULT|v1|" + selado.master), fromHex(selado.sig), fromHex(selado.pk));
-  document.getElementById("verif").textContent = "selo mestre: " + (okM ? "CONFERE" : "DIVERGE") + "\nassinatura: " + (okS ? "VÁLIDA" : "INVÁLIDA") + "\n" + (okM && okS ? "VERDE — carteira íntegra" : "VERMELHO — carteira adulterada");
+  document.getElementById("verif").textContent = "selo mestre: " + (okM ? "CONFERE" : "DIVERGE") + "\nassinatura: " + (okS ? "VÁLIDA" : "INVÁLIDA") + "\n" + (okM && okS ? "CONFERE — carteira íntegra" : "NÃO CONFERE — carteira adulterada"); document.getElementById("verif").style.color = (okM && okS) ? "#FF9E7D" : "#F4F7FA";
   document.getElementById("verif").className = okM && okS ? "verde" : "vermelho";
 }
 </script>

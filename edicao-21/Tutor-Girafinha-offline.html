@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
+<head><!-- Ícones: Lucide (ISC), ver assets/LICENCA-ICONES-LUCIDE.txt --><meta name="konfirmu-paleta" content="unica-2026-11-27">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tutor Girafinha v0 — Offline</title>
-<style>
-[hidden]{display:none!important} #temas{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0} #ajuda{background:#8b321e;margin:.5rem 0} #chat{margin:1rem 0}
-body{font-family:system-ui,sans-serif;background:#fef9e7;color:#333;max-width:640px;margin:0 auto;padding:16px}
+<style>:root{color-scheme:dark}input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]),select,textarea,button{color:#F4F7FA;background-color:rgba(15,34,61,.72)}input,select,textarea,button{border-color:rgba(159,179,200,.24)}::placeholder{color:#9FB3C8;opacity:1}::file-selector-button{color:#F4F7FA;background:rgba(15,34,61,.72);border:1px solid #FF9E7D;border-radius:8px}input[type=range],input[type=checkbox],input[type=radio],progress{accent-color:#FF9E7D}option{background:#0B192C;color:#F4F7FA}
+[hidden]{display:none!important} #temas{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0} #ajuda{background:rgba(15,34,61,.72);margin:.5rem 0} #chat{margin:1rem 0}
+body{font-family:system-ui,sans-serif;background:#0B192C;color:#F4F7FA;max-width:640px;margin:0 auto;padding:16px}
 h1{font-size:1.3rem} .msg{padding:10px 14px;border-radius:12px;margin:8px 0;line-height:1.5}
-.eu{background:#e8f4ea}.ela{background:#fdf0d5}
-input,button{font-size:1rem;padding:10px;border-radius:8px;border:1px solid #ccc}
-button{background:#2e7d32;color:#fff;border:none;cursor:pointer}
-#selo{font-family:monospace;font-size:.75rem;word-break:break-all;background:#eee;padding:8px;border-radius:6px}
-.aviso{background:#fdecea;border-left:4px solid #c0392b;padding:10px;font-size:.85rem}
-</style>
+.eu{background:rgba(15,34,61,.72);color:#F4F7FA}.ela{background:rgba(15,34,61,.72);color:#F4F7FA}
+input,button{font-size:1rem;padding:10px;border-radius:8px;border:1px solid rgba(159,179,200,.24)}
+button{background:rgba(255,158,125,.16);color:#F4F7FA;border:1px solid #FF9E7D;cursor:pointer}
+#selo{font-family:monospace;font-size:.75rem;word-break:break-all;background:rgba(15,34,61,.72);padding:8px;border-radius:6px;color:#F4F7FA}
+.aviso{background:rgba(15,34,61,.72);border-left:4px solid #9FB3C8;padding:10px;font-size:.85rem;color:#F4F7FA}
+.ki{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.18em;color:#FF9E7D;flex:none}</style>
 </head>
 <body>
-<h1>🦒 Tutor Girafinha <small>· atividades guiadas offline</small></h1>
+<h1><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.4 4.6V2.6M12.4 4.6V2.6"/><circle cx="9.4" cy="2.1" r=".5"/><circle cx="12.4" cy="2.1" r=".5"/><path d="M8.4 6.7c.5-1.3 1.8-2.1 3.3-2.1 1.9 0 3.7 1.1 4.8 2.5.5.7.2 1.6-.7 1.8l-3.1.6"/><path d="M8.4 6.7 6.8 6"/><path d="M8.6 7.8 7.8 21.5M12.6 9.6l.6 11.9"/><circle cx="10.4" cy="12.6" r=".9"/><circle cx="10.6" cy="17.2" r=".9"/></svg> Tutor Girafinha <small>· atividades guiadas offline</small></h1>
 <p>Escolhe um tema. Podes pensar na tua resposta ou conversar sobre ela com alguém que esteja contigo.</p>
 <noscript><p>Se estás em perigo agora, procura uma pessoa de confiança e chama o serviço de emergência local. Na União Europeia, liga 112. Este ficheiro não envia alertas.</p></noscript>
 <button id="ajuda" type="button" aria-controls="socorro" aria-expanded="false">Preciso de ajuda agora</button>

@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
+<head><!-- Ícones: Lucide (ISC), ver assets/LICENCA-ICONES-LUCIDE.txt --><meta name="konfirmu-paleta" content="unica-2026-11-27">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KONFIRMU — Estúdio Aberto de Arte & Música (offline)</title>
-<style>
-body{font-family:system-ui,sans-serif;max-width:680px;margin:0 auto;padding:16px;background:#0d1117;color:#e6edf3}
-.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;margin:12px 0}
-button{background:#238636;color:#fff;border:0;border-radius:6px;padding:8px 12px;margin:3px 2px;cursor:pointer}
-canvas{background:#fff;border-radius:6px;touch-action:none}
+<style>:root{color-scheme:dark}input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]),select,textarea,button{color:#F4F7FA;background-color:rgba(15,34,61,.72)}input,select,textarea,button{border-color:rgba(159,179,200,.24)}::placeholder{color:#9FB3C8;opacity:1}::file-selector-button{color:#F4F7FA;background:rgba(15,34,61,.72);border:1px solid #FF9E7D;border-radius:8px}input[type=range],input[type=checkbox],input[type=radio],progress{accent-color:#FF9E7D}option{background:#0B192C;color:#F4F7FA}
+body{font-family:system-ui,sans-serif;max-width:680px;margin:0 auto;padding:16px;background:#0B192C;color:#F4F7FA}
+.card{background:#0B192C;border:1px solid rgba(159,179,200,.24);border-radius:8px;padding:14px;margin:12px 0}
+button{background:rgba(255,158,125,.16);color:#F4F7FA;border:1px solid #FF9E7D;border-radius:6px;padding:8px 12px;margin:3px 2px;cursor:pointer}
+canvas{background:rgba(15,34,61,.72);border-radius:6px;touch-action:none;color:#F4F7FA}
 pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
-.aviso{font-size:.75em;color:#8b949e;margin-top:10px}
-.verde{color:#3fb950}.vermelho{color:#f85149}
-.notas button{background:#0f172a;width:44px;padding:10px 0}
-</style>
+.aviso{font-size:.75em;color:#9FB3C8;margin-top:10px}
+.verde{color:#FF9E7D}.vermelho{color:#F4F7FA}
+.notas button{background:#0B192C;width:44px;padding:10px 0}
+.ki{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.18em;color:#FF9E7D;flex:none}</style>
 </head>
 <body>
-<h1>🎨🎵 KONFIRMU — Estúdio Aberto de Arte & Música</h1>
+<h1><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></svg><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V3a1 1 0 0 0-1.28-.96l-10 2.917a1 1 0 0 0-.72.96V19"/><circle cx="18" cy="16" r="3"/><circle cx="6" cy="19" r="3"/></svg> KONFIRMU — Estúdio Aberto de Arte & Música</h1>
 <p>Cria, desenha, toca e sela a tua autoria — tudo offline, sem nuvem, sem taxas. A obra fica contigo; o selo prova quando e em que aparelho a selaste.</p>
 
 <div class="card notas">
 <b>1. Sintetizador (Web Audio, zero downloads)</b><br>
 <div id="teclas"></div>
 <select id="onda"><option value="sine">seno</option><option value="square">quadrada</option><option value="sawtooth">serra</option><option value="triangle">triângulo</option></select>
-<button onclick="escala()">▶ escala cultural (dó ré mi…)</button>
+<button onclick="escala()"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg> escala cultural (dó ré mi…)</button>
 </div>
 
 <div class="card">
 <b>2. Tela de desenho vetorial</b><br>
-<input type="color" id="cor" value="#3fb950"> <button onclick="limpar()">limpar</button><br>
+<input type="color" id="cor" value="#FF9E7D"> <button onclick="limpar()">limpar</button><br>
 <canvas id="tela" width="640" height="360"></canvas>
 </div>
 
@@ -36,10 +36,10 @@ pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
 <b>3. Selo de autoria (Chronolex)</b><br>
 <input id="artista" placeholder="Nome do autor / artista">
 <select id="licenca"><option value="CC BY 4.0">CC BY 4.0</option><option value="CC BY-SA 4.0">CC BY-SA 4.0</option><option value="EUPL-1.2">EUPL-1.2</option><option value="CC0">CC0 (domínio público)</option></select>
-<button onclick="selar()">🔒 Selar obra</button>
+<button onclick="selar()"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Selar obra</button>
 <pre id="selo">—</pre>
-<canvas id="qr" style="background:#fff;padding:6px"></canvas><br>
-<button onclick="guardar()">💾 Guardar obra + certificado (JSON)</button> <button onclick="verificar()">Re-verificar</button>
+<canvas id="qr" style="background:rgba(15,34,61,.72);padding:6px"></canvas><br>
+<button onclick="guardar()"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg> Guardar obra + certificado (JSON)</button> <button onclick="verificar()">Re-verificar</button>
 <pre id="verif">—</pre>
 </div>
 
@@ -169,7 +169,7 @@ function selar(){
   var c = document.getElementById("qr");
   var qr = qrcode(0,"M"); qr.addData(payload,"Byte"); qr.make();
   var n = qr.getModuleCount(), s = 3; c.width = n*s; c.height = n*s;
-  var ctx2 = c.getContext("2d"); ctx2.fillStyle = "#fff"; ctx2.fillRect(0,0,c.width,c.height); ctx2.fillStyle = "#000";
+  var ctx2 = c.getContext("2d"); ctx2.fillStyle = "#F4F7FA"; ctx2.fillRect(0,0,c.width,c.height); ctx2.fillStyle = "#0B192C";
   for (var r=0;r<n;r++) for (var cc=0;cc<n;cc++) if (qr.isDark(r,cc)) ctx2.fillRect(cc*s,r*s,s,s);
 }
 function verificar(){
@@ -178,7 +178,7 @@ function verificar(){
   var okH = sha256Studio(obra, false) === selo.hash;
   var alvo = "KONFIRMU-ART|v1|" + selo.hash + "|" + selo.nome + "|" + selo.ts;
   var okS = nacl.sign.detached.verify(nacl.util.decodeUTF8(alvo), fromHex(selo.sig), fromHex(selo.pk));
-  document.getElementById("verif").textContent = "hash: " + (okH ? "CONFERE" : "DIVERGE") + "\nassinatura: " + (okS ? "VÁLIDA" : "INVÁLIDA") + "\n" + (okH && okS ? "VERDE — obra íntegra" : "VERMELHO — adulterada");
+  document.getElementById("verif").textContent = "hash: " + (okH ? "CONFERE" : "DIVERGE") + "\nassinatura: " + (okS ? "VÁLIDA" : "INVÁLIDA") + "\n" + (okH && okS ? "CONFERE — obra íntegra" : "NÃO CONFERE — adulterada"); document.getElementById("verif").style.color = (okH && okS) ? "#FF9E7D" : "#F4F7FA";
   document.getElementById("verif").className = okH && okS ? "verde" : "vermelho";
 }
 function guardar(){

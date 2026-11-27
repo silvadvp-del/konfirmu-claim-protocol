@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
+<head><!-- Ícones: Lucide (ISC), ver assets/LICENCA-ICONES-LUCIDE.txt --><meta name="konfirmu-paleta" content="unica-2026-11-27">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KONFIRMU — Ligação Local WebRTC (sem nuvem, mesma rede)</title>
-<style>
-body{font-family:system-ui,sans-serif;max-width:680px;margin:0 auto;padding:16px;background:#0d1117;color:#e6edf3}
-.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;margin:12px 0}
-button{background:#238636;color:#fff;border:0;border-radius:6px;padding:8px 14px;margin:4px 2px;cursor:pointer}
-textarea{width:100%;background:#0d1117;color:#e6edf3;border:1px solid #30363d;padding:6px;font-size:.75em}
+<style>:root{color-scheme:dark}input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]),select,textarea,button{color:#F4F7FA;background-color:rgba(15,34,61,.72)}input,select,textarea,button{border-color:rgba(159,179,200,.24)}::placeholder{color:#9FB3C8;opacity:1}::file-selector-button{color:#F4F7FA;background:rgba(15,34,61,.72);border:1px solid #FF9E7D;border-radius:8px}input[type=range],input[type=checkbox],input[type=radio],progress{accent-color:#FF9E7D}option{background:#0B192C;color:#F4F7FA}
+body{font-family:system-ui,sans-serif;max-width:680px;margin:0 auto;padding:16px;background:#0B192C;color:#F4F7FA}
+.card{background:#0B192C;border:1px solid rgba(159,179,200,.24);border-radius:8px;padding:14px;margin:12px 0}
+button{background:rgba(255,158,125,.16);color:#F4F7FA;border:1px solid #FF9E7D;border-radius:6px;padding:8px 14px;margin:4px 2px;cursor:pointer}
+textarea{width:100%;background:#0B192C;color:#F4F7FA;border:1px solid rgba(159,179,200,.24);padding:6px;font-size:.75em}
 pre{white-space:pre-wrap;word-break:break-all;font-size:.8em}
-.verde{color:#3fb950}.vermelho{color:#f85149}.aviso{font-size:.75em;color:#8b949e;margin-top:10px}
-</style>
+.verde{color:#FF9E7D}.vermelho{color:#F4F7FA}.aviso{font-size:.75em;color:#9FB3C8;margin-top:10px}
+.ki{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.18em;color:#FF9E7D;flex:none}</style>
 </head>
 <body>
-<h1>📡 Ligação Local WebRTC — Konfirmu</h1>
+<h1><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.9 16.1C1 12.2 1 5.8 4.9 1.9"/><path d="M7.8 4.7a6.14 6.14 0 0 0-.8 7.5"/><circle cx="12" cy="9" r="2"/><path d="M16.2 4.8c2 2 2.26 5.11.8 7.47"/><path d="M19.1 1.9a9.96 9.96 0 0 1 0 14.1"/><path d="M9.5 18h5"/><path d="m8 22 4-11 4 11"/></svg> Ligação Local WebRTC — Konfirmu</h1>
 <p>Dois aparelhos na MESMA rede Wi-Fi (router local, internet pode estar desligada): um cria a oferta, o outro cola e responde; a mensagem assinada (Ed25519) viaja pelo túnel direto e ambos verificam.</p>
 
 <div class="card">

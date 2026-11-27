@@ -1,46 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
+<head><!-- Ícones: Lucide (ISC), ver assets/LICENCA-ICONES-LUCIDE.txt --><meta name="konfirmu-paleta" content="unica-2026-11-27">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌱 Régua do Planeta — a grande notícia das nossas IAs</title>
-<style>
-body{font-family:system-ui,sans-serif;max-width:680px;margin:0 auto;padding:16px;color:#eafbe9;overflow-x:hidden;
- background:radial-gradient(120% 80% at 50% -10%, #0b3d2e 0%, #071a12 45%, #050d09 100%)}
-.stars{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(1px 1px at 20% 30%, #fff, transparent),radial-gradient(1px 1px at 70% 20%, #fff, transparent),radial-gradient(1.5px 1.5px at 40% 70%, #ffd54f, transparent),radial-gradient(1px 1px at 85% 60%, #fff, transparent);background-size:500px 500px;animation:tw 4s ease-in-out infinite alternate;opacity:.7}
+<title>Régua do Planeta — a grande notícia das nossas IAs</title>
+<style>:root{color-scheme:dark}input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]),select,textarea,button{color:#F4F7FA;background-color:rgba(15,34,61,.72)}input,select,textarea,button{border-color:rgba(159,179,200,.24)}::placeholder{color:#9FB3C8;opacity:1}::file-selector-button{color:#F4F7FA;background:rgba(15,34,61,.72);border:1px solid #FF9E7D;border-radius:8px}input[type=range],input[type=checkbox],input[type=radio],progress{accent-color:#FF9E7D}option{background:#0B192C;color:#F4F7FA}
+body{font-family:system-ui,sans-serif;max-width:680px;margin:0 auto;padding:16px;color:#F4F7FA;overflow-x:hidden;
+ background:radial-gradient(120% 80% at 50% -10%, rgba(15,34,61,.72) 0%, #0B192C 45%, #0B192C 100%) #0B192C}
+.stars{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(1px 1px at 20% 30%, rgba(15,34,61,.72), transparent),radial-gradient(1px 1px at 70% 20%, rgba(15,34,61,.72), transparent),radial-gradient(1.5px 1.5px at 40% 70%, rgba(15,34,61,.72), transparent),radial-gradient(1px 1px at 85% 60%, rgba(15,34,61,.72), transparent);background-size:500px 500px;animation:tw 4s ease-in-out infinite alternate;opacity:.7;color:#F4F7FA}
 @keyframes tw{from{opacity:.35}to{opacity:.85}}
-.badge{display:inline-block;background:linear-gradient(90deg,#ffb300,#ffd54f);color:#1a1200;font-weight:800;padding:6px 14px;border-radius:999px;font-size:.8rem;letter-spacing:.02em;box-shadow:0 4px 18px rgba(255,179,0,.45);animation:pulse 2.2s infinite}
+.badge{display:inline-block;background:linear-gradient(90deg,rgba(255,158,125,.16),rgba(15,34,61,.72));color:#F4F7FA;font-weight:800;padding:6px 14px;border-radius:999px;font-size:.8rem;letter-spacing:.02em;box-shadow:0 4px 18px rgba(11,25,44,.45);animation:pulse 2.2s infinite;border:1px solid #FF9E7D}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-h1{font-size:1.9rem;margin:10px 0 6px;background:linear-gradient(90deg,#ffd54f,#81c784);-webkit-background-clip:text;background-clip:text;color:transparent}
-.card{background:rgba(10,40,28,.75);border:1px solid rgba(129,199,132,.35);border-radius:16px;padding:16px;margin:14px 0;backdrop-filter:blur(6px)}
-button{background:linear-gradient(135deg,#2e7d32,#4caf50);color:#fff;border:0;border-radius:10px;padding:10px 16px;margin:4px 2px;cursor:pointer;font-weight:700}
-button.gold{background:linear-gradient(135deg,#ff8f00,#ffb300);color:#1a1200}
-input[type=range]{width:100%;accent-color:#ffb300}
+h1{font-size:1.9rem;margin:10px 0 6px;background:linear-gradient(90deg,#FF9E7D,#FF9E7D);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:rgba(11,25,44,.75);border:1px solid rgba(255,158,125,.35);border-radius:16px;padding:16px;margin:14px 0;backdrop-filter:blur(6px)}
+button{background:linear-gradient(135deg,rgba(255,158,125,.16),rgba(255,158,125,.16));color:#F4F7FA;border:1px solid #FF9E7D;border-radius:10px;padding:10px 16px;margin:4px 2px;cursor:pointer;font-weight:700}
+button.gold{background:linear-gradient(135deg,rgba(255,158,125,.16),rgba(255,158,125,.16));color:#F4F7FA;border:1px solid #FF9E7D}
+input[type=range]{width:100%;accent-color:#FF9E7D}
 pre{white-space:pre-wrap;font-size:.85em;word-break:break-all}
-.verde{color:#a5d6a7}.aviso{font-size:.72em;color:#9e9e9e;margin-top:10px}
-#res{font-size:1.15em;font-weight:800;color:#ffd54f;text-shadow:0 0 18px rgba(255,213,79,.5)}
-</style>
+.verde{color:#9FB3C8}.aviso{font-size:.72em;color:#9FB3C8;margin-top:10px}
+#res{font-size:1.15em;font-weight:800;color:#FF9E7D;text-shadow:0 0 18px rgba(11,25,44,.5)}
+.ki{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.18em;color:#FF9E7D;flex:none}</style>
 </head>
 <body>
 <div class="stars"></div>
 <div style="text-align:center">
-<span class="badge">🤖 we've great news given by our AI Agents — check it out!</span>
-<h1 id="t1">🌱 Régua do Planeta</h1>
-<p id="p1" style="font-size:1.05em;color:#ffd54f">Can we still save the planet? — Planta e descobre, offline, com selo.</p>
+<span class="badge"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg> we've great news given by our AI Agents — check it out!</span>
+<h1><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9.536V7a4 4 0 0 1 4-4h1.5a.5.5 0 0 1 .5.5V5a4 4 0 0 1-4 4 4 4 0 0 0-4 4c0 2 1 3 1 5a5 5 0 0 1-1 3"/><path d="M4 9a5 5 0 0 1 8 4 5 5 0 0 1-8-4"/><path d="M5 21h14"/></svg> <span id="t1">Régua do Planeta</span></h1>
+<p id="p1" style="font-size:1.05em;color:#FF9E7D">Can we still save the planet? — Planta e descobre, offline, com selo.</p>
 </div>
 <canvas id="globe" width="640" height="320" style="display:block;margin:0 auto"></canvas>
 <div class="card">
-<div id="lang" style="display:flex;gap:6px;margin-bottom:8px"><button onclick="setLang('pt')">🇵🇹 PT</button><button onclick="setLang('en')">🇬🇧 EN</button><button onclick="kidMode()">🧒 kids</button></div>
+<div id="lang" style="display:flex;gap:6px;margin-bottom:8px"><button onclick="setLang('pt')"> PT</button><button onclick="setLang('en')"> EN</button><button onclick="kidMode()"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/><path d="M15 12h.01"/><path d="M19.38 6.813A9 9 0 0 1 20.8 10.2a2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1"/><path d="M9 12h.01"/></svg> kids</button></div>
 <b id="t2">Ritmo de plantação (mudas/dia)</b><br>
 <input type="range" id="rate" min="100" max="3200" step="100" value="800"><span id="rateTxt">800</span><br>
 <b id="t3">Percentagem que sobrevive</b><br>
 <input type="range" id="surv" min="30" max="100" step="5" value="90"><span id="survTxt">90%</span><br>
-<button class="gold" onclick="plantar()" id="btnPlant">🌍 Plantar e calcular!</button>
+<button class="gold" onclick="plantar()" ><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg> <span id="btnPlant">Plantar e calcular!</span></button>
 </div>
 <div class="card" style="text-align:center">
 <div id="res"></div>
 <pre id="out">—</pre>
-<canvas id="qr" style="display:none;background:#fff;padding:4px;margin:0 auto"></canvas>
+<canvas id="qr" style="display:none;background:rgba(15,34,61,.72);padding:4px;margin:0 auto"></canvas>
 </div>
 <p class="aviso" id="aviso">O que NÃO garante: cenário de demonstração (números de área/densidade ASSUMIDOS [VALIDAR]); a data vem do relógio do aparelho; o selo prova que ESTE cenário foi calculado assim, não que a plantação aconteceu; SELADO ≠ VERDADEIRO.</p>
 <script src="./assets/nacl-fast.min.js"></script>
@@ -103,11 +103,11 @@ function sha256Planeta(str) {
 }
 var L = "pt";
 var TXT = {
-  pt: { t1: "🌱 Régua do Planeta", p1: "Can we still save the planet? — Planta e descobre, offline, com selo.",
-    t2: "Ritmo de plantação (mudas/dia)", t3: "Percentagem que sobrevive", btnPlant: "🌍 Plantar e calcular!",
+  pt: { t1: "Régua do Planeta", p1: "Can we still save the planet? — Planta e descobre, offline, com selo.",
+    t2: "Ritmo de plantação (mudas/dia)", t3: "Percentagem que sobrevive", btnPlant: "Plantar e calcular!",
     res: "A GRANDE NOTÍCIA: a última muda entra na terra em", crianca: "A árvore que plantas hoje é a sombra de amanhã. Planta e vê!" },
-  en: { t1: "🌱 Planet Ruler", p1: "Can we still save the planet? — Plant and find out, offline, sealed.",
-    t2: "Planting rate (seedlings/day)", t3: "Survival percentage", btnPlant: "🌍 Plant and calculate!",
+  en: { t1: "Planet Ruler", p1: "Can we still save the planet? — Plant and find out, offline, sealed.",
+    t2: "Planting rate (seedlings/day)", t3: "Survival percentage", btnPlant: "Plant and calculate!",
     res: "GREAT NEWS: the last seedling goes into the ground on", crianca: "The tree you plant today is tomorrow's shade. Plant and see!" }
 };
 function setLang(l){ L = l; document.getElementById("t1").textContent = TXT[l].t1; document.getElementById("p1").textContent = TXT[l].p1; document.getElementById("t2").textContent = TXT[l].t2; document.getElementById("t3").textContent = TXT[l].t3; document.getElementById("btnPlant").textContent = TXT[l].btnPlant; }
@@ -118,22 +118,22 @@ function drawGlobe(){
   var c = document.getElementById("globe"), x = c.getContext("2d");
   var cx = c.width/2, cy = c.height/2, R = 140;
   x.clearRect(0,0,c.width,c.height);
-  x.fillStyle = "#0b1f33"; x.beginPath(); x.arc(cx,cy,R,0,7); x.fill();
+  x.fillStyle = "#0B192C"; x.beginPath(); x.arc(cx,cy,R,0,7); x.fill();
   x.save(); x.beginPath(); x.arc(cx,cy,R,0,7); x.clip();
   var g = x.createRadialGradient(cx-40,cy-50,20,cx,cy,R);
-  g.addColorStop(0,"#2e7d32"); g.addColorStop(1,"#0a1208");
+  g.addColorStop(0,"rgba(15,34,61,1)"); g.addColorStop(1,"#0B192C");
   x.fillStyle = g; x.fillRect(cx-R,cy-R,2*R,2*R);
-  x.strokeStyle = "rgba(255,255,255,.2)";
+  x.strokeStyle = "rgba(244,247,250,.2)";
   for(var i=-2;i<=2;i++){ x.beginPath(); x.ellipse(cx+i*R/3, cy, R*0.35, R, 0, 0, 7); x.stroke(); }
   for(var j=-2;j<=2;j++){ x.beginPath(); x.ellipse(cx, cy+j*R/3, R, R*0.35, 0, 0, 7); x.stroke(); }
   ang += 0.004; var wob = Math.sin(ang)*12;
   var h = verde * R*2;
-  x.fillStyle = "rgba(76,175,80,.6)";
+  x.fillStyle = "rgba(15,34,61,.6)";
   x.fillRect(cx-R + wob, cy+R-h, 2*R, h);
-  x.fillStyle = "rgba(255,213,79,.5)";
+  x.fillStyle = "rgba(255,158,125,.5)";
   for(var s=0;s<14;s++){ var sx = cx + Math.sin(ang*2 + s*1.7)*R*0.9, sy = cy + Math.cos(ang + s)*R*0.9; x.beginPath(); x.arc(sx,sy,1.2,0,7); x.fill(); }
   x.restore();
-  x.strokeStyle = "#4caf50"; x.lineWidth = 3; x.beginPath(); x.arc(cx,cy,R,0,7); x.stroke();
+  x.strokeStyle = "rgba(15,34,61,1)"; x.lineWidth = 3; x.beginPath(); x.arc(cx,cy,R,0,7); x.stroke();
   verde += (alvoVerde - verde)*0.04;
   requestAnimationFrame(drawGlobe);
 }
@@ -161,7 +161,7 @@ function plantar(){
   var vivas = Math.round(TOTAL * surv / 100);
   alvoVerde = Math.min(1, Math.max(0.08, vivas / TOTAL));
   somFesta();
-  document.getElementById("res").textContent = TXT[L].res + " " + fim.toISOString().slice(0,10) + " 🎉";
+  document.getElementById("res").textContent = TXT[L].res + " " + fim.toISOString().slice(0,10);
   var linhas = [];
   linhas.push(TXT[L].t2 + ": " + rate + " | " + TXT[L].t3 + ": " + surv + "%");
   linhas.push("mudas plantadas: " + TOTAL.toLocaleString() + " | árvores vivas: " + vivas.toLocaleString());
@@ -177,7 +177,7 @@ function plantar(){
   var c = document.getElementById("qr"); c.style.display = "block";
   var qr = qrcode(0,"M"); qr.addData("KONFIRMU|PLANETA|v1|" + hash + "|" + toHex(kp.publicKey) + "|" + toHex(sig),"Byte"); qr.make();
   var n = qr.getModuleCount(), s = 3; c.width = n*s; c.height = n*s;
-  var ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#000";
+  var ctx = c.getContext("2d"); ctx.fillStyle = "#F4F7FA"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#0B192C";
   for(var r=0;r<n;r++) for(var cc=0;cc<n;cc++) if(qr.isDark(r,cc)) ctx.fillRect(cc*s,r*s,s,s);
 }
 drawGlobe();

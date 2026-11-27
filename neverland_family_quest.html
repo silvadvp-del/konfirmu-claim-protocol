@@ -1,78 +1,78 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
+<head><!-- Ícones: Lucide (ISC), ver assets/LICENCA-ICONES-LUCIDE.txt --><meta name="konfirmu-paleta" content="unica-2026-11-27">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>✨ O Mapa Vivo da Terra do Nunca — Expedição em Família (Chronolex)</title>
-<style>body{font-family:system-ui,sans-serif;background:radial-gradient(circle at top,#1e1b4b 0%,#090d16 70%);color:#f8fafc;min-height:100vh;padding:16px;display:flex;justify-content:center;margin:0}
+<title>O Mapa Vivo da Terra do Nunca — Expedição em Família (Chronolex)</title>
+<style>:root{color-scheme:dark}input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]),select,textarea,button{color:#F4F7FA;background-color:rgba(15,34,61,.72)}input,select,textarea,button{border-color:rgba(159,179,200,.24)}::placeholder{color:#9FB3C8;opacity:1}::file-selector-button{color:#F4F7FA;background:rgba(15,34,61,.72);border:1px solid #FF9E7D;border-radius:8px}input[type=range],input[type=checkbox],input[type=radio],progress{accent-color:#FF9E7D}option{background:#0B192C;color:#F4F7FA}body{font-family:system-ui,sans-serif;background:radial-gradient(circle at top,#0B192C 0%,#0B192C 70%) #0B192C;color:#F4F7FA;min-height:100vh;padding:16px;display:flex;justify-content:center;margin:0}
 .app{width:100%;max-width:560px;display:flex;flex-direction:column;gap:16px}
-.hero{background:linear-gradient(135deg,rgba(30,41,59,.92),rgba(15,23,42,.95));border:1px solid rgba(251,191,36,.4);border-radius:18px;padding:20px;text-align:center}
-.hero h1{font-size:1.35rem;color:#fbbf24;margin-bottom:6px}
-.hero p{font-size:.88rem;color:#94a3b8;line-height:1.45}
-.pill{display:inline-block;margin-top:10px;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(16,185,129,.18);color:#6ee7b7;border:1px solid rgba(16,185,129,.4)}
-.card{background:rgba(30,41,59,.88);border:1px solid #334155;border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px}
-.card h2{font-size:1.02rem;color:#fbbf24;margin:0}
-input[type="text"],input[type="number"]{width:100%;padding:11px 14px;border-radius:10px;border:1px solid #475569;background:#0f172a;color:#f8fafc;font-size:.95rem;box-sizing:border-box}
+.hero{background:linear-gradient(135deg,rgba(11,25,44,.92),rgba(11,25,44,.95));border:1px solid rgba(255,158,125,.4);border-radius:18px;padding:20px;text-align:center}
+.hero h1{font-size:1.35rem;color:#FF9E7D;margin-bottom:6px}
+.hero p{font-size:.88rem;color:#9FB3C8;line-height:1.45}
+.pill{display:inline-block;margin-top:10px;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(15,34,61,.13);color:#FF9E7D;border:1px solid rgba(255,158,125,.4)}
+.card{background:rgba(11,25,44,.88);border:1px solid rgba(159,179,200,.24);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.card h2{font-size:1.02rem;color:#FF9E7D;margin:0}
+input[type="text"],input[type="number"]{width:100%;padding:11px 14px;border-radius:10px;border:1px solid rgba(159,179,200,.24);background:#0B192C;color:#F4F7FA;font-size:.95rem;box-sizing:border-box}
 button{padding:12px 16px;border:none;border-radius:12px;font-weight:700;font-size:.95rem;cursor:pointer}
 button:active{transform:scale(.98)}
-.btn-gold{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#1e1b4b}
-.btn-green{background:#10b981;color:#052e16}
+.btn-gold{background:linear-gradient(135deg,rgba(255,158,125,.16),rgba(255,158,125,.16));color:#F4F7FA;border:1px solid #FF9E7D}
+.btn-green{background:rgba(255,158,125,.16);color:#F4F7FA;border:1px solid #FF9E7D}
 .track{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.dot{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:8px 4px;text-align:center;font-size:.72rem;color:#94a3b8}
-.dot.done{background:rgba(16,185,129,.2);border-color:#10b981;color:#a7f3d0;font-weight:700}
-.dot.active{border-color:#fbbf24;color:#fbbf24;box-shadow:0 0 12px rgba(251,191,36,.25)}
+.dot{background:#0B192C;border:1px solid rgba(159,179,200,.24);border-radius:10px;padding:8px 4px;text-align:center;font-size:.72rem;color:#9FB3C8}
+.dot.done{background:rgba(15,34,61,.144);border-color:#FF9E7D;color:#FF9E7D;font-weight:700}
+.dot.active{border-color:#FF9E7D;color:#FF9E7D;box-shadow:0 0 12px rgba(11,25,44,.25)}
 .keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.m-key{padding:16px 6px;background:#1e1b4b;border:1px solid #38bdf8;color:#e0f2fe;border-radius:10px;font-weight:700}
-.parchment{background:linear-gradient(180deg,#fef3c7 0%,#fde68a 100%);color:#451a03;border:3px solid #d97706;border-radius:16px;padding:20px;text-align:center;display:none;flex-direction:column;gap:10px}
-.parchment h3{font-size:1.25rem;color:#78350f}
-.seal{font-family:monospace;font-size:.72rem;background:rgba(120,53,15,.1);padding:8px;border-radius:8px;word-break:break-all;text-align:left}
-.photo{max-width:100%;border-radius:10px;border:2px solid #d97706;margin-top:6px;display:none}
-.feedback{font-size:.85rem;padding:10px;border-radius:8px;display:none;background:rgba(239,68,68,.2);border:1px solid #ef4444;color:#fecaca}
-.aviso{font-size:.7rem;color:#94a3b8;margin-top:8px}</style>
+.m-key{padding:16px 6px;background:#0B192C;border:1px solid #FF9E7D;color:#F4F7FA;border-radius:10px;font-weight:700}
+.parchment{background:linear-gradient(180deg,rgba(15,34,61,.72) 0%,rgba(15,34,61,.72) 100%);color:#F4F7FA;border:3px solid #FF9E7D;border-radius:16px;padding:20px;text-align:center;display:none;flex-direction:column;gap:10px}
+.parchment h3{font-size:1.25rem;color:#FF9E7D}
+.seal{font-family:monospace;font-size:.72rem;background:rgba(15,34,61,.072);padding:8px;border-radius:8px;word-break:break-all;text-align:left}
+.photo{max-width:100%;border-radius:10px;border:2px solid #FF9E7D;margin-top:6px;display:none}
+.feedback{font-size:.85rem;padding:10px;border-radius:8px;display:none;background:rgba(15,34,61,.144);border:1px solid #9FB3C8;color:#F4F7FA}
+.aviso{font-size:.7rem;color:#9FB3C8;margin-top:8px}.ki{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.18em;color:#FF9E7D;flex:none}</style>
 <link rel="stylesheet" href="./assets/imersao.css">
 <script defer src="./assets/imersao.js"></script>
 </head>
 <body>
 <div class="app">
   <div class="hero">
-    <h1>✨ O Mapa Vivo da Terra do Nunca</h1>
+    <h1><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg> O Mapa Vivo da Terra do Nunca</h1>
     <p>Uma aventura cooperativa para pais, filhos e avós — sem anúncios, sem internet, com memórias seladas para sempre.</p>
-    <span class="pill">🧭 CHRONOLEX FAMILY EDITION · 100% OFFLINE</span>
+    <span class="pill"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></svg> CHRONOLEX FAMILY EDITION · 100% OFFLINE</span>
   </div>
 
   <div class="card" id="setupCard">
-    <h2>🏴‍☠️ 1. Batizar a Tripulação</h2>
+    <h2><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528"/></svg> 1. Batizar a Tripulação</h2>
     <input type="text" id="crewName" placeholder="Ex: Família Silva & os Exploradores Estelares">
     <input type="text" id="crewMembers" placeholder="Nomes da equipa (ex: Sofia, Tiago, Mãe, Pai)">
-    <button class="btn-gold" onclick="startExpedition()">✨ Abrir o Mapa e Iniciar Aventura</button>
+    <button class="btn-gold" onclick="startExpedition()"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg> Abrir o Mapa e Iniciar Aventura</button>
   </div>
 
   <div id="activeQuest" style="display:none;flex-direction:column;gap:14px;">
     <div class="track" id="progressTrack"></div>
     <div class="card" id="islandCard">
       <h2 id="islandTitle"></h2>
-      <p id="islandStory" style="font-size:.9rem;line-height:1.5;color:#e2e8f0;"></p>
-      <div id="islandMission" style="background:#0f172a;padding:12px;border-radius:10px;border-left:3px solid #fbbf24;font-size:.88rem;"></div>
+      <p id="islandStory" style="font-size:.9rem;line-height:1.5;color:#F4F7FA;"></p>
+      <div id="islandMission" style="background:#0B192C;padding:12px;border-radius:10px;border-left:3px solid #FF9E7D;font-size:.88rem;"></div>
       <div id="islandInteractive"></div>
       <div id="feedbackBox" class="feedback"></div>
     </div>
   </div>
 
   <div class="parchment" id="diplomaCard">
-    <div style="font-size:2rem;">🏆🧭✨</div>
+    <div style="font-size:2rem;"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2"/><path d="M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2"/><path d="M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3"/><path d="M4 22h16"/><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/><path d="M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3"/></svg><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></svg><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg></div>
     <h3>Certificado Oficial de Exploradores da Terra do Nunca</h3>
     <p id="diplomaText" style="font-size:.92rem;line-height:1.5;"></p>
     <img id="finalPhoto" class="photo" alt="Foto da Tripulação">
-    <div id="timelineSummary" style="font-size:.8rem;text-align:left;background:rgba(255,255,255,.55);padding:10px;border-radius:8px;"></div>
+    <div id="timelineSummary" style="font-size:.8rem;text-align:left;background:rgba(15,34,61,.396);padding:10px;border-radius:8px;"></div>
     <div class="seal" id="chronolexSeal"></div>
-    <canvas id="qr" style="background:#fff;padding:6px;margin:0 auto;display:none;"></canvas>
-    <button class="btn-gold" onclick="window.print()">🖨️ Imprimir ou Guardar Pergaminho em PDF</button>
+    <canvas id="qr" style="background:rgba(15,34,61,.72);padding:6px;margin:0 auto;display:none;"></canvas>
+    <button class="btn-gold" onclick="window.print()"><svg class="ki" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg> Imprimir ou Guardar Pergaminho em PDF</button>
     <div class="aviso">O que NÃO garante: o selo prova que ESTA aventura (passos e tempos do relógio do aparelho) foi registada e encadeada neste telemóvel — a hora é a do aparelho; as fotos ficam no aparelho (nada sai); é um jogo de memória, não um documento legal.</div>
   </div>
 </div>
 <script src="./assets/nacl-fast.min.js"></script>
 <script src="./assets/qrcode.js"></script>
-<script>
+<script>var KI={"compass":"<svg class=\"ki\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" focusable=\"false\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z\"/></svg>","wand_sparkles":"<svg class=\"ki\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" focusable=\"false\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72\"/><path d=\"m14 7 3 3\"/><path d=\"M5 6v4\"/><path d=\"M19 14v4\"/><path d=\"M10 2v2\"/><path d=\"M7 8H3\"/><path d=\"M21 16h-4\"/><path d=\"M11 3H9\"/></svg>","leaf":"<svg class=\"ki\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" focusable=\"false\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11 20a10 10 0 0010-10 25.9 25.9 0 00-1.04-7.281 1 1 0 00-1.755-.325C15.833 5.5 13 5.5 9.8 6.1A7 7 0 0011 20\"/><path d=\"M2 21a5 5 0 012.911-4.544C7.613 15.212 8.351 15.24 11 13\"/></svg>","alarm_clock":"<svg class=\"ki\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" focusable=\"false\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2 2\"/><path d=\"M5 3 2 6\"/><path d=\"m22 6-3-3\"/><path d=\"M6.38 18.7 4 21\"/><path d=\"M17.64 18.67 20 21\"/></svg>","camera":"<svg class=\"ki\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" focusable=\"false\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z\"/><circle cx=\"12\" cy=\"13\" r=\"3\"/></svg>","check":"<svg class=\"ki\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" focusable=\"false\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg>","music":"<svg class=\"ki\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" focusable=\"false\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 16V3a1 1 0 0 0-1.28-.96l-10 2.917a1 1 0 0 0-.72.96V19\"/><circle cx=\"18\" cy=\"16\" r=\"3\"/><circle cx=\"6\" cy=\"19\" r=\"3\"/></svg>","sparkles":"<svg class=\"ki\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" focusable=\"false\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\"/><path d=\"M20 2v4\"/><path d=\"M22 4h-4\"/><circle cx=\"4\" cy=\"20\" r=\"2\"/></svg>","star":"<svg class=\"ki\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" focusable=\"false\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"/></svg>","trophy":"<svg class=\"ki\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" focusable=\"false\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2\"/><path d=\"M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2\"/><path d=\"M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3\"/><path d=\"M4 22h16\"/><path d=\"M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z\"/><path d=\"M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3\"/></svg>"};
 function sha256NL(str) {
   // SHA-256 puro, offline, sem bibliotecas externas (implementação compacta de domínio público;
   // verificada neste pacote contra os vetores NIST "abc" e vazio — ver TESTES.md/PROVA.md)
@@ -129,23 +129,23 @@ function sha256NL(str) {
   return result;
 }
 var ISLANDS = [
-  { short: "1. Bússola", title: "🧭 Ilha 1: A Bússola das Estrelas",
+  { short: "1. Bússola", ico: "compass", title: "Ilha 1: A Bússola das Estrelas",
     story: "O Peter Pan perdeu o rumo entre as nuvens! Para orientar o navio voador, a tripulação tem de encontrar o Norte verdadeiro.",
     mission: "<strong>Missão Física:</strong> Deem 5 passos juntos pela sala ou jardim e respondam: quantas direções principais tem uma bússola?",
     type: "number", answer: 4, hint: "Pensa nos pontos cardeais: Norte, Sul, Este e..." },
-  { short: "2. Sininho", title: "🧚 Ilha 2: A Melodia Mágica da Sininho",
+  { short: "2. Sininho", ico: "wand_sparkles", title: "Ilha 2: A Melodia Mágica da Sininho",
     story: "A fada Sininho só abre a ponte de pó de fada quando ouve a sequência das 4 estrelas brilhantes!",
     mission: "<strong>Missão Musical:</strong> Toquem juntos na ordem exata: <strong>Dó → Mi → Sol → Dó Alto</strong>.",
     type: "music", targetSeq: ["Dó","Mi","Sol","Dó+"] },
-  { short: "3. Natureza", title: "🌿 Ilha 3: O Segredo dos Meninos Perdidos",
+  { short: "3. Natureza", ico: "leaf", title: "Ilha 3: O Segredo dos Meninos Perdidos",
     story: "Na floresta encantada, os Meninos Perdidos cuidam das árvores e da água limpa.",
     mission: "<strong>Missão de Explorador:</strong> Encontrem algo verde ou natural perto de vocês e escrevam o nome do tesouro natural!",
     type: "text_any", placeholder: "Ex: Folha de manjericão / Maçã vermelha" },
-  { short: "4. Gancho", title: "⏰ Ilha 4: O Enigma do Crocodilo Tic-Tac",
+  { short: "4. Gancho", ico: "alarm_clock", title: "Ilha 4: O Enigma do Crocodilo Tic-Tac",
     story: "O Capitão Gancho trancou o baú com um cadeado matemático!",
     mission: "<strong>Missão de Equipa:</strong> Contem nos dedos das vossas mãos: quantos dedos existem em 3 mãos juntas?",
     type: "number", answer: 15, hint: "5 dedos + 5 dedos + 5 dedos = ?" },
-  { short: "5. Tesouro", title: "📸 Ilha 5: O Retrato da Tripulação Vitoriosa",
+  { short: "5. Tesouro", ico: "camera", title: "Ilha 5: O Retrato da Tripulação Vitoriosa",
     story: "Chegaram ao coração da Terra do Nunca! Falta o retrato da equipa para selar a vitória.",
     mission: "<strong>Missão Final:</strong> Tirem uma foto divertida todos juntos para ficar no Diploma Oficial!",
     type: "photo" }
@@ -188,7 +188,7 @@ function renderProgress(){
   ISLANDS.forEach(function(isl, idx){
     var d = document.createElement("div");
     d.className = "dot" + (idx < currentIdx ? " done" : idx === currentIdx ? " active" : "");
-    d.textContent = (idx < currentIdx ? "✔ " : "") + isl.short;
+    d.textContent = isl.short; if(idx < currentIdx) d.insertAdjacentHTML("afterbegin", KI.check+" ");
     track.appendChild(d);
   });
 }
@@ -200,7 +200,7 @@ function renderIsland(){
   renderProgress();
   document.getElementById("feedbackBox").style.display = "none";
   var isl = ISLANDS[currentIdx];
-  document.getElementById("islandTitle").textContent = isl.title;
+  var tIlha=document.getElementById("islandTitle"); tIlha.textContent = isl.title; if(isl.ico) tIlha.insertAdjacentHTML("afterbegin", KI[isl.ico]+" ");
   document.getElementById("islandStory").textContent = isl.story;
   document.getElementById("islandMission").innerHTML = isl.mission;
   var box = document.getElementById("islandInteractive"); box.innerHTML = "";
@@ -208,11 +208,11 @@ function renderIsland(){
     box.innerHTML = '<input type="number" id="ansNum" placeholder="Escrevam o número aqui..."><button class="btn-gold" style="width:100%;margin-top:10px;" onclick="checkNumber()">Confirmar Resposta da Equipa</button>';
   } else if(isl.type === "music"){
     playedNotes = [];
-    box.innerHTML = '<div class="keys"><button class="m-key" onclick="playNote(261.63,\'Dó\')">🎵 Dó</button><button class="m-key" onclick="playNote(329.63,\'Mi\')">✨ Mi</button><button class="m-key" onclick="playNote(392.00,\'Sol\')">🌟 Sol</button><button class="m-key" onclick="playNote(523.25,\'Dó+\')">🧚 Dó Alto</button></div><div id="playedSeq" style="font-size:.82rem;color:#bae6fd;margin-top:8px;">Notas tocadas: (nenhuma ainda)</div>';
+    box.innerHTML = '<div class="keys"><button class="m-key" onclick="playNote(261.63,\'Dó\')">'+KI.music+' Dó</button><button class="m-key" onclick="playNote(329.63,\'Mi\')">'+KI.sparkles+' Mi</button><button class="m-key" onclick="playNote(392.00,\'Sol\')">'+KI.star+' Sol</button><button class="m-key" onclick="playNote(523.25,\'Dó+\')">'+KI.wand_sparkles+' Dó Alto</button></div><div id="playedSeq" style="font-size:.82rem;color:#FF9E7D;margin-top:8px;">Notas tocadas: (nenhuma ainda)</div>';
   } else if(isl.type === "text_any"){
     box.innerHTML = '<input type="text" id="ansTxt" placeholder="' + isl.placeholder + '"><button class="btn-green" style="width:100%;margin-top:10px;" onclick="checkText()">Registar Tesouro Natural</button>';
   } else if(isl.type === "photo"){
-    box.innerHTML = '<input type="file" id="photoInput" accept="image/*" capture="user" style="color:#f8fafc;"><button class="btn-gold" style="width:100%;margin-top:10px;" onclick="finishWithPhoto()">🏆 Selar Aventura e Abrir Diploma!</button>';
+    box.innerHTML = '<input type="file" id="photoInput" accept="image/*" capture="user" style="color:#F4F7FA;"><button class="btn-gold" style="width:100%;margin-top:10px;" onclick="finishWithPhoto()">'+KI.trophy+' Selar Aventura e Abrir Diploma!</button>';
   }
 }
 function checkNumber(){
@@ -260,7 +260,7 @@ function showDiploma(){
     img.src = teamPhotoDataUrl; img.style.display = "block";
   }
   var linhas = ["Diário de Bordo Selado:"];
-  chainLog.forEach(function(c){ linhas.push("✔ " + c.step + ": " + c.summary); });
+  chainLog.forEach(function(c){ linhas.push("- " + c.step + ": " + c.summary); });
   document.getElementById("timelineSummary").innerHTML = linhas.join("<br>");
   kpEd = nacl.sign.keyPair();
   var alvo = "KONFIRMU-NEVERLAND|v1|" + master;
@@ -272,7 +272,7 @@ function showDiploma(){
   var c = document.getElementById("qr"); c.style.display = "block";
   var qr = qrcode(0,"M"); qr.addData("KONFIRMU|NEVERLAND|v1|" + master + "|" + seloEd.pk + "|" + seloEd.sig,"Byte"); qr.make();
   var n = qr.getModuleCount(), s = 3; c.width = n*s; c.height = n*s;
-  var ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#000";
+  var ctx = c.getContext("2d"); ctx.fillStyle = "#F4F7FA"; ctx.fillRect(0,0,c.width,c.height); ctx.fillStyle = "#0B192C";
   for(var r=0;r<n;r++) for(var cc=0;cc<n;cc++) if(qr.isDark(r,cc)) ctx.fillRect(cc*s,r*s,s,s);
 }
 </script>

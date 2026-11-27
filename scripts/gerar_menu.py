@@ -94,9 +94,8 @@ PORTAIS = [
 SO_NA_EDICAO_21 = {"Tutor-Girafinha-offline.html", "kcp_family_quiz.html"}
 
 CSS = """
-:root{color-scheme:light dark;--pagina:#F3F1EE;--painel:#FBFAF8;--tinta:#1D1D21;--tinta2:#4B4B52;--tinta3:#4B4B50;--linha:#E2DDD6;--azulejo:#ECE8E2;--u:#D97D4A;
+:root{color-scheme:dark;--pagina:#0B192C;--painel:rgb(15 34 61 / .72);--tinta:#F4F7FA;--tinta2:#9FB3C8;--tinta3:#9FB3C8;--linha:rgb(159 179 200 / .24);--azulejo:rgb(159 179 200 / .06);--u:#FF9E7D;
 --letra:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
-@media (prefers-color-scheme:dark){:root{--pagina:#121317;--painel:#17181D;--tinta:#ECEAE6;--tinta2:#B4B2AD;--tinta3:#AEACA9;--linha:#2A2B31;--azulejo:#202127;--u:#F7B397}}
 *{box-sizing:border-box}
 html{background:var(--pagina);-webkit-text-size-adjust:100%}
 body{margin:0 auto;max-width:760px;padding:28px 20px 40px;font:16px/1.5 var(--letra);color:var(--tinta);background:var(--pagina)}
@@ -104,13 +103,13 @@ h1{margin:0;font-size:2rem;line-height:1.1;font-weight:650;letter-spacing:-.02em
 .acoes{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:16px 0 0}
 h1 .u{color:var(--u)}
 .letra{flex:none;min-height:44px;padding:0 14px;border:1px solid var(--linha);border-radius:10px;background:var(--painel);color:var(--tinta);font:600 .9375rem/1 var(--letra);cursor:pointer}
-.letra[aria-pressed="true"]{background:var(--tinta);color:var(--pagina);border-color:var(--tinta)}
+.letra[aria-pressed="true"]{background:rgb(255 158 125 / .16);color:var(--tinta);border-color:var(--u)}
 .intro{margin:12px 0 0;max-width:34em;color:var(--tinta2)}
 .aviao{min-height:44px;padding:0 16px;border:1px solid var(--tinta);border-radius:10px;background:transparent;color:var(--tinta);font:600 .9375rem/1 var(--letra);cursor:pointer}
 .aviao-estado{display:block;margin-top:8px;min-height:1.4em;font-size:.875rem;color:var(--tinta2)}
 .portais{display:flex;gap:4px;margin:28px 0 0;padding:4px;border-radius:12px;background:var(--azulejo)}
 .portais [role=tab]{flex:1 1 0;min-height:44px;padding:0 8px;border:0;border-radius:9px;background:transparent;color:var(--tinta2);font:600 .9375rem/1.2 var(--letra);cursor:pointer}
-.portais [role=tab][aria-selected="true"]{background:var(--painel);color:var(--tinta);box-shadow:0 1px 2px rgb(0 0 0 / .08),0 0 0 1px var(--linha)}
+.portais [role=tab][aria-selected="true"]{background:var(--painel);color:var(--tinta);box-shadow:0 1px 2px rgb(11 25 44 / .4),inset 0 0 0 1px rgb(255 158 125 / .55)}
 .portal{margin-top:24px}
 .portal h2{margin:0;font-size:1.25rem;line-height:1.25;font-weight:650;letter-spacing:-.01em}
 .portal .sub{margin:4px 0 14px;color:var(--tinta2);font-size:.9375rem}
@@ -120,7 +119,7 @@ h1 .u{color:var(--u)}
 .card:hover{background:var(--azulejo)}
 .card:active{background:var(--linha)}
 .ico{grid-area:ico;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;background:var(--azulejo);color:var(--tinta)}
-.ico svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ico svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .card b{grid-area:t;align-self:end;font-size:1rem;line-height:1.3;font-weight:600}
 .card .d{grid-area:d;align-self:start;font-size:.875rem;line-height:1.4;color:var(--tinta2)}
 .card .estado{display:table;margin:6px 0 2px;padding:1px 7px;border:1px solid var(--linha);border-radius:6px;font-size:.75rem;line-height:1.4;color:var(--tinta3)}
@@ -256,8 +255,7 @@ def pagina(variante, avisos, pt, dados_json):
     edicao = variante == "edicao21"
     partes = ['<!DOCTYPE html>', '<html lang="pt">', '<head>', '<meta charset="UTF-8">',
               '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
-              '<meta name="theme-color" content="#F3F1EE" media="(prefers-color-scheme: light)">',
-              '<meta name="theme-color" content="#121317" media="(prefers-color-scheme: dark)">',
+              '<meta name="theme-color" content="#0B192C">',
               '<title>Konfirmu</title>',
               # ícone dentro da página: o «u» pêssego; sem pedido ao servidor (sem favicon.ico 404)
               '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Crect width=\'32\' height=\'32\' rx=\'7\' fill=\'%231D1D21\'/%3E%3Ctext x=\'16\' y=\'22.5\' font-family=\'Inter,Arial,sans-serif\' font-size=\'21\' font-weight=\'700\' text-anchor=\'middle\' fill=\'%23D97D4A\'%3Eu%3C/text%3E%3C/svg%3E">',
