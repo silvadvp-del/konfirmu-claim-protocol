@@ -94,9 +94,9 @@ PORTAIS = [
 SO_NA_EDICAO_21 = {"Tutor-Girafinha-offline.html", "kcp_family_quiz.html"}
 
 CSS = """
-:root{color-scheme:light dark;--pagina:#F3F1EE;--painel:#FBFAF8;--tinta:#1D1D21;--tinta2:#4E4E55;--tinta3:#64646B;--linha:#E2DDD6;--azulejo:#ECE8E2;--u:#D97D4A;
+:root{color-scheme:light dark;--pagina:#F3F1EE;--painel:#FBFAF8;--tinta:#1D1D21;--tinta2:#4B4B52;--tinta3:#4B4B50;--linha:#E2DDD6;--azulejo:#ECE8E2;--u:#D97D4A;
 --letra:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
-@media (prefers-color-scheme:dark){:root{--pagina:#121317;--painel:#17181D;--tinta:#ECEAE6;--tinta2:#B4B2AD;--tinta3:#8E8C88;--linha:#2A2B31;--azulejo:#202127;--u:#F7B397}}
+@media (prefers-color-scheme:dark){:root{--pagina:#121317;--painel:#17181D;--tinta:#ECEAE6;--tinta2:#B4B2AD;--tinta3:#AEACA9;--linha:#2A2B31;--azulejo:#202127;--u:#F7B397}}
 *{box-sizing:border-box}
 html{background:var(--pagina);-webkit-text-size-adjust:100%}
 body{margin:0 auto;max-width:760px;padding:28px 20px 40px;font:16px/1.5 var(--letra);color:var(--tinta);background:var(--pagina)}
