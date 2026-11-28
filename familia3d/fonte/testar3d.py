@@ -115,8 +115,11 @@ def fluxo(b):
     ok("PIN diferente obriga a recomeçar", pg.text_content("#pin-titulo") == pt["definir_pin"] and pg.text_content("#pin-erro") == pt["pin_diferente"])
     digitar(pg, "2580"); digitar(pg, "2580"); esperar(pg, "document.body.classList.contains('modo-crianca')"); avancar(pg, 3)
     ok("PIN confirmado abre o Modo Criança", em_crianca(pg) and k3d(pg)["modo"] == "crianca" and pg.is_visible("#crianca"))
-    raw, est = estado(pg); pin = est.get("pin") or {}
-    ok("o PIN não fica guardado: só o hash com sal", pin.get("hash") == hashlib.sha256((pin.get("sal", "") + ":2580").encode()).hexdigest() and len(pin.get("sal", "")) == 32 and '"2580"' not in raw)
+    raw, est = estado(pg); tc_raw = pg.evaluate("localStorage.getItem('konfirmu.tranca')") or "{}"; tc = json.loads(tc_raw)
+    # 28-11-2026: o PIN é o da tranca comum da casa (assets/konfirmu-2040.js): PBKDF2-SHA-256, 150 000 voltas, n algarismos
+    ok("o PIN não fica guardado: só a derivação PBKDF2 da tranca comum da casa", tc.get("v") == 1 and tc.get("voltas") == 150000
+       and tc.get("n") == 4 and len(tc.get("h", "")) == 44 and len(tc.get("sal", "")) == 24 and "2580" not in tc_raw
+       and "pin" not in est and '"2580"' not in raw)
     ok("o Modo Criança fica guardado no aparelho", est.get("crianca") is True)
     for _ in range(4):
         pg.click(".tig >> nth=2")

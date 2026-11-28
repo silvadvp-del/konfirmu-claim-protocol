@@ -101,19 +101,20 @@
     setTimeout(function () { if (a.parentNode) a.parentNode.removeChild(a); }, 2600);
   }
 
-  /* ---------- teclado do PIN (4 algarismos) ---------- */
-  function teclado(titulo, texto, aoFim, extraHtml) {
-    var h = '<h2>' + titulo + '</h2><p>' + texto + '</p><div class="k-pontos" aria-hidden="true"><i></i><i></i><i></i><i></i></div>' +
+  /* ---------- teclado do PIN (4 algarismos; ao conferir, os n da tranca comum: 4 a 6, 28-11-2026) ---------- */
+  function teclado(titulo, texto, aoFim, extraHtml, n) {
+    n = n >= 4 && n <= 6 ? n : 4;
+    var h = '<h2>' + titulo + '</h2><p>' + texto + '</p><div class="k-pontos" aria-hidden="true">' + new Array(n + 1).join("<i></i>") + '</div>' +
       '<p class="k-msg" role="status" aria-live="polite"></p>' + (extraHtml || "") + '<div class="k-teclado">';
     for (var n = 1; n <= 9; n++) h += '<button type="button" data-d="' + n + '">' + n + '</button>';
     h += '<button type="button" data-k="apagar" aria-label="Apagar">&larr;</button><button type="button" data-d="0">0</button><button type="button" data-k="cancelar">Fechar</button></div>';
     var j = veu(h, true), pin = "";
     var pontos = j.caixa.querySelectorAll(".k-pontos i"), msg = j.caixa.querySelector(".k-msg");
-    function mostrar() { for (var i = 0; i < 4; i++) pontos[i].classList.toggle("k-cheio", i < pin.length); }
+    function mostrar() { for (var i = 0; i < n; i++) pontos[i].classList.toggle("k-cheio", i < pin.length); }
     function tecla(d) {
-      if (pin.length >= 4) return;
+      if (pin.length >= n) return;
       pin += d; mostrar();
-      if (pin.length === 4) { var p = pin; setTimeout(function () { aoFim(p, j, msg, function () { pin = ""; mostrar(); }); }, 120); }
+      if (pin.length === n) { var p = pin; setTimeout(function () { aoFim(p, j, msg, function () { pin = ""; mostrar(); }); }, 120); }
     }
     j.caixa.addEventListener("click", function (e) {
       var b = e.target.closest("button"); if (!b) return;
@@ -134,7 +135,7 @@
       if (p !== primeiro) { primeiro = null; msg.textContent = "Os dois PIN não são iguais. Começa outra vez."; limpar(); return; }
       var sal = aleatorio(16), voltas = 150000;
       derivar(p, sal, voltas).then(function (h) {
-        var t = { v: 1, sal: b64(sal), voltas: voltas, h: b64(h), cred: null };
+        var t = { v: 1, sal: b64(sal), voltas: voltas, h: b64(h), cred: null, n: 4 };
         guardar(CHAVE_TRANCA, JSON.stringify(t));
         j.fechar();
         return bioDisponivel().then(function (ok) {
@@ -176,14 +177,15 @@
     if (!t) { guardar(CHAVE_MODO, null); aplicarPreferencias(); desenharBotoes(); return; }
     var bio = t.cred && window.PublicKeyCredential && window.isSecureContext;
     var extra = bio ? '<div class="k-linha"><button type="button" class="k-principal" data-k="bio">Usar impressão digital</button></div>' : "";
-    var j = teclado("Modo Adulto", "Pede a um adulto: impressão digital ou o PIN de 4 algarismos.", function (p, j2, msg, limpar) {
+    var nPin = t.n >= 4 && t.n <= 6 ? t.n : 4;
+    var j = teclado("Modo Adulto", "Pede a um adulto: impressão digital ou o PIN de " + nPin + " algarismos.", function (p, j2, msg, limpar) {
       var e = espera();
       if (e.ate > Date.now()) { msg.textContent = "Espera " + Math.ceil((e.ate - Date.now()) / 1000) + " s e tenta outra vez."; limpar(); return; }
       derivar(p, deb64(t.sal), t.voltas).then(function (h) {
         if (iguais(h, deb64(t.h))) { guardar(CHAVE_FALHAS, null); j2.fechar(); desligar(); }
         else { var f = falhou(); msg.textContent = f.ate > Date.now() ? "PIN errado. Espera um pouco antes de tentar." : "PIN errado."; limpar(); }
       }).catch(function () { msg.textContent = "Não foi possível conferir o PIN neste navegador."; limpar(); });
-    }, extra);
+    }, extra, nPin);
     var b = j.caixa.querySelector('[data-k="bio"]');
     if (b) b.addEventListener("click", function () {
       bioConferir(t.cred).then(function (ok) { if (ok) { j.fechar(); desligar(); } else j.caixa.querySelector(".k-msg").textContent = "Não confirmou."; })

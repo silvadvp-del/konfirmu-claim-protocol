@@ -518,6 +518,19 @@ def construir(repo: Path, base: Path | None, com_ia: Path | None, edicao_21: boo
     for f in sorted((repo / "ferramentas").glob("*.py")) if (repo / "ferramentas").is_dir() else []:
         pacote["ferramentas/" + f.name] = f.read_bytes()
     web = sorted(p for p in pacote if p.endswith((".html", ".js", ".json", ".css", ".mjs")) and not p.startswith(("modelos/", "assets/ia/", "prova/", "ferramentas/")))
+    # Selo de versão e data no rodapé de todas as páginas (ordem do David de 28-11-2026, 04:25): antes da chave
+    # do sw.js, para um selo novo chegar a quem tinha a cache antiga; os hashes de PACOTE.json seguem as páginas seladas.
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import selo_versao  # noqa: E402
+    selo = selo_versao.ler(str(repo))
+    for p in sorted(pacote):
+        if p.endswith(".html"):
+            pacote[p] = selo_versao.aplicar(pacote[p].decode("utf-8"), selo).encode("utf-8")
+    for o in origens:
+        if o.get("ficheiro", "").endswith(".html") and o["ficheiro"] in pacote:
+            o["sha256"] = sha256(pacote[o["ficheiro"]])
+            o["selo"] = selo_versao.texto(selo)
+    registo.append("selo de versão em todas as páginas: " + selo_versao.texto(selo))
     chave = sha256("\n".join(f"{p}:{sha256(pacote[p])}" for p in web).encode())[:16]
     pacote["sw.js"] = gerar_sw(web, chave)
     pacote["servidor_local.py"] = SERVIDOR.encode("utf-8")

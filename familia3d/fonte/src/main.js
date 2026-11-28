@@ -515,8 +515,8 @@ function construirUI() {
   });
   $("b-ant").addEventListener("click", () => focar((foco + 7) % 8));
   $("b-seg").addEventListener("click", () => focar((foco + 1) % 8));
-  $("b-entrar").addEventListener("click", () => { if (estado.pin) entrar(); else abrirPin("definir"); });
-  $("b-sair").addEventListener("click", () => { if (estado.pin) abrirPin("desbloquear"); else sair(); });
+  $("b-entrar").addEventListener("click", () => { if (temPin()) entrar(); else abrirPin("definir"); });
+  $("b-sair").addEventListener("click", () => { if (temPin()) abrirPin("desbloquear"); else sair(); });
   $("b-filme").addEventListener("click", iniciarFilme);
   $("b-fechar").addEventListener("click", () => mudarModo("familia"));
   $("b-cancelar").addEventListener("click", fecharPin);
@@ -582,14 +582,14 @@ const pin = { modo: null, buf: "", primeiro: null };
 function emCrianca() { return document.body.classList.contains("modo-crianca"); }
 function entrar() {
   document.body.classList.add("modo-crianca");
-  estado.crianca = true; guardar();
+  estado.crianca = true; guardar(); casaGravar(CASA_MODO, "1");
   try { history.pushState({ konfirmu: "crianca" }, "", location.href); } catch (e) { /* sem histórico */ }
   try { const el = document.documentElement; if (el.requestFullscreen) { const r = el.requestFullscreen(); if (r && r.catch) r.catch(() => {}); } } catch (e) { /* recusado */ }
   recomecar(); mudarModo("crianca");
 }
 function sair() {
   document.body.classList.remove("modo-crianca");
-  estado.crianca = false; guardar();
+  estado.crianca = false; guardar(); casaGravar(CASA_MODO, null);
   try { if (document.fullscreenElement && document.exitFullscreen) { const r = document.exitFullscreen(); if (r && r.catch) r.catch(() => {}); } } catch (e) { /* nada */ }
   mudarModo("familia"); mostrarBio();
 }
@@ -611,6 +611,41 @@ function hashPin(sal, d) {
   const txt = sal + ":" + d;
   if (window.crypto && crypto.subtle && window.TextEncoder) return crypto.subtle.digest("SHA-256", new TextEncoder().encode(txt)).then((buf) => hex(new Uint8Array(buf)));
   return Promise.resolve(sha256js(txt));
+}
+// Tranca comum da casa (ordem do David, 28-11-2026, 04:25: «Girafinhas 3D com fechadura PIN comum da casa»).
+// O PIN de adulto é um só em toda a app: fica em «konfirmu.tranca», no formato de assets/konfirmu-2040.js
+// (PBKDF2-SHA-256, sal de 16 bytes, 150 000 voltas; o PIN nunca se guarda), com n = número de algarismos.
+// O Modo Criança também é um só: «konfirmu.modoCrianca» = "1". Um PIN antigo só deste portal confere uma vez
+// e passa logo para a tranca comum. Sem WebCrypto (endereço sem https), fica a tranca antiga deste portal.
+const CASA_TRANCA = "konfirmu.tranca", CASA_MODO = "konfirmu.modoCrianca";
+function casaLer(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function casaGravar(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { /* sem armazenamento */ } }
+function trancaCasa() { try { const c = JSON.parse(casaLer(CASA_TRANCA) || "null"); return c && c.v === 1 && c.sal && c.h ? c : null; } catch (e) { return null; } }
+function temPin() { return !!(trancaCasa() || estado.pin); }
+function casaEmCrianca() { return casaLer(CASA_MODO) === "1"; }
+function b64(u) { return btoa(String.fromCharCode.apply(null, u)); }
+function deb64(s) { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
+function derivarCasa(d, sal, voltas) {
+  if (!window.crypto || !crypto.subtle || !window.TextEncoder) return Promise.reject(new Error("sem-cripto"));
+  return crypto.subtle.importKey("raw", new TextEncoder().encode(d), "PBKDF2", false, ["deriveBits"])
+    .then((k) => crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt: sal, iterations: voltas }, k, 256))
+    .then((b) => new Uint8Array(b));
+}
+function iguaisCasa(a, b) { if (a.length !== b.length) return false; let x = 0; for (let i = 0; i < a.length; i++) x |= a[i] ^ b[i]; return x === 0; }
+function gravarTrancaCasa(d) {
+  const sal = aleatorio(16), voltas = 150000, antiga = trancaCasa();
+  return derivarCasa(d, sal, voltas).then((h) => {
+    casaGravar(CASA_TRANCA, JSON.stringify({ v: 1, sal: b64(sal), voltas, h: b64(h), cred: antiga ? antiga.cred : null, n: d.length }));
+  });
+}
+function conferirPin(d) {
+  const c = trancaCasa();
+  if (c) return derivarCasa(d, deb64(c.sal), c.voltas).then((h) => iguaisCasa(h, deb64(c.h)));
+  if (estado.pin) return hashPin(estado.pin.sal, d).then((h) => {
+    if (h !== estado.pin.hash) return false;
+    return gravarTrancaCasa(d).then(() => { delete estado.pin; guardar(); return true; }, () => true);
+  });
+  return Promise.resolve(false);
 }
 function teclado() {
   const tk = $("teclado");
@@ -649,23 +684,25 @@ function confirmarPin() {
   if (pin.modo === "definir") { pin.primeiro = d; abrirPin("confirmar"); return; }
   if (pin.modo === "confirmar") {
     if (d !== pin.primeiro) { pin.primeiro = null; abrirPin("definir"); erroPin("pin_diferente"); return; }
-    const sal = hex(aleatorio(16));
-    hashPin(sal, d).then((h) => { estado.pin = { sal, hash: h }; guardar(); pin.primeiro = null; fecharPin(); entrar(); });
+    gravarTrancaCasa(d).then(() => { delete estado.pin; guardar(); pin.primeiro = null; fecharPin(); entrar(); }, () => {
+      const sal = hex(aleatorio(16));
+      hashPin(sal, d).then((h) => { estado.pin = { sal, hash: h }; guardar(); pin.primeiro = null; fecharPin(); entrar(); });
+    });
     return;
   }
   if (pin.modo === "desbloquear") {
-    hashPin(estado.pin.sal, d).then((h) => {
-      if (h === estado.pin.hash) { estado.falhas = 0; guardar(); fecharPin(); sair(); return; }
+    conferirPin(d).then((ok) => {
+      if (ok) { estado.falhas = 0; guardar(); fecharPin(); sair(); return; }
       pin.buf = ""; pinos(); estado.falhas = (estado.falhas || 0) + 1;
       if (estado.falhas >= 5) { estado.falhas = 0; estado.bloqueio = Date.now() + 30000; }
       guardar(); if (bloqueado()) mostrarBloqueio(); else erroPin("pin_errado");
-    });
+    }).catch(() => { pin.buf = ""; pinos(); erroPin("pin_errado"); });
   }
 }
 function bioPossivel() { return !!(window.PublicKeyCredential && window.isSecureContext && location.protocol === "https:"); }
 function b64url(buf) { return btoa(String.fromCharCode.apply(null, new Uint8Array(buf))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); }
 function deb64url(s) { s = s.replace(/-/g, "+").replace(/_/g, "/"); while (s.length % 4) s += "="; const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
-function mostrarBio() { $("b-bio").hidden = !(bioPossivel() && estado.pin && !estado.cred); }
+function mostrarBio() { $("b-bio").hidden = !(bioPossivel() && temPin() && !estado.cred); }
 function registarBio() {
   navigator.credentials.create({ publicKey: { rp: { name: "Konfirmu" }, user: { id: aleatorio(16), name: "familia", displayName: "Família" }, challenge: aleatorio(32),
     pubKeyCredParams: [{ type: "public-key", alg: -7 }, { type: "public-key", alg: -257 }], authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required" }, timeout: 60000 } })
@@ -711,7 +748,7 @@ if (RETRATO >= 0) { document.body.classList.add("retrato"); modo = "retrato"; $(
 else if (Q.has("filme")) iniciarFilme();
 else mudarModo("familia");
 aplicar(); mostrarBio();
-if (estado.crianca && estado.pin && RETRATO < 0) entrar();
+if ((trancaCasa() ? casaEmCrianca() : estado.crianca) && temPin() && RETRATO < 0) entrar();
 camP.copy(alvoCamP).add(new THREE.Vector3(0, 0.4, 2.2));
 window.__k3d = { webgl: COM3D, estado: () => ({ modo, foco, cheias: cheias.slice(), cena: cenaAtual, lingua }), sha256js, versao: "2.0.0" };
 if (QUADROS) window.__quadro(0); else requestAnimationFrame(ciclo);

@@ -85,7 +85,7 @@ PORTAIS = [
      ]),
     ("cid", "Cidadão", "Cidadão e saúde",
      "Para o dia a dia: conversar, tratar de cartas e guardar a tua informação no teu aparelho.", [
-         ("konfirmu_chat_offline_v0.1.html", "chat", "Chat de bolso", "Responde com regras escritas. Quando não sabe, diz.", None),
+         ("konfirmu_chat_offline.html", "chat", "Chat de bolso", "Responde com regras escritas. Quando não sabe, diz.", None),  # KON-608: o chat com o portão do 112
          ("patient_vault_offline.html", "saude", "Cofre de saúde", "A tua história de saúde, guardada só neste aparelho.", EM_ENSAIO),
          ("carta_selada.html", "carta", "Carta com selo", "Escreve, põe o selo e imprime.", None),
          ("urna_voto_offline.html", "voto", "Votação sem rede", "Uma votação feita só nos aparelhos de quem vota.", EM_ENSAIO),
@@ -110,7 +110,7 @@ SO_NA_EDICAO_21 = {"Tutor-Girafinha-offline.html", "kcp_family_quiz.html"}
 SO_NA_RAIZ = {"economia_anti_casino.html", "terminal.html"}
 
 CSS = """
-:root{color-scheme:dark;--abissal:#0B192C;--vidro:rgba(15,34,61,.72);--vidro-solido:#0F223D;--pessego:#FF9E7D;--pessego-2:#FF9E7D;--titanio:#F4F7FA;--nevoeiro:#9FB3C8;--aresta:rgba(244,247,250,.12);--aresta-quente:rgba(255,158,125,.5);
+:root{color-scheme:dark;--u-marca:#f7b397;--abissal:#0B192C;--vidro:rgba(15,34,61,.72);--vidro-solido:#0F223D;--pessego:#FF9E7D;--pessego-2:#FF9E7D;--titanio:#F4F7FA;--nevoeiro:#9FB3C8;--aresta:rgba(244,247,250,.12);--aresta-quente:rgba(255,158,125,.5);
 --pagina:#0B192C;--painel:#0F223D;--tinta:#F4F7FA;--tinta2:#9FB3C8;--tinta3:#9FB3C8;--linha:rgba(244,247,250,.12);--azulejo:#0F223D;--u:#FF9E7D;
 --letra:"SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI Variable Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --titulo:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI Variable Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--mola:cubic-bezier(.2,.8,.2,1)}
@@ -120,7 +120,7 @@ html.sem-webgl{background:radial-gradient(130% 75% at 50% 0%,rgba(255,158,125,.1
 body{margin:0 auto;max-width:780px;padding:34px 18px 48px;font:16px/1.55 var(--letra);color:var(--titanio);background:transparent;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
 .ceu{position:fixed;inset:0;width:100%;height:100%;z-index:-1;display:block;pointer-events:none}
 h1{margin:0;font:700 clamp(2.75rem,11vw,4.25rem)/1 var(--titulo);letter-spacing:-.035em;color:var(--titanio)}
-h1 .u{color:var(--pessego);text-shadow:0 0 16px rgba(255,158,125,.5),0 0 40px rgba(255,158,125,.22)}
+h1 .u{color:var(--u-marca);text-shadow:0 0 16px rgba(255,158,125,.5),0 0 40px rgba(255,158,125,.22)}
 .intro{margin:14px 0 0;max-width:30em;font-size:1.0625rem;line-height:1.55;color:var(--titanio)}
 .acoes{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:22px 0 0}
 .letra,.aviao,body .im3d-tools button{flex:none;min-height:44px;padding:0 16px;border:1px solid var(--aresta);border-radius:12px;background:var(--vidro);color:var(--titanio);font:600 .9375rem/1 var(--letra);cursor:pointer;transition:border-color .3s,box-shadow .3s,transform .25s var(--mola)}

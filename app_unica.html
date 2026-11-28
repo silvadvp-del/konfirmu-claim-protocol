@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob: mediastream:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; font-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>Konfirmu</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230B192C'/%3E%3Ctext x='16' y='22.5' font-family='Inter,Arial,sans-serif' font-size='21' font-weight='700' text-anchor='middle' fill='%23FF9E7D'%3Eu%3C/text%3E%3C/svg%3E">
-<style>:root{color-scheme:dark;--abissal:#0B192C;--vidro:rgba(15,34,61,.72);--vidro-solido:#0F223D;--pessego:#FF9E7D;--pessego-2:#FF9E7D;--titanio:#F4F7FA;--nevoeiro:#9FB3C8;--aresta:rgba(244,247,250,.12);--aresta-quente:rgba(255,158,125,.5);
+<style>:root{color-scheme:dark;--u-marca:#f7b397;--abissal:#0B192C;--vidro:rgba(15,34,61,.72);--vidro-solido:#0F223D;--pessego:#FF9E7D;--pessego-2:#FF9E7D;--titanio:#F4F7FA;--nevoeiro:#9FB3C8;--aresta:rgba(244,247,250,.12);--aresta-quente:rgba(255,158,125,.5);
 --pagina:#0B192C;--painel:#0F223D;--tinta:#F4F7FA;--tinta2:#9FB3C8;--tinta3:#9FB3C8;--linha:rgba(244,247,250,.12);--azulejo:#0F223D;--u:#FF9E7D;
 --letra:"SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI Variable Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --titulo:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI Variable Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--mola:cubic-bezier(.2,.8,.2,1)}
@@ -19,7 +19,7 @@ html.sem-webgl{background:radial-gradient(130% 75% at 50% 0%,rgba(255,158,125,.1
 body{margin:0 auto;max-width:780px;padding:34px 18px 48px;font:16px/1.55 var(--letra);color:var(--titanio);background:transparent;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
 .ceu{position:fixed;inset:0;width:100%;height:100%;z-index:-1;display:block;pointer-events:none}
 h1{margin:0;font:700 clamp(2.75rem,11vw,4.25rem)/1 var(--titulo);letter-spacing:-.035em;color:var(--titanio)}
-h1 .u{color:var(--pessego);text-shadow:0 0 16px rgba(255,158,125,.5),0 0 40px rgba(255,158,125,.22)}
+h1 .u{color:var(--u-marca);text-shadow:0 0 16px rgba(255,158,125,.5),0 0 40px rgba(255,158,125,.22)}
 .intro{margin:14px 0 0;max-width:30em;font-size:1.0625rem;line-height:1.55;color:var(--titanio)}
 .acoes{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:22px 0 0}
 .letra,.aviao,body .im3d-tools button{flex:none;min-height:44px;padding:0 16px;border:1px solid var(--aresta);border-radius:12px;background:var(--vidro);color:var(--titanio);font:600 .9375rem/1 var(--letra);cursor:pointer;transition:border-color .3s,box-shadow .3s,transform .25s var(--mola)}
@@ -216,7 +216,7 @@ body .im3d-viewer summary::marker{color:var(--pessego)}
 <section class="portal" id="p-cid" role="tabpanel" aria-labelledby="t-cid">
 <h2>Cidadão e saúde</h2><p class="sub">Para o dia a dia: conversar, tratar de cartas e guardar a tua informação no teu aparelho.</p>
 <div class="grid">
-<a class="card" href="konfirmu_chat_offline_v0.1.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-7l-4 4v-4H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></span><b>Chat de bolso</b><span class="d">Responde com regras escritas. Quando não sabe, diz.</span></a>
+<a class="card" href="konfirmu_chat_offline.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-7l-4 4v-4H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></span><b>Chat de bolso</b><span class="d">Responde com regras escritas. Quando não sabe, diz.</span></a>
 <a class="card" href="patient_vault_offline.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/><path d="M12 9v6M9 12h6"/></svg></span><b>Cofre de saúde</b><span class="d">A tua história de saúde, guardada só neste aparelho.<span class="estado">Em ensaio, ainda não validado</span></span></a>
 <a class="card" href="carta_selada.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1.5"/><path d="m3.5 7 8.5 6.5L20.5 7"/></svg></span><b>Carta com selo</b><span class="d">Escreve, põe o selo e imprime.</span></a>
 <a class="card" href="urna_voto_offline.html"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 11h14v9H5z"/><path d="M9 11V5h6v6"/><path d="M8 15h8"/></svg></span><b>Votação sem rede</b><span class="d">Uma votação feita só nos aparelhos de quem vota.<span class="estado">Em ensaio, ainda não validado</span></span></a>

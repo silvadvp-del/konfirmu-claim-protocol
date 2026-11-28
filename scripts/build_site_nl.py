@@ -37,6 +37,7 @@ import gerar_menu  # noqa: E402
 import tema_2040  # noqa: E402
 import tigelas  # noqa: E402
 import paleta_unica  # noqa: E402  (paleta única de 27-11, 13:14: o sítio passa pelo mesmo conversor da app)
+import selo_versao  # noqa: E402  (selo de versão e data no rodapé de todas as páginas, ordem de 28-11, 04:25)
 
 FONTE = os.path.join(REPO, "site_nl", "fonte_ao_vivo")
 FAMILIA_3D = os.path.join(REPO, "familia3d", "portal_familia_dual_mode.html")  # feito por familia3d/fonte (node build.mjs)
@@ -69,7 +70,7 @@ SETA_FORA = ("↗", "→")  # a seta «↗» (pictográfica) passa a «→»
 # A entrada que está no ar é clara (fundo branco) e violeta. Passa à paleta única pelas variáveis da própria folha.
 ENTRADA_ESCURA = """
 /* 27-11-2026 (ordem do David, 14:53 e 15:32): paleta única — Azul Abissal, vidro, Pêssego Solar, Branco Titânio */
-:root{color-scheme:dark;--kv-v:255,158,125;--kv-m:255,176,136;--kv-p:255,211,194;--kv-g:255,158,125;--kv-l:159,179,200;
+:root{color-scheme:dark;--u-marca:#f7b397;--kv-v:255,158,125;--kv-m:255,158,125;--kv-p:255,211,194;--kv-g:255,158,125;--kv-l:159,179,200;
 --kv-bg:#0B192C;--kv-bg-deep:#0F223D;--kv-bg-top:#0F223D;--kv-text:#F4F7FA;--kv-muted:#9FB3C8;--kv-faint:#9FB3C8;
 --kv-accent:#FF9E7D;--kv-accent2:#FF9E7D;--kv-ink:#0B192C;
 --kv-glass:linear-gradient(160deg,rgba(15,34,61,.92),rgba(15,34,61,.72) 52%,rgba(15,34,61,.86));
@@ -88,6 +89,8 @@ html body .dps-live button[aria-pressed="true"]{background:#FF9E7D;color:#0B192C
 html body .dps-product-brand{background:#0F223D}
 html body .dps-book-hint{color:#9FB3C8}
 html body .textlink{display:block;margin:6px 0}
+/* 28-11-2026, 04:25 (ordem do David): o «u» de Konfirmu em #f7b397, só aí */
+.wordmark span{color:var(--u-marca)}
 """
 
 
@@ -342,8 +345,16 @@ def anterior():
 
 
 # ---------------------------------------------------------------- tudo
+def selar_paginas(ficheiros, selo):
+    """O selo de versão (r10 · commit · data) em cada página HTML do pacote; idempotente."""
+    for n in sorted(ficheiros):
+        if n.endswith(".html") and not n.startswith("_anterior/"):
+            ficheiros[n] = selo_versao.aplicar(ficheiros[n].decode("utf-8"), selo).encode("utf-8")
+
+
 def construir(saida):
     ficheiros = {}
+    selo = selo_versao.ler(REPO)
     menu, _ = menu_web()
     # Entrada da app: o Modo Família 3D, com as girafinhas em 3D (ordem do David de 27-11-2026, 17:42).
     # O menu dos 3 portais fica em app_unica.html; a marca e o ícone dos portais levam lá, o «3D» do menu traz de volta.
@@ -365,6 +376,7 @@ def construir(saida):
         zipo = pacote_offline(tmp)
     ficheiros["app/konfirmu-offline-2030.zip"] = zipo
     ficheiros["app/konfirmu-offline-2030.zip.sha256"] = ("%s  konfirmu-offline-2030.zip\n" % hashlib.sha256(zipo).hexdigest()).encode()
+    selar_paginas(ficheiros, selo)  # antes da versão do sw.js: um selo novo chega a quem tinha a cache antiga
     pecas = sorted(n[4:] for n in ficheiros if n.startswith("app/") and not n.endswith((".zip", ".sha256")))
     versao = hashlib.sha256(b"".join(ficheiros["app/" + p] for p in pecas)).hexdigest()[:12]
     ficheiros["app/sw.js"] = sw_web(["./" + p for p in pecas], versao).encode("utf-8")
@@ -378,6 +390,7 @@ def construir(saida):
             c = os.path.join(raiz, n)
             ficheiros["protocolo/correcoes_ledger/" + os.path.relpath(c, os.path.join(REPO, "ferramentas", "correcoes_ledger"))] = ler(c, True)
     ficheiros.update(anterior())
+    selar_paginas(ficheiros, selo)  # a entrada e o manifesto também levam o selo (as da app já o têm: fica igual)
     somas = "".join("%s  %s\n" % (hashlib.sha256(ficheiros[n]).hexdigest(), n) for n in sorted(ficheiros))
     ficheiros["SHA256SUMS.txt"] = somas.encode("utf-8")
     alvo = os.path.join(saida, "konfirmu")
@@ -392,6 +405,7 @@ def construir(saida):
     total = sum(len(c) for c in ficheiros.values())
     raiz = hashlib.sha256(ficheiros["SHA256SUMS.txt"]).hexdigest()
     print("konfirmu/: %d ficheiros · %d bytes · SHA-256 do SHA256SUMS.txt: %s" % (len(ficheiros), total, raiz))
+    print("selo de versão: %s" % selo_versao.texto(selo))
     import zlib
     if "ng" in zlib.ZLIB_RUNTIME_VERSION:
         # os ZIP comprimem de outra maneira com a zlib-ng: tudo funciona, mas os bytes deixam de bater com os do GitHub

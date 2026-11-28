@@ -197,7 +197,7 @@ def main():
                                          ("03_app_familia_tigelas", "/konfirmu/app/app_unica.html", "document.getElementById('t-fam').click()"),
                                          ("04_terminal", "/konfirmu/app/terminal.html", "window.KonfirmuTerminal.correr('selftest')"),
                                          ("05_girafinhas", "/konfirmu/app/girafinhas_criancas_facil.html", None),
-                                         ("06_chat_de_bolso", "/konfirmu/app/konfirmu_chat_offline_v0.1.html", None),
+                                         ("06_chat_de_bolso", "/konfirmu/app/konfirmu_chat_offline.html", None),  # KON-608: o cartão abre o chat com o 112
                                          ("07_verificar_ata", "/konfirmu/app/chronolex_verify.html", None),
                                          ("08_manifesto", "/konfirmu/manifesto.html", None)]:
                 page = ctx.new_page()

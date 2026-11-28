@@ -2,7 +2,9 @@
 """Paleta única da Konfirmu — ordem do David de 27-11-2026, 13:14 (decisão cromática fechada).
 
 Cor oficial e exclusiva: Pêssego Solar #FF9E7D sobre Azul Abissal #0B192C, texto Branco Titânio #F4F7FA
-e Cinza Nevoeiro #9FB3C8, vidro rgba(15, 34, 61, 0.72). O #f7b397 está reformado. Carmesim #EF4444 só no
+e Cinza Nevoeiro #9FB3C8, vidro rgba(15, 34, 61, 0.72). O #f7b397 só existe no «u» de Konfirmu (ordem do David
+de 28-11-2026, 04:25): declara-se uma vez como «--u-marca:#f7b397» e usa-se com color:var(--u-marca) só nas
+regras da marca (.u, .marca b, .wordmark span). Em qualquer outro sítio continua proibido. O #FFB088 está recusado. Carmesim #EF4444 só no
 alerta real 112 / 116 111. Zero verde, zero violeta, zero amarelo berrante, zero fundos brancos crus,
 um só tema escuro. Zero emojis de sistema: ícones de linha 1,5 px (scripts/icones_linha.py).
 
@@ -263,8 +265,15 @@ def papel_var_pelo_nome(nome):
     return "desenho"
 
 
+U_MARCA = "--u-marca:#f7b397"   # a única forma aceite do #f7b397 (o «u» de Konfirmu)
+RE_USO_U = re.compile(r"var\(\s*--u-marca\s*\)")
+RE_SELETOR_U = re.compile(r"(^|[\s,>+~])(\.u|\.marca\s+b|\.wordmark\s+span)(?![\w-])")
+
+
 def trocar_cores(valor, papel, ctx):
     """Troca todas as cores de um valor CSS/atributo (hex, rgb[a](), nomes)."""
+    if getattr(ctx, "prop", None) == "--u-marca":
+        return valor  # a cor do «u» de Konfirmu fica como está (só pode ser #f7b397; o portão confere)
     if papel == "sombra" and ctx.prop in ("filter", "-webkit-filter") and "drop-shadow" not in valor:
         return valor
 
@@ -856,6 +865,15 @@ def verificar_texto(nome, txt, falhas):
     # ids/âncoras do tipo href="#add" não são cores
     sem_ancoras = re.sub(r'(href|xlink:href|url\()\s*=?\s*["\']?#[\w-]+', "", sem_comentarios)
     sem_ancoras = re.sub(r"getElementById\([^)]*\)|querySelector(All)?\([^)]*\)", "", sem_ancoras)
+    # o #f7b397 só vale na declaração única do «u» (--u-marca:#f7b397); o portão tira-a antes de medir as cores
+    n_u = len(re.findall(r"--u-marca\s*:\s*#f7b397(?![0-9a-fA-F])", sem_ancoras, re.I))
+    sem_ancoras = re.sub(r"--u-marca\s*:\s*#f7b397(?![0-9a-fA-F])", "--u-marca:", sem_ancoras, flags=re.I)
+    if re.search(r"--u-marca\s*:\s*(?!#f7b397)[^;}]", re.sub(r"--u-marca:(?=[;}])", "", sem_ancoras), re.I):
+        falhas.append("%s: --u-marca com outra cor (só pode ser #f7b397)" % nome)
+    for bl in re.findall(r"<style\b[^>]*>(.*?)</style>", sem_comentarios, re.S | re.I) + ([sem_comentarios] if nome.endswith(".css") else []):
+        for regra in re.finditer(r"([^{}]*)\{([^{}]*)\}", bl):
+            if RE_USO_U.search(regra.group(2)) and not RE_SELETOR_U.search(regra.group(1).strip()):
+                falhas.append("%s: var(--u-marca) fora da marca (%s)" % (nome, regra.group(1).strip()[:60]))
     for pos, tok, rgb, alfa in cores_do_texto(sem_ancoras):
         if rgb in OFICIAIS:
             if rgb == C:
@@ -866,8 +884,10 @@ def verificar_texto(nome, txt, falhas):
         if alfa == 0:
             continue  # transparente: não pinta nada
         falhas.append("%s: cor fora da paleta %s" % (nome, tok))
-    if "f7b397" in txt.lower():
-        falhas.append("%s: #f7b397 reformado ainda presente" % nome)
+    if txt.lower().count("f7b397") != n_u:
+        falhas.append("%s: #f7b397 fora do «u» de Konfirmu" % nome)
+    if re.search(r"ffb088|255\s*,\s*176\s*,\s*136", txt, re.I):
+        falhas.append("%s: #FFB088 recusado (ordem de 28-11, 04:25)" % nome)
     # 2. nomes de cores proibidas, só dentro de CSS (blocos <style>, atributos style="" e ficheiros .css)
     blocos = re.findall(r"<style\b[^>]*>(.*?)</style>", sem_comentarios, re.S | re.I) + \
         re.findall(r'\sstyle\s*=\s*["\']([^"\']*)', sem_comentarios, re.I)

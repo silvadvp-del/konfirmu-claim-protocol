@@ -1,4 +1,4 @@
-:root{--abissal:#0B192C;--vidro:rgba(15,34,61,.72);--solar:#FF9E7D;--titanio:#F4F7FA;--nevoeiro:#9FB3C8;--borda:rgba(255,158,125,.24);--letra:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+:root{--u-marca:#f7b397;--abissal:#0B192C;--vidro:rgba(15,34,61,.72);--solar:#FF9E7D;--titanio:#F4F7FA;--nevoeiro:#9FB3C8;--borda:rgba(255,158,125,.24);--letra:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:#0B192C;color:#F4F7FA;font:16px/1.45 var(--letra);-webkit-text-size-adjust:100%;overflow:hidden}
 button,select,a{font:inherit;color:inherit}
@@ -9,7 +9,7 @@ svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:
 .vis-esc{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .topo{position:fixed;left:0;right:0;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:max(14px,env(safe-area-inset-top)) 18px 8px}
 .marca{font-weight:850;font-size:1.65rem;letter-spacing:-.025em;color:#F4F7FA;text-shadow:0 0 24px rgba(255,158,125,.28)}
-.marca .u{color:#FF9E7D;text-shadow:0 0 18px rgba(255,158,125,.75)}
+.marca .u{color:var(--u-marca);text-shadow:0 0 18px rgba(255,158,125,.75)}
 .acoes{display:flex;align-items:center;gap:8px}a.marca{text-decoration:none}a.marca:focus-visible,.portais:focus-visible{outline:2px solid #FF9E7D;outline-offset:3px;border-radius:10px}
 .portais{display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;border-radius:14px;color:#F4F7FA}.portais svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.5}
 .lingua{display:flex;align-items:center;gap:6px;min-height:44px;padding:0 10px;border-radius:14px;color:#9FB3C8}
