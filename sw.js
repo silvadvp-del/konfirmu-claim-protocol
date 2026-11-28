@@ -9,7 +9,10 @@
 //     Nome novo, para o início novo chegar a quem já tinha a v7 (a cache serve primeiro o que tem guardado).
 // v10 (27-11-2026): memória (ordem das 17:42) — o céu vivo passa para um trabalhador (assets/ceu_vivo.js) e a imersão e o menu
 //     mudam para não refazer estilos a cada quadro. Nome novo, para as peças novas chegarem a quem já tinha a v9.
-const CACHE_NAME = "konfirmu-app-unica-v10:" + self.registration.scope;
+// v10 (27-11-2026, ramo da rádio): a Rádio com Prova lê a taxa real do aparelho e recusa tramas cortadas.
+// v11 (28-11-2026, junção KON-627): juntam-se as duas v10 (menu mais leve + céu no trabalhador, e a Rádio nova).
+//     Nome novo, para as duas mudanças chegarem a quem já tinha qualquer uma das v10.
+const CACHE_NAME = "konfirmu-app-unica-v11:" + self.registration.scope;
 const OPCIONAIS = ["./"];
 const ASSETS = ["./app_unica.html", "./girafinhas_criancas_facil.html", "./sala_natal_girafinhas.html", "./estudio_video_criancas.html", "./executor_criancas.html", "./radio_selo.html", "./carta_selada.html", "./manifest.json", "./assets/qrcode.js", "./assets/nacl-fast.min.js", "./assets/nacl-util.min.js", "./assets/imersao.css", "./assets/imersao.js", "./konfirmu_chat_offline_v0.1.html", "./konfirmu_chat_offline.html", "./verificador_offline.html", "./patient_vault_offline.html", "./ficha_campo.html", "./urna_voto_offline.html", "./testemunha_offline.html", "./chronolex_ata.html", "./chronolex_photo_seal.html", "./chronolex_verify.html", "./regua_do_planeta.html", "./neverland_family_quest.html", "./kcp_art_music_studio.html", "./webrtc_local.html", "./avisos_legais.html", "./terminal.html", "./assets/terminal_worker.js", "./assets/ceu_vivo.js", "./assets/konfirmu-2040.js", "./assets/kcp_ed_estrito.js", "./economia_anti_casino.html"];
 self.addEventListener("install", (event) => {

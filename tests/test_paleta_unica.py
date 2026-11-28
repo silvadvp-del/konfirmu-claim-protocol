@@ -7,7 +7,7 @@ Corre com:
 O que prova (cada linha diz PASSA ou FALHA; sai com 1 se alguma falhar):
   A. sem navegador: só cores da paleta (#FF9E7D, #0B192C, #F4F7FA, #9FB3C8, vidro), #f7b397 reformado, um só tema
      escuro, zero emojis de sistema; a marca de revisão jurídica nas 24 línguas dos avisos; o motor KSHA/2 igual
-     ao ksha_fluxo.js em todas as páginas que o levam; nacl-util e avisos legais na cache do sw.js v9.
+     ao ksha_fluxo.js em todas as páginas que o levam; nacl-util e avisos legais na cache do sw.js v11.
   B. navegador: 13 ficheiros acima de 124 KB conferem no verificador público e no verificador offline
      (SHA-256 igual ao do Python), «CONFERE» em pêssego #FF9E7D sobre azul abissal #0B192C.
   C. navegador: contraste WCAG AAA medido no ecrã de cada página (7:1; 4,5:1 em letra grande);
@@ -68,7 +68,7 @@ def parte_a(pacote=None):
     prova("motor KSHA/2 igual ao ksha_fluxo.js em %d páginas" % len(copias), len(copias) >= 4 and all(c for _, c in copias),
           ", ".join(n for n, c in copias if not c))
     sw = (RAIZ / "sw.js").read_text(encoding="utf-8")
-    prova("sw.js v10 guarda nacl-util e os avisos legais", '"konfirmu-app-unica-v10:"' in sw and "./assets/nacl-util.min.js" in sw
+    prova("sw.js v11 guarda nacl-util e os avisos legais", '"konfirmu-app-unica-v11:"' in sw and "./assets/nacl-util.min.js" in sw
           and "./avisos_legais.html" in sw)
     sem_marca = [p.name for p in RAIZ.glob("*.html") if p.name != "app_unica.html" and paleta.MARCA not in p.read_text(encoding="utf-8")]
     prova("todas as páginas estáticas passaram pela paleta única", not sem_marca, ", ".join(sem_marca))
