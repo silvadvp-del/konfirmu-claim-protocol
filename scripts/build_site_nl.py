@@ -89,7 +89,7 @@ html body .dps-live button[aria-pressed="true"]{background:#FF9E7D;color:#0B192C
 html body .dps-product-brand{background:#0F223D}
 html body .dps-book-hint{color:#9FB3C8}
 html body .textlink{display:block;margin:6px 0}
-/* 28-11-2026, 04:25 (ordem do David): o «u» de Konfirmu em #f7b397, só aí */
+/* 28-11-2026, 04:25 (ordem do David): o «u» de Konfirmu na cor própria da marca (--u-marca), só aí */
 .wordmark span{color:var(--u-marca)}
 """
 

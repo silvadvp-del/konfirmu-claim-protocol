@@ -51,7 +51,7 @@ NOMEADAS = {"white": (255, 255, 255), "black": (0, 0, 0), "red": (255, 0, 0), "g
             "goldenrod": (218, 165, 32), "crimson": (220, 20, 60), "tomato": (255, 99, 71)}
 
 RE_HEX = re.compile(r"#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{4}|[0-9a-fA-F]{3})(?![0-9a-zA-Z_-])")
-RE_FUNC = re.compile(r"rgba?\(\s*([^()]*?)\s*\)", re.I)
+RE_FUNC = re.compile(r"(?<![\w.$])rgba?\(\s*([^()]*?)\s*\)", re.I)  # «setRGB(1,1,1)» do three.js não é uma cor (28-11)
 RE_NOMEADA = re.compile(r"(?<![\w#.-])(" + "|".join(sorted(NOMEADAS, key=len, reverse=True)) + r")(?![\w-])", re.I)
 RE_COR = re.compile(RE_HEX.pattern + "|" + RE_FUNC.pattern, re.I)
 
