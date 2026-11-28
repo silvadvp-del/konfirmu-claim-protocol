@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "ga",
+  "nome": "Gaeilge",
+  "nome_pt": "Irlandês",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Teaghlach",
+ "fam.titulo": "Oideachas agus teaghlach",
+ "fam.sub": "Foghlaim agus spraoi le chéile mar theaghlach, leis an gcúram céanna don phríobháideacht.",
+ "fam.comeca": "Tosaigh anseo",
+ "fam.lingua": "Teanga",
+ "fam.procurar_lingua": "Cuardaigh teanga",
+ "fam.girafinhas.t": "Na chéad chéimeanna",
+ "fam.girafinhas.d": "Trí bhrú, guth agus dathanna, do dhuine nár úsáid fón riamh.",
+ "fam.tutor.t": "Teagascóir",
+ "fam.tutor.d": "Múineann céim ar chéim, fiú gan líonra.",
+ "fam.quiz.t": "Tráth na gceist teaghlaigh",
+ "fam.quiz.d": "Ceisteanna le himirt mar theaghlach, nó idir dhaoine fásta amháin.",
+ "fam.natal.t": "Nollaig leis an teaghlach",
+ "fam.natal.d": "Cluichí, teimpléid pháipéir agus teastas le coinneáil.",
+ "fam.video.t": "Stiúideo físe",
+ "fam.video.d": "Déan scannán gan idirlíon agus coinnigh é le séala.",
+ "fam.contas.t": "Suimeanna le séala",
+ "fam.contas.d": "Déan suimeanna agus coinnigh an toradh le séala.",
+ "fam.arte.t": "Stiúideo ealaíne",
+ "fam.arte.d": "Ceol agus líníocht, le d'ainm.",
+ "fam.regua.t": "Rialóir an phláinéid",
+ "fam.regua.d": "An bhfuil am fós againn an pláinéad a shábháil?",
+ "fam.aventura.t": "Eachtra teaghlaigh",
+ "fam.aventura.d": "Cluiche eachtraíochta le himirt le chéile."
+}

@@ -1,0 +1,93 @@
+:root{--abissal:#0B192C;--vidro:rgba(15,34,61,.72);--solar:#FF9E7D;--titanio:#F4F7FA;--nevoeiro:#9FB3C8;--borda:rgba(255,158,125,.24);--letra:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#0B192C;color:#F4F7FA;font:16px/1.45 var(--letra);-webkit-text-size-adjust:100%;overflow:hidden}
+button,select,a{font:inherit;color:inherit}
+#palco{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
+svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.vidro{background:rgba(15,34,61,.72);-webkit-backdrop-filter:blur(14px) saturate(1.15);backdrop-filter:blur(14px) saturate(1.15);border:1px solid rgba(255,158,125,.22);box-shadow:0 18px 44px rgba(11,25,44,.6),inset 0 1px 0 rgba(244,247,250,.07)}
+.solar{background:linear-gradient(180deg,rgba(255,158,125,.98),rgba(255,158,125,.86));color:#0B192C;border:0;box-shadow:0 0 0 1px rgba(255,158,125,.4),0 10px 30px rgba(255,158,125,.35)}
+.vis-esc{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.topo{position:fixed;left:0;right:0;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:max(14px,env(safe-area-inset-top)) 18px 8px}
+.marca{font-weight:850;font-size:1.65rem;letter-spacing:-.025em;color:#F4F7FA;text-shadow:0 0 24px rgba(255,158,125,.28)}
+.marca .u{color:#FF9E7D;text-shadow:0 0 18px rgba(255,158,125,.75)}
+.acoes{display:flex;align-items:center;gap:8px}a.marca{text-decoration:none}a.marca:focus-visible,.portais:focus-visible{outline:2px solid #FF9E7D;outline-offset:3px;border-radius:10px}
+.portais{display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;border-radius:14px;color:#F4F7FA}.portais svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.5}
+.lingua{display:flex;align-items:center;gap:6px;min-height:44px;padding:0 10px;border-radius:14px;color:#9FB3C8}
+.lingua select{max-width:150px;min-height:44px;border:0;background:transparent;color:#F4F7FA;outline:0}
+.lingua option{background:#0B192C;color:#F4F7FA}
+main{position:fixed;inset:0;z-index:3;pointer-events:none}
+main>*{pointer-events:auto}
+.cabeca{position:absolute;left:18px;right:18px;top:calc(max(14px,env(safe-area-inset-top)) + 54px);pointer-events:none}
+.rotulo{margin:0;color:#FF9E7D;font-size:.8rem;font-weight:750;letter-spacing:.16em;text-transform:uppercase}
+.cabeca h1{margin:2px 0 4px;font-size:clamp(1.55rem,5.6vw,2.3rem);line-height:1.1;letter-spacing:-.02em;text-shadow:0 4px 24px rgba(11,25,44,.9)}
+.sub{margin:0;max-width:34em;color:#9FB3C8;text-shadow:0 2px 14px rgba(11,25,44,.95),0 0 2px rgba(11,25,44,.9)}
+.barra-botoes{position:absolute;left:18px;right:18px;top:calc(max(14px,env(safe-area-inset-top)) + 150px);display:flex;flex-wrap:wrap;gap:8px}
+@media (max-width:480px){.barra-botoes{top:calc(max(14px,env(safe-area-inset-top)) + 158px)}.pilula{min-height:44px;padding:0 15px;font-size:.92rem}}
+.pilula{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 18px;border-radius:999px;cursor:pointer;font-weight:700;color:#F4F7FA}
+.pilula.solar{color:#0B192C}
+.cartao{position:absolute;left:14px;right:14px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 104px);display:flex;align-items:center;gap:14px;padding:14px 14px 14px 16px;border-radius:22px;max-width:560px;margin:0 auto}
+.cartao-ico{display:grid;place-items:center;width:48px;height:48px;border-radius:16px;color:#FF9E7D;background:rgba(255,158,125,.1);border:1px solid rgba(255,158,125,.3)}
+.cartao-ico svg{width:26px;height:26px}
+.cartao-texto{flex:1;min-width:0}
+.cartao h2{margin:0;font-size:1.15rem;line-height:1.2}
+.cartao p{margin:3px 0 0;color:#9FB3C8;font-size:.92rem}
+.abrir{display:grid;place-items:center;width:52px;height:52px;border-radius:18px;text-decoration:none}
+.abrir svg{width:24px;height:24px;stroke-width:1.5}
+[dir=rtl] .abrir svg,[dir=rtl] .seta svg{transform:scaleX(-1)}
+.setas{position:absolute;left:14px;right:14px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 34px);display:flex;align-items:center;justify-content:space-between;gap:10px;max-width:560px;margin:0 auto}
+.seta{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;cursor:pointer}
+.entrada{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 12px;border-radius:18px;text-decoration:none;color:#F4F7FA;font-size:.9rem;line-height:1.15;text-align:center}
+.entrada svg{color:#FF9E7D}
+.entrada b{color:#FF9E7D}
+.rodape{position:absolute;left:10px;right:10px;bottom:max(8px,env(safe-area-inset-bottom));margin:0;text-align:center;color:#9FB3C8;font-size:.72rem;line-height:1.3;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nota-pin{margin:12px 0 0;color:#9FB3C8;font-size:.8rem}
+.selo.selo-ia{border-color:rgba(159,179,200,.55);color:#9FB3C8;margin-top:4px}
+.nota-pin.marca-ia{margin-top:6px;font-style:italic}
+.selo{display:inline-block;margin-inline-start:6px;padding:1px 8px;border-radius:999px;border:1px solid rgba(255,158,125,.6);color:#FF9E7D;font-weight:650;font-size:.68rem;letter-spacing:.02em;text-transform:none;vertical-align:1px}
+#tigelas{position:fixed;inset:0;z-index:2;pointer-events:none}
+.tig{position:absolute;display:block;padding:0;border:0;background:transparent;border-radius:40%;cursor:pointer;pointer-events:auto;-webkit-tap-highlight-color:transparent;visibility:hidden}
+.tig:focus-visible{outline:2px solid #FF9E7D;outline-offset:4px}
+.tig-ico{display:none}
+.pontos{position:absolute;left:0;right:0;bottom:-14px;display:none;justify-content:center;gap:5px}
+.pontos i{display:block;width:11px;height:11px;border-radius:50%;border:1.5px solid #FF9E7D;background:rgba(11,25,44,.55)}
+.pontos i.cheio{background:#FF9E7D;box-shadow:0 0 10px rgba(255,158,125,.9)}
+.bem{position:absolute;left:0;right:0;top:-26px;text-align:center;font-weight:800;color:#FF9E7D;text-shadow:0 0 14px rgba(255,158,125,.9)}
+body[data-modo=crianca] .pontos{display:flex}
+#crianca .barra-crianca{position:absolute;left:12px;right:12px;top:max(12px,env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;gap:10px}
+.instrucao{margin:0;padding:10px 16px;border-radius:16px;font-weight:750;font-size:1.05rem}
+.sair{min-height:44px;padding:0 14px;border-radius:14px;color:#9FB3C8;font-size:.88rem;cursor:pointer}
+.final{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:18px;padding:28px 30px;border-radius:28px;text-align:center;width:min(92vw,420px)}
+.final h2{margin:0;font-size:1.7rem;color:#FF9E7D;text-shadow:0 0 22px rgba(255,158,125,.7)}
+body.modo-crianca{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;overscroll-behavior:none}
+.fechar{position:absolute;top:max(12px,env(safe-area-inset-top));right:12px;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;cursor:pointer}
+.legenda{position:absolute;left:50%;bottom:calc(max(14px,env(safe-area-inset-bottom)) + 44px);transform:translateX(-50%);width:min(92vw,980px);margin:0;padding:14px 22px;border-radius:20px;text-align:center;font-size:clamp(1.05rem,3.2vw,1.9rem);font-weight:750;line-height:1.25}
+.contador{position:absolute;left:0;right:0;top:30%;text-align:center;font-size:clamp(3.4rem,15vw,9rem);font-weight:850;letter-spacing:-.03em;color:#FF9E7D;text-shadow:0 0 40px rgba(255,158,125,.75)}
+.marca-filme{position:absolute;left:0;right:0;top:28%;text-align:center}
+.marca.grande{font-size:clamp(3.2rem,13vw,8rem)}
+.marca-filme p{margin:10px 0 0;font-size:clamp(1.1rem,3.4vw,2rem);font-weight:700}
+.marca-filme .nota{color:#9FB3C8;font-size:clamp(.85rem,2.2vw,1.1rem);font-weight:500;font-family:ui-monospace,Menlo,Consolas,monospace}
+.regua{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:10px;padding:10px 16px max(10px,env(safe-area-inset-bottom));background:rgba(11,25,44,.72);color:#9FB3C8;font:600 .78rem/1 ui-monospace,Menlo,Consolas,monospace}
+.regua i{position:absolute;left:0;top:0;height:3px;width:0;background:#FF9E7D;box-shadow:0 0 12px rgba(255,158,125,.9)}
+.modal{position:fixed;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(11,25,44,.66)}
+.caixa{width:min(360px,100%);padding:22px;border-radius:26px}
+.caixa h2{margin:0 0 12px;font-size:1.1rem;line-height:1.3}
+.pinos{display:flex;justify-content:center;gap:10px;min-height:22px;margin:6px 0 14px}
+.pinos i{display:block;width:16px;height:16px;border-radius:50%;border:1.5px solid #FF9E7D}
+.pinos i.cheio{background:#FF9E7D;box-shadow:0 0 12px rgba(255,158,125,.9)}
+.erro{min-height:1.4em;margin:0 0 10px;text-align:center;color:#FF9E7D;font-weight:650}
+.teclado{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tecla{min-height:56px;border-radius:18px;border:1px solid rgba(255,158,125,.22);background:rgba(11,25,44,.55);font-size:1.25rem;font-weight:700;cursor:pointer}
+.tecla.ok{border:0;background:#FF9E7D;color:#0B192C}
+.teclado.parado .tecla{opacity:.4;pointer-events:none}
+.acoes-pin{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-top:14px}
+.aviso{position:fixed;left:50%;bottom:26px;z-index:10;transform:translateX(-50%);padding:12px 18px;border-radius:16px;font-weight:650}
+[hidden]{display:none!important}
+.tig:focus-visible,.pilula:focus-visible,.seta:focus-visible,.entrada:focus-visible,.abrir:focus-visible,.tecla:focus-visible,.fechar:focus-visible,.sair:focus-visible,select:focus-visible{outline:2px solid #FF9E7D;outline-offset:3px}
+body.retrato #topo,body.retrato main,body.retrato #tigelas{display:none!important}
+body.sem3d #palco{display:none}
+body.sem3d{background:radial-gradient(120% 70% at 50% 0%,rgba(255,158,125,.16),rgba(11,25,44,0) 60%),#0B192C}
+body.sem3d #tigelas{position:fixed;left:0;right:0;top:46%;bottom:200px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 14px;align-content:center}
+body.sem3d .tig{position:relative;visibility:visible;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 38% 30%,rgba(244,247,250,.55),rgba(255,158,125,.95) 36%,rgba(255,158,125,.6) 70%,rgba(11,25,44,.2));box-shadow:0 10px 26px rgba(11,25,44,.7)}
+body.sem3d .tig-ico{display:grid;place-items:center;height:100%;color:#0B192C}
+body.sem3d[data-modo=crianca] #tigelas{top:90px;bottom:24px;grid-template-columns:repeat(2,1fr)}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}

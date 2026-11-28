@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "ha",
+  "nome": "Hausa",
+  "nome_pt": "Haúça",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Iyali",
+ "fam.titulo": "Ilimi da iyali",
+ "fam.sub": "Mu koya kuma mu yi wasa tare a matsayin iyali, da kulawa iri ɗaya ga sirri.",
+ "fam.comeca": "Fara a nan",
+ "fam.lingua": "Harshe",
+ "fam.procurar_lingua": "Nemi harshe",
+ "fam.girafinhas.t": "Matakan farko",
+ "fam.girafinhas.d": "Taɓawa uku, murya da launuka, ga wanda bai taɓa amfani da waya ba.",
+ "fam.tutor.t": "Malami",
+ "fam.tutor.d": "Yana koyarwa mataki-mataki, ko babu hanyar sadarwa.",
+ "fam.quiz.t": "Tambayoyin iyali",
+ "fam.quiz.d": "Tambayoyi don wasa tare da iyali, ko tsakanin manya kawai.",
+ "fam.natal.t": "Kirsimeti tare da iyali",
+ "fam.natal.d": "Wasanni, samfuran takarda da takardar shaida don ajiyewa.",
+ "fam.video.t": "Ɗakin bidiyo",
+ "fam.video.d": "Ɗauki bidiyo ba tare da intanet ba kuma ajiye shi da hatimi.",
+ "fam.contas.t": "Lissafi mai hatimi",
+ "fam.contas.d": "Yi lissafi kuma ajiye sakamakon da hatimi.",
+ "fam.arte.t": "Ɗakin fasaha",
+ "fam.arte.d": "Kiɗa da zane, da sunanka.",
+ "fam.regua.t": "Rular duniya",
+ "fam.regua.d": "Shin har yanzu muna da lokacin ceton duniya?",
+ "fam.aventura.t": "Kasadar iyali",
+ "fam.aventura.d": "Wasan kasada don yin wasa tare."
+}

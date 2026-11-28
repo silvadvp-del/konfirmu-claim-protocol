@@ -17,14 +17,68 @@
   let frame = 0;
   let x = 0, y = 0, origin = null;
   let ownsFullscreen = false;
+  // A inclinação vai direta para o «transform» de cada elemento à vista; a luz usa duas propriedades próprias
+  // do elemento (não herdadas). Só se escreve quando o valor muda: passos de 0,5° na inclinação (menos de meio
+  // píxel na borda de um cartão) e de 4 % na luz (uma sombra muito suave), com margem para o tremor da mão.
+  // Assim, a cada quadro o navegador recalcula poucos elementos e a memória fica estável.
+  const ALVOS = '.card,.game-card,.im3d-frame,.im3d-scene,.cert,.parchment,.hero';
+  let alvos = [], recolha = 0, chaveInc = null, chaveLuz = null, inclinacao = '', luz = null;
+  const visiveis = new Set();
+  const vigia = 'IntersectionObserver' in window ? new IntersectionObserver(entradas => {
+    for (const e of entradas) {
+      if (e.isIntersecting) { visiveis.add(e.target); escrever(e.target, 3); }
+      else visiveis.delete(e.target);
+    }
+  }, { rootMargin: '0px' }) : null;
+  function escrever(el, quais) {
+    if (!active) return;
+    const s = el.style;
+    if (quais & 1) s.transform = inclinacao;
+    if (quais & 2) {
+      if (luz) { s.setProperty('--lx', luz[0]); s.setProperty('--ly', luz[1]); }
+      else { s.removeProperty('--lx'); s.removeProperty('--ly'); }
+    }
+  }
+  function recolher() {
+    const novos = Array.from(document.querySelectorAll(ALVOS));
+    if (vigia) {
+      const conjunto = new Set(novos);
+      for (const el of alvos) if (!conjunto.has(el)) { vigia.unobserve(el); visiveis.delete(el); }
+      for (const el of novos) vigia.observe(el);
+    }
+    alvos = novos;
+    recolha = performance.now();
+  }
+  function limpar() {
+    if (vigia) vigia.disconnect();
+    visiveis.clear();
+    for (const el of alvos) { el.style.transform = ''; el.style.removeProperty('--lx'); el.style.removeProperty('--ly'); }
+    alvos = [];
+    chaveInc = chaveLuz = null;
+    rx = ry = 0; lx = 50; ly = 35;
+  }
+  // Segue o valor em passos fixos, com margem de um passo (histerese): sem saltos para trás e para a frente.
+  const segue = (atual, alvo, p) => Math.abs(alvo - atual) >= p ? Math.round(alvo / p) * p + 0 : atual;
+  let rx = 0, ry = 0, lx = 50, ly = 35;
 
   function paint() {
     frame = 0;
-    const dx = reduced.matches ? 0 : x, dy = reduced.matches ? 0 : y;
-    root.style.setProperty('--rx', (-dy * 8).toFixed(2) + 'deg');
-    root.style.setProperty('--ry', (dx * 12).toFixed(2) + 'deg');
-    root.style.setProperty('--lx', (50 + dx * 40).toFixed(1) + '%');
-    root.style.setProperty('--ly', (35 + dy * 34).toFixed(1) + '%');
+    if (!active) return;
+    if (performance.now() - recolha > 1000) { recolher(); chaveInc = chaveLuz = null; }
+    let quais = 0;
+    if (reduced.matches) {
+      if (chaveInc !== '') { chaveInc = inclinacao = ''; quais |= 1; }
+      if (chaveLuz !== '') { chaveLuz = ''; luz = null; quais |= 2; }
+    } else {
+      rx = segue(rx, -y * 8, .5); ry = segue(ry, x * 12, .5);
+      lx = segue(lx, 50 + x * 40, 4); ly = segue(ly, 35 + y * 34, 4);
+      const inc = 'perspective(850px) rotateX(' + rx.toFixed(1) + 'deg) rotateY(' + ry.toFixed(1) + 'deg)';
+      if (inc !== chaveInc) { chaveInc = inclinacao = inc; quais |= 1; }
+      const l = [lx.toFixed(0) + '%', ly.toFixed(0) + '%'];
+      const k = l.join(' ');
+      if (k !== chaveLuz) { chaveLuz = k; luz = l; quais |= 2; }
+    }
+    if (quais) for (const el of (vigia ? visiveis : alvos)) escrever(el, quais);
   }
   function tilt(nx, ny) {
     x = Math.max(-1, Math.min(1, nx));
@@ -53,6 +107,7 @@
     hint.hidden = !on;
     origin = null;
     if (on) {
+      recolher();
       addEventListener(pointerEvent, pointer, { passive: true });
       if (pointerEvent === 'mousemove') addEventListener('touchmove', pointer, { passive: true });
       // Os dois pedidos dependem do gesto original no iOS.
@@ -81,6 +136,7 @@
         if (exit) Promise.resolve(exit.call(document)).catch(() => {});
       }
       ownsFullscreen = false;
+      limpar();
     }
     paint();
   }

@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "fi",
+  "nome": "Suomi",
+  "nome_pt": "Finlandês",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Perhe",
+ "fam.titulo": "Koulutus ja perhe",
+ "fam.sub": "Opitaan ja leikitään perheenä, yhtä huolellisesti yksityisyydestä huolehtien.",
+ "fam.comeca": "Aloita tästä",
+ "fam.lingua": "Kieli",
+ "fam.procurar_lingua": "Hae kieltä",
+ "fam.girafinhas.t": "Ensimmäiset askeleet",
+ "fam.girafinhas.d": "Kolme kosketusta, ääni ja värit niille, jotka eivät ole koskaan käyttäneet puhelinta.",
+ "fam.tutor.t": "Opettaja",
+ "fam.tutor.d": "Opettaa vaihe vaiheelta, myös ilman verkkoa.",
+ "fam.quiz.t": "Perhevisa",
+ "fam.quiz.d": "Kysymyksiä koko perheelle tai vain aikuisille.",
+ "fam.natal.t": "Perheen joulu",
+ "fam.natal.d": "Pelejä, paperiaskarteluja ja todistus muistoksi.",
+ "fam.video.t": "Videostudio",
+ "fam.video.d": "Kuvaa ilman internetiä ja tallenna video sinetillä.",
+ "fam.contas.t": "Laskut sinetillä",
+ "fam.contas.d": "Laske ja tallenna tulos sinetillä.",
+ "fam.arte.t": "Taidestudio",
+ "fam.arte.d": "Musiikkia ja piirtämistä, sinun nimelläsi.",
+ "fam.regua.t": "Planeetan viivain",
+ "fam.regua.d": "Ehdimmekö vielä pelastaa planeetan?",
+ "fam.aventura.t": "Perheseikkailu",
+ "fam.aventura.d": "Seikkailupeli yhdessä pelattavaksi."
+}

@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "yo",
+  "nome": "Yorùbá",
+  "nome_pt": "Iorubá",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Ẹbí",
+ "fam.titulo": "Ẹ̀kọ́ àti ẹbí",
+ "fam.sub": "Ẹ jẹ́ ká kọ́ ẹ̀kọ́ ká sì ṣeré pọ̀ bí ẹbí, pẹ̀lú ìtọ́jú kan náà fún àṣírí.",
+ "fam.comeca": "Bẹ̀rẹ̀ níbí",
+ "fam.lingua": "Èdè",
+ "fam.procurar_lingua": "Wá èdè",
+ "fam.girafinhas.t": "Àwọn ìgbésẹ̀ àkọ́kọ́",
+ "fam.girafinhas.d": "Ìfọwọ́kan mẹ́ta, ohùn àti àwọ̀, fún ẹni tí kò tíì lo fóònù rí.",
+ "fam.tutor.t": "Olùkọ́",
+ "fam.tutor.d": "Ó ń kọ́ni ní ìgbésẹ̀ ní ìgbésẹ̀, kódà láìsí nẹ́tíwọ̀ọ̀kì.",
+ "fam.quiz.t": "Ìdíje ìbéèrè ẹbí",
+ "fam.quiz.d": "Àwọn ìbéèrè láti ṣeré pẹ̀lú ẹbí, tàbí láàrin àwọn àgbàlagbà nìkan.",
+ "fam.natal.t": "Kérésìmesì pẹ̀lú ẹbí",
+ "fam.natal.d": "Eré, àwòṣe ìwé àti ìwé-ẹ̀rí láti pa mọ́.",
+ "fam.video.t": "Ilé-iṣẹ́ fídíò",
+ "fam.video.d": "Ya fídíò láìsí íntánẹ́ẹ̀tì kí o sì fi èdìdì pa á mọ́.",
+ "fam.contas.t": "Ìṣirò pẹ̀lú èdìdì",
+ "fam.contas.d": "Ṣe ìṣirò kí o sì fi èdìdì pa àbájáde mọ́.",
+ "fam.arte.t": "Ilé-iṣẹ́ iṣẹ́ ọnà",
+ "fam.arte.d": "Orin àti àwòrán, pẹ̀lú orúkọ rẹ.",
+ "fam.regua.t": "Rúlà ayé",
+ "fam.regua.d": "Ṣé àkókò ṣì wà láti gba ayé là?",
+ "fam.aventura.t": "Ìrìn-àjò ẹbí",
+ "fam.aventura.d": "Eré ìrìn-àjò láti ṣe papọ̀."
+}

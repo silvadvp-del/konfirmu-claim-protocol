@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "so",
+  "nome": "Soomaali",
+  "nome_pt": "Somali",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Qoys",
+ "fam.titulo": "Waxbarasho iyo qoys",
+ "fam.sub": "Wax barta oo ku ciyaara qoys ahaan, adigoo isla daryeelka u haya arrimaha gaarka ah.",
+ "fam.comeca": "Halkan ka bilow",
+ "fam.lingua": "Luqad",
+ "fam.procurar_lingua": "Raadi luqad",
+ "fam.girafinhas.t": "Tallaabooyinka ugu horreeya",
+ "fam.girafinhas.d": "Saddex taabasho, cod iyo midabyo, qofka aan weligiis isticmaalin taleefan.",
+ "fam.tutor.t": "Macallin",
+ "fam.tutor.d": "Wuxuu baraa tallaabo tallaabo, xitaa shabakad la'aan.",
+ "fam.quiz.t": "Su'aalaha qoyska",
+ "fam.quiz.d": "Su'aalo lagu ciyaaro qoys ahaan, ama dadka waaweyn oo keliya.",
+ "fam.natal.t": "Kirismas qoyska la jira",
+ "fam.natal.d": "Ciyaaro, qaababka waraaqda iyo shahaado la kaydiyo.",
+ "fam.video.t": "Istuudiyaha fiidiyowga",
+ "fam.video.d": "Duub internet la'aan oo fiidiyowga ku kaydi shaabad.",
+ "fam.contas.t": "Xisaab shaabad leh",
+ "fam.contas.d": "Xisaabi oo natiijada ku kaydi shaabad.",
+ "fam.arte.t": "Istuudiyaha farshaxanka",
+ "fam.arte.d": "Muusig iyo sawir, magacaaga.",
+ "fam.regua.t": "Mastarada meeraha",
+ "fam.regua.d": "Weli ma haysannaa waqti aan ku badbaadinno meeraha?",
+ "fam.aventura.t": "Tacabur qoys",
+ "fam.aventura.d": "Ciyaar tacabur ah oo la wada ciyaaro."
+}

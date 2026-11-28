@@ -135,10 +135,10 @@ def main():
         prova("modo avião: %d de %d endereços abrem sem rede (com e sem «.html»)" % (total - len(falham), total), not falham, falham[:5])
         ctx.close()
 
-        # D. Modo Criança e Tranca Parental
+        # D. Modo Criança e Tranca Parental (no menu: a entrada /konfirmu/app/ é o Modo Família 3D desde 27-11, ordem das 17:42)
         ctx = b.new_context(**TEL)
         page = ctx.new_page()
-        page.goto(base + "/konfirmu/app/"); page.wait_for_timeout(400)
+        page.goto(base + "/konfirmu/app/app_unica.html"); page.wait_for_timeout(400)
         page.get_by_role("button", name="Modo Criança").click()
         def pin(p):
             for d in p:
@@ -194,7 +194,7 @@ def main():
             os.makedirs(CAPTURAS, exist_ok=True)
             ctx = b.new_context(**TEL)
             for nome, alvo, antes_js in [("01_entrada", "/konfirmu/", None), ("02_app_inicio", "/konfirmu/app/", None),
-                                         ("03_app_familia_tigelas", "/konfirmu/app/", "document.getElementById('t-fam').click()"),
+                                         ("03_app_familia_tigelas", "/konfirmu/app/app_unica.html", "document.getElementById('t-fam').click()"),
                                          ("04_terminal", "/konfirmu/app/terminal.html", "window.KonfirmuTerminal.correr('selftest')"),
                                          ("05_girafinhas", "/konfirmu/app/girafinhas_criancas_facil.html", None),
                                          ("06_chat_de_bolso", "/konfirmu/app/konfirmu_chat_offline_v0.1.html", None),

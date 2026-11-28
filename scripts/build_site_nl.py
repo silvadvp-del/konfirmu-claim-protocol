@@ -39,12 +39,13 @@ import tigelas  # noqa: E402
 import paleta_unica  # noqa: E402  (paleta única de 27-11, 13:14: o sítio passa pelo mesmo conversor da app)
 
 FONTE = os.path.join(REPO, "site_nl", "fonte_ao_vivo")
+FAMILIA_3D = os.path.join(REPO, "familia3d", "portal_familia_dual_mode.html")  # feito por familia3d/fonte (node build.mjs)
 DATA_ZIP = (2026, 11, 27, 0, 0, 0)
 
 PAGINAS_APP = sorted(p for p in tema_2040.PAGINAS if not p.startswith("edicao-21/")) + ["economia_anti_casino.html"]
 DA_EDICAO_21 = ["edicao-21/Tutor-Girafinha-offline.html", "edicao-21/kcp_family_quiz.html"]
 ASSETS_APP = ["imersao.css", "imersao.js", "nacl-fast.min.js", "nacl-util.min.js", "qrcode.js",
-              "konfirmu-2040.js", "kcp_ed_estrito.js", "terminal_worker.js"]
+              "konfirmu-2040.js", "kcp_ed_estrito.js", "terminal_worker.js", "ceu_vivo.js"]
 
 # entrada: caminho na raiz do sítio → caminho no pacote
 ENTRADA = {
@@ -344,7 +345,11 @@ def anterior():
 def construir(saida):
     ficheiros = {}
     menu, _ = menu_web()
-    ficheiros["app/index.html"] = menu.encode("utf-8")
+    # Entrada da app: o Modo Família 3D, com as girafinhas em 3D (ordem do David de 27-11-2026, 17:42).
+    # O menu dos 3 portais fica em app_unica.html; a marca e o ícone dos portais levam lá, o «3D» do menu traz de volta.
+    familia = ler(FAMILIA_3D, True)
+    ficheiros["app/index.html"] = familia
+    ficheiros["app/portal_familia_dual_mode.html"] = familia
     ficheiros["app/app_unica.html"] = menu.encode("utf-8")
     for p in PAGINAS_APP:
         t = ler(os.path.join(REPO, p))

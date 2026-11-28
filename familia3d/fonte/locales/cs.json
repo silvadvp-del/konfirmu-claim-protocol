@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "cs",
+  "nome": "Čeština",
+  "nome_pt": "Checo",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Rodina",
+ "fam.titulo": "Vzdělávání a rodina",
+ "fam.sub": "Učte se a hrajte si v rodině se stejnou péčí o soukromí.",
+ "fam.comeca": "Začni tady",
+ "fam.lingua": "Jazyk",
+ "fam.procurar_lingua": "Hledat jazyk",
+ "fam.girafinhas.t": "První kroky",
+ "fam.girafinhas.d": "Tři dotyky, hlas a barvy pro ty, kdo nikdy nepoužili telefon.",
+ "fam.tutor.t": "Doučování",
+ "fam.tutor.d": "Učí krok za krokem, i bez sítě.",
+ "fam.quiz.t": "Rodinný kvíz",
+ "fam.quiz.d": "Otázky pro celou rodinu nebo jen pro dospělé.",
+ "fam.natal.t": "Vánoce v rodině",
+ "fam.natal.d": "Hry, papírové vystřihovánky a diplom na památku.",
+ "fam.video.t": "Video studio",
+ "fam.video.d": "Natáčej bez internetu a ulož video s pečetí.",
+ "fam.contas.t": "Počty s pečetí",
+ "fam.contas.d": "Počítej a ulož výsledek s pečetí.",
+ "fam.arte.t": "Umělecké studio",
+ "fam.arte.d": "Hudba a kreslení, s tvým jménem.",
+ "fam.regua.t": "Pravítko planety",
+ "fam.regua.d": "Stihneme ještě zachránit planetu?",
+ "fam.aventura.t": "Rodinné dobrodružství",
+ "fam.aventura.d": "Dobrodružná hra, kterou hrajete spolu."
+}

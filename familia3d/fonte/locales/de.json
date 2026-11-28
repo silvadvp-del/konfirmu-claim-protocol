@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "de",
+  "nome": "Deutsch",
+  "nome_pt": "Alemão",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Familie",
+ "fam.titulo": "Bildung und Familie",
+ "fam.sub": "Gemeinsam lernen und spielen, mit derselben Sorgfalt für die Privatsphäre.",
+ "fam.comeca": "Hier anfangen",
+ "fam.lingua": "Sprache",
+ "fam.procurar_lingua": "Sprache suchen",
+ "fam.girafinhas.t": "Erste Schritte",
+ "fam.girafinhas.d": "Drei Berührungen, Stimme und Farben, für alle, die noch nie ein Handy benutzt haben.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Erklärt Schritt für Schritt, auch ohne Netz.",
+ "fam.quiz.t": "Familienquiz",
+ "fam.quiz.d": "Fragen für die ganze Familie oder nur für Erwachsene.",
+ "fam.natal.t": "Weihnachten mit der Familie",
+ "fam.natal.d": "Spiele, Bastelvorlagen und eine Urkunde zum Aufbewahren.",
+ "fam.video.t": "Videostudio",
+ "fam.video.d": "Filme ohne Internet und bewahre den Film mit Siegel auf.",
+ "fam.contas.t": "Rechnen mit Siegel",
+ "fam.contas.d": "Rechne und bewahre das Ergebnis mit Siegel auf.",
+ "fam.arte.t": "Kunststudio",
+ "fam.arte.d": "Musik und Zeichnen, mit deinem Namen.",
+ "fam.regua.t": "Planetenlineal",
+ "fam.regua.d": "Können wir den Planeten noch rechtzeitig retten?",
+ "fam.aventura.t": "Familienabenteuer",
+ "fam.aventura.d": "Ein Abenteuerspiel, um gemeinsam zu spielen."
+}

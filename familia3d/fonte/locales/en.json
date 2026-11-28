@@ -1,0 +1,33 @@
+{
+ "_meta": {
+  "codigo": "en",
+  "nome": "English",
+  "nome_pt": "Inglês",
+  "dir": "ltr",
+  "revisao": "tradução feita por IA a 27-11-2026; por rever por pessoa nativa"
+ },
+ "fam.rotulo": "Family",
+ "fam.titulo": "Education and family",
+ "fam.sub": "Learn and play as a family, with the same care for privacy.",
+ "fam.comeca": "Start here",
+ "fam.lingua": "Language",
+ "fam.procurar_lingua": "Search language",
+ "fam.girafinhas.t": "First steps",
+ "fam.girafinhas.d": "Three taps, voice and colours, for anyone who has never used a phone.",
+ "fam.tutor.t": "Tutor",
+ "fam.tutor.d": "Teaches step by step, even without a network.",
+ "fam.quiz.t": "Family quiz",
+ "fam.quiz.d": "Questions to play as a family, or just among adults.",
+ "fam.natal.t": "Christmas with the family",
+ "fam.natal.d": "Games, paper templates and a certificate to keep.",
+ "fam.video.t": "Video studio",
+ "fam.video.d": "Film without internet and keep the film with a seal.",
+ "fam.contas.t": "Sums with a seal",
+ "fam.contas.d": "Do sums and keep the result with a seal.",
+ "fam.arte.t": "Art studio",
+ "fam.arte.d": "Music and drawing, with your name.",
+ "fam.regua.t": "The planet's ruler",
+ "fam.regua.d": "Is there still time to save the planet?",
+ "fam.aventura.t": "Family adventure",
+ "fam.aventura.d": "An adventure game to play together."
+}
