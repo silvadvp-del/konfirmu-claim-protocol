@@ -79,7 +79,7 @@ ATIVIDADES_21 = {
     "girafinhas_criancas_facil.html",
     "kcp_art_music_studio.html",
     "kcp_family_quiz.html",
-    "konfirmu_chat_offline_v0.1.html",
+    "konfirmu_chat_offline.html",  # KON-608 (28-11): o chat do menu é o que tem o portão do 112; a v0.1 fica no repositório
     "neverland_family_quest.html",
     "patient_vault_offline.html",
     "radio_selo.html",
